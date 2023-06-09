@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bobbers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -32,9 +33,11 @@ namespace WarehouseManagement.Views.Login
             InitializeComponent();
             this.SizeToContent = SizeToContent.Height;
         }
-
+        sql_control sql = new sql_control();
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            
+
             if (!loading)
             {
                 ShowLoading();
