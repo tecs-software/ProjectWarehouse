@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="primaryColor1">#272C2E</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor2">#36393A</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor3">#212526</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor4">#949494</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor5">#1F5FA8</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor6">#D4A200</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor7">#FF5733</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor8">#171A1B</SolidColorBrush>
+    <SolidColorBrush x:Key="searchBarColor1">#4E575C</SolidColorBrush>
+    <SolidColorBrush x:Key="buttonBorder1">#BDBDBD</SolidColorBrush>
+    <SolidColorBrush x:Key="buttonBorder2">#FF4307</SolidColorBrush>
+    <SolidColorBrush x:Key="buttonBorder3">#1E88E5</SolidColorBrush>
+    <SolidColorBrush x:Key="buttonBorder4">#4CAF50</SolidColorBrush>
+    <SolidColorBrush x:Key="secondaryColor">#04B5AD</SolidColorBrush>
+    <SolidColorBrush x:Key="progressColor1">#c6c6c6</SolidColorBrush>
+    <SolidColorBrush x:Key="primaryColor9">#c5c5c5</SolidColorBrush>
+    <SolidColorBrush x:Key="textMenuColor1">#8B8B8B</SolidColorBrush>
+    <SolidColorBrush x:Key="textMenuColor2">#3C3C3C</SolidColorBrush>
+    <SolidColorBrush x:Key="textboxProfitAnalysisColor1">#E9E8E8</SolidColorBrush>
+
+</ResourceDictionary>

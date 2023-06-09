@@ -1,0 +1,147 @@
+﻿<Page x:Class="WarehouseManagement.Views.Main.OrderModule.OrderView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Background="White"
+      Title="OrderView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource primaryColor2}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <Border CornerRadius="25"
+                        Background="{StaticResource searchBarColor1}" Margin="15,10,15,10" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="23" Width="auto" Margin="15,0,0,0" Foreground="Gray"/>
+                        <TextBox Width="230" FontSize="17" FontWeight="Light" Foreground="White"
+                         BorderBrush="Transparent"
+                         Margin="-5,5,0,5"
+                         Padding="7"
+                         materialDesign:HintAssist.IsFloating="False"
+                         materialDesign:HintAssist.Hint="Search for orders"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                <Button BorderBrush="{StaticResource secondaryColor}" Height="40" Width="140" x:Name="btnOrder" Click="btnOrder_Click"  FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,0,20,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Plus" Height="20" Width="auto" Margin="0,0,4,0"/>
+                        <TextBlock Text="Order"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <TreeView Grid.Row="1" Grid.Column="0" Background="{StaticResource ResourceKey=primaryColor3}">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="Padding" Value="0" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate>
+                    <DataTemplate>
+                        <local:OrderMenu/>
+                    </DataTemplate>
+                </TreeView.ItemTemplate>
+                <TreeView.ItemsSource>
+                    <Binding Path="MenuItems" />
+                </TreeView.ItemsSource>
+            </TreeView>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+
+                <StackPanel Grid.Row="0">
+                    <DataGrid ItemsSource="{Binding Path=myList}"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="All"
+                            x:Name="dgtRespondentData"
+                            IsReadOnly="True"
+                            CanUserSortColumns="True"
+                            CanUserReorderColumns="False"
+                            CanUserResizeColumns="False"
+                            TextBlock.TextAlignment="Left"
+                              ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="110"/>
+                            <DataGridTextColumn Header="DATE"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="110"/>
+                            <DataGridTextColumn Header="STATUS"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="100"/>
+                            <DataGridTextColumn Header="CUTOMER NAME"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="200"/>
+                            <DataGridTextColumn Header="ADDRESS"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="110"/>
+                            <DataGridTextColumn Header="TOTAL"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="110"/>
+                            <DataGridTextColumn Header="LAST MODIFIED"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="150"/>
+                            <DataGridTextColumn Header=""
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="200"/>
+                            <DataGridTextColumn Header=""
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="150"/>
+                            <DataGridTextColumn Header=""
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="150"/>
+                            <DataGridTextColumn Header=""
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="150"/>
+                            <DataGridTextColumn Header=""
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="150"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

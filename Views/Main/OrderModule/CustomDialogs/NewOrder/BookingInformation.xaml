@@ -1,0 +1,141 @@
+﻿<Page x:Class="WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder.BookingInformation"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder"
+      mc:Ignorable="d" 
+      Background="White"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BookingInformation">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <TextBlock Text="Booking Information" Grid.Row="0" Grid.Column="0" Margin="20,20,0,0" FontSize="25" FontWeight="SemiBold"/>
+            <RadioButton GroupName="PickupDropoff" Content="Door to door pickup" Margin="30,0,0,5" FontSize="15" VerticalAlignment="Bottom"/>
+            <RadioButton GroupName="PickupDropoff" Content="Drop off to branches" Margin="20,0,0,5" FontSize="15" VerticalAlignment="Bottom"/>
+        </StackPanel>
+
+        <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="0"
+                      Grid.Row="2"
+                      Margin="20,20,10,0"
+                      materialDesign:HintAssist.Hint="Item Name" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      x:Name="cbItem"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="2"
+                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="Quantity" 
+                     FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     x:Name="tbQuantity"
+                     IsReadOnly="False"
+                     Margin="10,20,20,0"
+                     Focusable="True"
+                    />
+
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="3"
+                     Grid.Column="0"
+                     materialDesign:HintAssist.Hint="Weight (KG)" 
+                     FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                  x:Name="tbWeight"
+                     IsReadOnly="False"
+                     Margin="20,20,10,0"
+                     Focusable="True"/>
+
+        <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="2"
+                      Grid.Row="3"
+                      Margin="10,20,20,0"
+                      materialDesign:HintAssist.Hint="Item Category" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                   x:Name="tbCategory"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="4"
+                     Grid.Column="0"
+                     materialDesign:HintAssist.Hint="Goods Value (PHP)" 
+                     FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                  x:Name="tbGoodsValue"
+                     BorderBrush="Black"
+                     IsReadOnly="False"
+                     Margin="20,20,10,0"
+                     Focusable="True"/>
+
+        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+            <TextBlock Text="Valuation fee (PHP):" Grid.Row="8" Grid.Column="0" Margin="10,20,0,0" FontSize="20" VerticalAlignment="Bottom" FontWeight="Regular"/>
+            <TextBlock Text="₱0" Grid.Row="8" Grid.Column="0" Margin="20,20,0,0" FontSize="25" VerticalAlignment="Bottom" FontWeight="SemiBold"/>
+        </StackPanel>
+
+
+        <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="0"
+                      Grid.Row="5"
+                      Margin="20,20,10,0"
+                   x:Name="tbBagSpecification"
+                      materialDesign:HintAssist.Hint="Bag Specification" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="6"
+                     Grid.ColumnSpan="2"
+                     Grid.Column="0"
+                  x:Name="tbRemarks"
+                     materialDesign:HintAssist.Hint="Remarks" 
+                     FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     IsReadOnly="False"
+                     Margin="20,20,20,0"
+                     Focusable="True"/>
+
+        <StackPanel  Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,0,20">
+            <RadioButton GroupName="service" Content="J &amp; T"  FontSize="17" Margin="0,0,0,0" VerticalAlignment="Center"/>
+            <RadioButton GroupName="service" Content="Flash Express"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            <RadioButton GroupName="service" Content="LBC"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            <RadioButton GroupName="service" Content="Ninjavan"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal" Margin="0,20,0,20">
+            <TextBlock Text="Total Amount:" Grid.Row="8" Grid.Column="0" Margin="20,0,0,0" FontSize="20" VerticalAlignment="Bottom" FontWeight="Regular"/>
+            <TextBlock Text="₱0" x:Name="tbTotal" Grid.Row="8" Grid.Column="0" FontSize="35" Margin="20,0,0,0" FontWeight="SemiBold"/>
+        </StackPanel>
+    </Grid>
+</Page>

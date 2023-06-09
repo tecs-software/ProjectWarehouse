@@ -1,0 +1,153 @@
+﻿<Window x:Class="WarehouseManagement.Views.Main.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:WarehouseManagement.Views.Main"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="MainWindow" Height="1080" Width="1920">
+
+    <Border CornerRadius="10" Background="{StaticResource ResourceKey=primaryColor1}"
+            BorderBrush="#3c3c3c"
+            BorderThickness=".5">
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="617*"/>
+                <ColumnDefinition Width="1304*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" x:Name="topPanel">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <RadioButton Grid.Column="0"
+                             Width="Auto"
+                             MinWidth="200"
+                             Visibility="Visible"
+                             Checked="btnDashboardModule_Checked"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             x:Name="btnDashboardModule"
+                             Cursor="Hand">
+
+                    <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Dashboard" VerticalAlignment="Center"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                    
+                </RadioButton>
+
+                <RadioButton Grid.Column="1" 
+                             Checked="btnInventoryModule_Checked"
+                             MinWidth="200"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             Name="btnInventoryModule"
+                             Cursor="Hand">
+                    
+                    <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Inventory" VerticalAlignment="Center"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                    
+                </RadioButton>
+
+                <RadioButton Grid.Column="2" 
+                             Checked="btnOrderModule_Checked"
+                             MinWidth="200"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             Name="btnOrderModule"
+                             Cursor="Hand">
+
+                    <StackPanel Orientation="Horizontal" Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Orders" VerticalAlignment="Center"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                    
+                </RadioButton>
+
+                <RadioButton Grid.Column="3" 
+                             Checked="btnEmployeeModule_Checked"
+                             MinWidth="200"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             x:Name="btnEmployeeModule"
+                             Cursor="Hand">
+
+                    <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Employee Management" VerticalAlignment="Center" Margin="5,0,5,0"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                    
+                </RadioButton>
+
+                <RadioButton Grid.Column="4" 
+                             Checked="btnSalesModule_Checked"
+                             MinWidth="200"
+                             Visibility="Visible"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             x:Name="btnSalesModule"
+                             Cursor="Hand">
+
+                    <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Sales" VerticalAlignment="Center"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                    
+                </RadioButton>
+
+                <RadioButton Grid.Column="5" 
+                             Checked="btnComissionsModule_Checked"
+                             MinWidth="200"
+                             Cursor="Hand"
+                             Visibility="Visible"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             x:Name="btnComissionsModule">
+
+                    <StackPanel Orientation="Horizontal" Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Commissions" VerticalAlignment="Center"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                    
+                </RadioButton>
+
+                <StackPanel Grid.Column="6" Orientation="Horizontal" VerticalAlignment="Stretch"  HorizontalAlignment="Right" Height="Auto" Width="Auto" >
+
+                    <materialDesign:PackIcon Kind="AccountCircle" Margin="0,20,0,20" Foreground="#8B8B8B" Height="Auto" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    <TextBlock x:Name="tbAccountName" Text="Admin" Foreground="#8B8B8B" FontSize="15" Cursor="Hand" VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                    <Button x:Name="btnAccountDropDown" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Transparent" Height="Auto" Width="Auto" Margin="0,25,10,20" Padding="0,0,0,0">
+                        <materialDesign:PackIcon Kind="ArrowDropDown" Margin="0,0,0,0" Foreground="#8B8B8B" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+            
+            <Frame Grid.Row="1" Grid.ColumnSpan="2" x:Name="PageContent" NavigationUIVisibility="Hidden"/>
+            
+        </Grid>
+    </Border>
+</Window>
