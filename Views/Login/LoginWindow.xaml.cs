@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
+using WarehouseManagement.Views.InitialSetup;
 using WarehouseManagement.Views.Main;
 
 namespace WarehouseManagement.Views.Login
@@ -101,6 +103,35 @@ namespace WarehouseManagement.Views.Login
         private void HideMessage()
         {
             lblMessage.Visibility = Visibility.Collapsed;
+        }
+
+        private async void btnReset_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private async Task ClearConnection()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConnectionStringSettings connectionStringSettings = config.ConnectionStrings.ConnectionStrings["MyConnectionString"];
+            if (connectionStringSettings != null)
+            {
+                config.ConnectionStrings.ConnectionStrings.Remove(connectionStringSettings);
+                await Task.Run(() => config.Save(ConfigurationSaveMode.Modified));
+            }
+        }
+
+        private async void btnReset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            await ClearConnection();
+
+            this.Close();
+
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

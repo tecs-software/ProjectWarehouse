@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Views.Main.InventoryModule;
 using WarehouseManagement.Views.Main.OrderModule;
 
 namespace WarehouseManagement.Views.Main
@@ -32,8 +33,12 @@ namespace WarehouseManagement.Views.Main
 
         private void btnInventoryModule_Checked(object sender, RoutedEventArgs e)
         {
-
+            if (!(PageContent.Content is InventoryView))
+            {
+                PageContent.Content = new InventoryView();
+            }
         }
+    
 
         private void btnOrderModule_Checked(object sender, RoutedEventArgs e)
         {

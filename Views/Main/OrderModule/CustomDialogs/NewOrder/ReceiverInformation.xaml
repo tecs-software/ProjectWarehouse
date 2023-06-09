@@ -28,7 +28,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Receiver Information" Grid.Row="0" Grid.Column="0" Margin="20,20,0,0" FontSize="25" FontWeight="SemiBold"/>
+        <TextBlock Text="Receiver Information" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="20,20,0,0" FontSize="25" FontWeight="SemiBold"/>
 
 
 

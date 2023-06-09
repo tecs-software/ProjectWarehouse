@@ -92,7 +92,7 @@ namespace WarehouseManagement.Views.InitialSetup
                     if (await dbInitializer.CreateDatabaseIfNotExists("db_warehouse_management"))
                     {
                         connection += ";Initial Catalog=db_warehouse_management";
-                        saveConnection(connection);
+                        await SaveConnection(connection);
                         LoginWindow login = new LoginWindow();
                         login.Show();
                         this.Close();
@@ -114,12 +114,13 @@ namespace WarehouseManagement.Views.InitialSetup
             
         }
 
-        private void saveConnection(string connectionString)
+        private async Task SaveConnection(string connectionString)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             ConnectionStringSettings connectionStringSettings = new ConnectionStringSettings("MyConnectionString", connectionString, "System.Data.SqlClient");
             config.ConnectionStrings.ConnectionStrings.Add(connectionStringSettings);
-            config.Save(ConfigurationSaveMode.Modified);
+            await Task.Run(() => config.Save(ConfigurationSaveMode.Modified));
+            ConfigurationManager.RefreshSection("connectionStrings");
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e)

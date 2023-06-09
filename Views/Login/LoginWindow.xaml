@@ -39,6 +39,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Grid.Row="0"
+                        Click="btnClose_Click"
                         Style="{StaticResource SmallCloseButtonStyle}"
                         Background="{StaticResource textboxProfitAnalysisColor1}"
                         BorderBrush="Transparent"
@@ -102,13 +103,15 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock 
+                    MouseLeftButtonDown="btnReset_MouseLeftButtonDown"
                     Grid.Column="0" 
                     Grid.ColumnSpan="2"
                     VerticalAlignment="Center" 
-                    Text="Register" 
+                    Text="Reset" 
                     Foreground="#04B5AD" 
                     FontSize="15" 
                     Cursor="Hand"
+                    x:Name="btnReset"
                     FontWeight="Light"/>
 
                 <Button 
