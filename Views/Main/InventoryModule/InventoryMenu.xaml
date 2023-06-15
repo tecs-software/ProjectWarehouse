@@ -7,29 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <Expander x:Name="ExpanderMenu" Margin="-20,0,20,0" Header="{Binding Name}" IsExpanded="False" HorizontalAlignment="Stretch" Foreground="{StaticResource textMenuColor1}" Background="Transparent"
-           Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}, Path=ActualWidth}">
-            <Expander.HeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" Width="Auto" HorizontalAlignment="Stretch" />
-                </DataTemplate>
-            </Expander.HeaderTemplate>
-            <ListView x:Name="ListViewMenu" ItemsSource="{Binding SubmenuItems}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" Background="Black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsSynchronizedWithCurrentItem="False">
+        <ListBoxItem x:Name="ListViewItemMenu" Content="{Binding Path=Header}" Foreground="White"/>
+        <Expander x:Name="ExpanderMenu" PreviewMouseDown="ExpanderMenu_PreviewMouseDown"  Header="{Binding Path=Header}" IsExpanded="False" HorizontalAlignment="Stretch" Foreground="{StaticResource textMenuColor1}" Background="Transparent">
+            <ListView x:Name="ListViewMenu" SelectionChanged="ListViewMenu_SelectionChanged"  ItemsSource="{Binding Path=SubMenuItems}" Foreground="White" Background="Black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsSynchronizedWithCurrentItem="False">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch" Margin="0,10,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15" />
-                            <TextBlock Grid.Column="1" Text="{Binding Count}" Margin ="0,0,25,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15" />
-                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="30,10,0,0" VerticalAlignment="Center"  HorizontalAlignment="Left" FontSize="15"/>
+
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Numbers}" Visibility="Collapsed" Margin="0,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="20 0" FontSize="15"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

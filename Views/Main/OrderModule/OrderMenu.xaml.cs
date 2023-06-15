@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Models;
+using MenuItem = WarehouseManagement.Models.MenuItem;
 
 namespace WarehouseManagement.Views.Main.OrderModule
 {
@@ -20,9 +22,24 @@ namespace WarehouseManagement.Views.Main.OrderModule
     /// </summary>
     public partial class OrderMenu : UserControl
     {
-        public OrderMenu()
+        public OrderMenu(MenuItem itemMenu)
         {
             InitializeComponent();
+            ExpanderMenu.Visibility = itemMenu.SubMenuItems == null ? Visibility.Collapsed : Visibility.Visible;
+            ListViewItemMenu.Visibility = itemMenu.SubMenuItems == null ? Visibility.Visible : Visibility.Collapsed;
+
+            DataContext = itemMenu;
+        }
+
+
+        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ExpanderMenu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

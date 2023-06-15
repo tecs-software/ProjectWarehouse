@@ -4,9 +4,386 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarehouseManagement.Views.Main.InventoryModule.CustomDialogs"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ProfitAnalysis" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Loaded="Window_Loaded"
+        Title="ProfitAnalysis" Height="780" Width="1200">
+    
+    <Border CornerRadius="10"
+            Background="White"
+            BorderBrush="Black"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height="1.3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="20,0,0,0" HorizontalAlignment="Left">
+                    <TextBlock Text="Profit Analysis"  FontSize="25" FontWeight="SemiBold"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button x:Name="btnClose"
+                            Click="btnClose_Click"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                            Background="{StaticResource textboxProfitAnalysisColor1}"
+                            BorderBrush="Transparent"
+                            Margin="0,0,20,0">
+                        <materialDesign:PackIcon Kind="Close" Foreground="Black" Height="20" Width="Auto"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          materialDesign:HintAssist.Hint="Choose Item" FontSize="15" Width="200"
+                          materialDesign:HintAssist.Foreground="Black"
+                          BorderBrush="Black"
+                          SelectionChanged="cbItems_SelectionChanged"
+                          Background="{StaticResource textboxProfitAnalysisColor1}"
+                          Margin="0,0,10,0"
+                          x:Name="cbItems"
+                          />
+                
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                         materialDesign:HintAssist.Hint="Cost of Good" FontSize="15"
+                         Background="{StaticResource textboxProfitAnalysisColor1}"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="False"
+                         Focusable="True"
+                         Margin="10,0,10,0"
+                         x:Name="tbCostOfGood"/>
+
+                <Grid ClipToBounds="False">
+
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                             materialDesign:HintAssist.Hint="Factor" FontSize="15"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             materialDesign:HintAssist.HintOpacity="0.5"
+                             Margin="10,0,10,0"
+                             CaretBrush="Black"
+                             x:Name="tbFactor"
+                             GotFocus="tooltipGotFocus"
+                             PreviewTextInput="DecimalValidationTextBox"
+                             TextChanged="tbFactor_TextChanged"
+                             LostFocus="tbFactor_LostFocus"
+                             />
+
+                    <Border CornerRadius="15"
+                            Background="#EE860C"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            Margin="0,5,15,0"
+                            Height="7"
+                            Width="7">
+
+                    </Border>
+                </Grid>
+
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                         materialDesign:HintAssist.Hint="Nominated SRP" FontSize="15"
+                         Background="{StaticResource textboxProfitAnalysisColor1}"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         Margin="10,0,0,0"
+                         x:Name="tbNominated"
+                         GotFocus="textBoxGotFocus"
+                         PreviewTextInput="DecimalValidationTextBox"
+                         TextChanged="tbNominated_TextChanged"
+                         LostFocus="tbNominated_LostFocus"/>
+                
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1" />
+                
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                         materialDesign:HintAssist.Hint="Order Quantity" FontSize="15"
+                         Background="{StaticResource textboxProfitAnalysisColor1}"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         Margin="20,0,0,0"
+                         x:Name="tbQuantity"
+                         TextChanged="tbQuantity_TextChanged"
+                         LostFocus="numWithCommaLostFocus"
+                         PreviewTextInput="IntValidationTextBox"/>
+            </StackPanel>
+
+
+            <Border BorderThickness="0,1,0,0" Grid.Row="2" BorderBrush="#4A4A4A">
+
+                <StackPanel Grid.Row="2" Orientation="Vertical">
+
+                    <TextBlock Text="Selling Expenses" FontSize="22" Margin="20,20,20,10" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                                 materialDesign:HintAssist.Hint="Ads Budget" FontSize="15"
+                                 Background="{StaticResource textboxProfitAnalysisColor1}"
+                                 materialDesign:HintAssist.Foreground="Black"
+                                 BorderBrush="Black"
+                                 TextChanged="tbAdsBudget_TextChanged"
+                                 x:Name="tbAdsBudget"
+                                 Margin="0,0,10,0"
+                                 LostFocus="moneyLostFocus"
+                                 GotFocus="textBoxGotFocus"/>
+
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                                 materialDesign:HintAssist.Hint="ROAS" FontSize="15"
+                                 Background="{StaticResource textboxProfitAnalysisColor1}"
+                                 materialDesign:HintAssist.Foreground="Black"
+                                 BorderBrush="Black"
+                                 TextChanged="tbROAS_TextChanged"
+                                 Margin="10,0,10,0"
+                                 x:Name="tbROAS"
+                                 LostFocus="numWithCommaLostFocus"
+                                 PreviewTextInput="IntValidationTextBox"/>
+
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                                 materialDesign:HintAssist.Hint="Ad Spent per Item" FontSize="15"
+                                 Background="{StaticResource textboxProfitAnalysisColor1}"
+                                 materialDesign:HintAssist.Foreground="Black"
+                                 BorderBrush="Black"
+                                 TextChanged="tbAdsSpent_TextChanged"
+                                 IsReadOnly="True"
+                                 Focusable="False"
+                                 Margin="10,0,10,0"
+                                 x:Name="tbAdsSpent"/>
+
+                        <Grid ClipToBounds="False">
+
+                            <TextBox 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                                 Width="200"
+                                 materialDesign:HintAssist.Hint="Platform Commission" 
+                                 FontSize="15"
+                                 Background="{StaticResource textboxProfitAnalysisColor1}"
+                                 materialDesign:HintAssist.Foreground="Black"
+                                 BorderBrush="Black"
+                                 Margin="10,0,10,0"
+                                 x:Name="tbPlatform"
+                                 TextChanged="tbPlatform_TextChanged"
+                                 PreviewTextInput="percentageValidation"
+                                 GotFocus="tooltipGotFocus"
+                                 LostFocus="percentLostFocus">
+                            </TextBox>
+
+                            <Border CornerRadius="15"
+                                Background="#EE860C"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Margin="0,5,15,0"
+                                Height="7"
+                                Width="7">
+                            </Border>
+                            
+                        </Grid>
+
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                                 materialDesign:HintAssist.Hint="Employee Commission" FontSize="15"
+                                 Background="{StaticResource textboxProfitAnalysisColor1}"
+                                 materialDesign:HintAssist.Foreground="Black"
+                                 BorderBrush="Black"
+                                 Margin="10,0,0,0"
+                                 x:Name="tbEmployeeCommission"
+                                 TextChanged="tbEmployeeCommission_TextChanged"
+                                 GotFocus="textBoxGotFocus"
+                                 PreviewTextInput="DecimalValidationTextBox"
+                                 LostFocus="moneyLostFocus"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="58,20,0,0">
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                                 materialDesign:HintAssist.Hint="Shipping Fee" FontSize="15"
+                                 Background="{StaticResource textboxProfitAnalysisColor1}"
+                                 materialDesign:HintAssist.Foreground="Black"
+                                 BorderBrush="Black"
+                                 Margin="0,0,10,0"
+                                 x:Name="tbShippingFee"
+                                 GotFocus="textBoxGotFocus"
+                                 LostFocus="moneyLostFocus"
+                                 TextChanged="tbShippingFee_TextChanged"
+                                 PreviewTextInput="DecimalValidationTextBox"/>
+
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                                 materialDesign:HintAssist.Hint="RTS Margin (%)" FontSize="15"
+                                 Background="{StaticResource textboxProfitAnalysisColor1}"
+                                 materialDesign:HintAssist.Foreground="Black"
+                                 BorderBrush="Black"
+                                 Margin="10,0,0,0"
+                                 x:Name="tbRtsMargin"
+                                 TextChanged="tbRtsMargin_TextChanged"
+                                 GotFocus="textBoxGotFocus"
+                                 LostFocus="percentLostFocus"
+                                 PreviewTextInput="percentageValidation"/>
+
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            
+            <Grid Grid.Row="3">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="420"
+                             materialDesign:HintAssist.Hint="Selling Expenses Subtotal" FontSize="15"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             Margin="58,0,0,0"
+                             IsReadOnly="True"
+                             Focusable="False"
+                             x:Name="tbSellingTotal"
+                             TextChanged="tbSellingTotal_TextChanged"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="420"
+                             materialDesign:HintAssist.Hint="Total Cost" FontSize="15"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             IsReadOnly="True"
+                             Focusable="False"
+                             Name="tbTotalCost"
+                             VerticalAlignment="Center"
+                             Margin="0,0,58,0" HorizontalAlignment="Right" Grid.ColumnSpan="2"
+                             TextChanged="tbTotalCost_TextChanged"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    
+                    <TextBlock Text="Provision for Administrative Expenses" FontSize="22" Margin="20,0,10,0" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Border CornerRadius="5"
+                            Background="{StaticResource textboxProfitAnalysisColor1}"
+                            VerticalAlignment="Center"
+                            Height="25"
+                            Width="25">
+                        <materialDesign:PackIcon x:Name="btnEditProvision" MouseLeftButtonDown="btnEditProvision_MouseLeftButtonDown"  Background="Transparent" Cursor="Hand" Kind="Pencil" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="20" />
+                    </Border>
+                    
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="420"
+                             materialDesign:HintAssist.Hint="Net Profit Per Item Sold" FontSize="15"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             x:Name="tbNetProfit"
+                             IsReadOnly="True"
+                             Focusable="False"
+                             HorizontalAlignment="Right"
+                             TextChanged="tbNetProfit_TextChanged"
+                             Margin="0,0,58,0"/>
+
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="58,0,0,0">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                             materialDesign:HintAssist.Hint="Total Administrative Costs" FontSize="15"
+                             Text="300,000.00"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             IsEnabled="False"
+                             x:Name="tbTotalAdministrative" 
+                             Margin="0,0,10,0"
+                             TextChanged="tbTotalAdministrative_TextChanged"
+                             GotFocus="textBoxGotFocus"
+                             PreviewTextInput="DecimalValidationTextBox"
+                             LostFocus="moneyLostFocus"
+                             />
+                    
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="200"
+                             materialDesign:HintAssist.Hint="Unit Sold per Month" FontSize="15"
+                             Text="5,000"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             IsEnabled="False"
+                             x:Name="tbUnitSold"
+                             Margin="10,0,0,0"
+                             LostFocus="numWithCommaLostFocus"
+                             TextChanged="tbUnitSold_TextChanged"
+                             PreviewTextInput="IntValidationTextBox"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="420"
+                             materialDesign:HintAssist.Hint="Gross Profit Per Month" FontSize="15"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             IsReadOnly="True"
+                             Focusable="False"
+                             x:Name="tbGrossPerMonth"
+                             TextChanged="tbGrossPerMonth_TextChanged"
+                             HorizontalAlignment="Right"
+                             Margin="0,0,58,0"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">
+                    <TextBox Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="420"
+                             materialDesign:HintAssist.Hint="Cost Per Unit" FontSize="15"
+                             Text="60.00"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             IsReadOnly="True"
+                             Focusable="False"
+                             x:Name="tbCostPerUnit"
+                             Margin="58,10,0,10" HorizontalAlignment="Left"
+                             TextChanged="tbCostPerUnit_TextChanged"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="420"
+                             materialDesign:HintAssist.Hint="Net Profit Per Month" FontSize="15"
+                             Background="{StaticResource textboxProfitAnalysisColor1}"
+                             materialDesign:HintAssist.Foreground="Black"
+                             BorderBrush="Black"
+                             IsReadOnly="True"
+                             Focusable="False"
+                             TextChanged="tbNetProfitPerMonth_TextChanged"
+                             x:Name="tbNetProfitPerMonth"
+                             HorizontalAlignment="Right"
+                             Margin="0,0,58,0"/>
+
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center">
+                <Button HorizontalAlignment="Right" Click="btnUpdate_Click" Content="Apply Nominated Price" Background="{StaticResource secondaryColor}" FontSize="20" Height="50" Width="auto"  MinWidth="200"
+                        Visibility="Collapsed"
+                        Margin="0,0,58,0"
+                        x:Name="btnUpdate"
+                        BorderBrush="Transparent"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

@@ -14,18 +14,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 {
-    /// <summary>
-    /// Interaction logic for ReceiverInformation.xaml
-    /// </summary>
     public partial class ReceiverInformation : Page
     {
-        private List<Address.Province> provinces;
-        private List<Address.Municipality> municipalities;
-        private List<Address.Barangay> barangays;
+        private List<Address.Province>? provinces;
+        private List<Address.Municipality>? municipalities;
+        private List<Address.Barangay>? barangays;
+
         public ReceiverInformation()
         {
             InitializeComponent();
@@ -34,21 +33,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private async void LoadAddress()
         {
-            await Task.Run(() =>
-            {
-                string provinceJson = File.ReadAllText("Components/table_province.json");
-                provinces = JsonConvert.DeserializeObject<List<Address.Province>>(provinceJson);
-
-                string municipalityJson = File.ReadAllText("Components/table_municipality.json");
-                municipalities = JsonConvert.DeserializeObject<List<Address.Municipality>>(municipalityJson);
-
-                string barangayJson = File.ReadAllText("Components/table_barangay.json");
-                barangays = JsonConvert.DeserializeObject<List<Address.Barangay>>(barangayJson);
-
-                provinces = provinces.OrderBy(p => p.province_name).ToList();
-                municipalities = municipalities.OrderBy(m => m.municipality_name).ToList();
-                barangays = barangays.OrderBy(b => b.barangay_name).ToList();
-            });
+            (provinces, municipalities, barangays) = await Util.LoadAddressData();
 
             cbProvince.ItemsSource = provinces;
             cbProvince.DisplayMemberPath = "province_name";
@@ -56,10 +41,10 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void cbProvince_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cbCity.SelectedIndex = -1; // Clear the selected item
-            cbBarangay.ItemsSource = null; // Clear the items
+            cbCity.SelectedIndex = -1;
+            cbBarangay.ItemsSource = null;
 
-            if (cbProvince.SelectedItem is Address.Province selectedProvince)
+            if (cbProvince.SelectedItem is Address.Province selectedProvince && municipalities != null)
             {
                 List<Address.Municipality> filteredMunicipalities = municipalities.FindAll(m => m.province_id == selectedProvince.province_id);
                 cbCity.ItemsSource = filteredMunicipalities;
@@ -69,7 +54,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void cbCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cbBarangay.SelectedIndex = -1; // Clear the selected item
+            cbBarangay.SelectedIndex = -1;
 
             if (cbCity.SelectedItem is Address.Municipality selectedMunicipality)
             {

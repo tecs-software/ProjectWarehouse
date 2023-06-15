@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WarehouseManagement.Database;
 
-namespace Bobbers
+namespace WWarehouseManagement.Database
 {
-
-
-    class sql_control
+    class sql_control : DatabaseConnection
     {
-        public static string constring = @"Server=.;Database=dbBobber;User ID=sa;Password=123123";
+        public static string constring = "";
 
         public SqlConnection DBCon = new SqlConnection(constring);
+
         private SqlCommand DBCmd;
         // DB DATA
         public SqlDataAdapter DBDA = new SqlDataAdapter();
@@ -28,7 +29,14 @@ namespace Bobbers
 
         public sql_control()
         {
-
+            if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
+            {
+                constring = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+            }
+            else
+            {
+                MessageBox.Show("No connection");
+            }
         }
 
         // ALLOW CONNECTION STRING OVERRIDE

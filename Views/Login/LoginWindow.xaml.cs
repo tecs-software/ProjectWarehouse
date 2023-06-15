@@ -1,5 +1,4 @@
-﻿using Bobbers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -18,6 +17,7 @@ using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Views.InitialSetup;
 using WarehouseManagement.Views.Main;
+using WarehouseManagement.Views.Register;
 
 namespace WarehouseManagement.Views.Login
 {
@@ -33,11 +33,10 @@ namespace WarehouseManagement.Views.Login
             InitializeComponent();
             this.SizeToContent = SizeToContent.Height;
         }
-        sql_control sql = new sql_control();
+
+
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            
-
             if (!loading)
             {
                 ShowLoading();
@@ -52,16 +51,18 @@ namespace WarehouseManagement.Views.Login
                 string username = tbUsername.Text;
                 string password = Util.HashPassword(tbPassword.SecurePassword);
 
-                if (!await DatabaseHelper.IsDataExistsAsync("tbl_users", "username", username))
+                DBHelper db = new();
+
+                if (!await db.IsDataExistsAsync("tbl_users", "username", username))
                 {
                     ShowMessage("User does not exist!");
                     HideLoading();
                     return;
                 }
 
-                if (await DatabaseHelper.AuthenticateUser(username, password))
+                if (await db.AuthenticateUser(username, password))
                 {
-                    MainWindow mainWindow = new MainWindow();
+                    MainWindow mainWindow = new();
                     mainWindow.Show();
                     this.Close();
                 }
@@ -108,11 +109,6 @@ namespace WarehouseManagement.Views.Login
             lblMessage.Visibility = Visibility.Collapsed;
         }
 
-        private async void btnReset_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
-
         private async Task ClearConnection()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -126,8 +122,8 @@ namespace WarehouseManagement.Views.Login
 
         private async void btnReset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            await ClearConnection();
-
+            RegisterWindow register = new RegisterWindow();
+            register.Show();
             this.Close();
 
         }
@@ -135,6 +131,17 @@ namespace WarehouseManagement.Views.Login
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private async void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to reset the connection? You'll need to restart the app.", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                await ClearConnection();
+                this.Close();
+            }
         }
     }
 }

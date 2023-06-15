@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WarehouseManagement.Models
 {
-    internal class SubMenuItem
+    public class SubMenuItem
     {
         public string Name { get; set; }
         public int Numbers { get; set; }

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace WarehouseManagement.Database
 {
@@ -12,22 +13,26 @@ namespace WarehouseManagement.Database
     {
         private string? connectionString;
         private SqlConnection? connection;
+        protected SqlTransaction? transaction;
         int retries = 3;
         int delayMilliseconds = 100;
 
         public DatabaseConnection(string? connectionString = null)
         {
-            if (!string.IsNullOrEmpty(connectionString))
+            try
             {
-                this.connectionString = connectionString;
+                if (!string.IsNullOrEmpty(connectionString))
+                {
+                    this.connectionString = connectionString;
+                }
+                else if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
+                {
+                    this.connectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+                }
             }
-            else if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
+            catch(Exception e)
             {
-                this.connectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
-            }
-            else
-            {
-                throw new ArgumentException("Connection string is not provided or configured.");
+
             }
         }
 
@@ -76,6 +81,27 @@ namespace WarehouseManagement.Database
             }
 
             return null;
+        }
+
+        public SqlTransaction? BeginTransaction()
+        {
+            if (connection == null || connection.State != System.Data.ConnectionState.Open)
+            {
+                return null; // Return null if connection is not open
+            }
+
+            transaction = connection.BeginTransaction();
+            return transaction;
+        }
+
+        public void CommitTransaction()
+        {
+            transaction?.Commit();
+        }
+
+        public void RollbackTransaction()
+        {
+            transaction?.Rollback();
         }
 
         public void CloseConnection()

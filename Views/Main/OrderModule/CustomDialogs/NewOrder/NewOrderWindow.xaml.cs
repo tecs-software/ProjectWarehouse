@@ -87,7 +87,5 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
             return bookingInformationPage;
         }
-
-
     }
 }

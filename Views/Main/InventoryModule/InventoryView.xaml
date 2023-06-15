@@ -10,6 +10,7 @@
       Title="InventoryView"
       Background="White">
 
+
     <Grid x:Name="mainGrid">
 
         <Grid.RowDefinitions>
@@ -47,7 +48,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button x:Name="btnProfitAnalysis" BorderBrush="{StaticResource buttonBorder3}" Height="40" Width="170" FontSize="15" Background="Transparent" Margin="0,0,10,0">
+                <Button x:Name="btnProfitAnalysis" Click="btnProfitAnalysis_Click" BorderBrush="{StaticResource buttonBorder3}" Height="40" Width="170" FontSize="15" Background="Transparent" Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="ChartLineVariant" Height="20" Width="auto" Margin="0,0,4,0" Foreground="{StaticResource buttonBorder4}"/>
                         <TextBlock Text="Profit Analysis"/>
@@ -59,7 +60,7 @@
                         <TextBlock Text="Return to Seller"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnAddProduct" Command="{Binding AddProductCommand}" BorderBrush="{StaticResource buttonBorder4}" Height="40" Width="170" FontSize="15" Background="{StaticResource buttonBorder4}" Margin="0,0,20,0">
+                <Button x:Name="btnAddProduct" Click="btnAddProduct_Click" BorderBrush="{StaticResource buttonBorder4}" Height="40" Width="170" FontSize="15" Background="{StaticResource buttonBorder4}" Margin="0,0,20,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="TruckPlusOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
                         <TextBlock Text="Add Product(s)"/>
@@ -70,6 +71,7 @@
         </Grid>
 
         <Grid Grid.Row="1" Name="gridTable">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5*"/>
@@ -79,24 +81,14 @@
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
 
-            <TreeView Grid.Row="1" Grid.Column="0" Background="{StaticResource ResourceKey=primaryColor3}">
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="TreeViewItem">
-                        <Setter Property="Padding" Value="0" />
-                    </Style>
-                </TreeView.ItemContainerStyle>
-                <TreeView.ItemTemplate>
-                    <DataTemplate>
-                        <local:InventoryMenu/>
-                    </DataTemplate>
-                </TreeView.ItemTemplate>
-                <TreeView.ItemsSource>
-                    <Binding Path="MenuItems" />
-                </TreeView.ItemsSource>
-            </TreeView>
+            <StackPanel Grid.Column="0" Grid.Row="0"  Background="{StaticResource primaryColor3}">
+                <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="Menu" Height="auto"/>
+                </ScrollViewer>
+            </StackPanel>
 
             <DockPanel x:Name="dockPanelTable" Grid.Column="1" Height="Auto" VerticalAlignment="Top">
-                <local:InventoryTable />
+                <local:InventoryTable  x:Name="inventoryTable" />
             </DockPanel>
         </Grid>
     </Grid>

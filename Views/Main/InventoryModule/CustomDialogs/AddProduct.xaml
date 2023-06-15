@@ -3,10 +3,161 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:WarehouseManagement.Views.Main.InventoryModule.CustomDialogs"
         mc:Ignorable="d"
-        Title="AddProduct" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Closing="Window_Closing"
+        Background="Transparent"
+        Title="AddProduct" Height="Auto" Width="1200">
+    
+    <Border CornerRadius="10" Background="White"
+            BorderBrush="Black"
+            BorderThickness="1">
+
+        <Grid Margin="15">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
+
+                <TextBlock Text="Add Product" FontSize="20" FontWeight="Light" x:Name="lbProduct"/>
+
+                <Button x:Name="btnClose"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Grid.Row="0"
+                        Style="{StaticResource SmallCloseButtonStyle}"
+                        Background="{StaticResource textboxProfitAnalysisColor1}"
+                        BorderBrush="Transparent"
+                        IsCancel="True">
+                </Button>
+
+            </DockPanel>
+
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     Grid.Row="1"
+                     Grid.Column="0"
+                     materialDesign:HintAssist.Hint="Product ID" FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     Margin="10,0,10,0"
+                     IsEnabled="False"
+                     x:Name="tbProductId"/>
+
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="1"
+                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="Item Name" FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     LostFocus="tbItemName_LostFocus"
+                     Margin="10,0,10,0"
+                     x:Name="tbItemName"/>
+
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="1"
+                     Grid.Column="2"
+                     materialDesign:HintAssist.Hint="Acquisition Cost" FontSize="15"
+                     PreviewTextInput="DecimalValidationTextBox"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     Margin="10,0,10,0"
+                     x:Name="tbAcquisitionCost"/>
+
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="1"
+                     Grid.Column="3"
+                     materialDesign:HintAssist.Hint="Barcode (Optional)" FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     KeyDown="tbBarcode_KeyDown"
+                     Margin="10,0,10,0"
+                     x:Name="tbBarcode"/>
+
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="1"
+                     Grid.Column="4"
+                     materialDesign:HintAssist.Hint="Unit Quantity" FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     PreviewTextInput="IntValidationTextBox"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     Margin="10,0,10,0"
+                     x:Name="tbUnitQuantity"/>
+
+
+
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Column="0"
+                     materialDesign:HintAssist.Hint="Nominated Price" FontSize="15"
+                     Margin="10,20,10,0"
+                     Grid.Row="2"
+                     PreviewTextInput="DecimalValidationTextBox"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     x:Name="tbNominatedPrice"/>
+
+            <Border CornerRadius="15"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Background="#434343"
+                    HorizontalAlignment="Right"
+                    Margin="0,20,0,0"
+                    Height="25"
+                    Width="25"
+                    Cursor="Hand">
+
+                <materialDesign:PackIcon Kind="ChartLineVariant" MouseDown="PackIcon_MouseDown" Width="20" Height="auto" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
+
+            </Border>
+
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="Employee commission" FontSize="15"
+                     Margin="10,20,10,0"
+                     Grid.Row="2"
+                     PreviewTextInput="DecimalValidationTextBox"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     x:Name="tbEmployeeCommission"/>
+
+
+            <Button VerticalAlignment="Center" 
+                    Grid.Row="3"
+                    Grid.Column="4"
+                    x:Name="btnProceed" 
+                    Click="btnProceed_Click" 
+                    Content="Proceed" 
+                    IsDefault="True" 
+                    Background="{StaticResource secondaryColor}" 
+                    FontSize="20" 
+                    Margin="10,40,10,10"
+                    Height="50" 
+                    Width="Auto"
+                    BorderBrush="Transparent"/>
+        </Grid>
+    </Border>
 </Window>

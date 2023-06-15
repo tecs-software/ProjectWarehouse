@@ -4,9 +4,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarehouseManagement.Views.Main.InventoryModule.CustomDialogs"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="RetunToSeller" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        Title="RetunToSeller" Height="200" Width="1200">
+    <Border CornerRadius="10"
+            BorderBrush="Black"
+            Background="White"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height="1*"/>
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" x:Name="gridTop">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" Margin="0,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock Text="Return to Seller" Margin="30,0,0,0" FontSize="20" FontWeight="Light" x:Name="lbProduct"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock x:Name="lbDate" Text="Date" FontSize="20" FontWeight="Light" TextAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                            Background="{StaticResource textboxProfitAnalysisColor1}"
+                            BorderBrush="Transparent"
+                            x:Name="btnClose"
+                            Margin="0,0,20,0"
+                            IsCancel="True">
+                        <materialDesign:PackIcon Kind="Close" Foreground="Black" Height="20" Width="Auto"/>
+                    </Button>
+                </StackPanel>
+                
+            </Grid>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="500"
+                         materialDesign:HintAssist.Hint="Order No." FontSize="15"
+                         Background="{StaticResource textboxProfitAnalysisColor1}"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         Margin="58,0,0,0"
+                         x:Name="tbBarcode"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

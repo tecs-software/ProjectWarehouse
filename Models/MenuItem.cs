@@ -7,14 +7,14 @@ using System.Windows.Controls;
 
 namespace WarehouseManagement.Models
 {
-    internal class MenuItem
+    public class MenuItem
     {
         public string Header { get; set; }
         public List<SubMenuItem> SubMenuItems { get; set; }
-        public MenuItem(string header, List<SubMenuItem> subMenItems)
+        public MenuItem(string header, List<SubMenuItem> subMenuItems)
         {
             Header = header;
-            this.SubMenuItems = subMenItems;
+            this.SubMenuItems = subMenuItems;
         }
     }
 }

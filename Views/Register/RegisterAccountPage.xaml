@@ -1,0 +1,90 @@
+﻿<Page x:Class="WarehouseManagement.Views.Register.RegisterAccountPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WarehouseManagement.Views.Register"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      Loaded="Page_Loaded"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RegisterAccountPage"
+      Background="White">
+
+    <Grid Margin="20,20,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" VerticalAlignment="Center">
+
+            <TextBox 
+                Grid.Column="1"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                Width="Auto"
+                materialDesign:HintAssist.Hint="Username" 
+                FontSize="14"
+                Background="{StaticResource textboxProfitAnalysisColor1}"
+                materialDesign:HintAssist.Background="Transparent"
+                materialDesign:HintAssist.Foreground="#3C3C3C"
+                BorderBrush="Transparent"
+                x:Name="tbUsername"
+                Margin="0,5,0,5"/>
+        </Grid>
+
+        <Grid Grid.Row="1" VerticalAlignment="Center">
+
+            <PasswordBox 
+                    x:Name="tbPassword"
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedPasswordBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="Password"
+                    PasswordChar="•"
+                    FontSize="13"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    Margin="0,5,0,5"
+                    BorderBrush="Transparent">
+            </PasswordBox>
+        </Grid>
+
+        <Grid Grid.Row="2" VerticalAlignment="Center">
+
+            <PasswordBox 
+                    x:Name="tbConfirmPassword"
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedPasswordBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="Confirm Password"
+                    PasswordChar="•"
+                    FontSize="13"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    Margin="0,5,0,5"
+                    BorderBrush="Transparent">
+            </PasswordBox>
+        </Grid>
+
+        <Grid Grid.Row="3" VerticalAlignment="Center">
+
+            <TextBox 
+                x:Name="tbAuthentication"
+                Grid.Column="1"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                Width="Auto"
+                materialDesign:HintAssist.Hint="Authentication Code" 
+                FontSize="14"
+                Background="{StaticResource textboxProfitAnalysisColor1}"
+                materialDesign:HintAssist.Background="Transparent"
+                materialDesign:HintAssist.Foreground="#3C3C3C"
+                BorderBrush="Transparent"
+                Margin="0,5,0,5"/>
+        </Grid>
+    </Grid>
+</Page>

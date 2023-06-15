@@ -55,21 +55,11 @@
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
 
-            <TreeView Grid.Row="1" Grid.Column="0" Background="{StaticResource ResourceKey=primaryColor3}">
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="TreeViewItem">
-                        <Setter Property="Padding" Value="0" />
-                    </Style>
-                </TreeView.ItemContainerStyle>
-                <TreeView.ItemTemplate>
-                    <DataTemplate>
-                        <local:OrderMenu/>
-                    </DataTemplate>
-                </TreeView.ItemTemplate>
-                <TreeView.ItemsSource>
-                    <Binding Path="MenuItems" />
-                </TreeView.ItemsSource>
-            </TreeView>
+            <StackPanel Grid.Column="0" Grid.Row="1"  Background="{StaticResource primaryColor3}">
+                <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="Menu" Height="auto"/>
+                </ScrollViewer>
+            </StackPanel>
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -91,53 +81,34 @@
                               ColumnHeaderStyle="{StaticResource HeaderStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
+
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="110"/>
+                                                Width="1*"/>
                             <DataGridTextColumn Header="DATE"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="110"/>
+                                                Width="1*"/>
                             <DataGridTextColumn Header="STATUS"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="100"/>
+                                                Width="1*"/>
                             <DataGridTextColumn Header="CUTOMER NAME"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="200"/>
+                                                Width="1*"/>
                             <DataGridTextColumn Header="ADDRESS"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="110"/>
-                            <DataGridTextColumn Header="TOTAL"
+                                                Width="1*"/>
+                            <DataGridTextColumn Header="PRODUCT"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="110"/>
+                                                Width="1*"/>
                             <DataGridTextColumn Header="LAST MODIFIED"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="150"/>
-                            <DataGridTextColumn Header=""
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="200"/>
-                            <DataGridTextColumn Header=""
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="150"/>
-                            <DataGridTextColumn Header=""
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="150"/>
-                            <DataGridTextColumn Header=""
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="150"/>
-                            <DataGridTextColumn Header=""
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="150"/>
+                                                Width="1*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

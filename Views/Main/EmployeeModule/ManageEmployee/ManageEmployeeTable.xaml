@@ -1,0 +1,99 @@
+﻿<Page x:Class="WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee.ManageEmployeeTable"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManageEmployeeTable">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid
+            Grid.Row="1"
+            CanUserAddRows="False"
+            AutoGenerateColumns="False"
+            HeadersVisibility="Column"
+            GridLinesVisibility="All"
+            BorderBrush="#949494"
+            Height="auto"
+            Background="White"
+            VerticalScrollBarVisibility="Auto"
+            RowHeight="40"
+            VerticalAlignment="Stretch"
+            IsReadOnly="True"
+            CanUserDeleteRows="False"
+            CanUserSortColumns="True"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            TextBlock.TextAlignment="Left"
+            SelectionMode="Single"
+            x:Name="tblUsers"
+            
+            ColumnHeaderStyle="{StaticResource HeaderStyle}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="USER LEVEL"     
+                                    Binding="{Binding access_level}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="1*"/>
+                <DataGridTextColumn Header="NAME"     
+                                    Binding="{Binding name}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="1*"/>
+
+                <DataGridTextColumn Header="USERNAME"
+                                    Binding="{Binding username}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="1*"/>
+
+                <DataGridTextColumn Header="EMAIL"
+                                    Binding="{Binding email}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="1*"/>
+
+                <DataGridTextColumn Header="CONTACT NO."
+                                    Binding="{Binding contact_number}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="1*"/>
+
+                <DataGridTextColumn Header="STATUS"
+                                    Binding="{Binding status}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="0.6*"/>
+
+                <DataGridTemplateColumn 
+                                    Header="ACTION" 
+                                    Width="0.5*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnAction" 
+                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},Path=DataContext}"
+                                    BorderThickness="0"
+                                    Click="btnAction_Click"
+                                    Background="Transparent">
+                                <Canvas Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Path Fill="#000000" Data="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z" />
+                                </Canvas>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+</Page>
