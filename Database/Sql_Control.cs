@@ -13,7 +13,7 @@ namespace WWarehouseManagement.Database
 {
     class sql_control : DatabaseConnection
     {
-        public static string constring = "";
+        public static string constring = @"Server=DESKTOP-NA73LMK\MSSQLSERVER01;Database=db_warehouse_management; User id=sa;Password=123123";
 
         public SqlConnection DBCon = new SqlConnection(constring);
 

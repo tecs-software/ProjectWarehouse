@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -7,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace WarehouseManagement.Models
 {
-    internal class Customer
+    public class Customer
     {
-        public string CustomerId { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Phone { get; set; }
-        public string Province { get; set; }
-        public string City { get; set; }
-        public string Barangay { get; set; }
-        public string Address { get; set; }
+        public string CustomerId { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string MiddleName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;        
+        public string Phone { get; set; } = string.Empty;
+        public string Province { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Barangay { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
 
         public void SetData(string[] propertyNames, string[] propertyValues)
         {

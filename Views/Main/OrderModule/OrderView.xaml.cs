@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder;
 using MenuItem = WarehouseManagement.Models.MenuItem;
+using WarehouseManagement.Controller;
+using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.OrderModule
 {
@@ -23,19 +25,24 @@ namespace WarehouseManagement.Views.Main.OrderModule
     /// </summary>
     public partial class OrderView : Page
     {
+       
         public OrderView()
         {
             InitializeComponent();
             showOrderMenu();
+            show_DT dt = new show_DT();
+            dt.show_orders(dgtRespondentData);
         }
 
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
+            
             NewOrderWindow newOrderWindow = new NewOrderWindow();
 
             if (newOrderWindow.ShowDialog() == true)
             {
-
+                
+                
             }
         }
 

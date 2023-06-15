@@ -81,27 +81,32 @@
                               ColumnHeaderStyle="{StaticResource HeaderStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-
+                                                Binding="{Binding ID}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
-                            <DataGridTextColumn Header="DATE"
+                            <DataGridTextColumn Header="WAYBILL#"
+                                                Binding="{Binding Waybill}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                             <DataGridTextColumn Header="STATUS"
+                                                Binding="{Binding status}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
-                            <DataGridTextColumn Header="CUTOMER NAME"
+                            <DataGridTextColumn Header="CUSTOMER NAME"
+                                                Binding="{Binding customer_name}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                             <DataGridTextColumn Header="ADDRESS"
+                                                Binding="{Binding address}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                             <DataGridTextColumn Header="PRODUCT"
+                                                Binding="{Binding product}" 
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>

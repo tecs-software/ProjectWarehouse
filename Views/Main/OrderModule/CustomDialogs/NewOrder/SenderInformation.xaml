@@ -34,7 +34,7 @@
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="1"
                      Grid.Column="0"
-                     materialDesign:HintAssist.Hint="Fist Name" 
+                     materialDesign:HintAssist.Hint="First Name" 
                      FontSize="15"
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
