@@ -3,12 +3,119 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PayrollHoursPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid
+                    CanUserAddRows="False"
+                    AutoGenerateColumns="False"
+                    HeadersVisibility="Column"
+                    IsReadOnly="True"
+                    CanUserSortColumns="True"
+                    VerticalScrollBarVisibility="Auto"
+                    CanUserReorderColumns="False"
+                    CanUserResizeColumns="False"
+                    CanUserDeleteRows="False"
+                    RowHeight="100"
+                    Height="2000"
+                    GridLinesVisibility="All"
+                    VerticalAlignment="Stretch"
+                    BorderBrush="#949494"
+                    TextBlock.TextAlignment="Left"
+                    Background="White"
+                    Width="Auto"
+                    x:Name="tbl_payroll"
+                    ColumnHeaderStyle="{StaticResource HeaderStyle}">
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Employee(s)" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding name}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Hours Worked" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccessTime" Width="Auto" Height="17"  VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                        <TextBlock Text="{Binding hours_worked, StringFormat='{}{0} hrs'}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0" >
+                                        <materialDesign:PackIcon Kind="AccessTime" Width="Auto" Height="17"  VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                        <TextBlock Text="{Binding overtime, StringFormat='{}{0} hrs'}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold" Foreground="Red"/>
+                                    </StackPanel>
+
+                                </Grid>
+                                <Button Click="btnHoursWorked_Click"  x:Name="btnHoursWorked" Background="Transparent" HorizontalAlignment="Left" Padding="0,0,0,0" BorderBrush="Transparent">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Overtime" Background="Transparent" Padding="0,0,0,0" FontSize="13" FontWeight="Light" Foreground="#787878"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Incentives" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PhilippinePeso" Width="Auto" Height="17"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding additional_earnings}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold"/>
+                                </StackPanel>
+                                <Button Click="btnCommission_Click"  x:Name="btnCommission" Background="Transparent" HorizontalAlignment="Left" Padding="0,0,0,0" BorderBrush="Transparent">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Commissions" Background="Transparent" Padding="0,0,0,0" FontSize="13" FontWeight="Light" Foreground="#787878"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Reimbursement" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PhilippinePeso" Width="Auto" Height="17"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding reimbursement}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold"/>
+                                </StackPanel>
+                                <Button Click="btnReimbursement_Click"  x:Name="btnReimbursement" Background="Transparent" HorizontalAlignment="Left" Padding="0,0,0,0" BorderBrush="Transparent">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Reimbursement" Background="Transparent" Padding="0,0,0,0" FontSize="13" FontWeight="Light" Foreground="#787878"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

@@ -160,6 +160,21 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_incentives')
+BEGIN
+    CREATE TABLE [dbo].[tbl_incentives](
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		[user_id] [int] NOT NULL,
+		[incentive_for] [varchar](50) NOT NULL,
+        [quantity] [int] NOT NULL,
+		[total_incentive] [decimal](10, 2) NOT NULL,
+		[issued] [bit] NOT NULL DEFAULT 0,
+		[is_valid] [bit] NOT NULL DEFAULT 0,
+		FOREIGN KEY ([user_id]) REFERENCES [tbl_users]([user_id])
+		)
+END
+GO
+
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_address_book')
 BEGIN
     CREATE TABLE tbl_address_book (

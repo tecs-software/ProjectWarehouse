@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
@@ -24,7 +26,14 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
     public partial class AddProduct : Window
     {
         Product? product;
+        SellingExpenses? sellingExpenses;
+        public event EventHandler<string> TableFilterRequested;
         bool isUpdate = false;
+
+        private void OnTableFilterRequested(string status)
+        {
+            TableFilterRequested?.Invoke(this, status);
+        }
 
         public AddProduct(Product? product)     
         {
@@ -42,15 +51,37 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
             }
             else
             {
+                
                 DBHelper db = new();
                 isUpdate = true;
                 tbProductId.Text = product.ProductId;
-                tbItemName.Text = product.ItemName;
-                tbAcquisitionCost.Text = product.AcqCost.ToString();
-                tbBarcode.Text = product.Barcode;
-                tbUnitQuantity.Text = product.UnitQuantity.ToString();
-                tbNominatedPrice.Text = product.NominatedPrice.ToString();
-                tbEmployeeCommission.Text = await db.GetValue("tb_selling_expenses", "employee_commission", "product_id", product.ProductId);
+
+                IEnumerable<string> columnNames = new List<string>()
+                {
+                    "product_id",
+                    "item_name",
+                    "acq_cost",
+                    "nominated_price",
+                    "barcode",
+                    "unit_quantity",
+                };
+
+                Dictionary<string, object>? row = await db.GetRow("tbl_products", columnNames, "product_id", product.ProductId);
+
+                if (row != null && row.Count > 0)
+                {
+
+                    tbItemName.Text = row["item_name"].ToString();
+                    tbAcquisitionCost.Text = Converter.StringToMoney(row["acq_cost"].ToString()).ToString();
+                    tbBarcode.Text = row["barcode"].ToString();
+                    tbUnitQuantity.Text = row["unit_quantity"].ToString();
+                    tbNominatedPrice.Text = Converter.StringToMoney(row["nominated_price"].ToString()).ToString();
+                }
+
+                tbEmployeeCommission.Text = await db.GetValue("tbl_selling_expenses", "employee_commission", "product_id", product.ProductId);
+
+                lbProduct.Text = "Update Product";
+                btnProceed.Content = "Update";
             }
         }
 
@@ -62,16 +93,19 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 return;
             }
 
-            Product newProduct = new Product();
-            newProduct.ProductId = tbProductId.Text;
-            newProduct.ItemName = tbItemName.Text;
-            newProduct.AcqCost = Converter.StringToDecimal(tbAcquisitionCost.Text);
-            newProduct.Barcode = string.IsNullOrEmpty(tbBarcode.Text) ? "N/A" : tbBarcode.Text;
-            newProduct.UnitQuantity = Converter.StringToInteger(tbUnitQuantity.Text);
-            newProduct.NominatedPrice = Converter.StringToDecimal(tbNominatedPrice.Text);
+            Product newProduct = new Product()
+            {
+                ProductId = tbProductId.Text,
+                ItemName = tbItemName.Text,
+                AcqCost = Converter.StringToDecimal(tbAcquisitionCost.Text),
+                Barcode = string.IsNullOrEmpty(tbBarcode.Text) ? "N/A" : tbBarcode.Text,
+                UnitQuantity = Converter.StringToInteger(tbUnitQuantity.Text),
+                NominatedPrice = Converter.StringToDecimal(tbNominatedPrice.Text)
+            };
+
             newProduct.Status = newProduct.UnitQuantity < 0 ? Util.status_out_of_stock : newProduct.UnitQuantity == 0 ? Util.status_out_of_stock : newProduct.UnitQuantity <= 100 ? Util.status_low_stock : Util.status_in_stock;
 
-            using DBHelper db = new();
+            using DBHelper db = new DBHelper();
 
             string[] productColumns = { "item_name", "acq_cost", "barcode", "unit_quantity", "nominated_price", "status", "reorder_point", "timestamp" };
             string[] productValues = { newProduct.ItemName, newProduct.AcqCost.ToString(), newProduct.Barcode, newProduct.UnitQuantity.ToString(), newProduct.NominatedPrice.ToString(), newProduct.Status, "100", DateTime.Now.ToString() };
@@ -97,11 +131,33 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
             if (operationResult && (employeeCommissionAdded != null))
             {
-                MessageBox.Show(isUpdate ? "Product updated successfully" : "Product inserted successfully");
+                MessageBox.Show(isUpdate ? "Product updated successfully" : "Product added successfully");
 
                 if (!isUpdate)
                 {
+                    if (sellingExpenses != null)
+                    {
+                        string? updateSellingExpenses = await db.InsertOrUpdateData("tbl_selling_expenses",
+                                                                             new string[] { "ads_budget", "roas", "adspent_per_item", "platform_commission", "employee_commission", "shipping_fee", "rts_margin" },
+                                                                             new string[] {
+                                                                                sellingExpenses.adsBudget.ToString(),
+                                                                                sellingExpenses.roas.ToString(),
+                                                                                sellingExpenses.adspentPerItem.ToString(),
+                                                                                sellingExpenses.platformCommission.ToString(),
+                                                                                sellingExpenses.employeeCommission.ToString(),
+                                                                                sellingExpenses.shippingFee.ToString(),
+                                                                                sellingExpenses.rtsMargin.ToString(),
+                                                                             }, "product_id", newProduct.ProductId);
+                    }
+
                     Clear();
+                    OnTableFilterRequested(null);
+
+                }
+                else
+                {
+                    this.DialogResult = true;
+                    this.Close();
                 }
             }
             else
@@ -112,8 +168,9 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
         private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (Util.IsAnyTextBoxEmpty(tbItemName, tbAcquisitionCost))
+            if (Util.IsAnyTextBoxEmpty(tbItemName, tbAcquisitionCost, tbUnitQuantity))
             {
+                MessageBox.Show("Please provide the Item Name, Acquisition Cost, and Unit Quantity to perform profit analysis.");
                 return;
             }
 
@@ -132,9 +189,13 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
             if (pa.ShowDialog() == true)
             {
-
+                tbNominatedPrice.Text = pa.product.NominatedPrice.ToString();
+                sellingExpenses = pa.sellingExpenses;
+                if (sellingExpenses != null)
+                {
+                    tbEmployeeCommission.Text = sellingExpenses.employeeCommission.ToString();
+                }
             }
-
         }
 
 
@@ -160,7 +221,9 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.DialogResult = true;
+            if (!isUpdate) {
+                this.DialogResult = true;
+            }
         }
 
         private void tbBarcode_KeyDown(object sender, KeyEventArgs e)

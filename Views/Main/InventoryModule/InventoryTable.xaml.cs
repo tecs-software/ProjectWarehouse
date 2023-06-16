@@ -29,6 +29,10 @@ namespace WarehouseManagement.Views.Main.InventoryModule
         public InventoryTable()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
             PopulateDataGrid();
         }
 
@@ -37,13 +41,13 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             await RefreshDataGrid();
         }
 
-        public async Task RefreshDataGrid()
+        public async Task RefreshDataGrid(Dictionary <string, string>? filters = null)
         {
             try
             {
                 DBHelper dbHelper = new DBHelper();
                 IEnumerable<string> columns = new List<string> { "product_id", "item_name", "nominated_price", "unit_quantity", "status", "reorder_point", "timestamp" }; // Specify your column names
-                DataTable? dataTable = await dbHelper.GetTableData("tbl_products", columns);
+                DataTable? dataTable = await dbHelper.GetTableFiltered("tbl_products", columns, filters);
 
                 if (dataTable != null)
                 {
@@ -100,9 +104,25 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             }
         }
 
-        private void Manage_Click(object sender, RoutedEventArgs e)
+        private async void Manage_Click(object sender, RoutedEventArgs e)
         {
+            if (tblProducts.SelectedItems.Count > 0)
+            {
+                DataRowView selectedRow = (DataRowView) tblProducts.SelectedItems[0];
 
+                Product selectedProduct = new Product
+                {
+                    ProductId = selectedRow["product_id"].ToString(),
+                };
+
+                AddProduct add = new(selectedProduct);
+
+
+                if (add.ShowDialog() == true)
+                {
+                    await RefreshDataGrid();
+                }
+            }
         }
 
         private async void Discontinued_Click(object sender, RoutedEventArgs e)

@@ -31,17 +31,17 @@
                         <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="23" Width="auto" Margin="15,0,0,0" Foreground="Gray"/>
                         <TextBlock Width="auto" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" >
                     <TextBox 
-                        FontWeight="Light" FontSize="17" Foreground="White"
-                        BorderBrush="Transparent"
-                        Margin="-5,5,0,5"
-                        Padding="7"
-                        materialDesign:HintAssist.IsFloating="False"
-                        materialDesign:HintAssist.Hint="Search for product"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        x:Name="tbSearchProduct"
-                        TextChanged="tbSearchProduct_TextChanged"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                            FontWeight="Light" FontSize="17" Foreground="White"
+                            BorderBrush="Transparent"
+                            Margin="-5,5,0,5"
+                            Padding="7"
+                            materialDesign:HintAssist.IsFloating="False"
+                            materialDesign:HintAssist.Hint="Search for product"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            x:Name="tbSearchProduct"
+                            TextChanged="tbSearchProduct_TextChanged"
+                            Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                         </TextBlock>
                     </StackPanel>
                 </Border>

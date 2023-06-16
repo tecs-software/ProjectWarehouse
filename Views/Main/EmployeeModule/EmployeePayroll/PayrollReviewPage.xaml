@@ -4,11 +4,148 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PayrollReviewPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid 
+                    Grid.Row="0"
+                    CanUserAddRows="False"
+                    AutoGenerateColumns="False"
+                    HeadersVisibility="Column"
+                    IsReadOnly="True"
+                    CanUserSortColumns="True"
+                    CanUserReorderColumns="False"
+                    CanUserResizeColumns="False"
+                    CanUserDeleteRows="False"
+                    GridLinesVisibility="All"
+                    BorderBrush="#949494"
+                    Height="2000"
+                    VerticalAlignment="Stretch"
+                    VerticalScrollBarVisibility="Auto"
+                    TextBlock.TextAlignment="Left"
+                    Background="White"
+                    PreviewMouseWheel="tb_payroll_review_PreviewMouseWheel"
+                    Width="Auto"
+                    x:Name="tb_payroll_review"
+                    ColumnHeaderStyle="{StaticResource HeaderStyle}">
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Employee(s)" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding name}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Hours Worked" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PhilippinePeso" Width="Auto" Height="13"  VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding regular_pay}" Margin="0,0,0,2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PhilippinePeso" Width="Auto" Height="13"  VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Red" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding overtime_pay}" Margin="0,0,0,2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Foreground="Red"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Additional Earnings" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <materialDesign:PackIcon Kind="PhilippinePeso" Width="Auto" Height="17" VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding additional_earnings}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold"/>
+                                </StackPanel>
+
+                                <Grid Margin="0,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.3*"/>
+                                        <ColumnDefinition Width="0.7*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding commission_details}" Margin="0,10,10,0" FontSize="13" FontWeight="Light" Foreground="#787878" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding commission_amount}" Margin="0,10,0,0" FontSize="13" FontWeight="Light" Foreground="#787878" TextAlignment="Right"/>
+
+                                </Grid>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Reimbursement" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PhilippinePeso" Width="Auto" Height="17"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding reimbursement}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold"/>
+                                </StackPanel>
+
+                                <Grid Margin="0,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.3*"/>
+                                        <ColumnDefinition Width="0.7*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding reimbursement_details}" Margin="0,10,10,0" FontSize="13" FontWeight="Light" Foreground="#787878" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding reimbursement_values}" Margin="0,10,0,0" FontSize="13" FontWeight="Light" Foreground="#787878" TextAlignment="Right"/>
+
+                                </Grid>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Deductions" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PhilippinePeso" Width="Auto" Height="17"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                    <TextBlock Text="{Binding deductions}" Margin="0,0,0,0" FontSize="15" FontWeight="Bold"/>
+                                </StackPanel>
+                                <Button Click="btnDeductions_Click"  x:Name="btnDeductions" Background="Transparent" HorizontalAlignment="Left" Padding="0,0,0,0" BorderBrush="Transparent">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Padding="0,0,0,0" Foreground="Black" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Deduction" Background="Transparent" Padding="0,0,0,0" FontSize="13" FontWeight="Light" Foreground="#787878"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Gross Pay" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding gross_pay, StringFormat='₱ {0:N0}'}" Margin="0,0,0,0" FontSize="20" FontWeight="Bold"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

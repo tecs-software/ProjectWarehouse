@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Database;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using MenuItem = WarehouseManagement.Models.MenuItem;
@@ -23,6 +24,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule
     /// </summary>
     public partial class InventoryView : Page
     {
+        private string status = null;
+
         public InventoryView()
         {
             InitializeComponent();
@@ -31,11 +34,33 @@ namespace WarehouseManagement.Views.Main.InventoryModule
 
         private void tbSearchProduct_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            tableFilter(status);
         }
 
-        public void showMenu()
+        private void Dialog_TableFilterRequested(object sender, string status)
         {
+            tableFilter(status);
+        }
+
+        public async void tableFilter(string status)
+        {
+            this.status = status;
+            Dictionary<string, string> filters = new Dictionary<string, string>();
+            filters.Add("status", status);
+            filters.Add("item_name", tbSearchProduct.Text);
+            await inventoryTable.RefreshDataGrid(filters);
+        }
+
+        public async void showMenu()
+        {
+            DBHelper db = new DBHelper();
+
+            (int inStock, int lowStock, int outOfStock) counts = await db.GetProductsCount();
+
+            int inStock = counts.inStock;
+            int lowStock = counts.lowStock;
+            int outOfStock = counts.outOfStock;
+
             var menuCategory = new List<SubMenuItem>();
             menuCategory.Add(new SubMenuItem("Sale", 20));
             menuCategory.Add(new SubMenuItem("Highest Grossing", 20));
@@ -44,9 +69,9 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             var category = new MenuItem("Category", menuCategory);
 
             var menuStatus = new List<SubMenuItem>();
-            menuStatus.Add(new SubMenuItem("In-Stock", 30));
-            menuStatus.Add(new SubMenuItem("Low-Stock", 40));
-            menuStatus.Add(new SubMenuItem("Out of Stock", 50));
+            menuStatus.Add(new SubMenuItem("In-Stock", inStock));
+            menuStatus.Add(new SubMenuItem("Low-Stock", lowStock));
+            menuStatus.Add(new SubMenuItem("Out of Stock", outOfStock));
 
             var status = new MenuItem("Status", menuStatus);
 
@@ -54,13 +79,15 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             Menu.Children.Add(new InventoryMenu(status));
         }
 
-        private async void btnAddProduct_Click(object sender, RoutedEventArgs e)
+        private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
-            AddProduct ap = new(null);
+            AddProduct dialog = new AddProduct(null);
+            dialog.TableFilterRequested += Dialog_TableFilterRequested;
+            dialog.Owner = Window.GetWindow(this);
 
-            if (ap.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
-                await inventoryTable.RefreshDataGrid();
+                tableFilter(null);
             }
         }
 
@@ -70,6 +97,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             {
                 mode = 2
             };
+
+            pa.Owner = Window.GetWindow(this);
 
             if (pa.ShowDialog() == true)
             {

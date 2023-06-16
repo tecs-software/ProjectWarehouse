@@ -4,11 +4,98 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Background="White"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="PayrollMainPage">
 
-    <Grid>
-        
+    <Grid Grid.Row="0" Margin="40,30,40,30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Width="Auto" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Run Payroll" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                <ProgressBar Margin="0,30,10,0" Value="0" x:Name="pbHours" Foreground="{StaticResource secondaryColor}" BorderBrush="Transparent" Background="{StaticResource progressColor1}" Height="10"/>
+                <TextBlock Text="1. Hours" FontSize="14" FontWeight="SemiBold"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
+                <ProgressBar Margin="0,0,0,0" Value="0" x:Name="pbReview" Foreground="{StaticResource secondaryColor}" BorderBrush="Transparent" Background="{StaticResource progressColor1}" Height="10"/>
+                <TextBlock Text="2. Review" FontSize="14" FontWeight="SemiBold"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" VerticalAlignment="Bottom">
+                <ProgressBar Margin="10,0,0,0" Value="0" x:Name="pbConfirmation" Foreground="{StaticResource secondaryColor}" BorderBrush="Transparent" Background="{StaticResource progressColor1}" Height="10"/>
+                <TextBlock Margin="10,0,0,0" Text="3. Confirmation" FontSize="14" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Grid>
+
+        <Border BorderBrush="#BBBBBB" VerticalAlignment="Stretch" Grid.Row="1" BorderThickness="0.5" Margin="0,30,0,0" >
+            <DockPanel x:Name="dockPanelTable" VerticalAlignment="Stretch">
+                <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
+            </DockPanel>
+        </Border>
+
+
+
+        <Grid Grid.Row="2" Height="Auto">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1" Visibility="Collapsed" x:Name="payslipControls" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Left">
+
+                <Button BorderBrush="Transparent" x:Name="btnPrev" Click="btnPrev_Click"  Padding="5" materialDesign:ElevationAssist.Elevation="Dp0" VerticalAlignment="Stretch" Width="50" Background="Transparent" Margin="0,20,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                        <materialDesign:PackIcon Kind="PersonArrowLeft" Foreground="#c3c3c3" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </Button>
+
+                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          materialDesign:HintAssist.Hint="Select Employee" FontSize="15" Height="40" Width="200"
+                          materialDesign:HintAssist.Foreground="Black"
+                          BorderBrush="#E9E8E8"
+                          Padding="10,10,10,10"
+                          Background="{StaticResource textboxProfitAnalysisColor1}"
+                          Margin="0,20,0,0"
+                          VerticalAlignment="Center"
+                          SelectionChanged="cbEmployee_SelectionChanged"
+                          x:Name="cbEmployee"/>
+
+                <Button BorderBrush="Transparent" Height="40" x:Name="btnNext" Click="btnNext_Click"  Padding="5" materialDesign:ElevationAssist.Elevation="Dp0" VerticalAlignment="Stretch" Width="50" Background="Transparent" Margin="0,20,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                        <materialDesign:PackIcon Kind="PersonArrowRight" Foreground="#c3c3c3" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </Button>
+
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button BorderBrush="Transparent" Height="40" x:Name="btnSaveChangesForLater" VerticalAlignment="Center" Click="btnSaveChangesForLater_Click"  Foreground="{StaticResource secondaryColor}" Width="Auto" FontSize="15" Background="Transparent" Margin="0,20,10,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="SAVE CHANGES FOR LATER"/>
+                    </StackPanel>
+                </Button>
+
+                <Button BorderBrush="{StaticResource secondaryColor}" Height="40" x:Name="btnSaveAndContinue" VerticalAlignment="Center" Click="btnSaveAndContinue_Click"  Width="Auto" MinWidth="180" FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,20,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="SAVE &amp; CONTINUE"/>
+                    </StackPanel>
+                </Button>
+
+
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Page>

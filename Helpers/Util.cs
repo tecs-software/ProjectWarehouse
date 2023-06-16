@@ -262,8 +262,11 @@ namespace WarehouseManagement.Helpers
             toolTip.IsOpen = true;
         }
 
-        public static void ShowContextMenuForButton(Button button, params MenuItem[] menuItems)
+        public static void ShowContextMenuForButton(Button? button, params MenuItem[] menuItems)
         {
+            if (button == null)
+                return;
+
             ContextMenu menu = new ContextMenu();
             foreach (MenuItem item in menuItems)
             {

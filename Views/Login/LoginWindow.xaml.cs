@@ -120,7 +120,7 @@ namespace WarehouseManagement.Views.Login
             }
         }
 
-        private async void btnReset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void btnReset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             RegisterWindow register = new RegisterWindow();
             register.Show();

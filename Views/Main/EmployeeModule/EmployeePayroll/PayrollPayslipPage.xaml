@@ -5,10 +5,170 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Background="White"
       Title="PayrollPayslipPage">
 
-    <Grid>
-        
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20,20,20,20" Height="NaN">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Payslip" Margin="0,0,20,20" FontSize="23" FontWeight="SemiBold"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Employee Name: " Margin="0,0,20,10" FontSize="15" FontWeight="SemiBold"/>
+
+                <Border Grid.Row="0" Grid.Column="1">
+                    <TextBlock x:Name="lbName" Margin="0,0,20,10" FontSize="15" FontWeight="Regular"/>
+                </Border>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Designation: " Margin="0,0,20,10" FontSize="15" FontWeight="SemiBold"/>
+
+                <Border Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="lbDesignation" Margin="0,0,20,10" FontSize="15" FontWeight="Regular"/>
+                </Border>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Date: " Margin="0,0,20,10" FontSize="15" FontWeight="SemiBold"/>
+
+                <Border Grid.Row="2" Grid.Column="1" >
+                    <TextBlock x:Name="lbDate" Margin="0,0,20,0" FontSize="15" FontWeight="Regular"/>
+                </Border>
+
+
+
+
+            </Grid>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Width="Auto" HorizontalAlignment="Stretch">
+
+
+            </StackPanel>
+
+            <Border BorderBrush="Black" Grid.Row="2" BorderThickness="0,0,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="0" BorderThickness="1,1,1,0"  BorderBrush="Black" Background="LightGray">
+                <TextBlock  Text="Earnings" Margin="20,10,20,10" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="1" BorderThickness="0,1,1,0" BorderBrush="Black" Background="LightGray">
+                <TextBlock  Text="Amount" Margin="20,10,20,10" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,1,1,0" BorderBrush="Black" Background="LightGray">
+                <TextBlock Text="Deductions" Margin="20,10,20,10" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="3" BorderThickness="0,1,1,0" BorderBrush="Black" Background="LightGray">
+                <TextBlock  Text="Amount" Margin="20,10,20,10" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            </Border>
+
+            <Border Grid.Row="3" Grid.Column="0" BorderThickness="1" BorderBrush="Black">
+                <TextBlock Text="Basic Pay" Margin="20,10,20,10" FontSize="15" FontWeight="Regular"/>
+            </Border>
+
+            <Border Grid.Row="3" Grid.Column="1" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Text="0.00" x:Name="lbBasicPay" Margin="20,10,20,10" FontSize="15" FontWeight="Regular" HorizontalAlignment="Right"/>
+            </Border>
+
+            <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="Deductions" Margin="20,10,20,10" FontSize="15" FontWeight="Regular"/>
+            </Border>
+
+            <Border Grid.Row="3" Grid.Column="3" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Text="0.00" Margin="20,10,20,10" x:Name="lbDeductions" FontSize="15" HorizontalAlignment="Right" FontWeight="Regular"/>
+            </Border>
+
+            <Border Grid.Row="4" Grid.Column="0" BorderThickness="1,0,1,0" BorderBrush="Black">
+                <TextBlock Text="Additional Pay" Margin="20,10,20,10" FontSize="15" FontWeight="Regular"/>
+            </Border>
+
+            <Border Grid.Row="4" Grid.Column="1" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Text="0.00" x:Name="lbAdditionalPay" Margin="20,10,20,10" FontSize="15" FontWeight="Regular" HorizontalAlignment="Right"/>
+            </Border>
+
+            <Border Grid.Row="4" Grid.Column="2" BorderThickness="0,1,1,0" BorderBrush="Black"/>
+            <Border Grid.Row="4" Grid.Column="3" BorderThickness="0,1,1,0" BorderBrush="Black"/>
+
+            <Border Grid.Row="5" Grid.Column="0" BorderThickness="1,1,1,0" BorderBrush="Black">
+                <TextBlock Text="Reimbursement" Margin="20,10,20,10" FontSize="15" FontWeight="Regular"/>
+            </Border>
+
+            <Border Grid.Row="5" Grid.Column="1" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Text="0.00" x:Name="lbReimbursement" Margin="20,10,20,10" FontSize="15" FontWeight="Regular" HorizontalAlignment="Right"/>
+            </Border>
+
+            <Border Grid.Row="5" Grid.Column="2" BorderThickness="0,1,1,0" BorderBrush="Black"/>
+            <Border Grid.Row="5" Grid.Column="3" BorderThickness="0,1,1,0" BorderBrush="Black"/>
+
+            <Border Grid.Row="6" Grid.Column="0" BorderThickness="1,1,1,0" BorderBrush="Black">
+                <TextBlock Text="Total Addition" Margin="20,25,20,25" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            </Border>
+
+            <Border Grid.Row="6" Grid.Column="1" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Text="0.00" x:Name="lbTotalAddition" Margin="20,0,20,0" FontSize="15" VerticalAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+            </Border>
+
+            <Border Grid.Row="6" Grid.Column="2" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Text="Total Deduction" Margin="20,0,20,0" FontSize="15" VerticalAlignment="Center" FontWeight="SemiBold"/>
+            </Border>
+
+            <Border Grid.Row="6" Grid.Column="3" BorderThickness="0,1,1,0" BorderBrush="Black">
+                <TextBlock Grid.Row="6" Grid.Column="3" Text="0.00" x:Name="lbTotalDeductions" Margin="20,0,20,0" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+            </Border>
+
+            <Border Grid.Row="7" Grid.Column="0" BorderThickness="1,1,1,1" BorderBrush="Black"/>
+            <Border Grid.Row="7" Grid.Column="1" BorderThickness="0,1,1,1" BorderBrush="Black"/>
+
+            <Border Grid.Row="7" Grid.Column="2" BorderThickness="0,1,1,1" BorderBrush="Black">
+                <TextBlock Text="Net Salary" Margin="20,25,20,25" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            </Border>
+
+            <Border Grid.Row="7" Grid.Column="3" BorderThickness="0,1,1,1" BorderBrush="Black">
+                <TextBlock Text="0.00" x:Name="tbNetPay" Margin="20,0,20,0" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+            </Border>
+
+            <StackPanel Grid.Row="8" Height="Auto" VerticalAlignment="Stretch"/>
+        </Grid>
+    </ScrollViewer>
 </Page>

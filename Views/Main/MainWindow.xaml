@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStyle="None"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
         Background="Transparent"
         AllowsTransparency="True"
         Title="MainWindow" Height="1080" Width="1920">
@@ -133,11 +136,11 @@
                     
                 </RadioButton>
 
-                <StackPanel Grid.Column="6" Orientation="Horizontal" VerticalAlignment="Stretch"  HorizontalAlignment="Right" Height="Auto" Width="Auto" >
+                <StackPanel Grid.Column="6" Orientation="Horizontal" VerticalAlignment="Stretch"  HorizontalAlignment="Right" Height="Auto" Width="Auto" Margin="0,0,20,0" >
 
-                    <materialDesign:PackIcon Kind="AccountCircle" Margin="0,20,0,20" Foreground="#8B8B8B" Height="Auto" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="AccountCircle" Margin="0,20,0,20" Foreground="#8B8B8B" Height="Auto" Width="Auto" MouseDown="PackIcon_MouseDown" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                    <TextBlock x:Name="tbAccountName" Text="Admin" Foreground="#8B8B8B" FontSize="15" Cursor="Hand" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="tbAccountName" Text="Admin" Foreground="#8B8B8B" FontSize="15" MouseDown="tbAccountName_MouseDown" Cursor="Hand" VerticalAlignment="Center" Margin="10,0,0,0"/>
 
                     <Button x:Name="btnAccountDropDown" Click="btnAccountDropDown_Click" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Transparent" Height="Auto" Width="Auto" Margin="0,25,10,20" Padding="0,0,0,0">
                         <materialDesign:PackIcon Kind="ArrowDropDown" Margin="0,0,0,0" Foreground="#8B8B8B" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

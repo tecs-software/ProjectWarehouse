@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace WarehouseManagement.Models
 {
-    internal class SellingExpenses
+    public class SellingExpenses
     {
-        decimal? adsBudget { get; set; }
-        int? roas { get; set; }
-        decimal adspentPerItem { get; set; }   
-        decimal platformCommission { get; set; }
-        decimal employeeCommission { get; set; }
-        decimal shipping_fee { get; set; }
-        decimal rts_margin { get; set; }
+        public decimal? adsBudget { get; set; }
+        public int? roas { get; set; }
+        public decimal? adspentPerItem { get; set; }
+        public decimal? platformCommission { get; set; }
+        public decimal? employeeCommission { get; set; }
+        public decimal? shippingFee { get; set; }
+        public decimal? rtsMargin { get; set; }
     }
 }

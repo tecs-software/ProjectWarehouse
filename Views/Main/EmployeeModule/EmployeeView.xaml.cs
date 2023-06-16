@@ -40,35 +40,57 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
         {
             btnGenerateAuthen.Visibility = Visibility.Visible;
             mainFrame.Navigate(employee);
-            //employee?.showEmployeeTable();
+            employee?.ShowEmployees();
+        }
+
+        public void ActiveEmployees()
+        {
+            btnGenerateAuthen.Visibility = Visibility.Visible;
+            mainFrame.Navigate(employee);
+            employee?.ShowActiveEmployees();
+        }
+
+        public void InactiveEmployees()
+        {
+            btnGenerateAuthen.Visibility = Visibility.Visible;
+            mainFrame.Navigate(employee);
+            employee?.ShowInactiveEmployees();
+        }
+
+        public void DisabledEmployees()
+        {
+            btnGenerateAuthen.Visibility = Visibility.Visible;
+            mainFrame.Navigate(employee);
+            employee?.ShowDisabledEmployees();
         }
 
         public void Payroll()
         {
             btnGenerateAuthen.Visibility = Visibility.Collapsed;
             mainFrame.Navigate(payroll);
-            //payroll?.showPayrollHours();
         }
 
 
-        public void showEmployeeMenu()
+        public async void showEmployeeMenu()
         {
-            //(int active, int inactive, int disabled) counts = DBHelper.GetUserCounts();
+            DBHelper db = new DBHelper();
 
-            //int activeCount = counts.active;
-            //int inactiveCount = counts.inactive;
-            //int disabledCount = counts.disabled;
+            (int active, int inactive, int disabled) counts = await db.GetUserCounts();
+
+            int activeCount = counts.active;
+            int inactiveCount = counts.inactive;
+            int disabledCount = counts.disabled;
 
             var menuEmployee = new List<SubMenuItem>();
 
-            menuEmployee.Add(new SubMenuItem("Active", 0));
-            menuEmployee.Add(new SubMenuItem("Offline", 0));
-            menuEmployee.Add(new SubMenuItem("Archived", 0));
+            menuEmployee.Add(new SubMenuItem("Active", activeCount));
+            menuEmployee.Add(new SubMenuItem("Offline", inactiveCount));
+            menuEmployee.Add(new SubMenuItem("Archived", disabledCount));
 
             var menuPayroll = new List<SubMenuItem>();
 
-            var employee = new MenuItem("PEOPLE", menuEmployee);
-            var payroll = new MenuItem("RUN PAYROLL", menuPayroll);
+            var employee = new MenuItem("People", menuEmployee);
+            var payroll = new MenuItem("Run Payroll", menuPayroll);
 
             // Remove all child controls from the Menu control
             Menu.Children.Clear();

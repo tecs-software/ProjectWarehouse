@@ -59,13 +59,13 @@ namespace WarehouseManagement.Views.Main.InventoryModule
                     switch (header.ToLower())
                     {
                         case "in-stock":
-                            //inventoryModule?.fillTable("In-Stock");
+                            inventoryModule?.tableFilter("In-Stock");
                             break;
                         case "low-stock":
-                            //inventoryModule?.fillTable("Low-Stock");
+                            inventoryModule?.tableFilter("Low-Stock");
                             break;
                         case "out of stock":
-                            //inventoryModule?.fillTable("Out of Stock");
+                            inventoryModule?.tableFilter("Out of Stock");
                             break;
                     }
                 }
@@ -104,8 +104,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule
                 {
                     case "status":
 
-                        //inventoryModule?.fillTable();
-
+                        inventoryModule?.tableFilter(null);
+                        ListViewMenu.SelectedItem = null;
                         break;
                 }
 

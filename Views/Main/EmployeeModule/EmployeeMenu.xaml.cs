@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,11 +33,14 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
             DataContext = itemMenu;
         }
 
-        private object _previousSelectedItem;
+        private object? _previousSelectedItem;
 
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = ListViewMenu.SelectedItem;
+
+
+            //MessageBox.Show(selectedItem.ToString());
 
             if (selectedItem != null)
             {
@@ -53,23 +57,28 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
 
                 }
 
-                var inventoryModule = parent as EmployeeView;
+                var employee = parent as EmployeeView;
+
+
 
                 if (header != null)
                 {
                     switch (header.ToLower())
                     {
-                        case "PEOPLE":
+                        case "active":
 
-                            //employeeModule?.Employee();
-                            //ListViewMenu.SelectedItem = null;
+                            employee?.ActiveEmployees();
+                            break;
+                        case "offline":
+
+                            employee?.InactiveEmployees();
 
                             break;
-                        case "RUN PAYROLL":
+                        case "archived":
 
-                            //employeeModule?.Payroll();
-
+                            employee?.DisabledEmployees();
                             break;
+
                     }
                 }
 
@@ -87,38 +96,39 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
             }
         }
 
-        private void ExpanderMenu_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ExpanderMenu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-
-            string header = ExpanderMenu.Header.ToString();
+            string? header = ExpanderMenu.Header.ToString();
 
             var parent = VisualTreeHelper.GetParent(this);
 
 
-
-            while (!(parent is EmployeeView))
+            while (parent is not EmployeeView)
             {
-
                 parent = VisualTreeHelper.GetParent(parent);
-
             }
 
-            var employeeModule = parent as EmployeeView;
+            var employee = parent as EmployeeView;
 
-            switch (header)
+            if (header != null)
             {
-                case "PEOPLE":
+                switch (header.ToLower())
+                {
+                    case "people":
+                        ListViewMenu.SelectedItem = null;
+                        employee?.Employee();
+                        break;
+                    case "run payroll":
 
-                    //employeeModule?.Employee();
-                    //ListViewMenu.SelectedItem = null;
+                        employee?.Payroll();
 
-                    break;
-                case "RUN PAYROLL":
+                        break;
+                }
 
-                    //employeeModule?.Payroll();
-
-                    break;
             }
+
+
         }
+    
     }
 }

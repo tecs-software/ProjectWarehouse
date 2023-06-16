@@ -124,12 +124,13 @@
                     Grid.Row="2"
                     Background="#434343"
                     HorizontalAlignment="Right"
+                    MouseDown="PackIcon_MouseDown"
                     Margin="0,20,0,0"
                     Height="25"
                     Width="25"
                     Cursor="Hand">
 
-                <materialDesign:PackIcon Kind="ChartLineVariant" MouseDown="PackIcon_MouseDown" Width="20" Height="auto" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
+                <materialDesign:PackIcon Kind="ChartLineVariant" Width="20" Height="auto" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
 
             </Border>
 

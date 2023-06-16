@@ -20,6 +20,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
     public partial class ProfitAnalysis : Window
     {
         public Product? product;
+        public SellingExpenses? sellingExpenses;
         public int mode = 0;
 
         public ProfitAnalysis(Product? product)
@@ -39,6 +40,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 tbCostOfGood.Text = product.AcqCost.ToString();
                 tbNominated.Text = product.NominatedPrice.ToString();
                 tbQuantity.Text = product.UnitQuantity.ToString();
+                btnUpdate.Content = "Confirm";
+                btnUpdate.Visibility = Visibility.Visible;
             }
             else if (mode == 2)
             {
@@ -149,6 +152,16 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
             {
                 if (product != null)
                 {
+                    sellingExpenses = new SellingExpenses();
+
+                    sellingExpenses.adsBudget = Converter.StringToDecimal(tbAdsBudget.Text);
+                    sellingExpenses.roas = Converter.StringToInteger(tbROAS.Text); ;
+                    sellingExpenses.adspentPerItem = Converter.StringToDecimal(tbAdsSpent.Text); ;
+                    sellingExpenses.platformCommission = Converter.StringToDecimal(tbPlatform.Text); ;
+                    sellingExpenses.employeeCommission = Converter.StringToDecimal(tbEmployeeCommission.Text); ;
+                    sellingExpenses.shippingFee = Converter.StringToDecimal(tbShippingFee.Text); ;
+                    sellingExpenses.rtsMargin = Converter.StringToDecimal(tbRtsMargin.Text); ;
+
                     product.NominatedPrice = Converter.StringToDecimal(string.IsNullOrEmpty(tbNominated.Text.Replace(",", "")) ? "0" : tbNominated.Text.Replace(",", ""));
                     this.DialogResult = true;
                 }
