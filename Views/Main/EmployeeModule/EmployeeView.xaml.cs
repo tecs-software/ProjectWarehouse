@@ -109,5 +109,10 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
                 // handle the result of the dialog
             }
         }
+
+        private void btnManageUserLevels_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

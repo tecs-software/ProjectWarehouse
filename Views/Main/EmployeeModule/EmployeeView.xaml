@@ -41,16 +41,33 @@
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,20,0" VerticalAlignment="Center">
 
                 <Button 
+                    BorderBrush="#AD0417" 
+                    Height="40" x:Name="btnManageUserLevels" 
+                    Margin="0,0,20,0"
+                    Click="btnManageUserLevels_Click"
+                    Width="230" 
+                    FontSize="15" 
+                    Background="#AD0417" 
+                    >
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="People" Height="20" Width="auto" Margin="0,1,4,0"/>
+                        <TextBlock Text="Manage User Levels"/>
+                    </StackPanel>
+
+                </Button>
+                
+                <Button 
                     BorderBrush="{StaticResource secondaryColor}" 
                     Height="40" x:Name="btnGenerateAuthen" 
                     Click="btnGenerateAuthen_Click"
-                    Width="Auto" 
+                    Width="230" 
                     FontSize="15" 
                     Background="{StaticResource secondaryColor}" 
                     >
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Plus" Height="20" Width="auto" Margin="0,0,4,0"/>
+                        <materialDesign:PackIcon Kind="Plus" Height="20" Width="auto" Margin="0,1,4,0"/>
                         <TextBlock Text="Generate Authentication"/>
                     </StackPanel>
 

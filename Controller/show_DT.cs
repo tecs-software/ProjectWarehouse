@@ -26,7 +26,7 @@ namespace WarehouseManagement.Controller
 
         public void show_orders(DataGrid dg)
         {
-            sql.Query($"SELECT * FROM tbl_orderss");
+            sql.Query($"SELECT * FROM tbl_orders");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {

@@ -13,9 +13,9 @@ namespace WWarehouseManagement.Database
 {
     class sql_control : DatabaseConnection
     {
-        public static string constring = @"Server=DESKTOP-NA73LMK\MSSQLSERVER01;Database=db_warehouse_management; User id=sa;Password=123123";
+        public string constring = "";
 
-        public SqlConnection DBCon = new SqlConnection(constring);
+        public SqlConnection DBCon;
 
         private SqlCommand DBCmd;
         // DB DATA
@@ -32,11 +32,14 @@ namespace WWarehouseManagement.Database
             if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
             {
                 constring = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+                DBCon = new SqlConnection(constring);
+                DBCmd = new SqlCommand(constring);
             }
             else
             {
                 MessageBox.Show("No connection");
             }
+
         }
 
         // ALLOW CONNECTION STRING OVERRIDE
@@ -144,7 +147,11 @@ namespace WWarehouseManagement.Database
                 // EXECUTE COMMAND & FILL DATASET
                 DBDT = new DataTable();
                 DBDA = new SqlDataAdapter(DBCmd);
-                r1 = DBCmd.ExecuteScalar().ToString();
+                object result = DBCmd.ExecuteScalar();
+                if (result != null)
+                {
+                    r1 = result.ToString();
+                }
                 RecordCount = DBDA.Fill(DBDT);
                 return r1;
             }

@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using WarehouseManagement.Database;
+using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
 
-namespace WarehouseManagement.Models
+namespace WarehouseManagement.Database
 {
     public class db_queries
     {
@@ -20,7 +20,7 @@ namespace WarehouseManagement.Models
         {
             MessageBox.Show(_customer.FirstName);
             string name = _customer.FirstName + " " + _customer.LastName;
-            sql.Query($"INSERT INTO tbl_sender (sender_name, sender_phone, sender_address) VALUES ('"+name+"', '"+_customer.Phone+"', '"+_customer.Address+"')");
+            sql.Query($"INSERT INTO tbl_sender (sender_name, sender_phone, sender_address) VALUES ('" + name + "', '" + _customer.Phone + "', '" + _customer.Address + "')");
             if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)
@@ -35,12 +35,12 @@ namespace WarehouseManagement.Models
             string user_id = sql.ReturnResult($"SELECT user_id FROM tbl_users");
             string sender_id = sql.ReturnResult($"SELECT sender_id FROM tbl_sender ORDER BY sender_id DESC");
             string receiver_id = sql.ReturnResult($"SELECT receiver_id FROM tbl_receiver ORDER BY receiver_id DESC");
-            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name ='"+book_info.item_name+"'");
+            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name ='" + book_info.item_name + "'");
 
             sql.Query($"INSERT INTO tbl_orderss (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at) VALUES" +
-                $"('"+order_id+"', '"+waybill+"', '"+user_id+"', '"+sender_id+"', '"+receiver_id+"', '"+product_id+"', '"+book_info.quantity+"', '"+book_info.quantity+"', '"+book_info.remarks+"'," +
-                "'Pending', '"+DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+"','')");
-            if(sql.HasException(true)) return;
+                $"('" + order_id + "', '" + waybill + "', '" + user_id + "', '" + sender_id + "', '" + receiver_id + "', '" + product_id + "', '" + book_info.quantity + "', '" + book_info.quantity + "', '" + book_info.remarks + "'," +
+                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','')");
+            if (sql.HasException(true)) return;
         }
     }
 }

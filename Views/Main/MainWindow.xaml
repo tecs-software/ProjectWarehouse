@@ -120,21 +120,6 @@
                     
                 </RadioButton>
 
-                <RadioButton Grid.Column="5" 
-                             Checked="btnComissionsModule_Checked"
-                             MinWidth="200"
-                             Cursor="Hand"
-                             Visibility="Visible"
-                             Style="{StaticResource menuButton}"
-                             Tag="{StaticResource primaryColor1}"
-                             x:Name="btnComissionsModule">
-
-                    <StackPanel Orientation="Horizontal" Margin="20,0,20,0" VerticalAlignment="Center">
-                        <TextBlock Text="Commissions" VerticalAlignment="Center"
-                               Style="{StaticResource textBlockTab}"/>
-                    </StackPanel>
-                    
-                </RadioButton>
 
                 <StackPanel Grid.Column="6" Orientation="Horizontal" VerticalAlignment="Stretch"  HorizontalAlignment="Right" Height="Auto" Width="Auto" Margin="0,0,20,0" >
 

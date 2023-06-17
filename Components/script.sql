@@ -195,7 +195,9 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_orders')
 BEGIN
     CREATE TABLE tbl_orders (
-        order_id INT PRIMARY KEY,
+        order_id VARCHAR(50) PRIMARY KEY,
+        courier VARCHAR(50),
+        [waybill_number] VARCHAR(50),
         user_id INT FOREIGN KEY REFERENCES tbl_users(user_id),
         sender_id INT FOREIGN KEY REFERENCES tbl_address_book(id),
         receiver_id INT FOREIGN KEY REFERENCES tbl_address_book(id),

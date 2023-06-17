@@ -75,8 +75,10 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                 currentPageIndex = index;
                 payslipControls.Visibility = Visibility.Visible;
                 List<User>? users = await db.GetUsers();
+
                 cbEmployee.ItemsSource = users;
                 cbEmployee.DisplayMemberPath = "name";
+
                 btnSaveAndContinue.Content = "PRINT";
                 pbReview.Value = 0;
                 pbConfirmation.Value = 100;
@@ -136,9 +138,68 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
             
         }
 
-        private void cbEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cbEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            string name = "", userLevel = null;
+            decimal hourlyRate = 0, overtime = 0, commissions = 0, hoursWorked = 0, reimbursements = 0, basicPay = 0, additionalPay = 0, deductions = 0;
 
+            if (cbEmployee.SelectedItem != null)
+            {
+                DBHelper db = new DBHelper();
+
+                int userId = ((User)cbEmployee.SelectedItem).userID;
+                name = ((User)cbEmployee.SelectedItem).firstName + " " + ((User)cbEmployee.SelectedItem).lastName;
+                var userData = await db.GetUserFinancialData(userId);
+
+                if (userData != null)
+                {
+                    foreach (var dictionary in userData)
+                    {
+                        foreach (var keyValuePair in dictionary)
+                        {
+                            string key = keyValuePair.Key;
+                            object value = keyValuePair.Value;
+
+                            if (value != DBNull.Value)
+                            {
+                                switch (key)
+                                {
+                                    case "access_level":
+                                        userLevel = value.ToString();
+                                        break;
+                                    case "hourly_rate":
+                                        hourlyRate = Convert.ToDecimal(value);
+                                        break;
+                                    case "overtime":
+                                        overtime = Convert.ToDecimal(value);
+                                        break;
+                                    case "commission":
+                                        commissions = Convert.ToDecimal(value);
+                                        break;
+                                    case "reimbursement":
+                                        reimbursements = Convert.ToDecimal(value);
+                                        break;
+                                    case "hours_worked":
+                                        hoursWorked = Convert.ToDecimal(value);
+                                        break;
+                                    case "deductions":
+                                        deductions = Convert.ToDecimal(value);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            basicPay = hoursWorked * hourlyRate;
+            additionalPay = (overtime * 60) + commissions;
+
+
+            var pp = mainFrame.Content as PayrollPayslipPage;
+            pp?.setData(name, userLevel, basicPay, additionalPay, reimbursements, deductions);
         }
     }
 }

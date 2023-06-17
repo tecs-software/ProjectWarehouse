@@ -19,6 +19,7 @@ namespace WarehouseManagement.Models
         public string authenticationCode { get; set; }
         public string username { get; set; }
         public SecureString password { get; set; }
+        public string name { get; set; }
 
         public void SetData(string[] propertyNames, string[] propertyValues)
         {

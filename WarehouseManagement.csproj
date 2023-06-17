@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Main\DashboardModule\" />
-    <Folder Include="Views\Main\SalesModule\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MaterialDesignColors" Version="2.1.5-ci281" />
     <PackageReference Include="MaterialDesignThemes" Version="4.10.0-ci281" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

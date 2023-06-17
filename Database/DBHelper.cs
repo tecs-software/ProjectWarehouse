@@ -732,6 +732,7 @@ namespace WarehouseManagement.Database
                                     user.userID = reader.GetInt32(reader.GetOrdinal("user_id"));
                                     string? firstName = reader["first_name"].ToString();
                                     string? lastName = reader["last_name"].ToString();
+                                    user.name = $"{firstName} {lastName}";
 
                                     users.Add(user);
                                 }
@@ -1163,6 +1164,116 @@ namespace WarehouseManagement.Database
 
                 return count > 0;
             }
+        }
+
+        public async Task <List<Dictionary<string, object>>> GetUserFinancialData(int userId)
+        {
+            List<Dictionary<string, object>> financialData = new List<Dictionary<string, object>>();
+
+            using DatabaseConnection conn = new();
+
+            using (SqlConnection? connection = await conn.OpenConnection())
+            {
+                // Get access level
+                string query = "SELECT access_level FROM tbl_user_access WHERE user_id = @userId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> accessLevelData = new Dictionary<string, object>();
+                    accessLevelData.Add("access_level", reader["access_level"]);
+                    financialData.Add(accessLevelData);
+                }
+                reader.Close();
+
+                // Get hourly rate
+                query = "SELECT hourly_rate FROM tbl_wage WHERE user_id = @userId";
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> hourlyRateData = new Dictionary<string, object>();
+                    hourlyRateData.Add("hourly_rate", reader["hourly_rate"]);
+                    financialData.Add(hourlyRateData);
+                }
+                reader.Close();
+
+
+                // Get sum of working hours
+                query = "SELECT SUM(hours_worked) AS hours_worked_sum FROM tbl_work_hours WHERE issued = 0 AND user_id = @userId";
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> workingHoursData = new Dictionary<string, object>();
+                    workingHoursData.Add("hours_worked", reader["hours_worked_sum"]);
+                    financialData.Add(workingHoursData);
+                }
+                reader.Close();
+
+                // Get sum of overtime
+                query = "SELECT SUM(overtime) AS overtime_sum FROM tbl_overtime WHERE issued = 0 AND user_id = @userId";
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> overtimeData = new Dictionary<string, object>();
+                    overtimeData.Add("overtime", reader["overtime_sum"]);
+                    financialData.Add(overtimeData);
+                }
+                reader.Close();
+
+                // Get sum of commissions
+                query = "SELECT SUM(commission_amount) AS commission_sum FROM tbl_commissions WHERE issued = 0 AND user_id = @userId";
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> commissionData = new Dictionary<string, object>();
+                    commissionData.Add("commission", reader["commission_sum"]);
+                    financialData.Add(commissionData);
+                }
+                reader.Close();
+
+                // Get sum of reimbursements
+                query = "SELECT SUM(amount) AS reimbursement_sum FROM tbl_reimbursement WHERE issued = 0 AND user_id = @userId";
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> reimbursementData = new Dictionary<string, object>();
+                    reimbursementData.Add("reimbursement", reader["reimbursement_sum"]);
+                    financialData.Add(reimbursementData);
+                }
+                reader.Close();
+
+                query = "SELECT SUM(amount) AS deductions_sum FROM tbl_deductions WHERE issued = 0 AND user_id = @userId";
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> deductionsData = new Dictionary<string, object>();
+                    deductionsData.Add("deductions", reader["deductions_sum"]);
+                    financialData.Add(deductionsData);
+                }
+                reader.Close();
+            }
+
+            return financialData;
         }
     }
 }

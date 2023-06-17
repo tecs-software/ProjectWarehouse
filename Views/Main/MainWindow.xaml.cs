@@ -17,9 +17,11 @@ using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Login;
+using WarehouseManagement.Views.Main.DashboardModule;
 using WarehouseManagement.Views.Main.EmployeeModule;
 using WarehouseManagement.Views.Main.InventoryModule;
 using WarehouseManagement.Views.Main.OrderModule;
+using WarehouseManagement.Views.Main.SalesModule;
 using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace WarehouseManagement.Views.Main
@@ -52,7 +54,6 @@ namespace WarehouseManagement.Views.Main
                 case "Sales Agent":
                     
                     btnEmployeeModule.Visibility = Visibility.Collapsed;
-                    btnComissionsModule.Visibility = Visibility.Collapsed;
                     btnSalesModule.Visibility = Visibility.Collapsed;
                     btnDashboardModule.Visibility = Visibility.Collapsed;
                     btnOrderModule_Checked(null, null);
@@ -60,7 +61,6 @@ namespace WarehouseManagement.Views.Main
                 case "Warehouse Manager":
                     btnOrderModule.Visibility = Visibility.Collapsed;
                     btnEmployeeModule.Visibility = Visibility.Collapsed;
-                    btnComissionsModule.Visibility = Visibility.Collapsed;
                     btnSalesModule.Visibility = Visibility.Collapsed;
                     btnDashboardModule.Visibility = Visibility.Collapsed;
                     btnInventoryModule_Checked(null, null);
@@ -78,7 +78,10 @@ namespace WarehouseManagement.Views.Main
 
         private void btnDashboardModule_Checked(object sender, RoutedEventArgs e)
         {
-
+            if (!(PageContent.Content is DashboardView))
+            {
+                PageContent.Content = new DashboardView();
+            }
         }
 
         private void btnInventoryModule_Checked(object sender, RoutedEventArgs e)
@@ -108,12 +111,10 @@ namespace WarehouseManagement.Views.Main
 
         private void btnSalesModule_Checked(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void btnComissionsModule_Checked(object sender, RoutedEventArgs e)
-        {
-
+            if (!(PageContent.Content is SalesView))
+            {
+                PageContent.Content = new SalesView();
+            }
         }
 
         private void btnAccountDropDown_Click(object sender, RoutedEventArgs e)
