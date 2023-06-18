@@ -33,7 +33,16 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 
         private void cbReason_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (cbReason.Text.ToLower().Contains("other"))
+            {
+                tbOtherReason.Visibility = Visibility.Visible;
+                this.SizeToContent = SizeToContent.Height;
+            }
+            else
+            {
+                tbOtherReason.Visibility = Visibility.Collapsed;
+                this.SizeToContent = SizeToContent.Height;
+            }
         }
     }
 }

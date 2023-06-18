@@ -63,7 +63,7 @@
             </StackPanel>
             
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button BorderBrush="{StaticResource secondaryColor}" Height="40" Width="140" x:Name="btnOrder" Click="btnOrder_Click"  FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,0,20,0">
+                <Button BorderBrush="{StaticResource secondaryColor}" Height="50" Width="140" x:Name="btnOrder" Click="btnOrder_Click"  FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,0,20,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="Plus" Height="20" Width="auto" Margin="0,0,4,0"/>
                         <TextBlock Text="Order"/>
@@ -101,7 +101,8 @@
                                 CanUserReorderColumns="False"
                                 CanUserResizeColumns="False"
                                 TextBlock.TextAlignment="Left"
-                              ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                               ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                        
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ORDER ID"
                                                 Binding="{Binding id}"

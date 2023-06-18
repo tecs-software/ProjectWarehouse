@@ -17,6 +17,11 @@ using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder;
 using MenuItem = WarehouseManagement.Models.MenuItem;
 using WarehouseManagement.Controller;
 using WWarehouseManagement.Database;
+using WarehouseManagement.Helpers;
+using System.Data;
+using WarehouseManagement.Database;
+using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
+using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
 
 namespace WarehouseManagement.Views.Main.OrderModule
 {
@@ -61,7 +66,62 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Controls.MenuItem item1 = new System.Windows.Controls.MenuItem() { Header = "Cancel Order" };
+            System.Windows.Controls.MenuItem item2 = new System.Windows.Controls.MenuItem() { Header = "Check Status" };
 
+            Util.ShowContextMenuForButton(sender as Button, item1, item2);
+
+            item1.Click += Cancel_Order_Click;
+            item2.Click += Check_Status_Click;
+        }
+
+        private void Check_Status_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgtRespondentData.SelectedItems.Count > 0)
+            {
+                DataRowView? selectedRow = (DataRowView)dgtRespondentData.SelectedItems[0];
+
+                if (selectedRow == null)
+                    return;
+
+                string? orderId = selectedRow["id"].ToString();
+
+
+                CheckStatus cs = new CheckStatus();
+
+
+                if (cs.ShowDialog() == true)
+                {
+
+                }
+            }
+        }
+
+
+        private void Cancel_Order_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgtRespondentData.SelectedItems.Count > 0)
+            {
+                DataRowView? selectedRow = (DataRowView)dgtRespondentData.SelectedItems[0];
+
+                if (selectedRow == null)
+                    return;
+
+                string? status = selectedRow["status"].ToString();
+
+                if(status.ToLower() == "pending")
+                {
+                    return;
+                }
+
+                CancelOrder ca = new CancelOrder();
+
+
+                if (ca.ShowDialog() == true)
+                {
+                   
+                }
+            }
         }
     }
 }
