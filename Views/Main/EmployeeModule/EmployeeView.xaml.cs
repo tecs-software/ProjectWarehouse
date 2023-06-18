@@ -27,7 +27,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
     public partial class EmployeeView : Page
     {
         private ManageEmployeeTable employee = new ManageEmployeeTable();
-        private PayrollMainPage payroll = new PayrollMainPage();
+        private PayrollMainPage payroll;
 
         public EmployeeView()
         {
@@ -66,6 +66,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
 
         public void Payroll()
         {
+            payroll = new PayrollMainPage();
             btnGenerateAuthen.Visibility = Visibility.Collapsed;
             mainFrame.Navigate(payroll);
         }
@@ -112,7 +113,14 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
 
         private void btnManageUserLevels_Click(object sender, RoutedEventArgs e)
         {
+            ManageUserLevels mul = new ManageUserLevels();
 
+            mul.Owner = Window.GetWindow(this);
+
+            if(mul.ShowDialog() == true)
+            {
+
+            }
         }
     }
 }

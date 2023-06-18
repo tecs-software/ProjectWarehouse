@@ -58,5 +58,10 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
             Menu.Children.Add(new OrderMenu(order));
         }
+
+        private void btnAction_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

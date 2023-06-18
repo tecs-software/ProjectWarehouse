@@ -34,38 +34,45 @@ namespace WarehouseManagement.Views.Main
         public MainWindow()
         {
             InitializeComponent();
+            btnDashboardModule.IsChecked = true;
+            PageContent.Content = new DashboardView();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            setUpUserAccess(CurrentUser.Instance.accessLevel);
+            setUpUserAccess();
             tbAccountName.Text = CurrentUser.Instance.firstName;
         }
 
-        private void setUpUserAccess(string accessLevel)
+        private void setUpUserAccess()
         {
             DBHelper db = new DBHelper();
             db.InsertOrUpdateWorkHoursAndActiveUsers(CurrentUser.Instance.userID, DateTime.Now);
 
-            switch (accessLevel)
+            foreach (string moduleName in CurrentUser.Instance.ModuleAccessList)
             {
-                case "ADMIN":
-                    break;
-                case "Sales Agent":
-                    
-                    btnEmployeeModule.Visibility = Visibility.Collapsed;
-                    btnSalesModule.Visibility = Visibility.Collapsed;
-                    btnDashboardModule.Visibility = Visibility.Collapsed;
-                    btnOrderModule_Checked(null, null);
-                    break;
-                case "Warehouse Manager":
-                    btnOrderModule.Visibility = Visibility.Collapsed;
-                    btnEmployeeModule.Visibility = Visibility.Collapsed;
-                    btnSalesModule.Visibility = Visibility.Collapsed;
-                    btnDashboardModule.Visibility = Visibility.Collapsed;
-                    btnInventoryModule_Checked(null, null);
-                    break;
+                switch (moduleName)
+                {
+                    case "View Employee":
+                        btnEmployeeModule.Visibility = Visibility.Visible;
+                        break;
+                    case "View Dashboard":
+                        btnDashboardModule.Visibility = Visibility.Visible;
+                        break;
+                    case "View Order":
+                        btnOrderModule.Visibility = Visibility.Visible;
+                        break;
+                    case "View Inventory":
+                        btnInventoryModule.Visibility = Visibility.Visible;
+                        break;
+                    // Add more cases for other module names if needed
+
+                    default:
+                        break;
+                }
             }
+
+
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -136,7 +143,8 @@ namespace WarehouseManagement.Views.Main
             MenuItem item1 = new MenuItem() { Header = "Logout" };
             MenuItem item2 = new MenuItem() { Header = "Account Settings" };
 
-            if(CurrentUser.Instance.accessLevel == "ADMIN")
+
+            if (CurrentUser.Instance.ModuleAccessList.Contains("Modify System Settings"))
             {
                 MenuItem item3 = new MenuItem() { Header = "System Settings" };
                 Util.ShowContextMenuForControl(sender as Control, item1, item2, item3);
@@ -145,6 +153,7 @@ namespace WarehouseManagement.Views.Main
             {
                 Util.ShowContextMenuForControl(sender as Control, item1, item2);
             }
+            
             
             
 

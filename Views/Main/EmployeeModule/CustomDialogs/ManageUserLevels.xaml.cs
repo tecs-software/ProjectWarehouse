@@ -23,5 +23,27 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
         {
             InitializeComponent();
         }
+
+        public void RefreshTable()
+        {
+
+        }
+
+        private void btnModify_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddNew_Click(object sender, RoutedEventArgs e)
+        {
+            NewUserLevel nul = new NewUserLevel();
+
+            nul.Owner = Window.GetWindow(this);
+
+            if (nul.ShowDialog() == true)
+            {
+
+            }
+        }
     }
 }

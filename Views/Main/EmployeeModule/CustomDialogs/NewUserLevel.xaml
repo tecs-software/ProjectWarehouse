@@ -1,0 +1,105 @@
+﻿<Window x:Class="WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs.NewUserLevel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        AllowsTransparency="True"
+        Background="Transparent"
+        mc:Ignorable="d"
+        Title="NewUserLevel" Height="Auto" Width="500">
+    <Border CornerRadius="10" Background="White"
+            BorderBrush="Black"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="20,20,20,20">
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Add New Role" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
+
+               
+
+            </DockPanel>
+
+            <Grid Grid.Row="1" VerticalAlignment="Center" Margin="20,0,20,0" >
+
+                <TextBox 
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="Role Name" 
+                    FontSize="14"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    BorderBrush="Transparent"
+                    Name="tbRoleName"
+                    Margin="0,5,0,5"/>
+            </Grid>
+
+            <Grid Grid.Row="2" VerticalAlignment="Center" Margin="20,0,20,0" >
+
+                <TextBox 
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="Hourly Rate (Optional)" 
+                    FontSize="13"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    BorderBrush="Transparent"
+                    x:Name="tbMiddleName"
+                    Margin="0,5,0,5"/>
+            </Grid>
+
+            <TextBlock Grid.Row="3" VerticalAlignment="Center" Grid.ColumnSpan="2" Text="Permissions" Foreground="{StaticResource textMenuColor2}" Margin="20,10,0,20" FontSize="15" FontWeight="Normal"/>
+
+            <StackPanel Grid.Row="4" x:Name="permissionsCheckbox" Margin="20,0,20,0">
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button 
+                    Grid.Row="5"
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    x:Name="btnCancel" 
+                    Content="Cancel" 
+                    IsDefault="True" 
+                    FontSize="15"
+                    Width="100"
+                    BorderBrush="Transparent"
+                    Background="{StaticResource secondaryColor}"
+                    Height="40" 
+                    Margin="0,20,20,20"/>
+                
+                <Button 
+                    Grid.Row="5"
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    x:Name="btnSave" 
+                    Content="Save" 
+                    Width="100"
+                    IsDefault="True" 
+                    FontSize="15"
+                    Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
+                    Height="40" 
+                    Margin="0,20,20,20"/>
+            </StackPanel>
+            
+
+        </Grid>
+    </Border>
+</Window>

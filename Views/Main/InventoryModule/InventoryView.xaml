@@ -25,23 +25,25 @@
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" VerticalAlignment="Center" Height="auto" Width="auto">
-                <Border CornerRadius="25" Background="{StaticResource searchBarColor1}" Margin="15,10,15,10" Width="auto" VerticalAlignment="Center">
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="auto" Width="auto">
+
+                <Border CornerRadius="25" Background="{StaticResource searchBarColor1}" Margin="15,10,15,10"  Width="289" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="23" Width="auto" Margin="15,0,0,0" Foreground="Gray"/>
                         <TextBlock Width="auto" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" >
-                    <TextBox 
-                            FontWeight="Light" FontSize="17" Foreground="White"
-                            BorderBrush="Transparent"
-                            Margin="-5,5,0,5"
-                            Padding="7"
-                            materialDesign:HintAssist.IsFloating="False"
-                            materialDesign:HintAssist.Hint="Search for product"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            x:Name="tbSearchProduct"
-                            TextChanged="tbSearchProduct_TextChanged"
-                            Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                        <TextBox 
+                                FontWeight="Light" FontSize="17" Foreground="White"
+                                BorderBrush="Transparent"
+                                Margin="-5,5,0,5"
+                                Padding="7"
+                                CaretBrush="White"
+                                materialDesign:HintAssist.IsFloating="False"
+                                materialDesign:HintAssist.Hint="Search for product"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                x:Name="tbSearchProduct"
+                                TextChanged="tbSearchProduct_TextChanged"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                         </TextBlock>
                     </StackPanel>
                 </Border>

@@ -66,17 +66,62 @@ BEGIN
 END
 GO
 
--- Create tbl_user_access table if not exists
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_user_access')
+-- Create tbl_roles table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_roles')
 BEGIN
-    CREATE TABLE [dbo].[tbl_user_access](
-        [id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
-        [user_id] [int] NOT NULL,
-        [access_level] [varchar](20) NOT NULL,
-        FOREIGN KEY ([user_id]) REFERENCES [tbl_users]([user_id])
+    CREATE TABLE [dbo].[tbl_roles](
+        [role_id] [int] IDENTITY(1,1) PRIMARY KEY,
+        [role_name] [varchar](50) NOT NULL,
+        [hourly_rate] [decimal](10, 2) NULL
     )
 END
 GO
+
+-- Create tbl_module_access table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_module_access')
+BEGIN
+    CREATE TABLE [dbo].[tbl_module_access](
+        [role_id] [int] NOT NULL,
+        [module_name] [varchar](120) NOT NULL,
+        CONSTRAINT FK_tbl_module_access_tbl_roles FOREIGN KEY (role_id) REFERENCES tbl_roles(role_id)
+    )
+END
+GO
+
+-- Insert initial data into tbl_module_access if it's empty
+IF NOT EXISTS (SELECT * FROM tbl_roles)
+BEGIN
+    -- Insert into tbl_roles and retrieve the last inserted ID
+    DECLARE @roleId INT;
+    INSERT INTO tbl_roles (role_name, hourly_rate)
+    VALUES ('admin', NULL);
+    SET @roleId = SCOPE_IDENTITY();
+
+    -- Insert into tbl_module_access using the last inserted ID
+    INSERT INTO tbl_module_access (role_id, module_name)
+    VALUES
+        (@roleId, 'View Dashboard'),
+        (@roleId, 'View Inventory'),
+        (@roleId, 'Modify Inventory'),
+        (@roleId, 'View Order'),
+        (@roleId, 'Modify Order'),
+        (@roleId, 'View Employee'),
+        (@roleId, 'Modify Employee'),
+        (@roleId, 'Modify System Settings')
+END
+
+-- Create tbl_access_level table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_access_level')
+BEGIN
+    CREATE TABLE [dbo].[tbl_access_level](
+        [id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        [user_id] [int] NOT NULL,
+        [role_id] [int] NOT NULL,
+        CONSTRAINT FK_tbl_access_level_tbl_roles FOREIGN KEY ([role_id]) REFERENCES [dbo].tbl_roles
+    )
+END
+GO
+
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_work_hours')
 BEGIN

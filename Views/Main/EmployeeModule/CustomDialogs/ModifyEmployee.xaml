@@ -33,13 +33,14 @@
 
                 <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button x:Name="btnClose"
-                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Grid.Row="0"
+                            DockPanel.Dock="Right"
+                            Style="{StaticResource SmallCloseButtonStyle}"
                             Background="{StaticResource textboxProfitAnalysisColor1}"
                             BorderBrush="Transparent"
-                            Margin="0,0,0,0"
-                            IsCancel="True">
-                        <materialDesign:PackIcon Kind="Close" Foreground="Black" Height="20" Width="Auto"/>
-                    </Button>
+                            IsCancel="True"/>
                 </StackPanel>
 
             </Grid>
@@ -47,17 +48,17 @@
             <Grid Grid.Row="1" VerticalAlignment="Center" Margin="20,0,20,0" >
 
                 <TextBox 
-                Grid.Column="1"
-                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
-                Width="Auto"
-                materialDesign:HintAssist.Hint="First Name" 
-                FontSize="14"
-                Background="{StaticResource textboxProfitAnalysisColor1}"
-                materialDesign:HintAssist.Background="Transparent"
-                materialDesign:HintAssist.Foreground="#3C3C3C"
-                BorderBrush="Transparent"
-                Name="tbFirstName"
-                Margin="0,5,0,5"/>
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="First Name" 
+                    FontSize="14"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    BorderBrush="Transparent"
+                    Name="tbFirstName"
+                    Margin="0,5,0,5"/>
             </Grid>
 
             <Grid Grid.Row="2" VerticalAlignment="Center" Margin="20,0,20,0" >

@@ -56,7 +56,7 @@ namespace WarehouseManagement.Database
                         await command.ExecuteNonQueryAsync();
                     }
 
-
+                   
                     transaction.Commit();
 
                     await InsertInitialAdminUser(databaseName);
@@ -76,47 +76,49 @@ namespace WarehouseManagement.Database
 
         public async Task<bool> InsertInitialAdminUser(string databaseName)
         {
+            using var connection = new SqlConnection($"{connectionString};Database={databaseName};");
+
+            await connection.OpenAsync();
+
+
+            SqlCommand checkCommand = connection.CreateCommand();
+            checkCommand.CommandText = "SELECT COUNT(*) FROM tbl_access_level WHERE role_id = '1'";
+            int adminCount = Convert.ToInt32(await checkCommand.ExecuteScalarAsync());
+
+            if (adminCount > 0)
+            {
+                return true;
+            }
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = "INSERT INTO tbl_users (first_name, middle_name, last_name, email, contact_number, authentication_code, username, password, status) VALUES (@first_name, @middle_name, @last_name, @email, @contact_number, @authentication_code, @username, @password_hash, @status)";
+            command.Parameters.AddWithValue("@first_name", "Admin");
+            command.Parameters.AddWithValue("@middle_name", "Admin");
+            command.Parameters.AddWithValue("@last_name", "Admin");
+            command.Parameters.AddWithValue("@email", "Admin@admin.com");
+            command.Parameters.AddWithValue("@contact_number", "Admin");
+            command.Parameters.AddWithValue("@authentication_code", "ADMIN");
+            command.Parameters.AddWithValue("@username", "admin");
+            command.Parameters.AddWithValue("@status", "Enabled");
+            command.Parameters.AddWithValue("@password_hash", "e201065d0554652615c320c00a1d5bc8edca469d72c2790e24152d0c1e2b");
+
+            await command.ExecuteNonQueryAsync();
+
+            command.CommandText = "SELECT @@IDENTITY";
+            int adminUserId = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+            command.CommandText = "INSERT INTO tbl_access_level (user_id, role_id) VALUES (@user_id, @role_id)";
+            command.Parameters.Clear();
+            command.Parameters.AddWithValue("@user_id", adminUserId);
+            command.Parameters.AddWithValue("@role_id", 1);
+
+            await command.ExecuteNonQueryAsync();
+
+            return true;
+
             try
             {
-                using var connection = new SqlConnection($"{connectionString};Database={databaseName};");
-
-                await connection.OpenAsync();
-
-
-                SqlCommand checkCommand = connection.CreateCommand();
-                checkCommand.CommandText = "SELECT COUNT(*) FROM tbl_user_access WHERE access_level = 'ADMIN'";
-                int adminCount = Convert.ToInt32(await checkCommand.ExecuteScalarAsync());
-
-                if (adminCount > 0)
-                {
-                    return true;
-                }
-
-                SqlCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO tbl_users (first_name, middle_name, last_name, email, contact_number, authentication_code, username, password, status) VALUES (@first_name, @middle_name, @last_name, @email, @contact_number, @authentication_code, @username, @password_hash, @status)";
-                command.Parameters.AddWithValue("@first_name", "Admin");
-                command.Parameters.AddWithValue("@middle_name", "Admin");
-                command.Parameters.AddWithValue("@last_name", "Admin");
-                command.Parameters.AddWithValue("@email", "Admin@admin.com");
-                command.Parameters.AddWithValue("@contact_number", "Admin");
-                command.Parameters.AddWithValue("@authentication_code", "ADMIN");
-                command.Parameters.AddWithValue("@username", "admin");
-                command.Parameters.AddWithValue("@status", "Enabled");
-                command.Parameters.AddWithValue("@password_hash", "e201065d0554652615c320c00a1d5bc8edca469d72c2790e24152d0c1e2b");
-
-                await command.ExecuteNonQueryAsync();
-
-                command.CommandText = "SELECT @@IDENTITY";
-                int adminUserId = Convert.ToInt32(await command.ExecuteScalarAsync());
-
-                command.CommandText = "INSERT INTO tbl_user_access (user_id, access_level) VALUES (@user_id, @access_level)";
-                command.Parameters.Clear();
-                command.Parameters.AddWithValue("@user_id", adminUserId);
-                command.Parameters.AddWithValue("@access_level", "ADMIN");
-
-                await command.ExecuteNonQueryAsync();
-
-                return true;
+                
             }
             catch (SqlException ex)
             {

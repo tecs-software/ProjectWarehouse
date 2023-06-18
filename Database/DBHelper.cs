@@ -91,10 +91,11 @@ namespace WarehouseManagement.Database
 
         public static async Task<DataTable?> GetUsersTable()
         {
-            string query = @"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, a.access_level
-                     FROM tbl_users u
-                     LEFT JOIN tbl_user_access a ON u.user_id = a.user_id
-                     WHERE u.username <> ''";
+            string query = @"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name
+                FROM tbl_users u
+                LEFT JOIN tbl_access_level a ON u.user_id = a.user_id
+                LEFT JOIN tbl_roles r ON a.role_id = r.role_id
+                WHERE u.username <> ''";
 
             using (DatabaseConnection dbConnection = new DatabaseConnection())
             {
@@ -336,9 +337,9 @@ namespace WarehouseManagement.Database
                     if (userID != 0)
                     {
                         // User authentication successful, retrieve user data
-                        string query = "SELECT u.first_name, u.middle_name, u.last_name, ua.access_level " +
+                        string query = "SELECT u.first_name, u.middle_name, u.last_name, ua.role_id " +
                                        "FROM tbl_users u " +
-                                       "INNER JOIN tbl_user_access ua ON u.user_id = ua.user_id " +
+                                       "INNER JOIN tbl_access_level ua ON u.user_id = ua.user_id " +
                                        "WHERE u.user_id = @user_id";
 
                         using (SqlCommand userDataCommand = new SqlCommand(query, conn))
@@ -354,7 +355,38 @@ namespace WarehouseManagement.Database
                                     CurrentUser.Instance.firstName = (string)reader["first_name"];
                                     CurrentUser.Instance.middleName = (string)reader["middle_name"];
                                     CurrentUser.Instance.lastName = (string)reader["last_name"];
-                                    CurrentUser.Instance.accessLevel = (string)reader["access_level"];
+                                    CurrentUser.Instance.RoleId = (int)reader["role_id"];
+                                }
+                            }
+                        }
+
+                        // Retrieve role name
+                        string roleNameQuery = "SELECT role_name FROM tbl_roles WHERE role_id = @role_id";
+                        using (SqlCommand roleNameCommand = new SqlCommand(roleNameQuery, conn))
+                        {
+                            roleNameCommand.Parameters.AddWithValue("@role_id", CurrentUser.Instance.RoleId);
+
+                            using (SqlDataReader roleNameReader = await roleNameCommand.ExecuteReaderAsync())
+                            {
+                                if (await roleNameReader.ReadAsync())
+                                {
+                                    CurrentUser.Instance.RoleName = (string)roleNameReader["role_name"];
+                                }
+                            }
+                        }
+
+                        // Retrieve module access list
+                        string moduleAccessQuery = "SELECT module_name FROM tbl_module_access WHERE role_id = @role_id";
+                        using (SqlCommand moduleAccessCommand = new SqlCommand(moduleAccessQuery, conn))
+                        {
+                            moduleAccessCommand.Parameters.AddWithValue("@role_id", CurrentUser.Instance.RoleId);
+
+                            using (SqlDataReader moduleAccessReader = await moduleAccessCommand.ExecuteReaderAsync())
+                            {
+                                CurrentUser.Instance.ModuleAccessList = new List<string>();
+                                while (await moduleAccessReader.ReadAsync())
+                                {
+                                    CurrentUser.Instance.ModuleAccessList.Add((string)moduleAccessReader["module_name"]);
                                 }
                             }
                         }
@@ -1051,12 +1083,13 @@ namespace WarehouseManagement.Database
 
         public async Task<DataTable> GetUsersDataTable(string condition)
         {
-            string query = $@"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, a.access_level
-                      FROM tbl_users u
-                      INNER JOIN tbl_active_users au ON u.user_id = au.user_id
-                      LEFT JOIN tbl_user_access a ON u.user_id = a.user_id
-                      WHERE {condition}
-                      GROUP BY u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, a.access_level";
+            string query = $@"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name
+                  FROM tbl_users u
+                  INNER JOIN tbl_active_users au ON u.user_id = au.user_id
+                  LEFT JOIN tbl_user_access a ON u.user_id = a.user_id
+                  LEFT JOIN tbl_roles r ON a.role_id = r.role_id
+                  WHERE {condition}
+                  GROUP BY u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name";
 
             using DatabaseConnection? conn = new();
 

@@ -81,6 +81,11 @@ namespace WarehouseManagement.Views.Main.InventoryModule
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
+            if(!CurrentUser.Instance.ModuleAccessList.Contains("Modify Inventory"))
+            {
+                return;
+            }
+
             AddProduct dialog = new AddProduct(null);
             dialog.TableFilterRequested += Dialog_TableFilterRequested;
             dialog.Owner = Window.GetWindow(this);

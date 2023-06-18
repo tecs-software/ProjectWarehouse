@@ -13,7 +13,11 @@ namespace WarehouseManagement.Models
         public string? firstName { get; set; }
         public string? middleName { get; set; }
         public string? lastName { get; set; }
-        public string? accessLevel { get; set; }
+
+        public List<string> ModuleAccessList { get; set; }
+
+        public string RoleName { get; set; }
+        public int RoleId { get; set; }
 
         private static CurrentUser? instance;
 
@@ -35,7 +39,6 @@ namespace WarehouseManagement.Models
             firstName = null;
             middleName = null;
             lastName = null;
-            accessLevel = null;
         }
     }
 }

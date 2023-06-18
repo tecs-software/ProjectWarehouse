@@ -62,6 +62,11 @@ namespace WarehouseManagement.Views.Main.InventoryModule
 
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Inventory"))
+            {
+                return;
+            }
+
             MenuItem item3 = new MenuItem() { Header = "Mark Discontinued" };
             MenuItem item2 = new MenuItem() { Header = "Reduce Stock" };
             MenuItem item1 = new MenuItem() { Header = "Manage Product" };
@@ -76,6 +81,11 @@ namespace WarehouseManagement.Views.Main.InventoryModule
 
         private async void Reduce_Stock_Click(object sender, RoutedEventArgs e)
         {
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Inventory"))
+            {
+                return;
+            }
+
             if (tblProducts.SelectedItems.Count > 0)
             {
                 DataRowView selectedRow = (DataRowView)tblProducts.SelectedItems[0];

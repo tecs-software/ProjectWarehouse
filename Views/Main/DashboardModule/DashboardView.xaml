@@ -5,16 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.DashboardModule"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
-      Background="White"
+      Background="#F1F4F5"
       Title="DashboardView">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -30,69 +30,172 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource primaryColor1}" Orientation="Horizontal">
-            <DatePicker x:Name="fromDatePicker"
-                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
-                        Margin="20,20,10,20"
-                        Width="200"
-                        materialDesign:HintAssist.Hint="Start Date"
-                        FontSize="15"
-                        materialDesign:HintAssist.Foreground="Black"
-                        BorderBrush="#4E575C"
-                        Foreground="#BCBCBC"
-                        Background="#4E575C"/>
 
-            <DatePicker x:Name="toDatePicker"
-                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
-                        Margin="10,20,20,20"
-                        Width="200"
-                        materialDesign:HintAssist.Hint="To Date"
-                        FontSize="15"
-                        materialDesign:HintAssist.Foreground="Black"
-                        BorderBrush="#4E575C"
-                        Foreground="#BCBCBC"
-                        Background="#4E575C"/>
+            <Border Height="50" Width="150" Background="#4E575C" Margin="20,10,10,10" CornerRadius="5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
+                    <Label Content="Start Date" Foreground="#BCBCBC"  FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
 
-            <Button Style="{StaticResource MaterialDesignFloatingActionButton}" Height="25" Width="25" Background="#618EE7" BorderBrush="#618EE7">
-                <materialDesign:PackIcon Kind="Close" Height="auto" Width="auto" />
+            <Border Height="50" Width="150" Background="#4E575C" Margin="0,10,15,10" CornerRadius="5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
+                    <Label Content="End Date" Foreground="#BCBCBC"  FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Button Style="{StaticResource MaterialDesignIconButton}" Height="25" Width="25" Background="#618EE7" BorderBrush="#618EE7">
+                <materialDesign:PackIcon Kind="Close" Height="15" Width="15"  Foreground="White"/>
             </Button>
 
             <Label Content="Clear Date" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#BCBCBC"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Background="{StaticResource secondaryColor}" Margin="30">
-            
-            
-        </StackPanel>
+        <Border Grid.Row="2" 
+                Grid.Column="1"  
+                CornerRadius="10"
+                Background="#FEFFFE"
+                BorderThickness="1"
+                Margin="15">
 
-        <StackPanel Grid.Row="2" Grid.Column="2" Background="{StaticResource secondaryColor}" Margin="30">
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <Label Content="Gross Sale" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
-        </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
+                    <Label Content="1,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="3" Background="{StaticResource secondaryColor}" Margin="30">
+                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
+            </Grid>
+        </Border>
 
-        </StackPanel>
+        <Border Grid.Row="2" 
+                Grid.Column="2"  
+                CornerRadius="10"
+                Background="#FEFFFE"
+                BorderThickness="1"
+                Margin="15">
 
-        <StackPanel Grid.Row="3" Grid.Column="1" Background="{StaticResource secondaryColor}" Margin="30">
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <Label Content="Gross Sale" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
-        </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
+                    <Label Content="1,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                </StackPanel>
 
-        <StackPanel Grid.Row="4" Grid.Column="1" Background="{StaticResource secondaryColor}" Margin="30">
+                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
+            </Grid>
+        </Border>
 
-        </StackPanel>
+        <Border Grid.Row="2" 
+                Grid.Column="3"  
+                CornerRadius="10"
+                Background="#FEFFFE"
+                BorderThickness="1"
+                Margin="15">
 
-        <StackPanel Grid.Row="5" Grid.Column="1" Background="{StaticResource secondaryColor}" Margin="30">
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <Label Content="Gross Sale" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
-        </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
+                    <Label Content="1,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                </StackPanel>
 
-        <StackPanel Grid.Row="3" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="{StaticResource secondaryColor}" Margin="30">
+                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
+            </Grid>
+        </Border>
 
-        </StackPanel>
+        <Border Grid.Row="3" 
+                Grid.Column="1"  
+                CornerRadius="10"
+                Background="#FEFFFE"
+                BorderThickness="1"
+                Margin="15">
+
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Gross Sale" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
+                    <Label Content="1,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                </StackPanel>
+
+                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="4" 
+                Grid.Column="1"  
+                CornerRadius="10"
+                Background="#FEFFFE"
+                BorderThickness="1"
+                 Margin="15">
+
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Gross Sale" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
+                    <Label Content="1,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                </StackPanel>
+
+                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="3" 
+                Grid.Column="2"
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="2"
+                CornerRadius="10"
+                Background="#FEFFFE"
+                BorderThickness="1"
+                 Margin="15">
+
+            <lvc:CartesianChart x:Name="salesChart" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="20,50,20,50">
+ 
+            </lvc:CartesianChart>
+
+        </Border>
 
     </Grid>
 </Page>
