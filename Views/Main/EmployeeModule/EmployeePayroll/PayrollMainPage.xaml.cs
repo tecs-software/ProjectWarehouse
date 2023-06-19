@@ -23,9 +23,9 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
     /// </summary>
     public partial class PayrollMainPage : Page
     {
-        private PayrollHoursPage payrollHours = new PayrollHoursPage();
-        private PayrollReviewPage payrollReview = new PayrollReviewPage();
-        private PayrollPayslipPage payrollPayslip = new PayrollPayslipPage();
+        private PayrollHoursPage payrollHours;
+        private PayrollReviewPage payrollReview;
+        private PayrollPayslipPage payrollPayslip;
         private int currentPageIndex = 0;
         private List<Page> pages = new List<Page>();
 
@@ -38,6 +38,11 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
 
         private void SetupPages()
         {
+            DBHelper db = new DBHelper();
+            db.DeleteInvalidRecords();
+            payrollHours = new PayrollHoursPage();
+            payrollReview = new PayrollReviewPage();
+            payrollPayslip = new PayrollPayslipPage();
             pages.Add(payrollHours);
             pages.Add(payrollReview);
             pages.Add(payrollPayslip);
@@ -148,7 +153,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                 DBHelper db = new DBHelper();
 
                 int userId = ((User)cbEmployee.SelectedItem).userID;
-                name = ((User)cbEmployee.SelectedItem).firstName + " " + ((User)cbEmployee.SelectedItem).lastName;
+                name = ((User)cbEmployee.SelectedItem).name;
                 var userData = await db.GetUserFinancialData(userId);
 
                 if (userData != null)
@@ -164,7 +169,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                             {
                                 switch (key)
                                 {
-                                    case "access_level":
+                                    case "role_name":
                                         userLevel = value.ToString();
                                         break;
                                     case "hourly_rate":
@@ -199,7 +204,34 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
 
 
             var pp = mainFrame.Content as PayrollPayslipPage;
+            MessageBox.Show(name);
             pp?.setData(name, userLevel, basicPay, additionalPay, reimbursements, deductions);
+        }
+
+        private async void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            DBHelper db = new DBHelper();
+
+            if (await db.HasInvalidPayrollRecords())
+            {
+                MessageBoxResult result = MessageBox.Show("There are unsave changes in payroll, do you want to save changes?", "Confirmation", MessageBoxButton.YesNo);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        await db.SavePayrollChanges();
+                        break;
+                    case MessageBoxResult.No:
+
+                        break;
+                }
+            }
+            
+        }
+
+        private void btnIssuePaySlip_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -10,7 +10,7 @@
       Title="PayrollPayslipPage">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid Margin="20,20,20,20" Height="NaN">
+        <Grid Margin="20,20,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -168,7 +168,8 @@
                 <TextBlock Text="0.00" x:Name="tbNetPay" Margin="20,0,20,0" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="SemiBold"/>
             </Border>
 
-            <StackPanel Grid.Row="8" Height="Auto" VerticalAlignment="Stretch"/>
+            <Grid Grid.Row="8" Height="1" Background="Transparent" />
+
         </Grid>
     </ScrollViewer>
 </Page>

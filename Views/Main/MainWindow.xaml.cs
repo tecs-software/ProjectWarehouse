@@ -31,16 +31,16 @@ namespace WarehouseManagement.Views.Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool initialPage = false;
         public MainWindow()
         {
             InitializeComponent();
-            btnDashboardModule.IsChecked = true;
-            PageContent.Content = new DashboardView();
+            setUpUserAccess();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            setUpUserAccess();
+           
             tbAccountName.Text = CurrentUser.Instance.firstName;
         }
 
@@ -53,18 +53,52 @@ namespace WarehouseManagement.Views.Main
             {
                 switch (moduleName)
                 {
-                    case "View Employee":
-                        btnEmployeeModule.Visibility = Visibility.Visible;
-                        break;
                     case "View Dashboard":
                         btnDashboardModule.Visibility = Visibility.Visible;
+
+                        if (!initialPage)
+                        {
+                            initialPage = true;
+                            btnDashboardModule.IsChecked = true;
+                            PageContent.Content = new DashboardView();
+                        }
+
                         break;
                     case "View Order":
                         btnOrderModule.Visibility = Visibility.Visible;
+
+                        if (!initialPage)
+                        {
+                            initialPage = true;
+                            btnOrderModule.IsChecked = true;
+                            PageContent.Content = new OrderView();
+                        }
+
                         break;
                     case "View Inventory":
                         btnInventoryModule.Visibility = Visibility.Visible;
+
+                        if (!initialPage)
+                        {
+                            initialPage = true;
+                            btnInventoryModule.IsChecked = true;
+                            PageContent.Content = new InventoryView();
+                        }
+
                         break;
+                    case "View Employee":
+
+                        btnEmployeeModule.Visibility = Visibility.Visible;
+
+                        if (!initialPage)
+                        {
+                            initialPage = true;
+                            btnEmployeeModule.IsChecked = true;
+                            PageContent.Content = new EmployeeView();
+                        }
+
+                        break;
+                   
                     // Add more cases for other module names if needed
 
                     default:
@@ -128,7 +162,7 @@ namespace WarehouseManagement.Views.Main
         {
             showMenu(sender);
         }
-        private void tbAccountName_MouseDown(object sender, MouseButtonEventArgs e)
+        private void tbAccountName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             //showMenu(sender);
         }
@@ -177,5 +211,7 @@ namespace WarehouseManagement.Views.Main
         {
            
         }
+
+        
     }
 }

@@ -35,14 +35,15 @@
                 <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="20,0,0,0" HorizontalAlignment="Left">
                     <TextBlock Text="Profit Analysis"  FontSize="25" FontWeight="SemiBold"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" Orientation="Horizontal">
                     <Button x:Name="btnClose"
-                            Click="btnClose_Click"
-                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
-                            Background="{StaticResource textboxProfitAnalysisColor1}"
-                            BorderBrush="Transparent"
-                            Margin="0,0,20,0">
-                        <materialDesign:PackIcon Kind="Close" Foreground="Black" Height="20" Width="Auto"/>
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Grid.Row="0"
+                        Style="{StaticResource SmallCloseButtonStyle}"
+                        Background="{StaticResource textboxProfitAnalysisColor1}"
+                        BorderBrush="Transparent"
+                        IsCancel="True">
                     </Button>
                 </StackPanel>
             </Grid>

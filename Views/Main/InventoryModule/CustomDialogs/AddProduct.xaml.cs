@@ -131,8 +131,6 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
             if (operationResult && (employeeCommissionAdded != null))
             {
-                MessageBox.Show(isUpdate ? "Product updated successfully" : "Product added successfully");
-
                 if (!isUpdate)
                 {
                     if (sellingExpenses != null)
@@ -156,6 +154,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 }
                 else
                 {
+                    MessageBox.Show("Product updated successfully");
                     this.DialogResult = true;
                     this.Close();
                 }

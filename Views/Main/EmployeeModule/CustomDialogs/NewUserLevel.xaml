@@ -26,7 +26,7 @@
 
             <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="20,20,20,20">
 
-                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Add New Role" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" x:Name="lblTitle" Text="Add New Role" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
 
                
 
@@ -54,13 +54,13 @@
                     Grid.Column="1"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}" 
                     Width="Auto"
-                    materialDesign:HintAssist.Hint="Hourly Rate (Optional)" 
+                    materialDesign:HintAssist.Hint="Default Hourly Rate (Optional)" 
                     FontSize="13"
                     Background="{StaticResource textboxProfitAnalysisColor1}"
                     materialDesign:HintAssist.Background="Transparent"
                     materialDesign:HintAssist.Foreground="#3C3C3C"
                     BorderBrush="Transparent"
-                    x:Name="tbMiddleName"
+                    x:Name="tbHourlyRate"
                     Margin="0,5,0,5"/>
             </Grid>
 
@@ -79,6 +79,7 @@
                     Content="Cancel" 
                     IsDefault="True" 
                     FontSize="15"
+                    IsCancel="True"
                     Width="100"
                     BorderBrush="Transparent"
                     Background="{StaticResource secondaryColor}"
@@ -91,6 +92,7 @@
                     VerticalAlignment="Center" 
                     x:Name="btnSave" 
                     Content="Save" 
+                    Click="btnSave_Click"
                     Width="100"
                     IsDefault="True" 
                     FontSize="15"

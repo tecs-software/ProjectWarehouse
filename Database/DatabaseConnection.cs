@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -127,6 +128,57 @@ namespace WarehouseManagement.Database
             }
 
             return command;
+        }
+
+        public async Task<int> ExecuteNonQuery(string query, Dictionary<string, object> parameters, SqlTransaction? transaction = null)
+        {
+            if (connection == null || connection.State != System.Data.ConnectionState.Open)
+            {
+                return -1; // Return -1 if connection is not open
+            }
+
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = query;
+
+                if (parameters != null)
+                {
+                    foreach (KeyValuePair<string, object> parameter in parameters)
+                    {
+                        command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                    }
+                }
+
+                int rowsAffected = await command.ExecuteNonQueryAsync();
+                return rowsAffected;
+            }
+        }
+
+        public async Task<T> ExecuteScalar<T>(string query, Dictionary<string, object> parameters, SqlTransaction transaction = null)
+        {
+            if (connection == null || connection.State != ConnectionState.Open)
+            {
+                throw new InvalidOperationException("The connection is not open.");
+            }
+
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = query;
+                command.CommandType = CommandType.Text;
+
+                if (parameters != null)
+                {
+                    foreach (KeyValuePair<string, object> parameter in parameters)
+                    {
+                        command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                    }
+                }
+
+                object result = await command.ExecuteScalarAsync();
+                return (T)Convert.ChangeType(result, typeof(T));
+            }
         }
 
         public void Dispose()

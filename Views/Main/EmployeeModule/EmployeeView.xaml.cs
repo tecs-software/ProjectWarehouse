@@ -26,8 +26,8 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
     /// </summary>
     public partial class EmployeeView : Page
     {
-        private ManageEmployeeTable employee = new ManageEmployeeTable();
-        private PayrollMainPage payroll;
+        private ManageEmployeeTable? employee = new ManageEmployeeTable();
+        private PayrollMainPage? payroll;
 
         public EmployeeView()
         {
@@ -68,6 +68,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
         {
             payroll = new PayrollMainPage();
             btnGenerateAuthen.Visibility = Visibility.Collapsed;
+            btnManageUserLevels.Visibility = Visibility.Collapsed;
             mainFrame.Navigate(payroll);
         }
 

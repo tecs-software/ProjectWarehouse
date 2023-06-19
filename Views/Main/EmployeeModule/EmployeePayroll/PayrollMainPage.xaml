@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="1080" d:DesignWidth="1920"
+      Unloaded="Page_Unloaded"
       Background="White"
       mc:Ignorable="d" 
       Title="PayrollMainPage">
@@ -84,6 +85,12 @@
                 <Button BorderBrush="Transparent" Height="40" x:Name="btnSaveChangesForLater" VerticalAlignment="Center" Click="btnSaveChangesForLater_Click"  Foreground="{StaticResource secondaryColor}" Width="Auto" FontSize="15" Background="Transparent" Margin="0,20,10,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="SAVE CHANGES FOR LATER"/>
+                    </StackPanel>
+                </Button>
+
+                <Button BorderBrush="{StaticResource secondaryColor}" Height="40" Visibility="Collapsed" x:Name="btnIssuePaySlip" VerticalAlignment="Center" Click="btnIssuePaySlip_Click"  Width="Auto" MinWidth="180" FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,20,20,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="ISSUE PAYSLIP"/>
                     </StackPanel>
                 </Button>
 

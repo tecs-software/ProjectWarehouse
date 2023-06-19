@@ -37,7 +37,13 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee
 
         public async Task ShowEmployees()
         {
-            DataTable? dataTable = await DBHelper.GetUsersTable();
+            string query = @"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name
+                FROM tbl_users u
+                LEFT JOIN tbl_access_level a ON u.user_id = a.user_id
+                LEFT JOIN tbl_roles r ON a.role_id = r.role_id
+                WHERE u.username <> ''";
+
+            DataTable? dataTable = await DBHelper.GetTable(query);
 
             if (dataTable != null)
             {

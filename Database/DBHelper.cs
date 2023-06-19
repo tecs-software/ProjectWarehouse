@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows;
+using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Database
@@ -89,14 +90,8 @@ namespace WarehouseManagement.Database
             }
         }
 
-        public static async Task<DataTable?> GetUsersTable()
+        public static async Task<DataTable?> GetTable(string query)
         {
-            string query = @"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name
-                FROM tbl_users u
-                LEFT JOIN tbl_access_level a ON u.user_id = a.user_id
-                LEFT JOIN tbl_roles r ON a.role_id = r.role_id
-                WHERE u.username <> ''";
-
             using (DatabaseConnection dbConnection = new DatabaseConnection())
             {
                 SqlConnection? connection = await dbConnection.OpenConnection();
@@ -744,35 +739,40 @@ namespace WarehouseManagement.Database
 
             using DatabaseConnection connection = new();
 
-            try
-            {
-                using (SqlConnection? conn = await connection.OpenConnection())
-                {
-                    if (conn != null)
-                    {
-                        using (SqlCommand cmd = new SqlCommand("SELECT u.user_id, u.last_name, u.first_name " +
-                                                               "FROM tbl_users u " +
-                                                               "LEFT JOIN tbl_user_access a ON u.user_id = a.user_id " +
-                                                               "WHERE u.username IS NOT NULL " +
-                                                               "AND u.username <> ''", conn))
-                        {
-                            using (SqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    User user = new User();
-                                    user.userID = reader.GetInt32(reader.GetOrdinal("user_id"));
-                                    string? firstName = reader["first_name"].ToString();
-                                    string? lastName = reader["last_name"].ToString();
-                                    user.name = $"{firstName} {lastName}";
 
-                                    users.Add(user);
-                                }
+            using (SqlConnection? conn = await connection.OpenConnection())
+            {
+                if (conn != null)
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT u.user_id, u.last_name, u.first_name " +
+                                                           "FROM tbl_users u " +
+                                                           "LEFT JOIN tbl_wage a ON u.user_id = a.user_id " +
+                                                           "WHERE u.username IS NOT NULL " +
+                                                           "AND u.username <> ''" +
+                                                           "AND a.user_id IS NOT NULL", conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                User user = new User();
+                                user.userID = reader.GetInt32(reader.GetOrdinal("user_id"));
+                                string? firstName = reader["first_name"].ToString();
+                                string? lastName = reader["last_name"].ToString();
+                                user.name = $"{firstName} {lastName}";
+
+                                users.Add(user);
                             }
                         }
                     }
                 }
-                return users;
+            }
+            return users;
+
+
+            try
+            {
+                
             }
             catch (Exception e)
             {
@@ -795,12 +795,12 @@ namespace WarehouseManagement.Database
                     // Get user IDs and names from tbl_users
                     SqlCommand userCommand = new SqlCommand("SELECT u.user_id, u.last_name, u.first_name, u.middle_name " +
                                                             "FROM tbl_users u " +
-                                                            "LEFT JOIN tbl_user_access a ON u.user_id = a.user_id " +
+                                                            "LEFT JOIN tbl_wage a ON u.user_id = a.user_id " +
                                                             "WHERE u.username IS NOT NULL " +
                                                             "AND u.username <> '' " +
                                                             "AND u.password IS NOT NULL " +
                                                             "AND u.password <> '' " +
-                                                            "AND a.access_level <> 'ADMIN'", connection);
+                                                            "AND a.user_id IS NOT NULL", connection);
                     SqlDataAdapter userAdapter = new SqlDataAdapter(userCommand);
                     DataTable userTable = new DataTable();
                     userAdapter.Fill(userTable);
@@ -1086,7 +1086,7 @@ namespace WarehouseManagement.Database
             string query = $@"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name
                   FROM tbl_users u
                   INNER JOIN tbl_active_users au ON u.user_id = au.user_id
-                  LEFT JOIN tbl_user_access a ON u.user_id = a.user_id
+                  LEFT JOIN tbl_access_level a ON u.user_id = a.user_id
                   LEFT JOIN tbl_roles r ON a.role_id = r.role_id
                   WHERE {condition}
                   GROUP BY u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name";
@@ -1207,8 +1207,12 @@ namespace WarehouseManagement.Database
 
             using (SqlConnection? connection = await conn.OpenConnection())
             {
-                // Get access level
-                string query = "SELECT access_level FROM tbl_user_access WHERE user_id = @userId";
+                string query = @"SELECT r.role_name
+                FROM tbl_users u
+                JOIN tbl_access_level al ON u.user_id = al.user_id
+                JOIN tbl_roles r ON al.role_id = r.role_id
+                WHERE u.user_id = @userId";
+
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
@@ -1216,7 +1220,7 @@ namespace WarehouseManagement.Database
                 if (reader.Read())
                 {
                     Dictionary<string, object> accessLevelData = new Dictionary<string, object>();
-                    accessLevelData.Add("access_level", reader["access_level"]);
+                    accessLevelData.Add("role_name", reader["role_name"]);
                     financialData.Add(accessLevelData);
                 }
                 reader.Close();
@@ -1307,6 +1311,280 @@ namespace WarehouseManagement.Database
             }
 
             return financialData;
+        }
+
+        public async  Task<List<Roles>> GetRoles()
+        {
+            List<Roles> roles = new List<Roles>();
+
+
+            using DatabaseConnection conn = new();
+
+            using (SqlConnection? connection = await conn.OpenConnection())
+            {
+                {
+                    string query = "SELECT role_id, role_name, hourly_rate FROM tbl_roles";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Roles role = new Roles();
+                            role.roleID = reader.GetInt32(0);
+                            role.roleName = Converter.CapitalizeWords(reader.GetString(1), 2);
+                            role.hourlyRate = reader.GetDecimal(2);
+
+                            roles.Add(role);
+                        }
+
+                        reader.Close();
+                    }
+                }
+
+                return roles;
+            }
+        }
+
+        public async Task<bool> InsertOrUpdateRole(string roleName, decimal hourlyRate, List<string> moduleAccessList, string id = null)
+        {
+            using (DatabaseConnection conn = new DatabaseConnection())
+            {
+                try
+                {
+                    using (SqlConnection connection = await conn.OpenConnection())
+                    using (SqlTransaction transaction = connection.BeginTransaction())
+                    {
+                        SqlCommand command = connection.CreateCommand();
+                        command.Transaction = transaction;
+
+                        // Check if roleName already exists
+                        string checkRoleQuery = "SELECT COUNT(*) FROM tbl_roles WHERE role_name = @roleName";
+                        Dictionary<string, object> checkRoleParams = new Dictionary<string, object>
+                {
+                    { "@roleName", roleName }
+                };
+
+                        int roleCount = await conn.ExecuteScalar<int>(checkRoleQuery, checkRoleParams, transaction);
+
+                        if (roleCount > 0 && string.IsNullOrEmpty(id))
+                        {
+                            MessageBox.Show("Role name already exists.");
+                            return false;
+                        }
+
+                        if (string.IsNullOrEmpty(id))
+                        {
+                            // Insert into tbl_roles
+                            string insertRoleQuery = "INSERT INTO tbl_roles (role_name, hourly_rate) OUTPUT INSERTED.role_id VALUES (@roleName, @hourlyRate)";
+                            Dictionary<string, object> roleParams = new Dictionary<string, object>
+                    {
+                        { "@roleName", roleName },
+                        { "@hourlyRate", hourlyRate }
+                    };
+
+                            command.CommandText = insertRoleQuery;
+                            command.Parameters.Clear();
+                            foreach (var param in roleParams)
+                            {
+                                command.Parameters.AddWithValue(param.Key, param.Value);
+                            }
+
+                            int roleId = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+                            // Insert into tbl_module_access
+                            string insertModuleAccessQuery = "INSERT INTO tbl_module_access (role_id, module_name) VALUES (@roleId, @moduleName)";
+                            foreach (string moduleName in moduleAccessList)
+                            {
+                                Dictionary<string, object> moduleAccessParams = new Dictionary<string, object>
+                        {
+                            { "@roleId", roleId },
+                            { "@moduleName", moduleName }
+                        };
+
+                                command.CommandText = insertModuleAccessQuery;
+                                command.Parameters.Clear();
+                                foreach (var param in moduleAccessParams)
+                                {
+                                    command.Parameters.AddWithValue(param.Key, param.Value);
+                                }
+                                await command.ExecuteNonQueryAsync();
+                            }
+                        }
+                        else
+                        {
+                            // Update tbl_roles
+                            string updateRoleQuery = "UPDATE tbl_roles SET role_name = @roleName, hourly_rate = @hourlyRate WHERE role_id = @roleId";
+                            Dictionary<string, object> roleParams = new Dictionary<string, object>
+                    {
+                        { "@roleName", roleName },
+                        { "@hourlyRate", hourlyRate },
+                        { "@roleId", id }
+                    };
+
+                            command.CommandText = updateRoleQuery;
+                            command.Parameters.Clear();
+                            foreach (var param in roleParams)
+                            {
+                                command.Parameters.AddWithValue(param.Key, param.Value);
+                            }
+
+                            await command.ExecuteNonQueryAsync();
+
+                            // Delete existing module access for the role
+                            string deleteModuleAccessQuery = "DELETE FROM tbl_module_access WHERE role_id = @roleId";
+                            Dictionary<string, object> deleteModuleAccessParams = new Dictionary<string, object>
+                    {
+                        { "@roleId", id }
+                    };
+
+                            command.CommandText = deleteModuleAccessQuery;
+                            command.Parameters.Clear();
+                            foreach (var param in deleteModuleAccessParams)
+                            {
+                                command.Parameters.AddWithValue(param.Key, param.Value);
+                            }
+
+                            await command.ExecuteNonQueryAsync();
+
+                            // Insert new module access for the role
+                            string insertModuleAccessQuery = "INSERT INTO tbl_module_access (role_id, module_name) VALUES (@roleId, @moduleName)";
+                            foreach (string moduleName in moduleAccessList)
+                            {
+                                Dictionary<string, object> moduleAccessParams = new Dictionary<string, object>
+                        {
+                            { "@roleId", id },
+                            { "@moduleName", moduleName }
+                        };
+
+                                command.CommandText = insertModuleAccessQuery;
+                                command.Parameters.Clear();
+                                foreach (var param in moduleAccessParams)
+                                {
+                                    command.Parameters.AddWithValue(param.Key, param.Value);
+                                }
+                                await command.ExecuteNonQueryAsync();
+                            }
+                        }
+
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error inserting/updating role: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        public async Task<Roles> GetRole(string roleId)
+        {
+            using (DatabaseConnection dbConnection = new DatabaseConnection())
+            {
+                SqlConnection connection = await dbConnection.OpenConnection();
+
+                if (connection != null && connection.State == ConnectionState.Open)
+                {
+                    string query = "SELECT * FROM tbl_roles WHERE role_id = @RoleId";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@RoleId", roleId);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (reader.HasRows)
+                        {
+                            await reader.ReadAsync();
+                            Roles role = new Roles
+                            {
+                                roleName = reader["role_name"].ToString(),
+                                hourlyRate = Convert.ToDecimal(reader["hourly_rate"])
+                            };
+
+                            return role;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public async Task<List<string>> GetModuleAccess(string roleId)
+        {
+            List<string> moduleAccess = new List<string>();
+
+            using (DatabaseConnection dbConnection = new DatabaseConnection())
+            {
+                SqlConnection connection = await dbConnection.OpenConnection();
+
+                if (connection != null && connection.State == ConnectionState.Open)
+                {
+                    string query = "SELECT module_name FROM tbl_module_access WHERE role_id = @RoleId";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@RoleId", roleId);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            moduleAccess.Add(reader["module_name"].ToString());
+                        }
+                    }
+                }
+            }
+
+            return moduleAccess;
+        }
+
+        public async void DeleteInvalidRecords()
+        {
+            using (DatabaseConnection dbConnection = new DatabaseConnection())
+            {
+                SqlConnection? connection = await dbConnection.OpenConnection();
+
+                if(connection != null)
+                {
+                    SqlCommand deleteCommand = new SqlCommand("DELETE FROM tbl_commissions WHERE is_valid = 0; DELETE FROM tbl_overtime WHERE is_valid = 0; DELETE FROM tbl_reimbursement WHERE is_valid = 0; DELETE FROM tbl_deductions WHERE is_valid = 0;", connection);
+
+                    deleteCommand.ExecuteNonQuery();
+                }
+                
+                CloseConnection();
+            }  
+        }
+
+        public async Task <bool> HasInvalidPayrollRecords()
+        {
+            bool hasInvalidRecords = false;
+
+            using (DatabaseConnection dbConnection = new DatabaseConnection())
+            {
+                SqlConnection? connection = await dbConnection.OpenConnection();
+
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM tbl_commissions WHERE is_valid = 0 UNION ALL SELECT COUNT(*) FROM tbl_overtime WHERE is_valid = 0 UNION ALL SELECT COUNT(*) FROM tbl_reimbursement WHERE is_valid = 0;", connection);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int count = (int)reader[0];
+
+                    if (count > 0)
+                    {
+                        hasInvalidRecords = true;
+                        break;
+                    }
+                }
+
+                reader.Close();
+                CloseConnection();
+            }
+
+
+            return hasInvalidRecords;
         }
     }
 }

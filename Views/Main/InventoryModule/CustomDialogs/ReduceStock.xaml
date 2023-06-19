@@ -9,19 +9,20 @@
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent"
-        Height="320" Width="400"
+        Height="290" Width="400"
         WindowStyle="None"
         Title="ReduceStock">
     
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
             BorderThickness="1">
-        <Grid>
+        
+        <Grid Margin="20">
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="2.4*"/>
-                <RowDefinition Height="1.1*"/>
-                <RowDefinition Height="1.8*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0">
@@ -30,43 +31,55 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 
-                <StackPanel Grid.Column="0" Margin="50,30,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBlock Text="Reduce Stock" Margin="0,0,0,20" FontSize="20" FontWeight="Regular" x:Name="lbProduct"/>
                     <TextBlock Text="Item: Name" Margin="0,0,0,0" FontSize="17" FontWeight="Light" x:Name="lblItemName"/>
                     <TextBlock Text="Current Stock: 20" Margin="0,0,0,0" FontSize="17" FontWeight="Light" x:Name="lblStock"/>
                 </StackPanel>
                 
-                <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="0,20,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button x:Name="btnClose"
-                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
-                            Background="{StaticResource textboxProfitAnalysisColor1}"
-                            BorderBrush="Transparent"
-                            Margin="0,0,20,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
                             Click="btnClose_Click"
-                            IsCancel="True">
-                        <materialDesign:PackIcon Kind="Close" Foreground="Black" Height="20" Width="Auto"/>
+                        Grid.Row="0"
+                        Style="{StaticResource SmallCloseButtonStyle}"
+                        Background="{StaticResource textboxProfitAnalysisColor1}"
+                        BorderBrush="Transparent"
+                        IsCancel="True">
                     </Button>
                 </StackPanel>
                 
             </Grid>
             
             <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" FocusManager.FocusedElement="{Binding ElementName=tbItemName}">
-                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="300"
-                         materialDesign:HintAssist.Hint="Amount" FontSize="15"
+
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="Auto"
+                         materialDesign:HintAssist.Hint="Amount to deduct" FontSize="15"
                          Background="{StaticResource textboxProfitAnalysisColor1}"
                          materialDesign:HintAssist.Foreground="Black"
                          BorderBrush="Black"
-                         Margin="10,0,10,10"
                          x:Name="tbAmount"/>
-                </StackPanel>
+
             </StackPanel>
-            
-            <StackPanel Grid.Row="2" x:Name="spBottom" VerticalAlignment="Top" Margin="0,10,0,0">
-                <Button HorizontalAlignment="Center" Click="btnConfirm_Click" VerticalAlignment="Center" x:Name="btnConfirm" Content="Confirm" IsDefault="True" Background="{StaticResource secondaryColor}" FontSize="20" Height="50" Width="300" 
-                            Margin="0,0,0,20" BorderBrush="Transparent"/>
-            </StackPanel>
+
+            <Button Grid.Row="2"
+                    Click="btnConfirm_Click" 
+                    x:Name="btnConfirm" 
+                    Content="Confirm" 
+                    Margin="0,20,0,0"
+                    IsDefault="True" 
+                    Background="{StaticResource secondaryColor}" 
+                    FontSize="20" 
+                    Height="50"
+                    BorderBrush="Transparent"/>
         </Grid>
     </Border>
 </Window>

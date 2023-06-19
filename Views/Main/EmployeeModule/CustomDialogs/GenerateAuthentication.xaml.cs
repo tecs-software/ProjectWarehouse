@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
+using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
 {
@@ -28,7 +29,17 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
             InitializeControls();
+        }
+
+        private async void InitializeControls()
+        {
+            DBHelper db = new DBHelper();
+            List<Roles> roles = await db.GetRoles();
+
+            cbUserLevel.ItemsSource = roles;
+            cbUserLevel.DisplayMemberPath = "roleName";
         }
 
         private async void btnGenerate_Click(object sender, RoutedEventArgs e)
@@ -52,9 +63,10 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                     { "status", "Enabled" },
                 };
 
+                Roles selectedRole = (Roles)cbUserLevel.SelectedItem; // Get the selected role from the ComboBox
                 Dictionary<string, object> secondTableValues = new Dictionary<string, object>
                 {
-                    { "access_level", cbUserLevel.Text },
+                    { "role_id", selectedRole.roleID },
                 };
 
                 Dictionary<string, object> thirdTableValues = new Dictionary<string, object>
@@ -62,7 +74,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                     { "hourly_rate", tbRate.Text },
                 };
 
-                if (await db.InsertDataWithForeignKey("tbl_users", firstTableValues, "user_id", "tbl_user_access", secondTableValues, "tbl_wage", thirdTableValues))
+                if (await db.InsertDataWithForeignKey("tbl_users", firstTableValues, "user_id", "tbl_access_level", secondTableValues, "tbl_wage", thirdTableValues))
                 {
                     Clipboard.SetText(tbAuthen.Text);
                     cbUserLevel.SelectedIndex = -1;
@@ -79,26 +91,12 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
             if (cbUserLevel.SelectedIndex >= 0)
             {
                 tbAuthen.Text = Util.GenerateRandomString(10);
-                UpdateRateTextBox();
+                Roles selectedRole = cbUserLevel.SelectedItem as Roles;
+                if (selectedRole != null)
+                {
+                    tbRate.Text = selectedRole.hourlyRate.ToString();
+                }
             }
-        }
-
-        private void UpdateRateTextBox()
-        {
-            if (cbUserLevel.Text == "Warehouse Manager")
-            {
-                tbRate.Text = "60.00";
-            }
-            else if (cbUserLevel.Text == "Sales Agent")
-            {
-                tbRate.Text = "50.00";
-            }
-        }
-
-        private void InitializeControls()
-        {
-            cbUserLevel.SelectedIndex = 0;
-            UpdateRateTextBox();
         }
 
         private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -106,9 +104,16 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
             InputValidation.Decimal(sender, e);
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void btnViewKeys_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            ViewGeneratedKeys vgk = new ViewGeneratedKeys();
+
+            vgk.Owner = Window.GetWindow(this);
+
+            if(vgk.ShowDialog() == true)
+            {
+                
+            }
         }
     }
 }
