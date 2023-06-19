@@ -8,6 +8,8 @@
         mc:Ignorable="d"
         WindowStyle="None"
         Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
         Title="CancelOrder" Height="Auto" Width="500">
     
     <Border CornerRadius="10" Background="White"
@@ -71,7 +73,7 @@
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"        
                 FontSize="15"       
                 Margin="0,0,0,10"
-                Background="{StaticResource textboxProfitAnalysisColor1}"         
+                Background="#B5B5B5"         
                 materialDesign:HintAssist.Foreground="Black"           
                 BorderBrush="Black"  
                 VerticalAlignment="Center"

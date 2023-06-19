@@ -37,9 +37,9 @@ namespace WarehouseManagement.Database
             string receiver_id = sql.ReturnResult($"SELECT receiver_id FROM tbl_receiver ORDER BY receiver_id DESC");
             string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name ='" + book_info.item_name + "'");
 
-            sql.Query($"INSERT INTO tbl_orderss (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at) VALUES" +
+            sql.Query($"INSERT INTO tbl_orders (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at, courier) VALUES" +
                 $"('" + order_id + "', '" + waybill + "', '" + user_id + "', '" + sender_id + "', '" + receiver_id + "', '" + product_id + "', '" + book_info.quantity + "', '" + book_info.quantity + "', '" + book_info.remarks + "'," +
-                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','')");
+                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','','"+book_info.courier+"')");
             if (sql.HasException(true)) return;
         }
     }

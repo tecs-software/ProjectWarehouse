@@ -79,21 +79,25 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             if (dgtRespondentData.SelectedItems.Count > 0)
             {
-                DataRowView? selectedRow = (DataRowView)dgtRespondentData.SelectedItems[0];
+                var selectedOrder = dgtRespondentData.SelectedItems[0] as WarehouseManagement.Controller.Orders;
 
-                if (selectedRow == null)
+                if (selectedOrder == null)
                     return;
 
-                string? orderId = selectedRow["id"].ToString();
+                string? orderId = selectedOrder.ID;
 
 
-                CheckStatus cs = new CheckStatus();
+
+                object id = dgtRespondentData.SelectedItem;
+                string waybill = (dgtRespondentData.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text;
+                CheckStatus cs = new CheckStatus(waybill);
 
 
                 if (cs.ShowDialog() == true)
                 {
 
                 }
+
             }
         }
 
@@ -102,25 +106,29 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             if (dgtRespondentData.SelectedItems.Count > 0)
             {
-                DataRowView? selectedRow = (DataRowView)dgtRespondentData.SelectedItems[0];
+                var selectedOrder = dgtRespondentData.SelectedItems[0] as WarehouseManagement.Controller.Orders;
 
-                if (selectedRow == null)
+                if (selectedOrder == null)
                     return;
 
-                string? status = selectedRow["status"].ToString();
+                string status = selectedOrder.status;
 
-                if(status.ToLower() == "pending")
+                if (status.ToLower() != "pending")
                 {
                     return;
                 }
 
-                CancelOrder ca = new CancelOrder();
 
+                object id = dgtRespondentData.SelectedItem;
+                string order_id = (dgtRespondentData.SelectedCells[0].Column.GetCellContent(id) as TextBlock).Text;
+
+                CancelOrder ca = new CancelOrder(order_id);
 
                 if (ca.ShowDialog() == true)
                 {
-                   
+                    // Code to handle the dialog result when it is true.
                 }
+
             }
         }
     }

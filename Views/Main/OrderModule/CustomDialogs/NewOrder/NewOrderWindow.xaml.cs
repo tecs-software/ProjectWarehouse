@@ -89,6 +89,22 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 booking_info.remarks = bookingInformationPage.tbRemarks.Text;
                 booking_info.quantity = bookingInformationPage.tbQuantity.Text;
                 booking_info.item_category = bookingInformationPage.tbCategory.Text;
+                if(bookingInformationPage.radioJAndT.IsChecked == true)
+                {
+                    booking_info.courier = "JnT";
+                }
+                else if(bookingInformationPage.radioFlashExpress.IsChecked == true)
+                {
+                    booking_info.courier = "FlashExpress";
+                }
+                else if(bookingInformationPage.radioLBC.IsChecked == true)
+                {
+                    booking_info.courier = "LBC";
+                }
+                else
+                {
+                    booking_info.courier = "NinjaVan";
+                }
 
                 //calling the method for api ordering
                 order_api.api_create(_customer,_receiver, booking_info);
@@ -133,5 +149,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             
             return bookingInformationPage;
         }
+        
     }
 }

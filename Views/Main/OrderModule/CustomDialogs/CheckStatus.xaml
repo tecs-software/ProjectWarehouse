@@ -9,6 +9,7 @@
         Background="Transparent"
         WindowStyle="None"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="CheckStatus" Height="300" Width="500">
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
@@ -68,11 +69,13 @@
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"        
                 FontSize="15"       
                 Margin="0,0,0,10"
-                Background="{StaticResource textboxProfitAnalysisColor1}"         
+                Background="#B5B5B5"         
                 materialDesign:HintAssist.Foreground="Black"           
                 BorderBrush="Black"  
+                IsEnabled="False"
                 VerticalAlignment="Center"
                 x:Name="tbOrderId"/>
+            
 
             <TextBlock
                 Grid.Row="2" 
@@ -91,11 +94,13 @@
                 <DataGrid
                     CanUserAddRows="False"
                     AutoGenerateColumns="False"
-                    HeadersVisibility="None"
+                    HeadersVisibility="Column"
                     GridLinesVisibility="None"
                     BorderBrush="#949494"
+                    Foreground="Black"
                     Height="140"
                     VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Auto"
                     Background="Transparent"
                     RowHeight="40"
                     IsReadOnly="True"
@@ -106,10 +111,16 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Status"
-                                    Binding="{Binding status}"
+                                    Binding="{Binding description}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     Width="2*"/>
+                        <DataGridTextColumn Header="Time Stamp"
+                                    Binding="{Binding scan_time}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="2*"/>
+
                     </DataGrid.Columns>
                 </DataGrid>
 
