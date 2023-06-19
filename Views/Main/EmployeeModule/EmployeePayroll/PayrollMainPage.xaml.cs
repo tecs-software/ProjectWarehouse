@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -57,6 +58,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                 mainFrame.Navigate(pages[index]);
                 currentPageIndex = index;
                 payslipControls.Visibility = Visibility.Collapsed;
+                print.Visibility = Visibility.Collapsed;
                 btnSaveChangesForLater.Content = "SAVE CHANGES FOR LATER";
                 btnSaveAndContinue.Content = "SAVE & CONTINUE";
                 pbConfirmation.Value = 0;
@@ -68,6 +70,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                 mainFrame.Navigate(pages[index]);
                 currentPageIndex = index;
                 payslipControls.Visibility = Visibility.Collapsed;
+                print.Visibility = Visibility.Collapsed;
                 btnSaveChangesForLater.Content = "BACK";
                 btnSaveAndContinue.Content = "NEXT";
                 pbConfirmation.Value = 0;
@@ -83,8 +86,9 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
 
                 cbEmployee.ItemsSource = users;
                 cbEmployee.DisplayMemberPath = "name";
-
-                btnSaveAndContinue.Content = "PRINT";
+                
+                print.Visibility = Visibility.Visible;
+                btnSaveAndContinue.Content = "ISSUE PAYSLIP";
                 pbReview.Value = 0;
                 pbConfirmation.Value = 100;
             }
@@ -103,7 +107,10 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                     }
                     break;
                 case 1:
+                    SetPage(currentPageIndex - 1);
+                    break;
                 case 2:
+                    payrollPayslip = new PayrollPayslipPage();
                     SetPage(currentPageIndex - 1);
                     break;
 
@@ -127,20 +134,56 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
             }
             else
             {
-                // Perform appropriate action for next button in the last page
+                if (cbEmployee.SelectedItem != null && cbEmployee.SelectedItem.ToString().ToLower() != "select employee")
+                {
+                    var confirmationResult = MessageBox.Show("Are you sure you want to reset the employee's payroll data?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (confirmationResult == MessageBoxResult.Yes)
+                    {
+                        DBHelper db = new DBHelper();
+                        int userID = ((User)cbEmployee.SelectedItem).userID;
+                        db.IssuePayslip(userID);
+
+                        var selectedUser = (User)cbEmployee.SelectedItem;
+                        var users = (List<User>)cbEmployee.ItemsSource;
+                        users.Remove(selectedUser);
+
+                        cbEmployee.ItemsSource = null;
+                        cbEmployee.ItemsSource = users;
+
+                        payrollHours.refreshTable();
+                        payrollReview.refreshTable();
+                    }
+                }
             }
-
-
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
+            int currentIndex = cbEmployee.SelectedIndex;
 
+            // Get the total number of items in the ComboBox
+            int totalItems = cbEmployee.Items.Count;
+
+            // Calculate the index of the next item
+            int nextIndex = (currentIndex + 1) % totalItems;
+
+            // Set the selected index to the next item
+            cbEmployee.SelectedIndex = nextIndex;
         }
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            
+            int currentIndex = cbEmployee.SelectedIndex;
+
+            // Get the total number of items in the ComboBox
+            int totalItems = cbEmployee.Items.Count;
+
+            // Calculate the index of the next item
+            int previousIndex = (currentIndex - 1 + totalItems) % totalItems;
+
+            // Set the selected index to the next item
+            cbEmployee.SelectedIndex = previousIndex;
         }
 
         private async void cbEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -204,7 +247,6 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
 
 
             var pp = mainFrame.Content as PayrollPayslipPage;
-            MessageBox.Show(name);
             pp?.setData(name, userLevel, basicPay, additionalPay, reimbursements, deductions);
         }
 
@@ -229,7 +271,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
             
         }
 
-        private void btnIssuePaySlip_Click(object sender, RoutedEventArgs e)
+        private void print_Click(object sender, RoutedEventArgs e)
         {
 
         }

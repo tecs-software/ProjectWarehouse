@@ -57,7 +57,7 @@
 
                 <Button BorderBrush="Transparent" x:Name="btnPrev" Click="btnPrev_Click"  Padding="5" materialDesign:ElevationAssist.Elevation="Dp0" VerticalAlignment="Stretch" Width="50" Background="Transparent" Margin="0,20,0,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
-                        <materialDesign:PackIcon Kind="PersonArrowLeft" Foreground="#c3c3c3" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        <materialDesign:PackIcon Kind="PersonArrowLeft" Foreground="#c3c3c3" Width="20" Height="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </StackPanel>
                 </Button>
 
@@ -74,7 +74,7 @@
 
                 <Button BorderBrush="Transparent" Height="40" x:Name="btnNext" Click="btnNext_Click"  Padding="5" materialDesign:ElevationAssist.Elevation="Dp0" VerticalAlignment="Stretch" Width="50" Background="Transparent" Margin="0,20,0,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
-                        <materialDesign:PackIcon Kind="PersonArrowRight" Foreground="#c3c3c3" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        <materialDesign:PackIcon Kind="PersonArrowRight" Foreground="#c3c3c3" Height="20" Width="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </StackPanel>
                 </Button>
 
@@ -87,19 +87,18 @@
                         <TextBlock Text="SAVE CHANGES FOR LATER"/>
                     </StackPanel>
                 </Button>
-
-                <Button BorderBrush="{StaticResource secondaryColor}" Height="40" Visibility="Collapsed" x:Name="btnIssuePaySlip" VerticalAlignment="Center" Click="btnIssuePaySlip_Click"  Width="Auto" MinWidth="180" FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,20,20,0">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="ISSUE PAYSLIP"/>
-                    </StackPanel>
-                </Button>
-
+                
                 <Button BorderBrush="{StaticResource secondaryColor}" Height="40" x:Name="btnSaveAndContinue" VerticalAlignment="Center" Click="btnSaveAndContinue_Click"  Width="Auto" MinWidth="180" FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,20,0,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="SAVE &amp; CONTINUE"/>
                     </StackPanel>
                 </Button>
 
+                <Button BorderBrush="{StaticResource secondaryColor}"  Height="40" Click="print_Click" Visibility="Visible" x:Name="print" VerticalAlignment="Center" Width="Auto" FontSize="15" Background="{StaticResource secondaryColor}" Margin="10,20,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Printer" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
 
             </StackPanel>
         </Grid>

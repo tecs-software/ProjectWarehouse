@@ -55,9 +55,9 @@ namespace WarehouseManagement.Views.Main.InventoryModule
         {
             DBHelper db = new DBHelper();
 
-            (int inStock, int lowStock, int outOfStock) counts = await db.GetProductsCount();
+            (int discontinued, int lowStock, int outOfStock) counts = await db.GetProductsCount();
 
-            int inStock = counts.inStock;
+            int discontinued = counts.discontinued;
             int lowStock = counts.lowStock;
             int outOfStock = counts.outOfStock;
 
@@ -69,13 +69,13 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             var category = new MenuItem("Category", menuCategory);
 
             var menuStatus = new List<SubMenuItem>();
-            menuStatus.Add(new SubMenuItem("In-Stock", inStock));
             menuStatus.Add(new SubMenuItem("Low-Stock", lowStock));
             menuStatus.Add(new SubMenuItem("Out of Stock", outOfStock));
+            menuStatus.Add(new SubMenuItem("Discontinued", discontinued));
 
             var status = new MenuItem("Status", menuStatus);
 
-            Menu.Children.Add(new InventoryMenu(category));
+            //Menu.Children.Add(new InventoryMenu(category));
             Menu.Children.Add(new InventoryMenu(status));
         }
 

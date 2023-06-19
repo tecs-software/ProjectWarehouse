@@ -220,23 +220,6 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_address_book')
-BEGIN
-    CREATE TABLE tbl_address_book (
-        id INT IDENTITY(1,1) PRIMARY KEY,
-        first_name VARCHAR(50),
-        middle_name VARCHAR(50),
-        last_name VARCHAR(50),
-        phone VARCHAR(20),
-        province VARCHAR(50),
-        city VARCHAR(50),
-        barangay VARCHAR(50),
-        address VARCHAR(255),
-        created_at DATETIME DEFAULT GETDATE()
-    );
-END
-GO
-
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_orders')
 BEGIN
     CREATE TABLE tbl_orders (
@@ -256,3 +239,23 @@ BEGIN
     );
 END
 GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_receiver')
+BEGIN
+    CREATE TABLE [dbo].[tbl_receiver](
+		receiver_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		[receiver_name] [varchar](50) NOT NULL,
+		[receiver_phone] [varchar](50) NOT NULL,
+        [receiver_address] [varchar](50) NOT NULL,
+		)
+END
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
+BEGIN
+    CREATE TABLE [dbo].[tbl_sender](
+		sender_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		[sender_name] [varchar](50) NOT NULL,
+		[sender_phone] [varchar](50) NOT NULL,
+        [sender_address] [varchar](50) NOT NULL,
+		)
+END

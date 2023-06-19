@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Controller;
+using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
@@ -50,6 +51,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         {
             if (mainFrame.Content is SenderInformation)
             {
+                if(Util.IsAnyTextBoxEmpty(senderInformationPage.tbFirstName, senderInformationPage.tbLastName, senderInformationPage.tbPhone, senderInformationPage.tbAddress))
+                {
+                    MessageBox.Show("Fill up required fields");
+                    return;
+                }
                 mainFrame.Navigate(GetOrCreateReceiverInformationPage());
                 
             }

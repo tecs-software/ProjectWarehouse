@@ -148,7 +148,7 @@ namespace WarehouseManagement.Controller
             }
             else
             {
-                payloadObj.txlogisticid = "ABC-218";
+                payloadObj.txlogisticid = "ABC-" + new Random().Next(100000, 999999).ToString();
             }
 
             string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);

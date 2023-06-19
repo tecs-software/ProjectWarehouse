@@ -58,8 +58,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule
                 {
                     switch (header.ToLower())
                     {
-                        case "in-stock":
-                            inventoryModule?.tableFilter("In-Stock");
+                        case "discontinued":
+                            inventoryModule?.tableFilter("Discontinued");
                             break;
                         case "low-stock":
                             inventoryModule?.tableFilter("Low-Stock");

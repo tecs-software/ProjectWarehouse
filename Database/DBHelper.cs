@@ -1140,9 +1140,9 @@ namespace WarehouseManagement.Database
             return (activeCount, inactiveCount, disabledCount);
         }
 
-        public async Task<(int inStock, int lowStock, int outOfStock)> GetProductsCount()
+        public async Task<(int discontinued, int lowStock, int outOfStock)> GetProductsCount()
         {
-            int inStockCount = 0;
+            int discontinuedCount = 0;
             int lowStockCount = 0;
             int outOfStockCount = 0;
 
@@ -1150,9 +1150,9 @@ namespace WarehouseManagement.Database
 
             using (SqlConnection? connection = await conn.OpenConnection())
             {
-                string inStockQuery = "SELECT COUNT(*) FROM tbl_products WHERE status = 'IN-STOCK'";
-                SqlCommand inStockCommand = new SqlCommand(inStockQuery, connection);
-                inStockCount = (int)inStockCommand.ExecuteScalar();
+                string discontinuedQuery = "SELECT COUNT(*) FROM tbl_products WHERE status = 'DISCONTINUED'";
+                SqlCommand discontinuedCommand = new SqlCommand(discontinuedQuery, connection);
+                discontinuedCount = (int)discontinuedCommand.ExecuteScalar();
 
                 string lowStockQuery = "SELECT COUNT(*) FROM tbl_products WHERE status = 'LOW-STOCK'";
                 SqlCommand lowStockCommand = new SqlCommand(lowStockQuery, connection);
@@ -1163,7 +1163,7 @@ namespace WarehouseManagement.Database
                 outOfStockCount = (int)outOfStockCommand.ExecuteScalar();
             }
 
-            return (inStockCount, lowStockCount, outOfStockCount);
+            return (discontinuedCount, lowStockCount, outOfStockCount);
         }
 
         public async Task  <bool> CheckIfLogged(string tableName, string columnId, string columnIdValue, string columnValue)
@@ -1585,6 +1585,44 @@ namespace WarehouseManagement.Database
 
 
             return hasInvalidRecords;
+        }
+
+        public async void IssuePayslip(int userId)
+        {
+            using (DatabaseConnection dbConnection = new DatabaseConnection())
+            {
+                SqlConnection? connection = await dbConnection.OpenConnection();
+
+                if (connection != null)
+                {
+                    // Update tbl_commissions
+                    SqlCommand updateCommissionsCommand = new SqlCommand("UPDATE tbl_commissions SET issued = 1 WHERE user_id = @userId", connection);
+                    updateCommissionsCommand.Parameters.AddWithValue("@userId", userId);
+                    updateCommissionsCommand.ExecuteNonQuery();
+
+                    // Update tbl_overtime
+                    SqlCommand updateOvertimeCommand = new SqlCommand("UPDATE tbl_overtime SET issued = 1 WHERE user_id = @userId", connection);
+                    updateOvertimeCommand.Parameters.AddWithValue("@userId", userId);
+                    updateOvertimeCommand.ExecuteNonQuery();
+
+                    // Update tbl_reimbursement
+                    SqlCommand updateReimbursementCommand = new SqlCommand("UPDATE tbl_reimbursement SET issued = 1 WHERE user_id = @userId", connection);
+                    updateReimbursementCommand.Parameters.AddWithValue("@userId", userId);
+                    updateReimbursementCommand.ExecuteNonQuery();
+
+                    // Update tbl_deductions
+                    SqlCommand updateDeductionsCommand = new SqlCommand("UPDATE tbl_deductions SET issued = 1 WHERE user_id = @userId", connection);
+                    updateDeductionsCommand.Parameters.AddWithValue("@userId", userId);
+                    updateDeductionsCommand.ExecuteNonQuery();
+
+                    // Update tbl_deductions
+                    SqlCommand updateWorkHoursCommand = new SqlCommand("UPDATE tbl_work_Hours SET issued = 1 WHERE user_id = @userId", connection);
+                    updateWorkHoursCommand.Parameters.AddWithValue("@userId", userId);
+                    updateWorkHoursCommand.ExecuteNonQuery();
+                }
+
+                CloseConnection();
+            }
         }
     }
 }

@@ -39,6 +39,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
         public void Employee(string type = null)
         {
             btnGenerateAuthen.Visibility = Visibility.Visible;
+            btnManageUserLevels.Visibility = Visibility.Visible;
             mainFrame.Navigate(employee);
             employee?.ShowEmployees();
         }
@@ -46,6 +47,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
         public void ActiveEmployees()
         {
             btnGenerateAuthen.Visibility = Visibility.Visible;
+            btnManageUserLevels.Visibility = Visibility.Visible;
             mainFrame.Navigate(employee);
             employee?.ShowActiveEmployees();
         }
@@ -53,6 +55,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
         public void InactiveEmployees()
         {
             btnGenerateAuthen.Visibility = Visibility.Visible;
+            btnManageUserLevels.Visibility = Visibility.Visible;
             mainFrame.Navigate(employee);
             employee?.ShowInactiveEmployees();
         }
@@ -60,6 +63,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule
         public void DisabledEmployees()
         {
             btnGenerateAuthen.Visibility = Visibility.Visible;
+            btnManageUserLevels.Visibility = Visibility.Visible;
             mainFrame.Navigate(employee);
             employee?.ShowDisabledEmployees();
         }
