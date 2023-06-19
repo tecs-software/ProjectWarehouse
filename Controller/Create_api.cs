@@ -148,7 +148,7 @@ namespace WarehouseManagement.Controller
             }
             else
             {
-                payloadObj.txlogisticid = "ABC-216";
+                payloadObj.txlogisticid = "ABC-218";
             }
 
             string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
@@ -174,9 +174,8 @@ namespace WarehouseManagement.Controller
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
-                    MessageBox.Show(response);
-                    Console.WriteLine(response);
 
+                    //to decode the response
                     dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
                     string logisticProviderId = responseObject.logisticproviderid;
                     dynamic responseItems = responseObject.responseitems[0];
@@ -192,7 +191,7 @@ namespace WarehouseManagement.Controller
                     string reasonString = reason.ToString();
                     
                     
-
+                    //if there is no error
                     if (successString == "true")
                     {
                         string txLogisticIdString = txLogisticId.ToString();
@@ -204,10 +203,12 @@ namespace WarehouseManagement.Controller
                         queries.insert_receiver(receiver);
 
                         queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info);
+                        MessageBox.Show("Order has been Created");
                     }
+                    //if there's error on API
                     else
                     {
-                        
+                        MessageBox.Show(response);
                     }
 
                 }

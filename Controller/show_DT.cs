@@ -36,13 +36,16 @@ namespace WarehouseManagement.Controller
                     Orders order = new Orders
                     {
                         // Assign values from the DataRow to the properties of the Order object
-                        
+
                         ID = dr[0].ToString(),
-                        Waybill = dr[1].ToString(),
-                        status = dr[9].ToString(),
-                        customer_name = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = '" + dr[4].ToString() +"'"),
-                        address = sql.ReturnResult($"SELECT receiver_address FROM tbl_receiver WHERE receiver_id = '" + dr[4].ToString() +"'"),
-                        product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '" + dr[5].ToString() +"'")
+                        Waybill = dr[2].ToString(),
+                        status = dr[10].ToString(),
+                        customer_name = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = '" + dr[4].ToString() + "'"),
+                        address = sql.ReturnResult($"SELECT receiver_address FROM tbl_receiver WHERE receiver_id = '" + dr[4].ToString() + "'"),
+                        product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '" + dr[6].ToString() + "'"),
+                        courier = dr[1].ToString(),
+                        quantity = dr[7].ToString(),
+                        total = dr[8].ToString()
 
                         // Assign other properties as needed
                     };
@@ -62,6 +65,9 @@ namespace WarehouseManagement.Controller
         public string customer_name { get; set; }
         public string address { get; set; } 
         public string product { get; set; }
+        public string courier { get; set; }
+        public string quantity { get; set; }
+        public string total { get; set; }
 
     }
 }

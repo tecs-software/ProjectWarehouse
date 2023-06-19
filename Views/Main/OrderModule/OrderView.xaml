@@ -105,7 +105,7 @@
                         
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ORDER ID"
-                                                Binding="{Binding id}"
+                                                Binding="{Binding ID}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
@@ -115,7 +115,7 @@
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                             <DataGridTextColumn Header="WAYBILL #"
-                                                Binding="{Binding waybill}"
+                                                Binding="{Binding Waybill}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
@@ -125,7 +125,7 @@
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                             <DataGridTextColumn Header="RECEIVER"
-                                                Binding="{Binding receiver}"
+                                                Binding="{Binding customer_name}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
@@ -135,7 +135,7 @@
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                             <DataGridTextColumn Header="TOTAL PRICE"
-                                                Binding="{Binding total_price}"
+                                                Binding="{Binding total}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>

@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder"
       mc:Ignorable="d" 
       Background="White"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="800"
       Title="BookingInformation">
 
     <Grid>
@@ -43,7 +43,7 @@
                       materialDesign:HintAssist.Foreground="Black"
                       x:Name="cbItem"
                       BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbItem_DropDownClosed"/>
 
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="2"
@@ -91,7 +91,7 @@
                      materialDesign:HintAssist.Foreground="Black"
                   x:Name="tbGoodsValue"
                      BorderBrush="Black"
-                     IsReadOnly="False"
+                     IsReadOnly="True"
                      Margin="20,20,10,0"
                      Focusable="True"/>
 
@@ -125,13 +125,13 @@
                      Margin="20,20,20,0"
                      Focusable="True"/>
 
-        <StackPanel  Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,0,20">
-            <RadioButton GroupName="service" Content="J &amp; T"  FontSize="17" Margin="0,0,0,0" VerticalAlignment="Center"/>
-            <RadioButton GroupName="service" Content="Flash Express"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
-            <RadioButton GroupName="service" Content="LBC"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
-            <RadioButton GroupName="service" Content="Ninjavan"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
-        </StackPanel>
 
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,0,20">
+            <RadioButton x:Name="radioJAndT" GroupName="service" Content="J &amp; T"  FontSize="17" Margin="0,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
+            <RadioButton x:Name="radioFlashExpress" GroupName="service" Content="Flash Express"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
+            <RadioButton x:Name="radioLBC" GroupName="service" Content="LBC"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
+            <RadioButton x:Name="radioNinjavan" GroupName="service" Content="Ninjavan"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
+        </StackPanel>
 
         <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal" Margin="0,20,0,20">
             <TextBlock Text="Total Amount:" Grid.Row="8" Grid.Column="0" Margin="20,0,0,0" FontSize="20" VerticalAlignment="Bottom" FontWeight="Regular"/>

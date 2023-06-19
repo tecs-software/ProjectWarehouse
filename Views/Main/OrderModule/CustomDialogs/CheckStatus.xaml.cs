@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 {
@@ -19,9 +20,18 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     /// </summary>
     public partial class CheckStatus : Window
     {
-        public CheckStatus()
+        public CheckStatus(string waybill)
         {
             InitializeComponent();
+            tbOrderId.Text = waybill;
+            initialize_status();
+
+        }
+        public void initialize_status()
+        {
+            Track_api api_track = new Track_api();
+            api_track.api_track(tbOrderId.Text);
+            api_track.update_status(tblStatus);
         }
     }
 }

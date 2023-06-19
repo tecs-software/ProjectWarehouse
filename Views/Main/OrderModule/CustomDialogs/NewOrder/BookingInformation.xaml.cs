@@ -27,18 +27,29 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         {
             InitializeComponent();
             insert_item();
+            radioJAndT.IsChecked = true;
         }
         public void insert_item()
         {
-            sql.Query($"SELECT item_name FROM tbl_products");
+            sql.Query($"SELECT * FROM tbl_products");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
-                    cbItem.Items.Add(dr[0]);
+                    cbItem.Items.Add(dr[1]);
                 }
             }
+        }
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton selectedRadioButton = (RadioButton)sender;
+            string selectedRadioButtonName = selectedRadioButton.Content.ToString();
+        }
+
+        private void cbItem_DropDownClosed(object sender, EventArgs e)
+        {
+            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '" + cbItem.Text + "'");
         }
     }
 }
