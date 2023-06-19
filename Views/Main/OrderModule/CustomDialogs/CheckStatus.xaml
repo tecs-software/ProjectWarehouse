@@ -10,7 +10,7 @@
         WindowStyle="None"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="CheckStatus" Height="300" Width="500">
+        Title="CheckStatus" Height="300" Width="550">
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
             BorderThickness="1">
@@ -24,7 +24,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="0.45*"/>
             </Grid.ColumnDefinitions>
 
@@ -111,7 +111,7 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Status"
-                                    Binding="{Binding description}"
+                                    Binding="{Binding scan_type}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     Width="2*"/>

@@ -71,9 +71,9 @@ namespace WarehouseManagement.Controller
 
                     if(successString == "true")
                     {
-                        MessageBox.Show("Order has been Cancelled");
-                        sql.Query($"UPDATE tbl_orders SET status = 'CANCELLED', updated_at = '"+DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +"' WHERE order_id = '"+id+"'");
+                        sql.Query($"UPDATE tbl_orders SET status = 'CANCELLED', updated_at = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE order_id = '" + id + "'");
                         if (sql.HasException(true)) return;
+                        MessageBox.Show("Order has been Cancelled");
                     }
                     else
                     {
