@@ -130,7 +130,7 @@
                     Width="25"
                     Cursor="Hand">
 
-                <materialDesign:PackIcon Kind="ChartLineVariant" Width="20" Height="auto" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
+                <materialDesign:PackIcon Kind="Analytics" Width="20" Height="auto" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
 
             </Border>
 

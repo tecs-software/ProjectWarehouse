@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Helpers;
 
 namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
 {
@@ -30,7 +31,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
         {
             var culturePH = new CultureInfo("en-PH");
             lbName.Text = name;
-            lbDesignation.Text = user_level;
+            lbDesignation.Text = Converter.CapitalizeWords(user_level, 2);
             lbBasicPay.Text = "₱" + basicPay.ToString("n2", culturePH);
             lbAdditionalPay.Text = "₱" + additionalPay.ToString("n2", culturePH);
             lbReimbursement.Text = "₱" + reimbursement.ToString("n2", culturePH);

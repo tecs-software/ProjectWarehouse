@@ -1,0 +1,107 @@
+﻿<Window x:Class="WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs.ViewGeneratedKeys"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Title="ViewGeneratedKeys" Height="400" Width="600">
+    
+    <Border CornerRadius="10" Background="White"
+            BorderBrush="Black"
+            BorderThickness="1">
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,20">
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Generated Authentication Keys" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
+
+                <Button x:Name="btnHide"
+                            Click="btnHide_Click"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Grid.Row="0"
+                            DockPanel.Dock="Right"
+                            Style="{StaticResource SmallCloseButtonStyle}"
+                            Background="{StaticResource textboxProfitAnalysisColor1}"
+                            BorderBrush="Transparent">
+                </Button>
+
+
+            </DockPanel>
+
+            <DataGrid
+                DockPanel.Dock="Top"
+                CanUserAddRows="False"
+                AutoGenerateColumns="False"
+                HeadersVisibility="Column"
+                GridLinesVisibility="Horizontal"
+                BorderBrush="#949494"
+                VerticalScrollBarVisibility="Auto"
+                Background="White"
+                Height="300"
+                Grid.Row="1"
+                RowHeight="40"
+                IsReadOnly="True"
+                CanUserDeleteRows="False"
+                CanUserSortColumns="True"
+                CanUserReorderColumns="False"
+                CanUserResizeColumns="False"
+                TextBlock.TextAlignment="Left"
+                SelectionMode="Single"
+                x:Name="tblKeys"
+                ColumnHeaderStyle="{StaticResource HeaderStyle2}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="User Level"
+                                    Binding="{Binding role_name}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="0.90*"/>
+
+                    <DataGridTextColumn Header="Authentication Key"
+                                    Binding="{Binding authentication_code}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="1*"/>
+
+                    <DataGridTextColumn Header="Status"
+                                    Binding="{Binding status}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="0.50*"/>
+                    
+
+                    <DataGridTemplateColumn Header="" Width="0.50*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnCopy" 
+                                            Click="btnCopy_Click"
+                                            DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},Path=DataContext}"
+                                            BorderThickness="0"
+                                            Background="Transparent">
+                                    <Canvas Width="20" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Path Fill="#3c3c3c" Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+                                    </Canvas>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+    </Border>
+</Window>

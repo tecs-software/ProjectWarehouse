@@ -12,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Database;
+using WarehouseManagement.Helpers;
+using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
 {
@@ -20,24 +23,62 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
     /// </summary>
     public partial class NewUserLevel : Window
     {
-        public NewUserLevel()
+        private Roles? role;
+        private string id = null;
+        private bool isUpdate = false;
+
+        public NewUserLevel(string? id = null)
         {
             InitializeComponent();
             setPermissions();
+
+            if (id != null)
+            {
+                lblTitle.Text = "Modify Role";
+                isUpdate = true;
+                this.id = id;
+                setData(id);
+            }
+
             this.SizeToContent = SizeToContent.Height;
+        }
+
+        private async void setData(string id)
+        {
+            DBHelper db = new DBHelper();
+
+            role = new Roles();
+            role = await db.GetRole(id);
+
+            if (role != null)
+            {
+                tbRoleName.Text = role.roleName;
+                tbHourlyRate.Text = (role.hourlyRate <= 0) ? "N/A" : role.hourlyRate.ToString();
+            }
+
+            // Retrieve permissions from tbl_module_access using role_id
+            List<String> permissions = await db.GetModuleAccess(id);
+
+            foreach (CheckBox checkbox in permissionsCheckbox.Children.OfType<CheckBox>())
+            {
+                if (permissions.Contains(checkbox.Content.ToString()))
+                {
+                    checkbox.IsChecked = true;
+                }
+            }
         }
 
         private void setPermissions()
         {
             string[] permissionNames = {
-                "Can View Dashboard",
-                "Can View Inventory",
-                "Can Modify Inventory",
-                "Can View Order",
-                "Can Modify Order",
-                "Can View Employee",
-                "Can Modify Employee",
-                "Can View Sales"
+                "View Dashboard",
+                "View Inventory",
+                "Modify Inventory",
+                "View Order",
+                "Modify Order",
+                "View Employee",
+                "Modify Employee",
+                "Modify System Settings"
             };
 
             foreach (string permissionName in permissionNames)
@@ -56,6 +97,46 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                 checkbox.Style = checkBoxStyle;
 
                 permissionsCheckbox.Children.Add(checkbox);
+            }
+        }
+
+        private async void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (Util.IsAnyTextBoxEmpty(tbRoleName))
+            {
+                MessageBox.Show("Please enter role name");
+                return;
+            }
+
+            string roleName = tbRoleName.Text;
+            decimal hourlyRate = Converter.StringToDecimal(tbHourlyRate.Text);
+
+            List<string> moduleAccessList = new List<string>();
+            foreach (CheckBox checkbox in permissionsCheckbox.Children)
+            {
+                if (checkbox.IsChecked == true)
+                {
+                    moduleAccessList.Add(checkbox.Content.ToString());
+                }
+            }
+
+            DBHelper db = new DBHelper();
+            bool success = await db.InsertOrUpdateRole(roleName, hourlyRate, moduleAccessList, id);
+
+            if (success)
+            {
+                this.DialogResult = true;
+            }
+            else
+            {
+                if (isUpdate)
+                {
+                    MessageBox.Show("Failed to add role.");
+                }
+                else
+                {
+
+                }
             }
         }
     }
