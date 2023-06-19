@@ -119,7 +119,6 @@ namespace WarehouseManagement.Controller
             if (sql.DBDT.Rows.Count > 0)
             {
                 string txlogisticid = sql.ReturnResult($"SELECT order_id FROM tbl_orders ORDER BY order_id DESC");
-                MessageBox.Show(txlogisticid);
                 string[] parts = txlogisticid.Split('-');
                 if (parts.Length == 2)
                 {
@@ -138,12 +137,12 @@ namespace WarehouseManagement.Controller
                     }
                     else
                     {
-                        MessageBox.Show("error1");
+                        
                     }
                 }
                 else
                 {
-                    MessageBox.Show("error2");
+                    
                 }
             }
             else
@@ -152,7 +151,7 @@ namespace WarehouseManagement.Controller
             }
 
             string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
-            MessageBox.Show(updatedPayload);
+            //MessageBox.Show(updatedPayload);
             try
             {
                 // Step 3: Sign the JSON content and secret key

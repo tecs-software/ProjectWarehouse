@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WWarehouseManagement.Database;
 using static WarehouseManagement.Controller.Create_api;
+using System.Text.RegularExpressions;
 
 namespace WarehouseManagement.Controller
 {
@@ -57,31 +58,46 @@ namespace WarehouseManagement.Controller
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
-
+                    //MessageBox.Show(response);
+                    //Console.WriteLine(response);
                     dynamic responseObject = JsonConvert.DeserializeObject(response);
                     string logisticProviderId = responseObject.logisticproviderid;
 
                     dynamic responseItem = responseObject.responseitems[0];
                     string reason = responseItem.reason;
-                    bool success = responseItem.success == "true";
 
-                    if (success)
+                    dynamic[] details = responseItem.details.ToObject<dynamic[]>();
+
+                    foreach (dynamic detail in details)
                     {
-                        dynamic[] details = responseItem.details;
+                        string scanTime = detail.scantime;
+                        string scanType = detail.scantype;
+                        string description = detail.desc;
 
-                        foreach (dynamic detail in details)
+                        sql.Query($"SELECT * FROM tbl_status WHERE scan_time = '"+scanTime+"' AND waybill# = '"+waybill+"'");
+                        if (sql.HasException(true)) return;
+                        if(sql.DBDT.Rows.Count > 0)
                         {
-                            string scanTime = detail.scantime;
-                            string scanType = detail.scantype;
-                            string description = detail.desc;
-
-                            sql.Query($"INSERT INTO tbl_status (waybill#, scan_type, description, scan_time) VALUES ('" + waybill + "', '" + scanType + "', '" + description + "', '" + scanTime + "')");
+                            foreach(DataRow dr in sql.DBDT.Rows)
+                            {
+                                string parse_time = DateTime.Parse(dr[4].ToString()).ToString("yyyy-MM-dd HH:mm:ss");
+                                if (parse_time == scanTime)
+                                {
+                                    
+                                }
+                                else
+                                {
+                                    sql.Query($"INSERT INTO tbl_status (waybill#, scan_type, description, scan_time) VALUES ('" + waybill + "', '" + scanType.Replace('?', ' ') + "', '" + description.Replace('?', ' ') + "', '" + scanTime + "')");
+                                    if (sql.HasException(true)) return;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            sql.Query($"INSERT INTO tbl_status (waybill#, scan_type, description, scan_time) VALUES ('" + waybill + "', '" + scanType.Replace('?', ' ') + "', '" + description.Replace('?', ' ') + "', '" + scanTime + "')");
                             if (sql.HasException(true)) return;
                         }
-                    }
-                    else
-                    {
-                        MessageBox.Show("The order is still on pending status");
+
                     }
                 }
             }
@@ -102,8 +118,8 @@ namespace WarehouseManagement.Controller
                 {
                     Updates update = new Updates
                     {
-                        description = dr[3].ToString(),
-                        scan_time = dr[4].ToString()
+                        scan_type = dr[2].ToString(),
+                        scan_time = DateTime.Parse(dr[4].ToString()).ToString("yyyy-MM-dd hh:mm tt")
                     };
                     updates.Add(update);
                 }
@@ -113,7 +129,7 @@ namespace WarehouseManagement.Controller
         }
         public class Updates
         {
-
+            public string scan_type { get; set; } = string.Empty;
             public string description { get; set; } = string.Empty;    
             public string scan_time { get; set; } = string.Empty;
         }

@@ -18,14 +18,12 @@ namespace WarehouseManagement.Database
 
         public void insert_sender(Customer _customer)
         {
-            MessageBox.Show(_customer.FirstName);
             string name = _customer.FirstName + " " + _customer.LastName;
             sql.Query($"INSERT INTO tbl_sender (sender_name, sender_phone, sender_address) VALUES ('" + name + "', '" + _customer.Phone + "', '" + _customer.Address + "')");
             if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)
         {
-            MessageBox.Show(_receiver.LastName);
             string name = _receiver.FirstName + " " + _receiver.LastName;
             sql.Query($"INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) VALUES ('" + name + "', '" + _receiver.Phone + "', '" + _receiver.Address + "')");
             if (sql.HasException(true)) return;
