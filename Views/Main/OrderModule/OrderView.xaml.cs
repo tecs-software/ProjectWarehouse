@@ -22,12 +22,10 @@ using System.Data;
 using WarehouseManagement.Database;
 using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
+using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.LocalOrder;
 
 namespace WarehouseManagement.Views.Main.OrderModule
 {
-    /// <summary>
-    /// Interaction logic for OrderView.xaml
-    /// </summary>
     public partial class OrderView : Page
     {
        
@@ -35,21 +33,13 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             InitializeComponent();
             showOrderMenu();
+
+            //refreshTable();
+
             show_DT dt = new show_DT();
             dt.show_orders(dgtRespondentData);
         }
 
-        private void btnOrder_Click(object sender, RoutedEventArgs e)
-        {
-            
-            NewOrderWindow newOrderWindow = new NewOrderWindow();
-
-            if (newOrderWindow.ShowDialog() == true)
-            {
-                
-                
-            }
-        }
 
         public void showOrderMenu()
         {
@@ -64,6 +54,27 @@ namespace WarehouseManagement.Views.Main.OrderModule
             Menu.Children.Add(new OrderMenu(order));
         }
 
+        private void btnOrder_Click(object sender, RoutedEventArgs e)
+        {
+
+            NewOrderWindow newOrderWindow = new NewOrderWindow();
+
+            if (newOrderWindow.ShowDialog() == true)
+            {
+
+
+            }
+
+            //LocalOrderWindow localOrderWindow = new LocalOrderWindow();
+
+            //if(localOrderWindow.ShowDialog() == true)
+            //{
+            //    refreshTable();
+            //}
+
+        }
+
+
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.MenuItem item1 = new System.Windows.Controls.MenuItem() { Header = "Cancel Order" };
@@ -73,10 +84,20 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
             item1.Click += Cancel_Order_Click;
             item2.Click += Check_Status_Click;
+
+            //System.Windows.Controls.MenuItem item1 = new System.Windows.Controls.MenuItem() { Header = "Void Order" };
+            //System.Windows.Controls.MenuItem item2 = new System.Windows.Controls.MenuItem() { Header = "Complete Order" };
+
+            //Util.ShowContextMenuForButton(sender as Button, item1, item2);
+
+
+            //item1.Click += Cancel_Order_Click;
+            //item2.Click += Check_Status_Click;
         }
 
-        private void Check_Status_Click(object sender, RoutedEventArgs e)
+        private async void Check_Status_Click(object sender, RoutedEventArgs e)
         {
+
             if (dgtRespondentData.SelectedItems.Count > 0)
             {
                 var selectedOrder = dgtRespondentData.SelectedItems[0] as WarehouseManagement.Controller.Orders;
@@ -99,11 +120,39 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 }
 
             }
+
+            //if (tblOrders.SelectedItems.Count > 0)
+            //{
+            //    DataRowView selectedRow = (DataRowView)tblOrders.SelectedItems[0];
+
+            //    string orderID = selectedRow["order_id"].ToString();
+            //    string status = selectedRow["status"].ToString();
+
+            //    if(status != Util.status_in_progress)
+            //    {
+
+            //        return;
+            //    }
+
+            //    MessageBoxResult result = MessageBox.Show("Are you sure you want to complete this order?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            //    if (result == MessageBoxResult.Yes)
+            //    {
+            //        DBHelper db = new DBHelper();
+
+            //        if (await db.UpdateData("tbl_orders", new string[] { "status" }, new string[] { Util.status_completed }, "order_id", orderID))
+            //        {
+            //            refreshTable();
+            //        }
+            //    }
+            //}
         }
 
 
-        private void Cancel_Order_Click(object sender, RoutedEventArgs e)
+        private async void Cancel_Order_Click(object sender, RoutedEventArgs e)
         {
+
+
             if (dgtRespondentData.SelectedItems.Count > 0)
             {
                 var selectedOrder = dgtRespondentData.SelectedItems[0] as WarehouseManagement.Controller.Orders;
@@ -131,5 +180,68 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
             }
         }
+
+        private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+
+
+        //public async void refreshTable()
+        //{
+        //    string searchFilter =  tbSearch.Text;
+
+        //    string? query;
+        //    bool admin_privillages = false;
+
+        //    if (CurrentUser.Instance.ModuleAccessList.Contains("Modify System Settings"))
+        //    {
+        //        admin_privillages = true;
+
+        //        query = @"
+        //            SELECT o.order_id, o.courier, u.username, r.receiver_name, p.item_name, o.quantity, o.total, o.status, o.remarks, o.created_at
+        //            FROM tbl_orders o
+        //            LEFT JOIN tbl_users u ON o.user_id = u.user_id
+        //            LEFT JOIN tbl_receiver r ON o.receiver_id = r.receiver_id
+        //            LEFT JOIN tbl_products p ON o.product_id = p.product_id
+        //            ORDER BY o.created_at DESC";
+        //    }
+        //    else
+        //    {
+        //        query = $@"
+        //            SELECT o.order_id, o.courier, r.receiver_name, p.item_name, o.quantity, o.total, o.status, o.remarks, o.created_at
+        //            FROM tbl_orders o
+        //            LEFT JOIN tbl_users u ON o.user_id = u.user_id
+        //            LEFT JOIN tbl_receiver r ON o.receiver_id = r.receiver_id
+        //            LEFT JOIN tbl_products p ON o.product_id = p.product_id
+        //            WHERE o.user_id = {CurrentUser.Instance.userID}
+        //            ORDER BY o.created_at DESC";
+        //    }
+
+
+        //    DataTable? dataTable = await DBHelper.GetTable(query);
+
+        //    if (dataTable != null)
+        //    {
+        //        DataView dataView = new DataView(dataTable);
+
+        //        foreach (DataRowView row in dataView)
+        //        {
+        //            row["receiver_name"] = Converter.CapitalizeWords(row["receiver_name"].ToString(), 2);
+        //        }
+
+        //        if (!admin_privillages)
+        //        {
+        //            usernameColumn.Visibility = Visibility.Collapsed;
+        //        }
+
+        //        tblOrders.ItemsSource = dataView;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Failed to retrieve orders, database error.");
+        //    }
+        //}
     }
 }

@@ -50,7 +50,7 @@
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     Width="0.8*"/>
 
-                <DataGridTemplateColumn Header="STATUS" Width="0.8*">
+                <DataGridTemplateColumn Header="STATUS" Width="1*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border CornerRadius="5" VerticalAlignment="Center" Height="25">

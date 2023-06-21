@@ -46,6 +46,100 @@ namespace WarehouseManagement.Database
             }
         }
 
+        public async Task<DataTable> GetOrdersFiltered(Dictionary<string, string>? orFilters, Dictionary<string, string>? andFilters)
+        {
+            string tableName = "tbl_orders";
+            string[] columns = {
+        "order_id", "courier", "username", "receiver_name", "item_name",
+        "quantity", "total", "status", "remarks", "created_at"
+    };
+
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append($"SELECT {string.Join(", ", columns)} FROM {tableName} o");
+            queryBuilder.Append(" LEFT JOIN tbl_users u ON o.user_id = u.user_id");
+            queryBuilder.Append(" LEFT JOIN tbl_receiver r ON o.receiver_id = r.receiver_id");
+            queryBuilder.Append(" LEFT JOIN tbl_products p ON o.product_id = p.product_id");
+
+            if (orFilters != null && orFilters.Count > 0)
+            {
+                queryBuilder.Append(" WHERE ");
+                List<string> orFilterConditions = new List<string>();
+
+                foreach (var filter in orFilters)
+                {
+                    string filterColumn = filter.Key;
+                    string filterValue = filter.Value;
+                    orFilterConditions.Add($"p.{filterColumn} LIKE '%' + @{filterColumn} + '%' OR r.{filterColumn} LIKE '%' + @{filterColumn} + '%' OR u.{filterColumn} LIKE '%' + @{filterColumn} + '%'");
+                }
+
+                queryBuilder.Append(string.Join(" OR ", orFilterConditions));
+            }
+
+            if (andFilters != null && andFilters.Count > 0)
+            {
+                if (orFilters == null || orFilters.Count == 0)
+                    queryBuilder.Append(" WHERE ");
+                else
+                    queryBuilder.Append(" AND ");
+
+                List<string> andFilterConditions = new List<string>();
+
+                foreach (var filter in andFilters)
+                {
+                    string filterColumn = filter.Key;
+                    string filterValue = filter.Value;
+                    andFilterConditions.Add($"p.{filterColumn} LIKE '%' + @{filterColumn} + '%' OR r.{filterColumn} LIKE '%' + @{filterColumn} + '%' OR u.{filterColumn} LIKE '%' + @{filterColumn} + '%'");
+                }
+
+                queryBuilder.Append(string.Join(" AND ", andFilterConditions));
+            }
+
+            queryBuilder.Append(" ORDER BY o.created_at DESC");
+
+            try
+            {
+                using (DatabaseConnection dbConnection = new DatabaseConnection())
+                {
+                    using (SqlConnection connection = await dbConnection.OpenConnection())
+                    {
+                        using (SqlCommand command = new SqlCommand(queryBuilder.ToString(), connection))
+                        {
+                            if (orFilters != null && orFilters.Count > 0)
+                            {
+                                foreach (var filter in orFilters)
+                                {
+                                    string filterColumn = filter.Key;
+                                    string filterValue = filter.Value;
+                                    command.Parameters.AddWithValue($"@{filterColumn}", filterValue);
+                                }
+                            }
+
+                            if (andFilters != null && andFilters.Count > 0)
+                            {
+                                foreach (var filter in andFilters)
+                                {
+                                    string filterColumn = filter.Key;
+                                    string filterValue = filter.Value;
+                                    command.Parameters.AddWithValue($"@{filterColumn}", filterValue);
+                                }
+                            }
+
+                            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                            {
+                                DataTable dataTable = new DataTable();
+                                await Task.Run(() => adapter.Fill(dataTable));
+                                return dataTable;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<DataTable> GetTableFiltered(string tableName, IEnumerable<string> columns, Dictionary<string, string>? filters)
         {
             StringBuilder queryBuilder = new StringBuilder();
@@ -818,18 +912,24 @@ namespace WarehouseManagement.Database
                     commisionAdapter.Fill(commisionTable);
 
                     // Calculate commissions for each user
+                    SqlCommand incentiveCommand = new SqlCommand("SELECT user_id, SUM(total_incentive) AS incentives FROM tbl_incentives WHERE issued = 0 AND is_valid = 1 GROUP BY user_id", connection);
+                    SqlDataAdapter incentiveAdapter = new SqlDataAdapter(incentiveCommand);
+                    DataTable incentiveTable = new DataTable();
+                    incentiveAdapter.Fill(incentiveTable);
+
+                    // Calculate overtime for each user
                     SqlCommand overtimeCommand = new SqlCommand("SELECT user_id, SUM(overtime) AS total_overtime FROM tbl_overtime WHERE issued = 0 GROUP BY user_id", connection);
                     SqlDataAdapter overtimeAdapter = new SqlDataAdapter(overtimeCommand);
                     DataTable overtimeTable = new DataTable();
                     overtimeAdapter.Fill(overtimeTable);
 
-                    // Calculate commissions for each user
+                    // Calculate reimbursement for each user
                     SqlCommand reimbursementCommand = new SqlCommand("SELECT user_id, SUM(amount) AS total_reimbursement FROM tbl_reimbursement WHERE issued = 0 GROUP BY user_id", connection);
                     SqlDataAdapter reimbursementAdapter = new SqlDataAdapter(reimbursementCommand);
                     DataTable reimbursementTable = new DataTable();
                     reimbursementAdapter.Fill(reimbursementTable);
 
-                    // Calculate commissions for each user
+                    // Calculate deductions for each user
                     SqlCommand deductionCommand = new SqlCommand("SELECT user_id, SUM(amount) AS total_deductions FROM tbl_deductions WHERE issued = 0 GROUP BY user_id", connection);
                     SqlDataAdapter deductionAdapter = new SqlDataAdapter(deductionCommand);
                     DataTable deductionTable = new DataTable();
@@ -841,6 +941,7 @@ namespace WarehouseManagement.Database
                     payrollData.Columns.Add("hours_worked");
                     payrollData.Columns.Add("additional_earnings");
                     payrollData.Columns.Add("commission");
+                    payrollData.Columns.Add("incentives");
                     payrollData.Columns.Add("gross_pay");
                     payrollData.Columns.Add("overtime");
                     payrollData.Columns.Add("regular_pay");
@@ -893,6 +994,15 @@ namespace WarehouseManagement.Database
                             commission = Convert.ToDouble(commissionRows[0]["total_commision"]);
                         }
 
+                        // Get incentives for user
+                        DataRow[] incentiveRows = incentiveTable.Select("user_id = '" + userId + "'");
+                        double incentive = 0.0;
+
+                        if (incentiveRows.Length > 0)
+                        {
+                            incentive = Convert.ToDouble(incentiveRows[0]["incentives"]);
+                        }
+
                         DataRow[] reimbursementnRows = reimbursementTable.Select("user_id = '" + userId + "'");
                         double reimbursement = 0.0;
 
@@ -921,7 +1031,7 @@ namespace WarehouseManagement.Database
 
                         double regularPay = (hoursWorked - overtime) * hourlyRate;
                         double overtimePay = overtime * 80;
-
+                        double totalIncentive = incentive + commission;
                         double grossPay = ((hoursWorked - overtime) * hourlyRate) + commission + reimbursement + (overtime * 80) - deduction;
                         //double grossPay = hourlyRate * hoursWorked + commission + (overtime * hourlyRate) + reimbursement;
 
@@ -932,7 +1042,7 @@ namespace WarehouseManagement.Database
                         payrollRow["hours_worked"] = hoursWorked;
                         payrollRow["commission"] = 0;
                         payrollRow["gross_pay"] = string.Format("{0:N2}", grossPay);
-                        payrollRow["additional_earnings"] = string.Format("{0:N2}", commission);
+                        payrollRow["additional_earnings"] = string.Format("{0:N2}", totalIncentive);
                         payrollRow["regular_pay"] = string.Format("{0:N2}", regularPay);
                         payrollRow["overtime_pay"] = string.Format("{0:N2}", overtimePay);
                         payrollRow["overtime"] = overtime;
@@ -1086,9 +1196,10 @@ namespace WarehouseManagement.Database
             string query = $@"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name
                   FROM tbl_users u
                   INNER JOIN tbl_active_users au ON u.user_id = au.user_id
+                  LEFT JOIN tbl_wage w ON u.user_id = w.user_id  
                   LEFT JOIN tbl_access_level a ON u.user_id = a.user_id
                   LEFT JOIN tbl_roles r ON a.role_id = r.role_id
-                  WHERE {condition}
+                  WHERE {condition} AND w.user_id IS NOT NULL
                   GROUP BY u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name";
 
             using DatabaseConnection? conn = new();
@@ -1124,11 +1235,25 @@ namespace WarehouseManagement.Database
 
             using (SqlConnection? connection = await conn.OpenConnection())
             {
-                string activeQuery = "SELECT COUNT(*) FROM tbl_active_users au INNER JOIN tbl_users u ON au.user_id = u.user_id WHERE u.status = 'Enabled' AND au.login_time IS NOT NULL AND au.logout_time IS NULL";
+                string activeQuery = @"SELECT COUNT(*)
+                      FROM tbl_active_users au
+                      INNER JOIN tbl_users u ON au.user_id = u.user_id
+                      INNER JOIN tbl_wage w ON u.user_id = w.user_id
+                      WHERE u.status = 'Enabled'
+                      AND au.login_time IS NOT NULL
+                      AND au.logout_time IS NULL
+                      AND u.user_id IS NOT NULL";
+
                 SqlCommand activeCommand = new SqlCommand(activeQuery, connection);
                 activeCount = (int)activeCommand.ExecuteScalar();
 
-                string inactiveQuery = "SELECT COUNT(*) FROM tbl_active_users au INNER JOIN tbl_users u ON au.user_id = u.user_id WHERE u.status = 'Enabled' AND (au.login_time IS NOT NULL AND au.logout_time IS NOT NULL OR au.login_time IS NULL AND au.logout_time IS NULL)";
+                string inactiveQuery = @"SELECT COUNT(*)
+                        FROM tbl_active_users au
+                        INNER JOIN tbl_users u ON au.user_id = u.user_id
+                        INNER JOIN tbl_wage w ON u.user_id = w.user_id
+                        WHERE u.status = 'Enabled'
+                        AND ((au.login_time IS NOT NULL AND au.logout_time IS NOT NULL)
+                        OR (au.login_time IS NULL AND au.logout_time IS NULL))";
                 SqlCommand inactiveCommand = new SqlCommand(inactiveQuery, connection);
                 inactiveCount = (int)inactiveCommand.ExecuteScalar();
 
@@ -1282,6 +1407,20 @@ namespace WarehouseManagement.Database
                 }
                 reader.Close();
 
+                // Get sum of incentives
+                query = "SELECT SUM(total_incentive) AS incentive_sum FROM tbl_incentives WHERE issued = 0 AND is_valid = 1 AND user_id = @userId";
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, object> incentiveData = new Dictionary<string, object>();
+                    incentiveData.Add("incentive", reader["incentive_sum"]);
+                    financialData.Add(incentiveData);
+                }
+                reader.Close();
+
                 // Get sum of reimbursements
                 query = "SELECT SUM(amount) AS reimbursement_sum FROM tbl_reimbursement WHERE issued = 0 AND user_id = @userId";
                 command = new SqlCommand(query, connection);
@@ -1334,7 +1473,8 @@ namespace WarehouseManagement.Database
                             Roles role = new Roles();
                             role.roleID = reader.GetInt32(0);
                             role.roleName = Converter.CapitalizeWords(reader.GetString(1), 2);
-                            role.hourlyRate = reader.GetDecimal(2);
+                            decimal? hourlyRateNullable = reader.IsDBNull(2) ? (decimal?)null : reader.GetDecimal(2);
+                            decimal hourlyRate = hourlyRateNullable ?? 0;
 
                             roles.Add(role);
                         }
@@ -1610,6 +1750,11 @@ namespace WarehouseManagement.Database
                     updateReimbursementCommand.Parameters.AddWithValue("@userId", userId);
                     updateReimbursementCommand.ExecuteNonQuery();
 
+                    // Update tbl_reimbursement
+                    SqlCommand updateIncentiveCommand = new SqlCommand("UPDATE tbl_incentives SET issued = 1 WHERE user_id = @userId", connection);
+                    updateIncentiveCommand.Parameters.AddWithValue("@userId", userId);
+                    updateIncentiveCommand.ExecuteNonQuery();
+
                     // Update tbl_deductions
                     SqlCommand updateDeductionsCommand = new SqlCommand("UPDATE tbl_deductions SET issued = 1 WHERE user_id = @userId", connection);
                     updateDeductionsCommand.Parameters.AddWithValue("@userId", userId);
@@ -1623,6 +1768,127 @@ namespace WarehouseManagement.Database
 
                 CloseConnection();
             }
+        }
+
+        public async Task <bool> InsertOrder(string[] receiverDataValues, string[] orderValues)
+        {
+            bool success = false;
+
+            DatabaseConnection dbConnection = new DatabaseConnection();
+
+            using (SqlConnection connection = await dbConnection.OpenConnection())
+            {
+                SqlTransaction transaction = null;
+
+                try
+                {
+                    transaction = connection.BeginTransaction();
+
+                    // Retrieve the newly inserted sender and receiver IDs
+                    int receiverID;
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        command.Transaction = transaction;
+                        command.CommandText = "INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) " +
+                                              "VALUES (@ReceiverName, @ReceiverPhone, @ReceiverAddress);" +
+                                              "SELECT SCOPE_IDENTITY() AS ReceiverID";
+
+                        command.Parameters.AddWithValue("@ReceiverName", receiverDataValues[0]);
+                        command.Parameters.AddWithValue("@ReceiverPhone", receiverDataValues[1]);
+                        command.Parameters.AddWithValue("@ReceiverAddress", receiverDataValues[2]);
+
+                        receiverID = Convert.ToInt32(command.ExecuteScalar());
+                        if (receiverID <= 0)
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+
+                    // Insert into tbl_orders with sender and receiver IDs and status as "pending"
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        command.Transaction = transaction;
+                        command.CommandText = "INSERT INTO tbl_orders (order_id, courier, user_id, receiver_id, product_id, quantity, total, remarks, status) " +
+                                              "VALUES (@OrderID, @Courier, @UserID,  @ReceiverID, @ProductID, @Quantity, @Total, @Remarks, @Status )";
+
+                        command.Parameters.AddWithValue("@OrderID", orderValues[0]);
+                        command.Parameters.AddWithValue("@Courier", orderValues[1]);
+                        command.Parameters.AddWithValue("@UserID", orderValues[2]);
+                        command.Parameters.AddWithValue("@ReceiverID", receiverID);
+                        command.Parameters.AddWithValue("@ProductID", orderValues[3]);
+                        command.Parameters.AddWithValue("@Quantity", orderValues[4]);
+                        command.Parameters.AddWithValue("@Total", orderValues[5]);
+                        command.Parameters.AddWithValue("@Remarks", orderValues[6]);
+                        command.Parameters.AddWithValue("@Status", "IN PROGRESS");
+                       
+
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Update tbl_products with new quantity
+                    int newQty = Convert.ToInt32(orderValues[4]);
+
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        command.Transaction = transaction;
+                        command.CommandText = "UPDATE tbl_products SET unit_quantity = unit_quantity - @Quantity, status = @Status WHERE product_id = @ProductID";
+
+                        command.Parameters.AddWithValue("@Quantity", newQty);
+                        command.Parameters.AddWithValue("@Status", orderValues[7]);
+                        command.Parameters.AddWithValue("@ProductID", orderValues[3]);
+
+                        command.ExecuteNonQuery();
+                    }
+
+
+                    //insert tbl_incentive
+
+
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        command.Transaction = transaction;
+
+                        command.CommandText = "SELECT employee_commission FROM tbl_selling_expenses WHERE product_id = @ProductID";
+                        command.Parameters.AddWithValue("@ProductID", orderValues[3]);
+                        decimal employeeCommission = (decimal)command.ExecuteScalar();
+
+                        // Calculate the totalIncentive by multiplying the employee_commission with the quantity
+                        decimal quantity = Convert.ToDecimal(orderValues[4]);
+                        decimal totalIncentive = employeeCommission * quantity;
+
+                        // Insert into tbl_incentives
+                        command.CommandText = "INSERT INTO tbl_incentives (user_id, incentive_for, quantity, total_incentive, is_valid) " +
+                                              "VALUES (@UserID, @IncentiveFor, @Quantity,  @Total, @IsValid)";
+
+                        command.Parameters.AddWithValue("@UserID", orderValues[2]);
+                        command.Parameters.AddWithValue("@IncentiveFor", orderValues[3]);
+                        command.Parameters.AddWithValue("@Quantity", quantity);
+                        command.Parameters.AddWithValue("@Total", totalIncentive);
+                        command.Parameters.AddWithValue("@IsValid", 1);
+
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    success = true;
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show("An error occurred: " + ex.Message);
+                }
+                finally
+                {
+                    CloseConnection();
+                }
+            }
+
+            return success;
         }
     }
 }

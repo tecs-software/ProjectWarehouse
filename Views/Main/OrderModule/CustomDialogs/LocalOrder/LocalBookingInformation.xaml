@@ -1,0 +1,93 @@
+﻿<Page x:Class="WarehouseManagement.Views.Main.OrderModule.CustomDialogs.LocalOrder.LocalBookingInformation"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder"
+      mc:Ignorable="d" 
+      Background="White"
+      d:DesignHeight="400" d:DesignWidth="800"
+      Title="BookingInformation">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <TextBlock Text="Order Information" Grid.Row="0" Grid.Column="0" Margin="20,20,0,0" FontSize="25" FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="0"
+                      Grid.Row="2"
+                      Margin="20,20,10,0"
+                      materialDesign:HintAssist.Hint="Select Item" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      x:Name="cbItem"
+                      
+                      SelectionChanged="cbItem_SelectionChanged"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}" />
+
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="2"
+                     
+                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="Quantity" 
+                     FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     x:Name="tbQuantity"
+                     TextChanged="tbQuantity_TextChanged"
+                     IsReadOnly="False"
+                     PreviewTextInput="IntValidationTextBox"
+                     Margin="10,20,20,0"
+                     Focusable="True"
+                     MaxLength="6"
+                    />
+
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Grid.Row="6"
+                Grid.ColumnSpan="2"
+                Grid.Column="0"
+                x:Name="tbRemarks"
+                materialDesign:HintAssist.Hint="Remarks" 
+                FontSize="15"
+                Background="{StaticResource textboxProfitAnalysisColor1}"
+                materialDesign:HintAssist.Foreground="Black"
+                BorderBrush="Black"
+                IsReadOnly="False"
+                Margin="20,20,20,0"
+                Focusable="True"/>
+
+
+        <StackPanel Grid.Row="7" x:Name="courierRadioButtons" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,0,20">
+            <RadioButton x:Name="radioJAndT" GroupName="service" Content="J &amp; T"  FontSize="17" Margin="0,0,0,0" VerticalAlignment="Center"/>
+            <RadioButton x:Name="radioFlashExpress" GroupName="service" Content="Flash Express"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            <RadioButton x:Name="radioLBC" GroupName="service" Content="LBC"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            <RadioButton x:Name="radioNinjavan" GroupName="service" Content="Ninjavan"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,20,0,20">
+            <TextBlock Text="Total Amount:" Grid.Row="8" Grid.Column="0" Margin="20,0,0,4" FontSize="20" VerticalAlignment="Bottom" FontWeight="Regular"/>
+            <TextBlock Text="₱0" x:Name="tbTotal" Grid.Row="8" Grid.Column="0" FontSize="35" Margin="20,0,0,0" FontWeight="SemiBold"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -189,7 +189,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
         private async void cbEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string name = "", userLevel = null;
-            decimal hourlyRate = 0, overtime = 0, commissions = 0, hoursWorked = 0, reimbursements = 0, basicPay = 0, additionalPay = 0, deductions = 0;
+            decimal hourlyRate = 0, overtime = 0, commissions = 0, incentive = 0, hoursWorked = 0, reimbursements = 0, basicPay = 0, additionalPay = 0, deductions = 0;
 
             if (cbEmployee.SelectedItem != null)
             {
@@ -212,6 +212,9 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                             {
                                 switch (key)
                                 {
+                                    case "incentive":
+                                        incentive = Convert.ToDecimal(value);
+                                        break;
                                     case "role_name":
                                         userLevel = value.ToString();
                                         break;
@@ -243,7 +246,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
             }
 
             basicPay = hoursWorked * hourlyRate;
-            additionalPay = (overtime * 60) + commissions;
+            additionalPay = (overtime * 60) + commissions + incentive;
 
 
             var pp = mainFrame.Content as PayrollPayslipPage;

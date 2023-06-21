@@ -15,7 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
+using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee
 {
@@ -39,9 +41,11 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee
         {
             string query = @"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name
                 FROM tbl_users u
-                LEFT JOIN tbl_access_level a ON u.user_id = a.user_id
-                LEFT JOIN tbl_roles r ON a.role_id = r.role_id
-                WHERE u.username <> ''";
+                LEFT JOIN tbl_wage w ON u.user_id = w.user_id
+                LEFT JOIN tbl_access_level al ON u.user_id = al.user_id
+                LEFT JOIN tbl_roles r ON al.role_id = r.role_id
+                WHERE u.username <> '' AND w.user_id IS NOT NULL";
+
 
             DataTable? dataTable = await DBHelper.GetTable(query);
 
@@ -129,7 +133,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee
                 return;
 
             string? status = ((DataRowView)tblUsers.SelectedItem)["status"].ToString();
-            MenuItem item1 = (status == "Disabled") ? new MenuItem() { Header = "Reactivate" } : new MenuItem() { Header = "Archive" };
+            System.Windows.Controls.MenuItem item1 = (status == "Disabled") ? new MenuItem() { Header = "Reactivate" } : new MenuItem() { Header = "Archive" };
             MenuItem item2 = new MenuItem() { Header = "Manage Employee" };
 
             Util.ShowContextMenuForButton(sender as Button, item1, item2);

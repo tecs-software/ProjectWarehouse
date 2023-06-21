@@ -24,6 +24,10 @@ namespace WarehouseManagement.Helpers
         public static readonly string status_out_of_stock = "OUT OF STOCK";
         public static readonly string status_low_stock = "LOW-STOCK";
         public static readonly string status_discontinued = "DISCONTINUED";
+        public static readonly string status_in_progress = "IN PROGRESS";
+        public static readonly string status_voided = "VOIDED";
+        public static readonly string status_completed = "COMPLETED";
+
 
         public static bool IsAnyTextBoxEmpty(params Control[] controls)
         {
@@ -46,6 +50,18 @@ namespace WarehouseManagement.Helpers
             foreach (var str in strings)
             {
                 if (string.IsNullOrWhiteSpace(str))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsAnyComboBoxItemEmpty(ComboBox comboBox)
+        {
+            foreach (var item in comboBox.Items)
+            {
+                if (item == null || string.IsNullOrWhiteSpace(item.ToString()))
                 {
                     return true;
                 }

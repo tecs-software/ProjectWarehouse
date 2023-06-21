@@ -36,8 +36,11 @@ namespace WarehouseManagement.Views.InitialSetup
                 login.Show();
                 this.Close();
             }
+        }
 
-            this.SizeToContent = SizeToContent.Height;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ReCenter();
         }
 
         private async void btnConnection_Click(object sender, RoutedEventArgs e)
@@ -70,7 +73,21 @@ namespace WarehouseManagement.Views.InitialSetup
                 }
                 else
                 {
+                    if (Util.IsAnyTextBoxEmpty(tbServerName, tbAuthentication, tbPassword))
+                    {
+                        return;
+                    }
 
+                    connection = $"Data Source={tbServerName.Text};Initial Catalog=db_warehouse_management;User ID={tbAuthentication.Text};Password={tbPassword.Text};Integrated Security=False";
+                    if (await DatabaseConnection.TestConnection(connection))
+                    {
+                        btnProceed.Visibility = Visibility.Visible;
+                        ShowMessage("Connection Success");
+                    }
+                    else
+                    {
+                        ShowMessage("Connection Failed");
+                    }
                 }
 
                 btnConnection.Content = "Check Connection";
@@ -91,11 +108,17 @@ namespace WarehouseManagement.Views.InitialSetup
 
                     if (await dbInitializer.CreateDatabaseIfNotExists("db_warehouse_management"))
                     {
+                        if (!await dbInitializer.InsertSQLAuthentication("db_warehouse_management"))
+                        {
+                            MessageBox.Show("Failed to create login");
+                        }
+
                         connection += ";Initial Catalog=db_warehouse_management";
                         await SaveConnection(connection);
                         LoginWindow login = new LoginWindow();
                         login.Show();
                         this.Close();
+
                     }
                     else
                     {
@@ -105,7 +128,10 @@ namespace WarehouseManagement.Views.InitialSetup
                 }
                 else
                 {
-
+                    await SaveConnection(connection);
+                    LoginWindow login = new LoginWindow();
+                    login.Show();
+                    this.Close();
                 }
 
                 btnProceed.Content = "Proceed";
@@ -146,6 +172,7 @@ namespace WarehouseManagement.Views.InitialSetup
             isServer = false;
             tbAuthentication.Visibility = Visibility.Visible;
             tbPassword.Visibility = Visibility.Visible;
+            ReCenter();
         }
 
         private void Server()
@@ -155,6 +182,8 @@ namespace WarehouseManagement.Views.InitialSetup
             tbAuthentication.Visibility = Visibility.Collapsed;
             tbPassword.Visibility = Visibility.Collapsed;
             tbServerName.Text = Util.GetLocalSqlServerInstanceName();
+            ReCenter();
+
         }
 
         private void Clear()
@@ -191,14 +220,60 @@ namespace WarehouseManagement.Views.InitialSetup
         private void ShowProgressBar()
         {
             loading = true;
+            rbClient.IsEnabled = false;
+            rbServer.IsEnabled = false;
             progressBar.Visibility = Visibility.Visible;
         }
 
         private void HideProgressBar()
         {
             progressBar.Visibility = Visibility.Collapsed;
+            rbClient.IsEnabled = true;
+            rbServer.IsEnabled = true;
             loading = false;
             
+        }
+
+       
+
+        private void ReCenter()
+        {
+            this.SizeToContent = SizeToContent.Height;
+
+            this.Loaded += (sender, e) =>
+            {
+                double screenWidth = SystemParameters.PrimaryScreenWidth;
+                double screenHeight = SystemParameters.PrimaryScreenHeight;
+                double windowWidth = ActualWidth;
+                double windowHeight = ActualHeight;
+
+                Left = (screenWidth - windowWidth) / 2;
+                Top = (screenHeight - windowHeight) / 2;
+            };
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ReleaseMouseCapture();
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (Mouse.Captured == null)
+                {
+                    DragMove();
+                }
+            }
         }
     }
 }

@@ -48,6 +48,7 @@ namespace WarehouseManagement.Database
                 using SqlTransaction transaction = sqlConnection.BeginTransaction();
 
                 command.Transaction = transaction;
+
                 try
                 {
                     foreach (var batch in batches)
@@ -72,6 +73,51 @@ namespace WarehouseManagement.Database
             }
 
             return false;
+        }
+
+        public async Task<bool> InsertSQLAuthentication(string databaseName)
+        {
+            try
+            {
+                using (DatabaseConnection connection = new DatabaseConnection(connectionString))
+                {
+                    using SqlConnection? sqlConnection = await connection.OpenConnection();
+
+                    if (sqlConnection == null)
+                    {
+                        return false;
+                    }
+
+                    string loginName = $"client";
+                    string loginPassword = $"password123";
+
+                    // Check if login already exists
+                    string checkLoginSql = $"SELECT COUNT(*) FROM sys.sql_logins WHERE name = '{loginName}'";
+                    SqlCommand checkLoginCommand = new SqlCommand(checkLoginSql, sqlConnection);
+                    int loginCount = (int)checkLoginCommand.ExecuteScalar();
+
+                    if (loginCount == 0)
+                    {
+                        // Create login
+                        string createLoginSql = $"CREATE LOGIN {loginName} WITH PASSWORD = '{loginPassword}';";
+                        SqlCommand createLoginCommand = new SqlCommand(createLoginSql, sqlConnection);
+                        createLoginCommand.ExecuteNonQuery();
+
+                        string createUserSql = $"USE {databaseName}; CREATE USER {loginName} FOR LOGIN {loginName};";
+                        string addDataReaderRoleSql = $"EXEC sp_addrolemember 'db_datareader', '{loginName}';";
+                        string addDataWriterRoleSql = $"EXEC sp_addrolemember 'db_datawriter', '{loginName}';";
+                        SqlCommand createUserCommand = new SqlCommand(createUserSql + addDataReaderRoleSql + addDataWriterRoleSql, sqlConnection);
+                        createUserCommand.ExecuteNonQuery();
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
 
         public async Task<bool> InsertInitialAdminUser(string databaseName)

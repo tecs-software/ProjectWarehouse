@@ -34,6 +34,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         Receiver _receiver = new Receiver();
         Booking_info booking_info = new Booking_info();
         Create_api order_api = new Create_api();
+
         public NewOrderWindow()
         {
             InitializeComponent();
@@ -95,6 +96,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 booking_info.remarks = bookingInformationPage.tbRemarks.Text;
                 booking_info.quantity = bookingInformationPage.tbQuantity.Text;
                 booking_info.item_category = bookingInformationPage.tbCategory.Text;
+
                 if(bookingInformationPage.radioJAndT.IsChecked == true)
                 {
                     booking_info.courier = "JnT";

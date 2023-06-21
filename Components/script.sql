@@ -157,6 +157,7 @@ BEGIN
 		[description] [varchar](50) NOT NULL,
 		[issued] [bit] NOT NULL DEFAULT 0,
 		[is_valid] [bit] NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT GETDATE(),
 		FOREIGN KEY ([user_id]) REFERENCES [tbl_users]([user_id])
 		)
 END
@@ -171,6 +172,7 @@ BEGIN
 		[overtime] [decimal](10, 2) NOT NULL,
 		[issued] [bit] NOT NULL DEFAULT 0,
 		[is_valid] [bit] NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT GETDATE(),
 		FOREIGN KEY ([user_id]) REFERENCES [tbl_users]([user_id])
 		)
 END
@@ -185,6 +187,7 @@ BEGIN
 		[description] [varchar](50) NOT NULL,
 		[issued] [bit] NOT NULL DEFAULT 0,
 		[is_valid] [bit] NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT GETDATE(),
 		FOREIGN KEY ([user_id]) REFERENCES [tbl_users]([user_id])
 		)
 END
@@ -200,6 +203,7 @@ BEGIN
 		[commission_amount] [decimal](10, 2) NOT NULL,
 		[issued] [bit] NOT NULL DEFAULT 0,
 		[is_valid] [bit] NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT GETDATE(),
 		FOREIGN KEY ([user_id]) REFERENCES [tbl_users]([user_id])
 		)
 END
@@ -215,6 +219,7 @@ BEGIN
 		[total_incentive] [decimal](10, 2) NOT NULL,
 		[issued] [bit] NOT NULL DEFAULT 0,
 		[is_valid] [bit] NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT GETDATE(),
 		FOREIGN KEY ([user_id]) REFERENCES [tbl_users]([user_id])
 		)
 END
@@ -227,8 +232,8 @@ BEGIN
         courier VARCHAR(50),
         [waybill_number] VARCHAR(50),
         user_id INT FOREIGN KEY REFERENCES tbl_users(user_id),
-        sender_id INT FOREIGN KEY REFERENCES tbl_address_book(id),
-        receiver_id INT FOREIGN KEY REFERENCES tbl_address_book(id),
+        sender_id INT,
+        receiver_id INT,
         product_id VARCHAR(50) FOREIGN KEY REFERENCES tbl_products(product_id),
         quantity INT,
         total DECIMAL(10, 2),
@@ -257,5 +262,16 @@ BEGIN
 		[sender_name] [varchar](50) NOT NULL,
 		[sender_phone] [varchar](50) NOT NULL,
         [sender_address] [varchar](50) NOT NULL,
+		)
+END
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_status')
+BEGIN
+    CREATE TABLE [dbo].[tbl_status](
+		status_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		[waybill#] [varchar](50) NOT NULL,
+		[scan_type] [varchar](50) NOT NULL,
+        [description] [varchar](50) NOT NULL,
+        [scan_time] DATETIME DEFAULT GETDATE(),
 		)
 END

@@ -25,17 +25,18 @@
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="auto" Width="auto">
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="auto" Margin="20,15,0,15" Width="auto">
 
-                <Border CornerRadius="25" Background="{StaticResource searchBarColor1}" Margin="15,10,15,10"  Width="289" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Border CornerRadius="20" Background="{StaticResource searchBarColor1}"  Width="400" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="23" Width="auto" Margin="15,0,0,0" Foreground="Gray"/>
-                        <TextBlock Width="auto" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" >
+                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="40" Width="20" Margin="15,4,0,0" Foreground="Gray"/>
                         <TextBox 
-                                FontWeight="Light" FontSize="17" Foreground="White"
+                                FontWeight="Light" 
+                                FontSize="17" 
+                                Width="350"
+                                Foreground="White"
                                 BorderBrush="Transparent"
-                                Margin="-5,5,0,5"
-                                Padding="7"
+                                Padding="5"
                                 CaretBrush="White"
                                 materialDesign:HintAssist.IsFloating="False"
                                 materialDesign:HintAssist.Hint="Search for product"
@@ -44,7 +45,6 @@
                                 x:Name="tbSearchProduct"
                                 TextChanged="tbSearchProduct_TextChanged"
                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
-                        </TextBlock>
                     </StackPanel>
                 </Border>
             </StackPanel>

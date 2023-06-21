@@ -1,4 +1,4 @@
-﻿<Page x:Class="WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder.ReceiverInformation"
+﻿<Page x:Class="WarehouseManagement.Views.Main.OrderModule.CustomDialogs.LocalOrder.LocalReceiverInformation"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -41,7 +41,7 @@
                      materialDesign:HintAssist.Foreground="Black"
                      BorderBrush="Black"
                      IsReadOnly="False"
-                     x:Name="tbFirstName"
+                  x:Name="tbFirstName"
                      Margin="20,20,10,0"
                      
                      Focusable="True"/>
@@ -76,6 +76,7 @@
                      Grid.Column="0"
                      materialDesign:HintAssist.Hint="Phone" 
                      FontSize="15"
+                    PreviewTextInput="IntValidationTextBox"
                   x:Name="tbPhone"
                      Margin="20,20,10,0"
                      Background="{StaticResource textboxProfitAnalysisColor1}"
@@ -131,3 +132,4 @@
                      Focusable="True"/>
     </Grid>
 </Page>
+

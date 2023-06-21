@@ -20,15 +20,18 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <Border CornerRadius="25" Background="{StaticResource searchBarColor1}" Margin="15,10,15,10"  Width="289" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="20,15,0,15">
+                <Border CornerRadius="20" Background="{StaticResource searchBarColor1}"  Width="400" Margin="0,0,10,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="23" Width="auto" Margin="15,0,0,0" Foreground="Gray"/>
-                        <TextBox Width="230" FontSize="17" FontWeight="Light" Foreground="White"
+                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="40" Width="20" Margin="15,4,0,0" Foreground="Gray"/>
+                        <TextBox 
+                                 FontWeight="Light" 
+                                 FontSize="17" 
+                                 Width="350"
+                                 Foreground="White"
                                  BorderBrush="Transparent"
-                                 Margin="-5,5,0,5"
                                  CaretBrush="White"
-                                 Padding="7"
+                                 Padding="4"
                                  materialDesign:HintAssist.IsFloating="False"
                                  materialDesign:HintAssist.Hint="Search for employee"
                                  HorizontalAlignment="Center"
