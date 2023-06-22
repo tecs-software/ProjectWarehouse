@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Helpers;
 using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
@@ -50,6 +51,12 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         private void cbItem_DropDownClosed(object sender, EventArgs e)
         {
             tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '" + cbItem.Text + "'");
+        }
+
+        private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
+        {
+            decimal total = Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text);
+            tbTotal.Text = Converter.StringToMoney(total.ToString());
         }
     }
 }

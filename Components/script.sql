@@ -271,7 +271,7 @@ BEGIN
 		status_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 		[waybill#] [varchar](50) NOT NULL,
 		[scan_type] [varchar](50) NOT NULL,
-        [description] [varchar](50) NOT NULL,
+        [description] [varchar](255) NOT NULL,
         [scan_time] DATETIME DEFAULT GETDATE(),
 		)
 END

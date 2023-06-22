@@ -56,7 +56,7 @@
                      x:Name="tbQuantity"
                      IsReadOnly="False"
                      Margin="10,20,20,0"
-                     Focusable="True"
+                     Focusable="True" KeyUp="tbQuantity_KeyUp"
                     />
 
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"

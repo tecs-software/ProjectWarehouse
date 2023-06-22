@@ -108,7 +108,7 @@ namespace WarehouseManagement.Controller
         }
         public void update_status(DataGrid dataGrid)
         {
-            sql.Query($"SELECT * FROM tbl_status");
+            sql.Query($"SELECT * FROM tbl_status ORDER BY scan_time DESC");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
