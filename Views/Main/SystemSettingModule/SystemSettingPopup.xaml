@@ -1,0 +1,62 @@
+﻿<Window x:Class="WarehouseManagement.Views.Main.SystemSettingModule.SystemSettingPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="System Setting" Height="600" Width="1000">
+
+    <Border CornerRadius="10"
+        Background="White"
+        BorderBrush="Black"
+        BorderThickness="1">
+
+        <Grid Height="Auto" Margin="20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" MaxHeight="50"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="System Setting" Margin="0,10,0,20" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
+
+                <Button x:Name="btnClose"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Grid.Row="0"
+                            Style="{StaticResource SmallCloseButtonStyle}"
+                            Background="{StaticResource textboxProfitAnalysisColor1}"
+                            BorderBrush="Transparent"
+                            IsCancel="True" Click="btnClose_Click">
+                </Button>
+
+
+            </DockPanel>
+            <StackPanel Grid.Row="1">
+                <TabControl x:Name="setting_tab" Width="auto" SelectionChanged="TabControl_SelectionChanged" Loaded="TabControl_Loaded" Height="500" >
+                    <TabControl.Items>
+                        <TabItem Header="Courier Accounts" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                            <Frame x:Name="courierAccountFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
+                        </TabItem>
+                        <TabItem Header="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                            <Frame x:Name="senderInfoFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
+                        </TabItem>
+                        <TabItem x:Name="importAddress" Header="Import Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                            <Frame x:Name="importAddressFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
+                        </TabItem>
+                    </TabControl.Items>
+                </TabControl>
+            </StackPanel>
+        </Grid>
+
+    </Border>
+</Window>

@@ -22,6 +22,7 @@ using WarehouseManagement.Views.Main.EmployeeModule;
 using WarehouseManagement.Views.Main.InventoryModule;
 using WarehouseManagement.Views.Main.OrderModule;
 using WarehouseManagement.Views.Main.SalesModule;
+using WarehouseManagement.Views.Main.SystemSettingModule;
 using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace WarehouseManagement.Views.Main
@@ -177,22 +178,19 @@ namespace WarehouseManagement.Views.Main
             MenuItem item1 = new MenuItem() { Header = "Logout" };
             MenuItem item2 = new MenuItem() { Header = "Account Settings" };
 
-
             if (CurrentUser.Instance.ModuleAccessList.Contains("Modify System Settings"))
             {
                 MenuItem item3 = new MenuItem() { Header = "System Settings" };
                 Util.ShowContextMenuForControl(sender as Control, item1, item2, item3);
+                item3.Click += SystemSetting_Click;
+
             }
             else
             {
                 Util.ShowContextMenuForControl(sender as Control, item1, item2);
             }
-            
-            
-            
 
             item1.Click += Logout_Click;
-        
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
@@ -206,7 +204,10 @@ namespace WarehouseManagement.Views.Main
 
             this.Close();
         }
-
+        private void SystemSetting_Click(object sender, RoutedEventArgs e)
+        {
+            new SystemSettingPopup().ShowDialog();
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
            

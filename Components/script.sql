@@ -20,6 +20,19 @@ END
 GO
 
 -- Create tbl_products table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_address_delivery')
+BEGIN
+   CREATE TABLE tbl_address_delivery(
+	    ID INT PRIMARY KEY IDENTITY(1,1),
+	    Province NVARCHAR(255),
+	    City NVARCHAR(255),
+	    AreaName NVARCHAR(255),
+	    CanDeliver BIT
+    )
+END
+GO
+
+-- Create tbl_products table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_products')
 BEGIN
     CREATE TABLE [dbo].[tbl_products](
@@ -275,3 +288,39 @@ BEGIN
         [scan_time] DATETIME DEFAULT GETDATE(),
 		)
 END
+
+--CREATION OF STORE PROCS
+
+-- StoreProc for Importing Address 
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpAddress_Import')
+BEGIN
+	EXEC('
+	CREATE PROC SpAddress_Import
+	@Province NVARCHAR(255),
+	@City NVARCHAR(255),
+	@AreaName NVARCHAR(255),
+	@CanDeliver INT
+	AS
+	BEGIN
+		INSERT INTO tbl_address_delivery(Province, City, AreaName, CanDeliver) VALUES
+		(@Province, @City, @AreaName, @CanDeliver);
+	END;
+	');
+END;
+
+-- StoreProc for Truncating Address table
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpAddress_Truncate')
+BEGIN
+	EXEC('
+	CREATE PROC SpAddress_Truncate
+	AS
+	BEGIN
+		DECLARE @AddressCount INT = (SELECT COUNT(ID) FROM tbl_address_delivery)
+
+		IF @AddressCount != 0
+		BEGIN
+			TRUNCATE TABLE tbl_address_delivery;
+		END;
+	END;
+	');
+END;
