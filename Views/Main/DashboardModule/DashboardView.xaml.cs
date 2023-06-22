@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Views.Main.OrderModule;
 
 namespace WarehouseManagement.Views.Main.DashboardModule
 {
@@ -23,36 +24,35 @@ namespace WarehouseManagement.Views.Main.DashboardModule
     /// </summary>
     public partial class DashboardView : Page
     {
+        private SalesReportPage? salesReportPage;
+        private ExpensesReportPage? expensesReportPage;
+        private SummaryPage? summaryPage;
+
         public DashboardView()
         {
             InitializeComponent();
-            setChart();
+            summaryPage = new SummaryPage();
+            cbSales.SelectedIndex = 0;
         }
 
-
-        private void setChart()
+        private void cbSales_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ChartValues < ObservableValue > revenueData = new ChartValues<ObservableValue>();
-            Random random = new Random();
-            int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-            for (int day = 1; day <= daysInMonth; day++)
+            switch (cbSales.SelectedIndex)
             {
-                double revenue = random.Next(1000, 5000); // Random revenue value between 1000 and 5000
-                revenueData.Add(new ObservableValue(revenue));
+                case 0:
+                    PageContent.Content = summaryPage;
+                    break;
+                case 1:
+                    if (salesReportPage == null)
+                        salesReportPage = new SalesReportPage();
+                    PageContent.Content = salesReportPage;
+                    break;
+                case 2:
+                    if (expensesReportPage == null)
+                        expensesReportPage = new ExpensesReportPage();
+                    PageContent.Content = expensesReportPage;
+                    break;
             }
-
-            // Set the sample data to the salesChart
-            salesChart.Series.Clear();
-            salesChart.Series.Add(new LineSeries
-            {
-                Title = "Total Revenue",
-                Values = revenueData
-            });
-        }
-
-        private void endDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

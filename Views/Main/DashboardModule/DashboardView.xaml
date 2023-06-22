@@ -14,20 +14,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
-        </Grid.ColumnDefinitions>
+
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource primaryColor1}" Orientation="Horizontal">
 
@@ -52,147 +42,30 @@
             <Label Content="Clear Date" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#BCBCBC"/>
         </StackPanel>
 
-        <Border Grid.Row="2" 
-                Grid.Column="1"  
-                CornerRadius="10"
-                Background="#FEFFFE"
-                BorderThickness="1"
-                Margin="15">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource primaryColor1}" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,20,0">
 
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Width="250"
+                      Padding="10,0,10,0"
+                      Height="40"
+                      HorizontalAlignment="Right"
+                      FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      BorderBrush="Black"
+                      x:Name="cbSales"
+                      SelectionChanged="cbSales_SelectionChanged"
+                      Background="{StaticResource textboxProfitAnalysisColor1}">
 
-                <Label Content="Total Sales" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <ComboBox.Items>
+                    <ComboBoxItem Content="Dashboard Summary" />
+                    <ComboBoxItem Content="Sales Report" />
+                    <ComboBoxItem Content="Expenses Report " />
+                </ComboBox.Items>
+            </ComboBox>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="3,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
-                </StackPanel>
+        </StackPanel>
 
-                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
-
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="2" 
-                Grid.Column="2"  
-                CornerRadius="10"
-                Background="#FEFFFE"
-                BorderThickness="1"
-                Margin="15">
-
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Content="Total Order" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
-
-                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="200" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
-                </StackPanel>
-
-                <Label Grid.Row="3" Content="+20%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
-
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="2" 
-                Grid.Column="3"  
-                CornerRadius="10"
-                Background="#FEFFFE"
-                BorderThickness="1"
-                Margin="15">
-
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Content="Products Sold" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
-
-                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="50" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
-                </StackPanel>
-
-                <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
-
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="3" 
-                Grid.Column="1"  
-                CornerRadius="10"
-                Background="#FEFFFE"
-                BorderThickness="1"
-                Margin="15">
-
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Content="Total Expense" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
-
-                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="2,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
-                </StackPanel>
-
-                <Label Grid.Row="3" Content="+60%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
-
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="4" 
-                Grid.Column="1"  
-                CornerRadius="10"
-                Background="#FEFFFE"
-                BorderThickness="1"
-                 Margin="15">
-
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Content="Total Revenue" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
-
-                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="1,000.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
-                </StackPanel>
-
-                <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
-
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="3" 
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
-                Grid.RowSpan="2"
-                CornerRadius="10"
-                Background="#FEFFFE"
-                BorderThickness="1"
-                 Margin="15">
-
-            <lvc:CartesianChart x:Name="salesChart" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="20,50,20,50">
-            </lvc:CartesianChart>
-
-        </Border>
+        <Frame Grid.Row="1" Grid.ColumnSpan="2" x:Name="PageContent" NavigationUIVisibility="Hidden"/>
 
     </Grid>
 </Page>
