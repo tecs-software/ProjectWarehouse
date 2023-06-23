@@ -27,7 +27,7 @@ namespace WarehouseManagement.Controller
     {
         sql_control sql = new sql_control();
         db_queries queries = new db_queries();
-        public void api_create(Customer customer, Receiver receiver, Booking_info booking_Info)
+        public bool api_create(Customer customer, Receiver receiver, Booking_info booking_Info)
         {
             
             string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
@@ -115,7 +115,7 @@ namespace WarehouseManagement.Controller
             }
 
             sql.Query($"SELECT order_id FROM tbl_orders ORDER BY order_id DESC");
-            if (sql.HasException(true)) return;
+            if (sql.HasException(true)) return false;
             if (sql.DBDT.Rows.Count > 0)
             {
                 string txlogisticid = sql.ReturnResult($"SELECT order_id FROM tbl_orders ORDER BY order_id DESC");
@@ -204,19 +204,26 @@ namespace WarehouseManagement.Controller
                         queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info);
 
                         queries.insert_Incentives(booking_Info);
+                        
                         MessageBox.Show("Order has been Created");
+                        return true;
                     }
                     //if there's error on API
                     else
                     {
+                       
                         MessageBox.Show(response);
+                        return false;
                     }
 
                 }
+                
             }
             catch (Exception ex)
             {
+               
                 MessageBox.Show("An error occurred: " + ex.Message);
+                return false;
             }
         }
         public static class MD5Util

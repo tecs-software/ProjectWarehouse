@@ -108,13 +108,10 @@ namespace WarehouseManagement.Views.InitialSetup
 
                     if (await dbInitializer.CreateDatabaseIfNotExists("db_warehouse_management"))
                     {
-                        if (!await dbInitializer.InsertSQLAuthentication("db_warehouse_management"))
-                        {
-                            MessageBox.Show("Failed to create login");
-                        }
 
                         connection += ";Initial Catalog=db_warehouse_management";
                         await SaveConnection(connection);
+                        await dbInitializer.InsertSQLAuthentication("db_warehouse_management", connection);
                         LoginWindow login = new LoginWindow();
                         login.Show();
                         this.Close();

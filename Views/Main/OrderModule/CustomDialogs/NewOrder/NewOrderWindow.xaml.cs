@@ -115,7 +115,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 }
 
                 //calling the method for api ordering
-                order_api.api_create(_customer,_receiver, booking_info);
+                if(order_api.api_create(_customer,_receiver, booking_info))
+                {
+                    this.DialogResult = true;
+                    this.Close();
+                }
             }
         }
 

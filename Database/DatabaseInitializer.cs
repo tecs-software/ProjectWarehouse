@@ -75,7 +75,7 @@ namespace WarehouseManagement.Database
             return false;
         }
 
-        public async Task<bool> InsertSQLAuthentication(string databaseName)
+        public async Task<bool> InsertSQLAuthentication(string databaseName, string connectionString)
         {
             try
             {
@@ -109,12 +109,21 @@ namespace WarehouseManagement.Database
                         SqlCommand createUserCommand = new SqlCommand(createUserSql + addDataReaderRoleSql + addDataWriterRoleSql, sqlConnection);
                         createUserCommand.ExecuteNonQuery();
                     }
+                    else
+                    {
+                        string createUserSql = $"USE {databaseName}; CREATE USER {loginName} FOR LOGIN {loginName};";
+                        string addDataReaderRoleSql = $"EXEC sp_addrolemember 'db_datareader', '{loginName}';";
+                        string addDataWriterRoleSql = $"EXEC sp_addrolemember 'db_datawriter', '{loginName}';";
+                        SqlCommand createUserCommand = new SqlCommand(createUserSql + addDataReaderRoleSql + addDataWriterRoleSql, sqlConnection);
+                        createUserCommand.ExecuteNonQuery();
+                    }
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 Console.WriteLine(ex);
                 return false;
             }
