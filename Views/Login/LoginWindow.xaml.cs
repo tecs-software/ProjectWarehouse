@@ -35,7 +35,7 @@ namespace WarehouseManagement.Views.Login
             this.SizeToContent = SizeToContent.Height;
         }
 
-
+        db_queries queries = new db_queries();
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (!loading)
@@ -63,6 +63,7 @@ namespace WarehouseManagement.Views.Login
 
                 if (await db.AuthenticateUser(username, password))
                 {
+                    queries.get_userID(tbUsername);
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
                     this.Close();

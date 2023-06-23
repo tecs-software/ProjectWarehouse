@@ -202,6 +202,8 @@ namespace WarehouseManagement.Controller
                         queries.insert_receiver(receiver);
 
                         queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info);
+
+                        queries.insert_Incentives(booking_Info);
                         MessageBox.Show("Order has been Created");
                     }
                     //if there's error on API

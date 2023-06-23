@@ -26,9 +26,8 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
         public PayrollReviewPage()
         {
             InitializeComponent();
-            refreshTable();
+           
         }
-
         public async void refreshTable()
         {
             DBHelper db = new DBHelper();
@@ -86,6 +85,11 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
         private void tb_payroll_review_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
 
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            refreshTable();
         }
     }
 }
