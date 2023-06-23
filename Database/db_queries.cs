@@ -68,7 +68,6 @@ namespace WarehouseManagement.Database
         public void get_userID(TextBox txt_username)
         {
             gModel.user_id = sql.ReturnResult($"SELECT user_id FROM tbl_users WHERE username = '"+txt_username.Text+"'");
-            MessageBox.Show(gModel.user_id);
         }
         public void province(ComboBox cb)
         {

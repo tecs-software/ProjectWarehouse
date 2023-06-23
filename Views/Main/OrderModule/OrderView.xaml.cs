@@ -35,7 +35,12 @@ namespace WarehouseManagement.Views.Main.OrderModule
             showOrderMenu();
 
             //refreshTable();
+            refreshTable();
+            
+        }
 
+        private void refreshTable()
+        {
             show_DT dt = new show_DT();
             dt.show_orders(dgtRespondentData);
         }
@@ -61,7 +66,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
             if (newOrderWindow.ShowDialog() == true)
             {
-
+                refreshTable();
 
             }
 
