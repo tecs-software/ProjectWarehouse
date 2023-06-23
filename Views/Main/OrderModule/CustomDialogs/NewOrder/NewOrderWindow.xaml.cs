@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Controller;
+using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 
@@ -34,6 +35,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         Receiver _receiver = new Receiver();
         Booking_info booking_info = new Booking_info();
         Create_api order_api = new Create_api();
+        db_queries queries = new db_queries();
 
         public NewOrderWindow()
         {
@@ -115,10 +117,17 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 }
 
                 //calling the method for api ordering
-                if(order_api.api_create(_customer,_receiver, booking_info))
+                if(queries.deduct_inventory(booking_info, _customer, _receiver))
                 {
-                    this.DialogResult = true;
-                    this.Close();
+                    if(order_api.api_create(_customer, _receiver, booking_info))
+                    {
+                        this.DialogResult = true;
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Not enought stocks for the desired quantity.");
                 }
             }
         }

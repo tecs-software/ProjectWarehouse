@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
@@ -113,6 +114,27 @@ namespace WarehouseManagement.Database
 
                 cb.ItemsSource = baranggays;
             }
+        }
+        public bool deduct_inventory(Booking_info book_info, Customer _customer, Receiver _receiver)
+        {
+            int stock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '"+book_info.item_name+"'"));
+            if(stock >= int.Parse(book_info.quantity))
+            {
+                sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity - '" + int.Parse(book_info.quantity) + "' WHERE item_name = '" + book_info.item_name + "'");
+                return true;
+                
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void update_inventory_status(Booking_info book_info)
+        {
+            int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '"+book_info.item_name+"'"));
+            string Status = newStock < 0 ? Util.status_out_of_stock : newStock == 0 ? Util.status_out_of_stock : newStock <= 100 ? Util.status_low_stock : Util.status_in_stock;
+            sql.Query($"UPDATE tbl_products set status = '"+Status+"' WHERE item_name = '"+book_info.item_name+"'");
+            if (sql.HasException(true)) return;
         }
     }
 }

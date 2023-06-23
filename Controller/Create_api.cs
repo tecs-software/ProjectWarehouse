@@ -189,7 +189,6 @@ namespace WarehouseManagement.Controller
                     string successString = success.ToString();
                     string reasonString = reason.ToString();
                     
-                    
                     //if there is no error
                     if (successString == "true")
                     {
@@ -197,14 +196,15 @@ namespace WarehouseManagement.Controller
                         string mailNoString = mailNo.ToString();
                         string sortingCodeString = sortingCode.ToString();
 
-
                         queries.insert_sender(customer);
                         queries.insert_receiver(receiver);
 
                         queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info);
 
                         queries.insert_Incentives(booking_Info);
-                        
+
+                        queries.update_inventory_status(booking_Info);
+
                         MessageBox.Show("Order has been Created");
                         return true;
                     }
