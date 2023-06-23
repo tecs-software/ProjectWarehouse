@@ -70,5 +70,50 @@ namespace WarehouseManagement.Database
             gModel.user_id = sql.ReturnResult($"SELECT user_id FROM tbl_users WHERE username = '"+txt_username.Text+"'");
             MessageBox.Show(gModel.user_id);
         }
+        public void province(ComboBox cb)
+        {
+            sql.Query($"SELECT distinct province FROM tbl_address_delivery WHERE province != '' ORDER BY province ASC");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                List<string> provinces = new List<string>();
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    provinces.Add(dr[0].ToString());
+                }
+
+                cb.ItemsSource = provinces;
+            }
+        }
+        public void city(ComboBox cb, string province)
+        {
+            sql.Query($"SELECT distinct city FROM tbl_address_delivery WHERE province = '"+province+ "' AND CanDeliver = '1' ORDER BY city ASC");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                List<string> cities = new List<string>();
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    cities.Add(dr[0].ToString());
+                }
+
+                cb.ItemsSource = cities;
+            }
+        }
+        public void baranggay(ComboBox cb, string city)
+        {
+            sql.Query($"SELECT distinct AreaName FROM tbl_address_delivery WHERE city = '" + city + "' ORDER BY AreaName ASC");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                List<string> baranggays = new List<string>();
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    baranggays.Add(dr[0].ToString());
+                }
+
+                cb.ItemsSource = baranggays;
+            }
+        }
     }
 }

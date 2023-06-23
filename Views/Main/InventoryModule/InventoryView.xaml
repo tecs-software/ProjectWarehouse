@@ -56,12 +56,6 @@
                         <TextBlock Text="Profit Analysis"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnReturntoSeller" BorderBrush="{StaticResource buttonBorder2}" Height="40" Width="170" FontSize="15" Background="Transparent" Margin="0,0,10,0">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="TruckDeliveryOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
-                        <TextBlock Text="Return to Seller"/>
-                    </StackPanel>
-                </Button>
                 <Button x:Name="btnAddProduct" Click="btnAddProduct_Click" BorderBrush="{StaticResource buttonBorder4}" Height="40" Width="170" FontSize="15" Background="{StaticResource buttonBorder4}" Margin="0,0,20,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="TruckPlusOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
