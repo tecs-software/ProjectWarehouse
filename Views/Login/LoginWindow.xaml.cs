@@ -64,20 +64,16 @@ namespace WarehouseManagement.Views.Login
 
                 if (await db.AuthenticateUser(username, password))
                 {
-                    if(queries.check_sender_info())
+                    if (queries.check_sender_info())
                     {
-                        
+                        MainWindow main = new MainWindow();
+                        main.Show();
                     }
                     else
                     {
-
-                        MainWindow main = new MainWindow();
-                        main.Show();
-                        //OnboardingSetup onboarding = new OnboardingSetup();
-                        //onboarding.Show();
+                        OnboardingSetup onboarding = new OnboardingSetup();
+                        onboarding.Show();
                     }
-                    
-                    
                     this.Close();
                 }
                 else

@@ -22,7 +22,12 @@ namespace WarehouseManagement.Models
     {
         sql_control sql = new sql_control();
 
-        public string user_id { get; set; } = string.Empty;
+        public string sender_name { get; set; } = string.Empty;
+        public string sender_province { get; set; } = string.Empty;
+        public string sender_city { get; set; } = string.Empty;
+        public string sender_area { get; set; } = string.Empty;
+        public string sender_phone { get; set; } = string.Empty;
+        public string sender_address { get; set; } = string.Empty;
 
     }
 }

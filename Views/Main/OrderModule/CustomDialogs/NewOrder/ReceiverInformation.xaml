@@ -93,7 +93,7 @@
                       materialDesign:HintAssist.Hint="Province" FontSize="15"
                       materialDesign:HintAssist.Foreground="Black"
                       BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbProvince_DropDownClosed"/>
 
         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="1"
@@ -104,7 +104,7 @@
                       materialDesign:HintAssist.Hint="City" FontSize="15" Width="Auto"
                       materialDesign:HintAssist.Foreground="Black"
                       BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbCity_DropDownClosed"/>
 
         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="2"

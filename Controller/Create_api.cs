@@ -27,9 +27,9 @@ namespace WarehouseManagement.Controller
     {
         sql_control sql = new sql_control();
         db_queries queries = new db_queries();
-        public bool api_create(Customer customer, Receiver receiver, Booking_info booking_Info)
+        public bool api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
         {
-            
+            MessageBox.Show(global.sender_name);
             string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
             string eccompanyid = "THIRDYNAL";
             string key = "8049bdb499fc06b6fde3e476a87987ef";
@@ -80,13 +80,13 @@ namespace WarehouseManagement.Controller
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
             //updating sender information
-            payloadObj.sender.name = customer.FirstName + " " + customer.MiddleName + " " + customer.LastName;
-            payloadObj.sender.phone = customer.Phone;
-            payloadObj.sender.mobile = customer.Phone;
-            payloadObj.sender.prov = customer.Province;
-            payloadObj.sender.city = customer.City;
-            payloadObj.sender.area = customer.Barangay;
-            payloadObj.sender.address = customer.Address;
+            payloadObj.sender.name = global.sender_name;
+            payloadObj.sender.phone = global.sender_phone;
+            payloadObj.sender.mobile = global.sender_phone;
+            payloadObj.sender.prov = global.sender_province;
+            payloadObj.sender.city = global.sender_city;
+            payloadObj.sender.area = global.sender_area;
+            payloadObj.sender.address = global.sender_address;
 
             //updating receiver information
             payloadObj.receiver.name = receiver.FirstName + " " + receiver.MiddleName + " " + receiver.LastName;

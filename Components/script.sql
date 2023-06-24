@@ -304,26 +304,24 @@ BEGIN
     )')
 END
 
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SPadd_sender_info')
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_sender_info')
 BEGIN
     EXEC('
     CREATE PROC SPadd_sender_info
-    @name VARCHAR(255),
-    @province VARCHAR(100),
-    @city VARCHAR(100),
-    @baranggay VARCHAR(100),
-    @phone VARCHAR(50),
-    @address VARCHAR(255)
+    @sender_name VARCHAR(255),
+    @sender_province VARCHAR(100),
+    @sender_city VARCHAR(100),
+    @sender_baranggay VARCHAR(100),
+    @sender_phone VARCHAR(50),
+    @sender_address VARCHAR(255)
     AS
     BEGIN
         INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address) VALUES
-        (@name, @province, @city, @baranggay, @phone, @address)
+        (@sender_name, @sender_province, @sender_city, @sender_baranggay, @sender_phone, @sender_address)
     END
     ');
 END;
     
-
-
 --CREATION OF STORE PROCS
 
 -- StoreProc for Importing Address 

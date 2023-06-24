@@ -31,7 +31,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         private BookingInformation bookingInformationPage;
 
         //models
-        Customer _customer = new Customer();
+        GlobalModel global_sender = new GlobalModel();
         Receiver _receiver = new Receiver();
         Booking_info booking_info = new Booking_info();
         Create_api order_api = new Create_api();
@@ -46,38 +46,24 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            mainFrame.Navigate(GetOrCreateSenderInformationPage());
+            mainFrame.Navigate(GetOrCreateReceiverInformationPage());
             this.SizeToContent = SizeToContent.Height;
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            if (mainFrame.Content is SenderInformation)
+            if (mainFrame.Content is ReceiverInformation)
             {
-                if(Util.IsAnyTextBoxEmpty(senderInformationPage.tbFirstName, senderInformationPage.tbLastName, senderInformationPage.tbPhone, senderInformationPage.tbAddress))
+                if (Util.IsAnyTextBoxEmpty(receiverInformationPage.tbFirstName, receiverInformationPage.tbLastName, receiverInformationPage.tbPhone, receiverInformationPage.tbAddress))
                 {
-                    //MessageBox.Show("Fill up required fields");
-                    //return;
+                    MessageBox.Show("Fill up required fields");
+                    return;
                 }
-                mainFrame.Navigate(GetOrCreateReceiverInformationPage());
-                
-            }
-            else if (mainFrame.Content is ReceiverInformation)
-            {
-                
                 mainFrame.Navigate(GetOrCreateBookingInformationPage());
             }
             else
             {
-                //sender frame
-                _customer.FirstName = senderInformationPage.tbFirstName.Text;
-                _customer.MiddleName = senderInformationPage.tbMiddleName.Text;
-                _customer.LastName = senderInformationPage.tbLastName.Text;
-                _customer.Phone = senderInformationPage.tbPhone.Text;
-                _customer.Province = senderInformationPage.cbProvince.Text;
-                _customer.City = senderInformationPage.cbCity.Text;
-                _customer.Barangay = senderInformationPage.cbBarangay.Text;
-                _customer.Address = senderInformationPage.tbAddress.Text;
+                queries.get_sender(global_sender);
 
                 //receiver frame
                 _receiver.FirstName = receiverInformationPage.tbFirstName.Text;
@@ -88,8 +74,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 _receiver.City = receiverInformationPage.cbCity.Text;
                 _receiver.Barangay = receiverInformationPage.cbBarangay.Text;
                 _receiver.Address = receiverInformationPage.tbAddress.Text;
-                
-                
+
                 //booking frame
                 booking_info.item_name = bookingInformationPage.cbItem.Text;
                 booking_info.weight = bookingInformationPage.tbWeight.Text;
@@ -117,9 +102,9 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 }
 
                 //calling the method for api ordering
-                if(queries.deduct_inventory(booking_info, _customer, _receiver))
+                if(queries.deduct_inventory(booking_info, _receiver))
                 {
-                    if(order_api.api_create(_customer, _receiver, booking_info))
+                    if(order_api.api_create(_receiver, booking_info, global_sender))
                     {
                         this.DialogResult = true;
                         this.Close();

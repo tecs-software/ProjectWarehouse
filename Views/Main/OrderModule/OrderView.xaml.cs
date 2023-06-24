@@ -67,7 +67,6 @@ namespace WarehouseManagement.Views.Main.OrderModule
             if (newOrderWindow.ShowDialog() == true)
             {
                 refreshTable();
-
             }
 
             //LocalOrderWindow localOrderWindow = new LocalOrderWindow();

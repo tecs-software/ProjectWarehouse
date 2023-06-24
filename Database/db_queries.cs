@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
+using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Database
@@ -19,16 +20,49 @@ namespace WarehouseManagement.Database
     public class db_queries
     {
         sql_control sql = new sql_control();
-        GlobalModel gModel = new GlobalModel();
-
-        public void insert_sender(TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
+        public bool insert_sender(TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
         {
             sql.AddParam("@name", page_name.Text);
             sql.AddParam("@phone", page_number.Text);
             sql.AddParam("@province", cb_province.Text);
             sql.AddParam("@city", cb_city.Text);
+            sql.AddParam("@baranggay", cb_baranggay.Text);
             sql.AddParam("@address", address.Text);
 
+            sql.Query("EXEC SPadd_sender_info @name, @province, @city, @baranggay, @phone, @address");
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
+            if(count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public void get_sender(GlobalModel sender)
+        {
+            sql.Query($"SELECT * FROM tbl_sender");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    sender.sender_name = dr[1].ToString();
+                    sender.sender_province = dr[2].ToString();
+                    sender.sender_city = dr[3].ToString();
+                    sender.sender_area = dr[4].ToString();
+                    sender.sender_phone = dr[5].ToString();
+                    sender.sender_address = dr[6].ToString();
+                }
+            }
+        }
+        public void api_credentials(ComboBox courier, TextBox api_key, TextBox ec, TextBox customer_id)
+        {
+            sql.Query($"INSERT INTO tbl_couriers (courier_name, api_key, eccompany_id, customer_id) VALUES" +
+                $"('"+courier.Text+"', '"+api_key.Text+"', '"+ec.Text+"', '"+customer_id.Text+"')");
+            if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)
         {
@@ -68,10 +102,6 @@ namespace WarehouseManagement.Database
 
                 }
             }
-        }
-        public void get_userID(TextBox txt_username)
-        {
-            gModel.user_id = sql.ReturnResult($"SELECT user_id FROM tbl_users WHERE username = '"+txt_username.Text+"'");
         }
         public void province(ComboBox cb)
         {
@@ -118,7 +148,7 @@ namespace WarehouseManagement.Database
                 cb.ItemsSource = baranggays;
             }
         }
-        public bool deduct_inventory(Booking_info book_info, Customer _customer, Receiver _receiver)
+        public bool deduct_inventory(Booking_info book_info, Receiver _receiver)
         {
             int stock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '"+book_info.item_name+"'"));
             if(stock >= int.Parse(book_info.quantity))

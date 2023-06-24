@@ -46,10 +46,10 @@
                         <TabItem Header="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtServerName" materialDesign:HintAssist.Hint="Page Name (Company Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Company Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtDatabaseName" materialDesign:HintAssist.Hint="Page Number (Company Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtPhone" materialDesign:HintAssist.Hint="Page Number (Company Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <Grid>
@@ -59,10 +59,10 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="24,8,0,0" x:Name="cmbProvince" materialDesign:HintAssist.Hint="Province" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
-                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" DropDownClosed="cmbProvince_DropDownClosed" 
                                                              />
                                     <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,8,8,0" x:Name="cmbCity" materialDesign:HintAssist.Hint="City" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
-                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" DropDownClosed="cmbCity_DropDownClosed" 
                                                              />
                                     <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,8,24,0" x:Name="cmbBarangay" materialDesign:HintAssist.Hint="Barangay" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
@@ -82,7 +82,7 @@
                       Grid.Column="0"
                       Grid.Row="3"
                       Margin="24,24,24,0"
-                      x:Name="cbCourier"
+                      x:Name="cmbCourier"
                       materialDesign:HintAssist.Hint="Couriers" FontSize="14"
                       materialDesign:HintAssist.Foreground="Black"
                       BorderBrush="Black"
