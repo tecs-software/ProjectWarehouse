@@ -56,8 +56,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             {
                 if(Util.IsAnyTextBoxEmpty(senderInformationPage.tbFirstName, senderInformationPage.tbLastName, senderInformationPage.tbPhone, senderInformationPage.tbAddress))
                 {
-                    MessageBox.Show("Fill up required fields");
-                    return;
+                    //MessageBox.Show("Fill up required fields");
+                    //return;
                 }
                 mainFrame.Navigate(GetOrCreateReceiverInformationPage());
                 

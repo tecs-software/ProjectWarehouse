@@ -196,7 +196,6 @@ namespace WarehouseManagement.Controller
                         string mailNoString = mailNo.ToString();
                         string sortingCodeString = sortingCode.ToString();
 
-                        queries.insert_sender(customer);
                         queries.insert_receiver(receiver);
 
                         queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info);

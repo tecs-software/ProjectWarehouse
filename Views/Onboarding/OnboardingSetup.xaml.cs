@@ -22,8 +22,15 @@ namespace WarehouseManagement.Views.Onboarding
         public OnboardingSetup()
         {
             InitializeComponent();
+            load_couriers();
         }
+        private void load_couriers()
+        {
+            List<String> couriers = new List<String>();
+            couriers.Add("JnT");
 
+            cbCourier.ItemsSource = couriers;
+        }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();

@@ -273,6 +273,9 @@ BEGIN
     CREATE TABLE [dbo].[tbl_sender](
 		sender_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 		[sender_name] [varchar](50) NOT NULL,
+        [sender_province] [varchar](50) NOT NULL,
+        [sender_city] [varchar](50) NOT NULL,
+        [sender_baranggay] [varchar](50) NOT NULL,
 		[sender_phone] [varchar](50) NOT NULL,
         [sender_address] [varchar](50) NOT NULL,
 		)
@@ -288,6 +291,38 @@ BEGIN
         [scan_time] DATETIME DEFAULT GETDATE(),
 		)
 END
+
+--Cejo tries store proc
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_couriers')
+BEGIN
+    EXEC('CREATE TABLE [dbo].[tbl_couriers]
+    (courier_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [courier_name] [varchar](50) NOT NULL,
+    [api_key] [varchar](255) NOT NULL,
+    [eccompany_id] [varchar](50) NOT NULL,
+    [customer_id] [varchar](50) NOT NULL,
+    )')
+END
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SPadd_sender_info')
+BEGIN
+    EXEC('
+    CREATE PROC SPadd_sender_info
+    @name VARCHAR(255),
+    @province VARCHAR(100),
+    @city VARCHAR(100),
+    @baranggay VARCHAR(100),
+    @phone VARCHAR(50),
+    @address VARCHAR(255)
+    AS
+    BEGIN
+        INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address) VALUES
+        (@name, @province, @city, @baranggay, @phone, @address)
+    END
+    ');
+END;
+    
+
 
 --CREATION OF STORE PROCS
 
