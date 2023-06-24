@@ -1,7 +1,11 @@
 ﻿using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +21,9 @@ using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
+using ZXing;
+using ZXing.Common;
+using ZXing.Rendering;
 
 namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 {
@@ -25,11 +32,49 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
     /// </summary>
     public partial class AddProduct : Window
     {
+        Bitmap barcodeImage = null;
         Product? product;
         SellingExpenses? sellingExpenses;
         public event EventHandler<string> TableFilterRequested;
         bool isUpdate = false;
+        private BitmapImage ConvertBitmapToBitmapImage(Bitmap bitmap)
+        {
+            using (var memory = new System.IO.MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                memory.Position = 0;
 
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
+        }
+        private WriteableBitmap ConvertBitmapToWriteableBitmap(System.Drawing.Bitmap bitmap)
+        {
+            System.Drawing.Imaging.BitmapData bitmapData = bitmap.LockBits(
+                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                bitmap.PixelFormat);
+
+            WriteableBitmap writeableBitmap = new WriteableBitmap(
+                bitmap.Width, bitmap.Height,
+                bitmap.HorizontalResolution, bitmap.VerticalResolution,
+                PixelFormats.Bgr24, null);
+
+            writeableBitmap.WritePixels(
+                new Int32Rect(0, 0, bitmap.Width, bitmap.Height),
+                bitmapData.Scan0, bitmapData.Stride * bitmapData.Height,
+                bitmapData.Stride);
+
+            bitmap.UnlockBits(bitmapData);
+
+            return writeableBitmap;
+        }
         private void OnTableFilterRequested(string status)
         {
             TableFilterRequested?.Invoke(this, status);
@@ -227,12 +272,23 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
         private void tbBarcode_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                tbUnitQuantity.Focus();
-                e.Handled = true;
-            }
+            //string barcodeNumber = tbBarcode.Text;
+
+            //BarcodeWriter<BitmapSource> barcodeWriter = new BarcodeWriter<BitmapSource>
+            //{
+            //    Format = BarcodeFormat.CODE_128,
+            //    Options = new EncodingOptions
+            //    {
+            //        Width = 100,
+            //        Height = 60
+            //    },
+            //    Renderer = new WriteableBitmapRenderer()
+            //};
+
+            //BitmapSource barcodeBitmap = barcodeWriter.Write(barcodeNumber);
+            //pbBarcode.Source = barcodeBitmap;
         }
+
 
         private void tbItemName_LostFocus(object sender, RoutedEventArgs e)
         {

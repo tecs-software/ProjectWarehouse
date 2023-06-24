@@ -1,0 +1,108 @@
+﻿<Window x:Class="WarehouseManagement.Views.Onboarding.OnboardingSetup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WarehouseManagement.Views.Onboarding"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="System Setting" Height="600" Width="1000">
+
+    <Border CornerRadius="10"
+        Background="White"
+        BorderBrush="Black"
+        BorderThickness="1">
+
+        <Grid Height="Auto" Margin="20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" MaxHeight="50"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Onboarding" Margin="0,10,0,20" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
+
+                <Button x:Name="btnClose"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Grid.Row="0"
+                            Style="{StaticResource SmallCloseButtonStyle}"
+                            Background="{StaticResource textboxProfitAnalysisColor1}"
+                            BorderBrush="Transparent"
+                            IsCancel="True" Click="btnClose_Click">
+                </Button>
+
+            </DockPanel>
+            <StackPanel Grid.Row="1">
+                <TabControl x:Name="setting_tab" Width="auto" SelectionChanged="TabControl_SelectionChanged" Loaded="TabControl_Loaded" Height="500" >
+                    <TabControl.Items >
+                        <TabItem Header="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
+                                <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtServerName" materialDesign:HintAssist.Hint="Page Name (Company Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtDatabaseName" materialDesign:HintAssist.Hint="Page Number (Company Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="24,8,0,0" x:Name="cmbProvince" materialDesign:HintAssist.Hint="Province" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             />
+                                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,8,8,0" x:Name="cmbCity" materialDesign:HintAssist.Hint="City" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             />
+                                    <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,8,24,0" x:Name="cmbBarangay" materialDesign:HintAssist.Hint="Barangay" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             />
+                                </Grid>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtAddress" materialDesign:HintAssist.Hint="Complete Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
+                                <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
+                                <TextBlock FontStyle="Italic" HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Note: (Ikaw bahala sa description ng note cejo)" TextWrapping="Wrap" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Regular" Margin="24,24,0,0"/>
+
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtCustomerID" materialDesign:HintAssist.Hint="Customer ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtEccompanyId" materialDesign:HintAssist.Hint="EcCompany ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtKey" materialDesign:HintAssist.Hint="Private Key" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
+                                <Button 
+                                    HorizontalAlignment="Stretch"
+                                    Margin="24,24,24,0"
+                                    VerticalAlignment="Center" 
+                                    x:Name="btnSubmit" 
+                                    Content="Submit" 
+                                    IsDefault="True" 
+                                    FontSize="15"
+                                    Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
+                                    Height="40" Click="btnSubmit_Click"/>
+                            </StackPanel>
+                        </TabItem>
+                    </TabControl.Items>
+                </TabControl>
+            </StackPanel>
+        </Grid>
+
+    </Border>
+</Window>
