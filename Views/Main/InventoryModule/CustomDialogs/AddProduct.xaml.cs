@@ -194,17 +194,17 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                                                                              }, "product_id", newProduct.ProductId);
                     }
                     //For generating barcode
-                    GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
-                    myBarcode.SaveAsPng($"./images/{tbItemName.Text}.png");
+                    //GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
+                    //myBarcode.SaveAsPng($"./images/{tbItemName.Text}.png");
 
-                    Clear();
-                    OnTableFilterRequested(null);
+                    //Clear();
+                    //OnTableFilterRequested(null);
 
                 }
                 else
                 {
-                    GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
-                    myBarcode.SaveAsPng($"./images/{tbItemName.Text}.png");
+                    //GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
+                    //myBarcode.SaveAsPng($"./images/{tbItemName.Text}.png");
                     MessageBox.Show("Product updated successfully");
                    
                     this.DialogResult = true;

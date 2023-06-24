@@ -44,11 +44,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Total Sales" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <Label Content="Gross Sales" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="18,363,750.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label x:Name="lbl_gross" Content="18,363,750.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
@@ -98,7 +98,7 @@
                 <Label Content="Products Sold" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="1292" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label x:Name="lbl_products_sold" Content="1292" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
@@ -124,7 +124,7 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="6,787,400.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label x:Name="lbl_expenses" Content="6,787,400.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+60%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
@@ -146,11 +146,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Total Revenue" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <Label Content="Net Profit" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="22,266,100.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label x:Name="lbl_Net_profit" Content="22,266,100.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>

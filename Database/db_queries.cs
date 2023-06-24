@@ -169,7 +169,7 @@ namespace WarehouseManagement.Database
             sql.Query($"UPDATE tbl_products set status = '"+Status+"' WHERE item_name = '"+book_info.item_name+"'");
             if (sql.HasException(true)) return;
         }
-        public void load_dashboard(Label lbl_total_orders)
+        public void load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label lbl_expenses, Label net_profit)
         {
             //for total orders
             sql.Query($"SELECT COUNT(*) FROM tbl_orders");
@@ -182,8 +182,45 @@ namespace WarehouseManagement.Database
                 }
             }
 
-            //for revenue
-            sql.Query($"");
+            //for gross sales
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'Delivered'");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_gross.Content = dr[0].ToString();
+                }
+            }
+
+            //for total products sold
+            sql.Query($"SELECT COALESCE(SUM(quantity),0) FROM tbl_orders WHERE status = 'Delivered'");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_products_sold.Content = dr[0].ToString();
+                }
+            }
+
+            //for expenses
+            sql.Query($"SELECT COALESCE(SUM(acq_cost * unit_quantity),0) FROM tbl_products");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_expenses.Content = decimal.Parse(dr[0].ToString());
+                    
+                }
+            }
+
+            //for net profit
+            decimal gross_sales = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'Delivered'"));
+            decimal total_product_cost = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(acq_cost * unit_quantity),0) FROM tbl_products"));
+            net_profit.Content = gross_sales - total_product_cost;
+
         }
         public bool check_sender_info()
         {
