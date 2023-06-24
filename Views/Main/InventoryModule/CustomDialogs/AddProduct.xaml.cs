@@ -38,44 +38,6 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
         SellingExpenses? sellingExpenses;
         public event EventHandler<string> TableFilterRequested;
         bool isUpdate = false;
-        private BitmapImage ConvertBitmapToBitmapImage(Bitmap bitmap)
-        {
-            using (var memory = new System.IO.MemoryStream())
-            {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-                memory.Position = 0;
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-                return bitmapImage;
-            }
-        }
-        private WriteableBitmap ConvertBitmapToWriteableBitmap(System.Drawing.Bitmap bitmap)
-        {
-            System.Drawing.Imaging.BitmapData bitmapData = bitmap.LockBits(
-                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                bitmap.PixelFormat);
-
-            WriteableBitmap writeableBitmap = new WriteableBitmap(
-                bitmap.Width, bitmap.Height,
-                bitmap.HorizontalResolution, bitmap.VerticalResolution,
-                PixelFormats.Bgr24, null);
-
-            writeableBitmap.WritePixels(
-                new Int32Rect(0, 0, bitmap.Width, bitmap.Height),
-                bitmapData.Scan0, bitmapData.Stride * bitmapData.Height,
-                bitmapData.Stride);
-
-            bitmap.UnlockBits(bitmapData);
-
-            return writeableBitmap;
-        }
         private void OnTableFilterRequested(string status)
         {
             TableFilterRequested?.Invoke(this, status);

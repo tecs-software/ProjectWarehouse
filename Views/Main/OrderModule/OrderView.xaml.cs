@@ -190,6 +190,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         }
 
+        private void btnReturntoSeller_Click(object sender, RoutedEventArgs e)
+        {
+            new ReturnSellerPopup().ShowDialog();
+        }
+
 
 
         //public async void refreshTable()

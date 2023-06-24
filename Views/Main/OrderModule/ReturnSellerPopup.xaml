@@ -1,0 +1,59 @@
+﻿<Window x:Class="WarehouseManagement.Views.Main.OrderModule.ReturnSellerPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        Background="Transparent"
+        Title="AddProduct" Height="170" Width="600">
+
+    <Border CornerRadius="10" Background="White"
+            BorderBrush="Black"
+            BorderThickness="1">
+
+        <Grid Margin="15">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
+
+                <TextBlock Text="Return to Seller" FontSize="20" FontWeight="Light" x:Name="lbProduct"/>
+
+                <Button x:Name="btnClose"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Grid.Row="0"
+                        Style="{StaticResource SmallCloseButtonStyle}"
+                        Background="{StaticResource textboxProfitAnalysisColor1}"
+                        BorderBrush="Transparent"
+                        IsCancel="True" Click="btnClose_Click">
+                </Button>
+            </DockPanel>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     Grid.Row="1"
+                     Grid.Column="0"
+                     materialDesign:HintAssist.Hint="Barcode Number" FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     Margin="10,0,10,10"
+                     x:Name="txtBarcode" KeyDown="txtBarcode_KeyDown"/>
+
+        </Grid>
+    </Border>
+</Window>

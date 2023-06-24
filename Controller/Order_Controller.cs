@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +15,27 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder;
+using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Controller
 {
     internal class Order_Controller
     {
-        public void qq()
+        static sql_control sql = new sql_control();
+        public static string id { get; set; }
+        public static bool isBarcodeExist(string barcode)
         {
-            MessageBox.Show("Test");
+            sql.Query($"SELECT order_id FROM tbl_orders WHERE waybill_number = '{barcode}' ");
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                     id = dr[0].ToString();
+                }
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
