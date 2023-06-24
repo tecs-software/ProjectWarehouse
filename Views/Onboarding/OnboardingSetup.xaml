@@ -76,9 +76,19 @@
                         <TabItem Header="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
-                                <TextBlock FontStyle="Italic" HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Note: (Ikaw bahala sa description ng note cejo)" TextWrapping="Wrap" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Regular" Margin="24,24,0,0"/>
+                                <TextBlock FontStyle="Italic" HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Note: (These information will be your connection api to couriers. As of now JnT is the only courier available.)" TextWrapping="Wrap" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Regular" Margin="24,24,0,0"/>
 
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtCustomerID" materialDesign:HintAssist.Hint="Customer ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="0"
+                      Grid.Row="3"
+                      Margin="24,24,24,0"
+                      x:Name="cbCourier"
+                      materialDesign:HintAssist.Hint="Couriers" FontSize="14"
+                      materialDesign:HintAssist.Foreground="Black"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtCustomerID" materialDesign:HintAssist.Hint="Customer ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtEccompanyId" materialDesign:HintAssist.Hint="EcCompany ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 

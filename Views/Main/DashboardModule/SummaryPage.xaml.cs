@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.DashboardModule
 {
@@ -28,7 +29,7 @@ namespace WarehouseManagement.Views.Main.DashboardModule
             InitializeComponent();
             setChart();
         }
-
+        db_queries queries = new db_queries();
         private void setChart()
         {
             ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
@@ -47,6 +48,11 @@ namespace WarehouseManagement.Views.Main.DashboardModule
                 Title = "Total Revenue",
                 Values = revenueData
             });
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            queries.load_dashboard(lbl_total_order);
         }
     }
 }

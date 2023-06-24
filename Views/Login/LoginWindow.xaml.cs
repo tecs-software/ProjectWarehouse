@@ -18,6 +18,7 @@ using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.InitialSetup;
 using WarehouseManagement.Views.Main;
+using WarehouseManagement.Views.Onboarding;
 using WarehouseManagement.Views.Register;
 
 namespace WarehouseManagement.Views.Login
@@ -63,9 +64,20 @@ namespace WarehouseManagement.Views.Login
 
                 if (await db.AuthenticateUser(username, password))
                 {
-                    queries.get_userID(tbUsername);
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
+                    if(queries.check_sender_info())
+                    {
+                        
+                    }
+                    else
+                    {
+
+                        MainWindow main = new MainWindow();
+                        main.Show();
+                        //OnboardingSetup onboarding = new OnboardingSetup();
+                        //onboarding.Show();
+                    }
+                    
+                    
                     this.Close();
                 }
                 else

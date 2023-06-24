@@ -22,8 +22,9 @@
         <Grid>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="617*"/>
-                <ColumnDefinition Width="1304*"/>
+                <ColumnDefinition Width="616*"/>
+                <ColumnDefinition Width="1267*"/>
+                <ColumnDefinition Width="36*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -31,7 +32,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Grid.ColumnSpan="2" x:Name="topPanel">
+            <Grid Grid.Row="0" Grid.ColumnSpan="3" x:Name="topPanel">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -56,7 +57,7 @@
                         <TextBlock Text="Dashboard" VerticalAlignment="Center"
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
-                    
+
                 </RadioButton>
 
                 <RadioButton Grid.Column="1" 
@@ -67,12 +68,12 @@
                              Tag="{StaticResource primaryColor1}"
                              Name="btnInventoryModule"
                              Cursor="Hand">
-                    
+
                     <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
                         <TextBlock Text="Inventory" VerticalAlignment="Center"
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
-                    
+
                 </RadioButton>
 
                 <RadioButton Grid.Column="2" 
@@ -88,7 +89,7 @@
                         <TextBlock Text="Orders" VerticalAlignment="Center"
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
-                    
+
                 </RadioButton>
 
                 <RadioButton Grid.Column="3" 
@@ -104,7 +105,7 @@
                         <TextBlock Text="Employee Management" VerticalAlignment="Center" Margin="5,0,5,0"
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
-                    
+
                 </RadioButton>
 
                 <RadioButton Grid.Column="4" 
@@ -120,7 +121,7 @@
                         <TextBlock Text="Sales" VerticalAlignment="Center"
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
-                    
+
                 </RadioButton>
 
 
@@ -133,12 +134,16 @@
                     <Button x:Name="btnAccountDropDown" Click="btnAccountDropDown_Click" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Transparent" Height="Auto" Width="Auto" Margin="0,25,10,20" Padding="0,0,0,0">
                         <materialDesign:PackIcon Kind="ArrowDropDown" Margin="0,0,0,2" Foreground="#8B8B8B" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </Button>
+                    <Button x:Name="btn_minimize" Background="Transparent" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderBrush="Transparent" Height="Auto" Width="Auto" Margin="0,25,10,20" Padding="0,0,0,0" Click="btn_minimize_Click">
+                        <materialDesign:PackIcon Kind="Minimize" Margin="10,0,0,22" Foreground="#8B8B8B" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    </Button>
 
                 </StackPanel>
+                
             </Grid>
-            
-            <Frame Grid.Row="1" Grid.ColumnSpan="2" x:Name="PageContent" NavigationUIVisibility="Hidden"/>
-            
+
+            <Frame Grid.Row="1" Grid.ColumnSpan="3" x:Name="PageContent" NavigationUIVisibility="Hidden"/>
+
         </Grid>
     </Border>
 </Window>

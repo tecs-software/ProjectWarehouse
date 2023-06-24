@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Background="#F1F4F5"
-      Title="SummaryPage"
+      Title="SummaryPage" Loaded="Page_Loaded"
       >
 
     <Grid>
@@ -73,7 +73,7 @@
                 <Label Content="Total Order" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="1,469,192" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label x:Name ="lbl_total_order" Content="1,469,192" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+20%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>

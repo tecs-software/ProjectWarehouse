@@ -213,6 +213,9 @@ namespace WarehouseManagement.Views.Main
            
         }
 
-        
+        private void btn_minimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

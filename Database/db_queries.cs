@@ -21,11 +21,14 @@ namespace WarehouseManagement.Database
         sql_control sql = new sql_control();
         GlobalModel gModel = new GlobalModel();
 
-        public void insert_sender(Customer _customer)
+        public void insert_sender(TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
         {
-            string name = _customer.FirstName + " " + _customer.LastName;
-            sql.Query($"INSERT INTO tbl_sender (sender_name, sender_phone, sender_address) VALUES ('" + name + "', '" + _customer.Phone + "', '" + _customer.Address + "')");
-            if (sql.HasException(true)) return;
+            sql.AddParam("@name", page_name.Text);
+            sql.AddParam("@phone", page_number.Text);
+            sql.AddParam("@province", cb_province.Text);
+            sql.AddParam("@city", cb_city.Text);
+            sql.AddParam("@address", address.Text);
+
         }
         public void insert_receiver(Receiver _receiver)
         {
@@ -135,6 +138,34 @@ namespace WarehouseManagement.Database
             string Status = newStock < 0 ? Util.status_out_of_stock : newStock == 0 ? Util.status_out_of_stock : newStock <= 100 ? Util.status_low_stock : Util.status_in_stock;
             sql.Query($"UPDATE tbl_products set status = '"+Status+"' WHERE item_name = '"+book_info.item_name+"'");
             if (sql.HasException(true)) return;
+        }
+        public void load_dashboard(Label lbl_total_orders)
+        {
+            //for total orders
+            sql.Query($"SELECT COUNT(*) FROM tbl_orders");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_total_orders.Content = dr[0].ToString();
+                }
+            }
+
+            //for revenue
+            sql.Query($"");
+        }
+        public bool check_sender_info()
+        {
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
+            if(count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
