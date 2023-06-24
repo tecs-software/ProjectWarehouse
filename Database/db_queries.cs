@@ -136,5 +136,21 @@ namespace WarehouseManagement.Database
             sql.Query($"UPDATE tbl_products set status = '"+Status+"' WHERE item_name = '"+book_info.item_name+"'");
             if (sql.HasException(true)) return;
         }
+        public void load_dashboard(Label lbl_total_orders)
+        {
+            //for total orders
+            sql.Query($"SELECT COUNT(*) FROM tbl_orders");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_total_orders.Content = dr[0].ToString();
+                }
+            }
+
+            //for revenue
+            sql.Query($"");
+        }
     }
 }
