@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Bson;
+﻿using IronBarCode;
+using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -192,6 +193,9 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                                                                                 sellingExpenses.rtsMargin.ToString(),
                                                                              }, "product_id", newProduct.ProductId);
                     }
+                    //For generating barcode
+                    GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
+                    myBarcode.SaveAsPng($"./images/{tbItemName.Text}.png");
 
                     Clear();
                     OnTableFilterRequested(null);
@@ -199,7 +203,10 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 }
                 else
                 {
+                    GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
+                    myBarcode.SaveAsPng($"./images/{tbItemName.Text}.png");
                     MessageBox.Show("Product updated successfully");
+                   
                     this.DialogResult = true;
                     this.Close();
                 }
@@ -270,23 +277,11 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
             }
         }
 
+      
+
         private void tbBarcode_KeyDown(object sender, KeyEventArgs e)
         {
-            //string barcodeNumber = tbBarcode.Text;
-
-            //BarcodeWriter<BitmapSource> barcodeWriter = new BarcodeWriter<BitmapSource>
-            //{
-            //    Format = BarcodeFormat.CODE_128,
-            //    Options = new EncodingOptions
-            //    {
-            //        Width = 100,
-            //        Height = 60
-            //    },
-            //    Renderer = new WriteableBitmapRenderer()
-            //};
-
-            //BitmapSource barcodeBitmap = barcodeWriter.Write(barcodeNumber);
-            //pbBarcode.Source = barcodeBitmap;
+           
         }
 
 
