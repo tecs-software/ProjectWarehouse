@@ -1,4 +1,8 @@
-﻿using System;
+﻿using LiveCharts.Defaults;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Wpf.Charts.Base;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -14,6 +18,7 @@ using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using WWarehouseManagement.Database;
+using System.Collections.Immutable;
 
 namespace WarehouseManagement.Database
 {
@@ -232,6 +237,39 @@ namespace WarehouseManagement.Database
             else
             {
                 return false;
+            }
+        }
+
+        public void sales_graph(DatePicker start, DatePicker end, CartesianChart chart)
+        {
+            ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
+            List<DateTime> dateList = new List<DateTime>();
+
+            //for revenue
+            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'Delivered' AND updated_at BETWEEN '" + start + "' AND '" + end + "' GROUP BY updated_at");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    revenueData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
+                    dateList.Add(DateTime.Parse(dr[1].ToString()));
+                }
+                List<string> dateLabels = dateList.Select(date => date.ToString("dd/MM/yyyy")).ToList();
+
+                chart.AxisX.Clear();
+                chart.AxisX.Add(new Axis
+                {
+                    Title = "Date",
+                    Labels = dateLabels
+                });
+
+                chart.Series.Clear();
+                chart.Series.Add(new LineSeries
+                {
+                    Title = "Total Revenue",
+                    Values = revenueData,
+                });
             }
         }
     }

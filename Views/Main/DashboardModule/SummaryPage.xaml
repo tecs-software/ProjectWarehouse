@@ -167,8 +167,25 @@
                 BorderThickness="1"
                  Margin="15">
 
-            <lvc:CartesianChart x:Name="salesChart" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="20,50,20,50">
-            </lvc:CartesianChart>
+            <wpf:CartesianChart x:Name="salesChart" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="20,50,20,50"
+                    xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
+                <wpf:CartesianChart.Series>
+                    <wpf:LineSeries Title="Net Profit" Values="{Binding NetProfitData}" DataLabels="{Binding NetProfitData}">
+                        <wpf:LineSeries.DataLabelsTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontSize="10"/>
+                            </DataTemplate>
+                        </wpf:LineSeries.DataLabelsTemplate>
+                    </wpf:LineSeries>
+                </wpf:CartesianChart.Series>
+                <wpf:CartesianChart.AxisX>
+                    <wpf:Axis Title="Dates" Labels="{Binding DateLabels}">
+                        <wpf:Axis.Separator>
+                            <wpf:Separator Step="1" />
+                        </wpf:Axis.Separator>
+                    </wpf:Axis>
+                </wpf:CartesianChart.AxisX>
+            </wpf:CartesianChart>
 
         </Border>
     </Grid>

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Views.Main.OrderModule;
+using WarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.DashboardModule
 {
@@ -27,6 +28,7 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         private SalesReportPage? salesReportPage;
         private ExpensesReportPage? expensesReportPage;
         private SummaryPage? summaryPage;
+        db_queries queries = new db_queries();
 
         public DashboardView()
         {
@@ -53,6 +55,29 @@ namespace WarehouseManagement.Views.Main.DashboardModule
                     PageContent.Content = expensesReportPage;
                     break;
             }
+        }
+
+        private void PageContent_Loaded(object sender, RoutedEventArgs e)
+        {
+            startDatePicker.DisplayDateEnd = DateTime.Now;
+            endDatePicker.DisplayDateEnd = DateTime.Now;
+
+            startDatePicker.SelectedDate = DateTime.Now.AddDays(-7);
+            endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
+
+            queries.sales_graph(startDatePicker,endDatePicker,summaryPage.salesChart);
+
+        }
+
+        private void startDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
+            queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+        }
+
+        private void endDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
         }
     }
 }

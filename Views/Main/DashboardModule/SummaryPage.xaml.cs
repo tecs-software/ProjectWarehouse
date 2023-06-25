@@ -27,13 +27,13 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         public SummaryPage()
         {
             InitializeComponent();
-            setChart();
         }
         db_queries queries = new db_queries();
         private void setChart()
         {
             ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
             Random random = new Random();
+
             int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             for (int day = 1; day <= daysInMonth; day++)
             {
