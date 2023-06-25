@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
@@ -37,12 +38,15 @@ namespace WarehouseManagement.Views.Main
         {
             InitializeComponent();
             setUpUserAccess();
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
            
             tbAccountName.Text = CurrentUser.Instance.firstName;
+            Trial_Controller.MessagePopup();
+
         }
 
         private void setUpUserAccess()
@@ -128,6 +132,8 @@ namespace WarehouseManagement.Views.Main
 
         private void btnInventoryModule_Checked(object sender, RoutedEventArgs e)
         {
+            Trial_Controller.MessagePopup();
+
             if (!(PageContent.Content is InventoryView))
             {
                 PageContent.Content = new InventoryView();
@@ -137,6 +143,8 @@ namespace WarehouseManagement.Views.Main
 
         private void btnOrderModule_Checked(object sender, RoutedEventArgs e)
         {
+            Trial_Controller.MessagePopup();
+
             if (!(PageContent.Content is OrderView))
             {
                 PageContent.Content = new OrderView();
@@ -145,6 +153,8 @@ namespace WarehouseManagement.Views.Main
 
         private void btnEmployeeModule_Checked(object sender, RoutedEventArgs e)
         {
+            Trial_Controller.MessagePopup();
+
             if (!(PageContent.Content is EmployeeView))
             {
                 PageContent.Content = new EmployeeView();
@@ -153,6 +163,8 @@ namespace WarehouseManagement.Views.Main
 
         private void btnSalesModule_Checked(object sender, RoutedEventArgs e)
         {
+            Trial_Controller.MessagePopup();
+
             if (!(PageContent.Content is SalesView))
             {
                 PageContent.Content = new SalesView();

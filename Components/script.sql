@@ -18,7 +18,15 @@ BEGIN
     )
 END
 GO
-
+--Create tbl_trial
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_trial')
+BEGIN
+    CREATE TABLE tbl_trial(
+	    ID INT PRIMARY KEY IDENTITY(1,1),
+	    [Date] DATE 
+    );
+END
+GO
 -- Create tbl_products table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_address_delivery')
 BEGIN
@@ -357,3 +365,101 @@ BEGIN
 	END;
 	');
 END;
+-- StoreProc for Trial Insertion
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'Sp_Trial_Insertion')
+BEGIN
+	EXEC('
+	CREATE PROC Sp_Trial_Insertion
+    AS
+    BEGIN
+	    DECLARE @DateNow DATE = (SELECT GETDATE())
+	    DECLARE @IsExist INT = (SELECT COUNT(*) FROM tbl_trial WHERE [Date] = @DateNow )
+	    IF @IsExist = 0
+	    BEGIN
+		    INSERT INTO tbl_trial([Date]) VALUES (@DateNow)
+	    END;
+    END
+	');
+END;
+-- StoreProc for Trial Validation
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'Sp_Trial_Validation')
+BEGIN
+	EXEC('
+	CREATE PROC Sp_Trial_Validation
+    AS
+    BEGIN
+	    SELECT COUNT(*) FROM tbl_trial 
+    END;
+	');
+END;
+
+--Creation of Jobs
+
+USE [msdb]
+GO
+
+/****** Object:  Job [WarehouseTrial]    Script Date: 6/25/2023 6:08:55 PM ******/
+BEGIN TRANSACTION
+DECLARE @ReturnCode INT
+SELECT @ReturnCode = 0
+/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 6/25/2023 6:08:55 PM ******/
+IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
+BEGIN
+EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+
+END
+
+DECLARE @jobId BINARY(16)
+EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'WarehouseTrial', 
+		@enabled=1, 
+		@notify_level_eventlog=0, 
+		@notify_level_email=0, 
+		@notify_level_netsend=0, 
+		@notify_level_page=0, 
+		@delete_level=0, 
+		@description=N'No description available.', 
+		@category_name=N'[Uncategorized (Local)]', 
+		@owner_login_name=N'sa', @job_id = @jobId OUTPUT
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+/****** Object:  Step [Trial_Insertion]    Script Date: 6/25/2023 6:08:55 PM ******/
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Trial_Insertion', 
+		@step_id=1, 
+		@cmdexec_success_code=0, 
+		@on_success_action=1, 
+		@on_success_step_id=0, 
+		@on_fail_action=2, 
+		@on_fail_step_id=0, 
+		@retry_attempts=0, 
+		@retry_interval=0, 
+		@os_run_priority=0, @subsystem=N'TSQL', 
+		@command=N'EXEC Sp_Trial_Insertion', 
+		@database_name=N'db_warehouse_management', 
+		@flags=0
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'trial_insertion', 
+		@enabled=1, 
+		@freq_type=64, 
+		@freq_interval=0, 
+		@freq_subday_type=0, 
+		@freq_subday_interval=0, 
+		@freq_relative_interval=0, 
+		@freq_recurrence_factor=0, 
+		@active_start_date=20230625, 
+		@active_end_date=99991231, 
+		@active_start_time=0, 
+		@active_end_time=235959, 
+		@schedule_uid=N'37cda711-320f-4a4d-90f8-a84935ffcf76'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+COMMIT TRANSACTION
+GOTO EndSave
+QuitWithRollback:
+    IF (@@TRANCOUNT > 0) ROLLBACK TRANSACTION
+EndSave:
+GO
+
+
