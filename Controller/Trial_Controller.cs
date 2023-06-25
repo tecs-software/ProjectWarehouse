@@ -19,10 +19,14 @@ namespace WarehouseManagement.Controller
             else
                 return false;
         }
+        public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
         public static void MessagePopup()
         {
-            if (Trial_Controller.IsTrialEnded())
-                MessageBox.Show("Your trial is expired. Please contact the distributer of the application.");
+            if (HaveTrialKey() == 0)
+            {
+                if (Trial_Controller.IsTrialEnded())
+                    MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
+            }
         }
     }
 }

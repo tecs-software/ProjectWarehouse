@@ -27,6 +27,15 @@ BEGIN
     );
 END
 GO
+--Create tbl_trial_key
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_trial')
+BEGIN
+    CREATE TABLE tbl_trial_key(
+	    ID INT PRIMARY KEY IDENTITY(1,1),
+	    Product_Key NVARCHAR(255)
+    );
+END
+GO
 -- Create tbl_products table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_address_delivery')
 BEGIN
@@ -392,7 +401,17 @@ BEGIN
     END;
 	');
 END;
-
+--StoreProc for Trial Product Key checker
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpTrial_HaveKey')
+BEGIN
+	EXEC('
+	CREATE PROC SpTrial_HaveKey
+    AS
+    BEGIN
+	    SELECT COUNT(*) FROM tbl_trial_key
+    END;
+	');
+END;
 --Creation of Jobs
 
 USE [msdb]
