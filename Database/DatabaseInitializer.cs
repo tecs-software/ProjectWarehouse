@@ -111,11 +111,18 @@ namespace WarehouseManagement.Database
                     }
                     else
                     {
-                        string createUserSql = $"USE {databaseName}; CREATE USER {loginName} FOR LOGIN {loginName};";
-                        string addDataReaderRoleSql = $"EXEC sp_addrolemember 'db_datareader', '{loginName}';";
-                        string addDataWriterRoleSql = $"EXEC sp_addrolemember 'db_datawriter', '{loginName}';";
-                        SqlCommand createUserCommand = new SqlCommand(createUserSql + addDataReaderRoleSql + addDataWriterRoleSql, sqlConnection);
-                        createUserCommand.ExecuteNonQuery();
+                        string checkLoginSql2 = $"USE {databaseName}; SELECT COUNT(*) FROM sys.syslogins WHERE name = '{loginName}'";
+                        SqlCommand checkLoginCommand2 = new SqlCommand(checkLoginSql, sqlConnection);
+                        int loginCount2 = (int)checkLoginCommand2.ExecuteScalar();
+
+                        if (loginCount == 0)
+                        {
+                            string createUserSql = $"USE {databaseName}; CREATE USER {loginName} FOR LOGIN {loginName};";
+                            string addDataReaderRoleSql = $"EXEC sp_addrolemember 'db_datareader', '{loginName}';";
+                            string addDataWriterRoleSql = $"EXEC sp_addrolemember 'db_datawriter', '{loginName}';";
+                            SqlCommand createUserCommand = new SqlCommand(createUserSql + addDataReaderRoleSql + addDataWriterRoleSql, sqlConnection);
+                            createUserCommand.ExecuteNonQuery();
+                        }
                     }
                 }
 

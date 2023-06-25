@@ -210,7 +210,9 @@ namespace WarehouseManagement.Views.Main
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-           
+            DBHelper db = new DBHelper();
+            db.UpdateWorkHoursAndActiveUsers(CurrentUser.Instance.userID, DateTime.Now);
+            CurrentUser.Instance.Clear();
         }
 
         private void btn_minimize_Click(object sender, RoutedEventArgs e)
