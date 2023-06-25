@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         Background="Transparent"
-        Title="AddProduct" Height="170" Width="600">
+        Title="AddProduct" Height="275" Width="600">
 
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
@@ -27,6 +27,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -44,8 +47,17 @@
                         IsCancel="True" Click="btnClose_Click">
                 </Button>
             </DockPanel>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" Height="Auto"
                      Grid.Row="1"
+                     Grid.Column="0"
+                     materialDesign:HintAssist.Hint="RTS Reason" FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     Margin="10,0,10,10"
+                     x:Name="cmbReason"/>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     Grid.Row="2"
                      Grid.Column="0"
                      materialDesign:HintAssist.Hint="Barcode Number" FontSize="15"
                      Background="{StaticResource textboxProfitAnalysisColor1}"
@@ -53,7 +65,11 @@
                      BorderBrush="Black"
                      Margin="10,0,10,10"
                      x:Name="txtBarcode" KeyDown="txtBarcode_KeyDown"/>
-
+            <Button   Grid.Row="3" HorizontalAlignment="Stretch"
+                     Grid.Column="0" Content="Return" Margin="8,8,8,0"
+                BorderBrush="{StaticResource secondaryColor}" Height="45" x:Name="btnReturn" FontSize="15" Background="{StaticResource secondaryColor}" Click="btnReturn_Click">
+               
+            </Button>
         </Grid>
     </Border>
 </Window>

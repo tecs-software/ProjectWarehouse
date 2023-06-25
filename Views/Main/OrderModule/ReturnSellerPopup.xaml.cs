@@ -39,12 +39,17 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
         {
-            //process of reading barcode.
-            if(Order_Controller.isBarcodeExist(txtBarcode.Text))
+           
+        }
+        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            if(cmbReason.Text == "" || txtBarcode.Text == "")
+                MessageBox.Show("Please complete all fields.");
+            else if(!Order_Controller.isBarcodeExist(txtBarcode.Text))
+                MessageBox.Show("The waybill is not exist");
+            else
             {
-                id = Order_Controller.id;
-                //trigger confirmation code here
-                //after triggering confirmation -> if yes (Update the status to return to sender)
+                //confirmation here
             }
         }
     }
