@@ -43,6 +43,51 @@
             <StackPanel Grid.Row="1">
                 <TabControl x:Name="setting_tab" Width="auto" SelectionChanged="TabControl_SelectionChanged" Loaded="TabControl_Loaded" Height="500" >
                     <TabControl.Items >
+                        <TabItem Header="Address Import" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition MaxHeight="80" />
+
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0,24,0,0">
+                                    <TextBlock Foreground="#636363" FontSize="20" Text="Import Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,24,8"/>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <TextBox HorizontalAlignment="Left" Margin="24,8,24,0" x:Name="txtFileNameProduct" materialDesign:HintAssist.Hint="File Name" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center" Width="600"
+                                                             SelectionBrush="#FF1D2118"/>
+                                        <Button FontSize="16" x:Name="btnBrowseAddress" Content="Browse" Style="{StaticResource MaterialDesignRaisedLightButton}" MinWidth="50"
+                                                            Foreground="#000000" Height="45" HorizontalAlignment="Right"
+                                                            Margin="24,8,24,0" Background="White" FontWeight="Light"  Width="250"
+                                                            BorderBrush="White" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"
+                                                            materialDesign:ElevationAssist.Elevation="Dp3" Click="btnBrowseAddress_Click" />
+                                    </Grid>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="14" Text="Total number of item(s)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Light" Margin="24,24,0,0"/>
+                                        <TextBlock x:Name="lblTotalNumberOfItems" HorizontalAlignment="Stretch" Foreground="#636363" FontSize="14" Text="0" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,24,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="14" Text="Total of imported item(s)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Light" Margin="24,24,0,0"/>
+                                        <TextBlock Foreground="Green" x:Name="lblImportedProducts"  HorizontalAlignment="Stretch" FontSize="14" Text="0" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,24,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <ProgressBar x:Name="pbBarProduct" Margin="24,16,24,0" Value="0" Height="8"  materialDesign:TransitionAssist.DisableTransitions="True" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Button FontSize="16" x:Name="btnImportAddress" Content="Import Address" Style="{StaticResource MaterialDesignRaisedLightButton}" MinWidth="50"
+                                                        Foreground="White" Height="45"
+                                                        Margin="24,0,24,8" Background="{StaticResource secondaryColor}" FontWeight="Light"
+                                                        BorderBrush="{StaticResource secondaryColor}" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"
+                                                        materialDesign:ElevationAssist.Elevation="Dp3" Click="btnImportAddress_Click" />
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
                         <TabItem Header="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>

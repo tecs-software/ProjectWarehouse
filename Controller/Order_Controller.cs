@@ -23,6 +23,7 @@ namespace WarehouseManagement.Controller
     {
         static sql_control sql = new sql_control();
         public static string id { get; set; }
+        public static bool isConfirmedToReturn { get; set; } = false;
         public static bool isBarcodeExist(string barcode)
         {
             sql.Query($"SELECT order_id FROM tbl_orders WHERE waybill_number = '{barcode}' ");
@@ -37,5 +38,6 @@ namespace WarehouseManagement.Controller
             else
                 return false;
         }
+        public static void UpdateStatus(string id) => sql.Query($"UPDATE tbl_orders SET status = 'Returned to Sender' WHERE order_id = '{id}' ");
     }
 }

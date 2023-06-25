@@ -20,10 +20,26 @@ namespace WarehouseManagement.Views.Main.OrderModule
     /// </summary>
     public partial class ReturnSellerPopup : Window
     {
-        string id;
+        public void reasons()
+        {
+            List<String> reasons = new List<String>();
+            reasons.Add("Item is no longer needed.");
+            reasons.Add("Found a better deal elsewhere..");
+            reasons.Add("Ordered by mistake.");
+            reasons.Add("Customer changed their mind.");
+            reasons.Add("Incorrect item selected.");
+            reasons.Add("Customer requested cancellation.");
+
+            for (int x = 0; x < reasons.Count; x++)
+            {
+                cmbReason.Items.Add(reasons[x]);
+            }
+        }
         public ReturnSellerPopup()
         {
             InitializeComponent();
+            Order_Controller.isConfirmedToReturn = false;
+            reasons();
             txtBarcode.Focus();
         }
 
@@ -43,13 +59,15 @@ namespace WarehouseManagement.Views.Main.OrderModule
         }
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
-            if(cmbReason.Text == "" || txtBarcode.Text == "")
+            if (cmbReason.Text == "" || txtBarcode.Text == "")
                 MessageBox.Show("Please complete all fields.");
-            else if(!Order_Controller.isBarcodeExist(txtBarcode.Text))
+            else if (!Order_Controller.isBarcodeExist(txtBarcode.Text))
                 MessageBox.Show("The waybill is not exist");
-            else
+            else if (Order_Controller.isBarcodeExist(txtBarcode.Text))
             {
-                //confirmation here
+                Order_Controller.UpdateStatus(Order_Controller.id);
+                Order_Controller.isConfirmedToReturn = true; 
+                Close();
             }
         }
     }
