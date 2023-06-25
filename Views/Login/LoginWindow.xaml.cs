@@ -37,7 +37,6 @@ namespace WarehouseManagement.Views.Login
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.Height;
-            Trial_Controller.MessagePopup();
         }
 
         db_queries queries = new db_queries();
@@ -68,24 +67,16 @@ namespace WarehouseManagement.Views.Login
 
                 if (await db.AuthenticateUser(username, password))
                 {
-                    
-                    if(queries.check_addresses())
+
+                    if (queries.check_sender_info())
                     {
-                        if (queries.check_sender_info())
-                        {
-                            MainWindow main = new MainWindow();
-                            main.Show();
-                        }
-                        else
-                        {
-                            OnboardingSetup onboarding = new OnboardingSetup();
-                            onboarding.Show();
-                        }
+                        MainWindow main = new MainWindow();
+                        main.Show();
                     }
                     else
                     {
-                        SystemSettingPopup settings = new SystemSettingPopup();
-                        settings.Show();
+                        OnboardingSetup onboarding = new OnboardingSetup();
+                        onboarding.Show();
                     }
                     this.Close();
                 }
