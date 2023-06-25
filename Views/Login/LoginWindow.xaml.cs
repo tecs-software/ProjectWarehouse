@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
@@ -36,6 +37,7 @@ namespace WarehouseManagement.Views.Login
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.Height;
+            Trial_Controller.MessagePopup();
         }
 
         db_queries queries = new db_queries();
