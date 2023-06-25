@@ -39,7 +39,6 @@ namespace WarehouseManagement.Views.Onboarding
             couriers.Add("JnT");
 
             cmbCourier.ItemsSource = couriers;
-            queries.province(cmbProvince);
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -118,6 +117,7 @@ namespace WarehouseManagement.Views.Onboarding
             MessageBox.Show("Import address successfully", "Success");
             btnImportAddress.IsEnabled = true;
             Csv_Controller.ConfirmedToImport = true;
+            queries.province(cmbProvince);
         }
         private void btnBrowseAddress_Click(object sender, RoutedEventArgs e)
         {
