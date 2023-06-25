@@ -29,5 +29,9 @@ namespace WarehouseManagement.Models
         public string sender_phone { get; set; } = string.Empty;
         public string sender_address { get; set; } = string.Empty;
 
+        public string key { get; set; }= string.Empty;
+        public string eccompany_id { get; set; } = string.Empty;
+        public string customer_id { get; set; } = string.Empty;
+
     }
 }

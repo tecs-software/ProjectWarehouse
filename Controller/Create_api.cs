@@ -29,10 +29,9 @@ namespace WarehouseManagement.Controller
         db_queries queries = new db_queries();
         public bool api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
         {
-            MessageBox.Show(global.sender_name);
+            
             string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
-            string eccompanyid = "THIRDYNAL";
-            string key = "8049bdb499fc06b6fde3e476a87987ef";
+            string key = global.key;
             string logistics_interface = @"
             {
             ""actiontype"": ""add"",
@@ -78,6 +77,10 @@ namespace WarehouseManagement.Controller
             string msg_type = "ORDERCREATE";
 
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
+
+            //for customer id
+            payloadObj.eccompanyid = global.eccompany_id;
+            payloadObj.customerid = global.customer_id;
 
             //updating sender information
             payloadObj.sender.name = global.sender_name;
@@ -166,7 +169,7 @@ namespace WarehouseManagement.Controller
                     requestData.Add("logistics_interface", updatedPayload);
                     requestData.Add("data_digest", encodedDataDigest);
                     requestData.Add("msg_type", msg_type);
-                    requestData.Add("eccompanyid", eccompanyid);
+                    requestData.Add("eccompanyid", global.eccompany_id);
 
                     // Send the POST request
                     byte[] responseBytes = client.UploadValues(url, requestData);

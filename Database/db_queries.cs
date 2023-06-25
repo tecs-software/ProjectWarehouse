@@ -62,6 +62,17 @@ namespace WarehouseManagement.Database
                     sender.sender_address = dr[6].ToString();
                 }
             }
+
+            sql.Query($"SELECT * FROM tbl_couriers");
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    sender.key = dr[2].ToString();
+                    sender.eccompany_id = dr[3].ToString();
+                    sender.customer_id = dr[4].ToString();
+                }
+            }
         }
         public void api_credentials(ComboBox courier, TextBox api_key, TextBox ec, TextBox customer_id)
         {
@@ -270,6 +281,18 @@ namespace WarehouseManagement.Database
                     Title = "Total Revenue",
                     Values = revenueData,
                 });
+            }
+        }
+        public bool check_addresses()
+        {
+            int addreses = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_address_delivery"));
+            if(addreses > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
