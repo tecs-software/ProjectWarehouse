@@ -63,6 +63,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             }
             else
             {
+                if (Util.IsAnyStringEmpty(bookingInformationPage.tbQuantity.Text, bookingInformationPage.tbGoodsValue.Text, bookingInformationPage.cbItem.Text, bookingInformationPage.tbWeight.Text))
+                {
+                    MessageBox.Show("Fill up required fields");
+                    return;
+                }
                 queries.get_sender(global_sender);
 
                 //receiver frame

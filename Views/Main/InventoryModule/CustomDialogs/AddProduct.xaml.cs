@@ -116,7 +116,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
             using DBHelper db = new DBHelper();
 
             string[] productColumns = { "item_name", "acq_cost", "barcode", "unit_quantity", "nominated_price", "status", "reorder_point", "timestamp" };
-            string[] productValues = { newProduct.ItemName, newProduct.AcqCost.ToString(), newProduct.Barcode, newProduct.UnitQuantity.ToString(), newProduct.NominatedPrice.ToString(), newProduct.Status, "100", DateTime.Now.ToString() };
+            string[] productValues = { newProduct.ItemName, newProduct.AcqCost.ToString(), newProduct.Barcode, newProduct.UnitQuantity.ToString(), newProduct.NominatedPrice.ToString(), newProduct.Status, "100", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") };
 
             bool operationResult;
 
