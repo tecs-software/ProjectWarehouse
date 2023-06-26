@@ -95,5 +95,17 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             queries.baranggay(cbBarangay, cbCity.Text);
 
         }
+
+        private void capitalize_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+
+            textBox.Text = Converter.CapitalizeWords(textBox.Text, 2);
+        }
+
+        private void tbLastName_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

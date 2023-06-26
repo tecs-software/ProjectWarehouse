@@ -63,8 +63,11 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                     {
                         if (await db.CheckIfExists("tbl_work_hours", "user_id", id, "issued", "false"))
                         {
-                            MessageBox.Show("Unable to update rate per hour, there are currently un-issued hours worked");
-                            return;
+                            var confirmationResult = MessageBox.Show("There are currently un-issued hours worked. Do you still want to update the rate per hour?", "Confirmation", MessageBoxButton.YesNo);
+                            if (confirmationResult == MessageBoxResult.No)
+                            {
+                                return;
+                            }
                         }
 
                         if (await db.UpdateData("tbl_wage", new string[] { "hourly_rate" }, new string[] { rate.ToString() }, "user_id", id))

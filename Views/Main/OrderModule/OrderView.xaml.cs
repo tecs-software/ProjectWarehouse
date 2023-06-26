@@ -64,6 +64,9 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
             NewOrderWindow newOrderWindow = new NewOrderWindow();
 
+            newOrderWindow.Owner = Window.GetWindow(this);
+
+
             if (newOrderWindow.ShowDialog() == true)
             {
                 refreshTable();
@@ -118,6 +121,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 string courier = (dgtRespondentData.SelectedCells[1].Column.GetCellContent(id) as TextBlock).Text;
                 CheckStatus cs = new CheckStatus(waybill,courier);
 
+                cs.Owner = Window.GetWindow(this);
 
                 if (cs.ShowDialog() == true)
                 {
@@ -178,6 +182,8 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 string courier = (dgtRespondentData.SelectedCells[1].Column.GetCellContent(id) as TextBlock).Text;
 
                 CancelOrder ca = new CancelOrder(order_id, courier);
+
+                ca.Owner = Window.GetWindow(this);
 
                 if (ca.ShowDialog() == true)
                 {

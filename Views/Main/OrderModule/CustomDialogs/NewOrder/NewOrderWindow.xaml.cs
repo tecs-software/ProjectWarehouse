@@ -82,7 +82,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 booking_info.bag_specification = bookingInformationPage.tbBagSpecification.Text;
                 booking_info.remarks = bookingInformationPage.tbRemarks.Text;
                 booking_info.quantity = bookingInformationPage.tbQuantity.Text;
-                booking_info.item_category = bookingInformationPage.tbCategory.Text;
 
                 if(bookingInformationPage.radioJAndT.IsChecked == true)
                 {

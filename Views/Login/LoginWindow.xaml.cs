@@ -78,6 +78,7 @@ namespace WarehouseManagement.Views.Login
                         OnboardingSetup onboarding = new OnboardingSetup();
                         onboarding.Show();
                     }
+
                     this.Close();
                 }
                 else

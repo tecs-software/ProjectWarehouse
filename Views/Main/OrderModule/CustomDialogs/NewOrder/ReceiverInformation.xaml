@@ -28,7 +28,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Receiver Information" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="20,20,0,0" FontSize="25" FontWeight="SemiBold"/>
+        <TextBlock Text="Receiver Information" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="20,0,0,0" FontSize="25" FontWeight="SemiBold"/>
 
 
 
@@ -41,12 +41,14 @@
                      materialDesign:HintAssist.Foreground="Black"
                      BorderBrush="Black"
                      IsReadOnly="False"
+                     LostFocus="capitalize_LostFocus"
                      x:Name="tbFirstName"
                      Margin="20,20,10,0"
                      
                      Focusable="True"/>
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="1"
+                     LostFocus="capitalize_LostFocus"
                      Grid.Column="1"
                      materialDesign:HintAssist.Hint="Middle Name (Optional)" 
                      FontSize="15"
@@ -63,6 +65,7 @@
                      Grid.Column="2"
                      materialDesign:HintAssist.Hint="Last Name" 
                      FontSize="15"
+                     LostFocus="capitalize_LostFocus"
                   x:Name="tbLastName"
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
@@ -74,9 +77,11 @@
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="2"
                      Grid.Column="0"
-                     materialDesign:HintAssist.Hint="Phone" 
+                     MaxLength="11"
+                     materialDesign:HintAssist.Hint="Phone (e.g., 09xxxxxxxxx)" 
                      FontSize="15"
-                  x:Name="tbPhone"
+                     x:Name="tbPhone"
+                     PreviewTextInput="TextBox_PreviewTextInput"
                      Margin="20,20,10,0"
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
@@ -107,27 +112,28 @@
                       Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbCity_DropDownClosed"/>
 
         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                      Grid.Column="2"
-                      Grid.Row="3"
-                      x:Name="cbBarangay"
-                      Margin="10,20,20,0"
-                      materialDesign:HintAssist.Hint="Barangay" FontSize="15" Width="Auto"
-                      materialDesign:HintAssist.Foreground="Black"
-                      BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    x:Name="cbBarangay"
+                    Margin="10,20,20,0"
+                    materialDesign:HintAssist.Hint="Barangay" FontSize="15" Width="Auto"
+                    materialDesign:HintAssist.Foreground="Black"
+                    BorderBrush="Black"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"/>
 
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     Grid.Row="5"
-                  x:Name="tbAddress"
-                     Grid.ColumnSpan="3"
-                     Margin="20,20,20,40"
-                     Grid.Column="0"
-                     materialDesign:HintAssist.Hint="Address" 
-                     FontSize="15"
-                     Background="{StaticResource textboxProfitAnalysisColor1}"
-                     materialDesign:HintAssist.Foreground="Black"
-                     BorderBrush="Black"
-                     IsReadOnly="False"
-                     Focusable="True"/>
+                    Grid.Row="5"
+                    x:Name="tbAddress"
+                    Grid.ColumnSpan="3"
+                    Margin="20,20,20,40"
+                    LostFocus="capitalize_LostFocus"
+                    Grid.Column="0"
+                    materialDesign:HintAssist.Hint="Full Address" 
+                    FontSize="15"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Foreground="Black"
+                    BorderBrush="Black"
+                    IsReadOnly="False"
+                    Focusable="True"/>
     </Grid>
 </Page>

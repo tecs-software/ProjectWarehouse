@@ -1452,7 +1452,7 @@ namespace WarehouseManagement.Database
             return financialData;
         }
 
-        public async  Task<List<Roles>> GetRoles()
+        public async Task<List<Roles>> GetRoles()
         {
             List<Roles> roles = new List<Roles>();
 
@@ -1474,7 +1474,7 @@ namespace WarehouseManagement.Database
                             role.roleID = reader.GetInt32(0);
                             role.roleName = Converter.CapitalizeWords(reader.GetString(1), 2);
                             decimal? hourlyRateNullable = reader.IsDBNull(2) ? (decimal?)null : reader.GetDecimal(2);
-                            decimal hourlyRate = hourlyRateNullable ?? 0;
+                            role.hourlyRate = hourlyRateNullable ?? 0;
 
                             roles.Add(role);
                         }
@@ -1640,7 +1640,7 @@ namespace WarehouseManagement.Database
                             Roles role = new Roles
                             {
                                 roleName = reader["role_name"].ToString(),
-                                hourlyRate = Convert.ToDecimal(reader["hourly_rate"])
+                                hourlyRate = reader.IsDBNull(reader.GetOrdinal("hourly_rate")) ? 0 : Convert.ToDecimal(reader["hourly_rate"])
                             };
 
                             return role;

@@ -262,6 +262,11 @@ namespace WarehouseManagement.Views.InitialSetup
             ReleaseMouseCapture();
         }
 
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)

@@ -58,5 +58,10 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             decimal total = Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text);
             tbTotal.Text = Converter.StringToMoney(total.ToString());
         }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputValidation.Integer(sender, e);
+        }
     }
 }

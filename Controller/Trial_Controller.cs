@@ -15,7 +15,7 @@ namespace WarehouseManagement.Controller
         {
             int days = int.Parse(sql.ReturnResult("EXEC Sp_Trial_Validation"));
             if (days <= 1)
-                return true;
+                return false;
             else
                 return false;
         }

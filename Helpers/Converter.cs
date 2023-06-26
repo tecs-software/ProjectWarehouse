@@ -143,7 +143,7 @@ namespace WarehouseManagement.Helpers
             switch (mode)
             {
                 case 1:
-                    return char.ToUpper(input[0]) + input.Substring(1).ToLower();
+                    return char.ToUpper(input[0]) + input.Substring(1).ToLower().Trim();
                 case 2:
                     var words = input.Split(' ');
                     for (int i = 0; i < words.Length; i++)
@@ -161,7 +161,7 @@ namespace WarehouseManagement.Helpers
                             }
                         }
                     }
-                    return string.Join(" ", words);
+                    return string.Join(" ", words).Trim();
                 default:
                     throw new ArgumentException("Invalid mode specified");
             }

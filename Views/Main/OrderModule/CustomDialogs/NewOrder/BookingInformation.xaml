@@ -30,9 +30,8 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <TextBlock Text="Booking Information" Grid.Row="0" Grid.Column="0" Margin="20,20,0,0" FontSize="25" FontWeight="SemiBold"/>
-            <RadioButton GroupName="PickupDropoff" Content="Door to door pickup" Margin="30,0,0,5" FontSize="15" VerticalAlignment="Bottom"/>
-            <RadioButton GroupName="PickupDropoff" Content="Drop off to branches" Margin="20,0,0,5" FontSize="15" VerticalAlignment="Bottom"/>
+            <TextBlock Text="Booking Information" Grid.Row="0" Grid.Column="0" Margin="20,0,0,0" FontSize="25" FontWeight="SemiBold"/>
+           
         </StackPanel>
 
         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
@@ -53,6 +52,8 @@
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
                      BorderBrush="Black"
+                     MaxLength="6"
+                     PreviewTextInput="TextBox_PreviewTextInput"
                      x:Name="tbQuantity"
                      IsReadOnly="False"
                      Margin="10,20,20,0"
@@ -72,15 +73,7 @@
                      Margin="20,20,10,0"
                      Focusable="True"/>
 
-        <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                      Grid.Column="2"
-                      Grid.Row="3"
-                      Margin="10,20,20,0"
-                      materialDesign:HintAssist.Hint="Item Category" FontSize="15"
-                      materialDesign:HintAssist.Foreground="Black"
-                   x:Name="tbCategory"
-                      BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+
 
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="4"
@@ -89,23 +82,18 @@
                      FontSize="15"
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
-                  x:Name="tbGoodsValue"
+                     x:Name="tbGoodsValue"
                      BorderBrush="Black"
                      IsReadOnly="True"
                      Margin="20,20,10,0"
                      Focusable="True"/>
 
-        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
-            <TextBlock Text="Valuation fee (PHP):" Grid.Row="8" Grid.Column="0" Margin="10,20,0,0" FontSize="20" VerticalAlignment="Bottom" FontWeight="Regular"/>
-            <TextBlock Text="₱0" Grid.Row="8" Grid.Column="0" Margin="20,20,0,0" FontSize="25" VerticalAlignment="Bottom" FontWeight="SemiBold"/>
-        </StackPanel>
-
-
         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                      Grid.Column="0"
-                      Grid.Row="5"
-                      Margin="20,20,10,0"
-                   x:Name="tbBagSpecification"
+                      Grid.Column="1"
+                      Grid.Row="3"
+                      Margin="10,20,20,0"
+                      x:Name="tbBagSpecification"
+                      Visibility="Hidden"
                       materialDesign:HintAssist.Hint="Bag Specification" FontSize="15"
                       materialDesign:HintAssist.Foreground="Black"
                       BorderBrush="Black"
@@ -128,14 +116,14 @@
 
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,0,20">
             <RadioButton x:Name="radioJAndT" GroupName="service" Content="J &amp; T"  FontSize="17" Margin="0,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="radioFlashExpress" GroupName="service" Content="Flash Express"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="radioLBC" GroupName="service" Content="LBC"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="radioNinjavan" GroupName="service" Content="Ninjavan"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
+            <RadioButton IsEnabled="False" x:Name="radioFlashExpress" GroupName="service" Content="Flash Express"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
+            <RadioButton IsEnabled="False" x:Name="radioLBC" GroupName="service" Content="LBC"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
+            <RadioButton IsEnabled="False" x:Name="radioNinjavan" GroupName="service" Content="Ninjavan"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal" Margin="0,20,0,20">
-            <TextBlock Text="Total Amount:" Grid.Row="8" Grid.Column="0" Margin="20,0,0,0" FontSize="20" VerticalAlignment="Bottom" FontWeight="Regular"/>
-            <TextBlock Text="₱0" x:Name="tbTotal" Grid.Row="8" Grid.Column="0" FontSize="35" Margin="20,0,0,0" FontWeight="SemiBold"/>
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,20,0,20">
+            <TextBlock Text="Total Amount:" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" FontSize="20" VerticalAlignment="Center" FontWeight="Regular"/>
+            <TextBlock Text="₱0" x:Name="tbTotal" Grid.Row="8" Grid.Column="0" FontSize="35" Margin="20,0,0,0" FontWeight="SemiBold" VerticalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Page>

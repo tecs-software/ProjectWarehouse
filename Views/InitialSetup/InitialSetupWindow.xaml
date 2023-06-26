@@ -37,6 +37,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Grid.Row="0"
+                        Click="btnClose_Click"
                         Style="{StaticResource SmallCloseButtonStyle}"
                         Background="{StaticResource textboxProfitAnalysisColor1}"
                         BorderBrush="Transparent"
@@ -116,10 +117,11 @@
 
                     <TextBox    
                         TextChanged="TextChanged"
-                        Visibility="Collapsed"
+                        Visibility="Visible"
                         Grid.Row="2"
                         Style="{StaticResource MaterialDesignOutlinedTextBox}" 
                         Width="Auto"
+                        
                         materialDesign:HintAssist.Hint="Password" 
                         FontSize="13"
                         Background="{StaticResource textboxProfitAnalysisColor1}"
