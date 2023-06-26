@@ -29,8 +29,7 @@ namespace WarehouseManagement.Controller
         db_queries queries = new db_queries();
         public bool api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
         {
-            
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = global.key;
             string logistics_interface = @"
             {
@@ -78,7 +77,7 @@ namespace WarehouseManagement.Controller
 
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
-            //for customer id
+            //for VIP code
             payloadObj.eccompanyid = global.eccompany_id;
             payloadObj.customerid = global.customer_id;
 

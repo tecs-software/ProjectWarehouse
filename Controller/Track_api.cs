@@ -20,11 +20,11 @@ namespace WarehouseManagement.Controller
     {
         sql_control sql = new sql_control();
 
-        public void api_track(string waybill)
+        public void api_track(string waybill, string courier)
         {
-            string url = " https://test-api.jtexpress.ph/jts-phl-order-api/api/track/trackForJson";
-            string eccompanyid = "THIRDYNAL";
-            string key = "8049bdb499fc06b6fde3e476a87987ef";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/track/trackForJson";
+            string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '"+courier+"'");
+            string key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '" + courier + "'");
             string logistics_interface = @"
             {
                 ""billcode"": """",

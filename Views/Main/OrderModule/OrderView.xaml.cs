@@ -115,7 +115,8 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
                 object id = dgtRespondentData.SelectedItem;
                 string waybill = (dgtRespondentData.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text;
-                CheckStatus cs = new CheckStatus(waybill);
+                string courier = (dgtRespondentData.SelectedCells[1].Column.GetCellContent(id) as TextBlock).Text;
+                CheckStatus cs = new CheckStatus(waybill,courier);
 
 
                 if (cs.ShowDialog() == true)
@@ -174,12 +175,13 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
                 object id = dgtRespondentData.SelectedItem;
                 string order_id = (dgtRespondentData.SelectedCells[0].Column.GetCellContent(id) as TextBlock).Text;
+                string courier = (dgtRespondentData.SelectedCells[1].Column.GetCellContent(id) as TextBlock).Text;
 
-                CancelOrder ca = new CancelOrder(order_id);
+                CancelOrder ca = new CancelOrder(order_id, courier);
 
                 if (ca.ShowDialog() == true)
                 {
-                    // Code to handle the dialog result when it is true.
+                    refreshTable();
                 }
 
             }

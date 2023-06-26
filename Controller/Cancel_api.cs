@@ -14,11 +14,11 @@ namespace WarehouseManagement.Controller
     class Cancel_api
     {
         sql_control sql = new sql_control();
-        public void api_cancel(string id, string reason)
+        public bool api_cancel(string id, string reason, string courier)
         {
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/cancel";
-            string eccompanyid = "THIRDYNAL";
-            string key = "8049bdb499fc06b6fde3e476a87987ef";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/cancel";
+            string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '" + courier + "'");
+            string key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '"+courier+"'");
             string logistics_interface = @"
             {
                 ""eccompanyid"": ""THIRDYNAL"",
@@ -28,6 +28,8 @@ namespace WarehouseManagement.Controller
             }";
 
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
+            payloadObj.eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '"+courier+"'");
+            payloadObj.customerid = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_name = '"+courier+"'");
             payloadObj.txlogisticid = id;
             payloadObj.reason = reason;
 
@@ -63,21 +65,16 @@ namespace WarehouseManagement.Controller
                     string failed_reason = responseItems.reason;
                     string txLogisticId = responseItems.txlogisticid;
 
-                    // Store the parameters in separate strings
-                    string logisticProviderIdString = logisticProviderId.ToString();
-                    string successString = success.ToString();
-                    string reasonString = reason.ToString();
-                    string txLogisticIdString = txLogisticId.ToString();
-
-                    if(successString == "true")
+                    if(success == "true")
                     {
                         sql.Query($"UPDATE tbl_orders SET status = 'CANCELLED', updated_at = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE order_id = '" + id + "'");
-                        if (sql.HasException(true)) return;
                         MessageBox.Show("Order has been Cancelled");
+                        return true;
                     }
                     else
                     {
                         MessageBox.Show("Cancellation Error", response);
+                        return false;
                     }
                 }
                 
@@ -85,6 +82,7 @@ namespace WarehouseManagement.Controller
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
+                return false;
             }
         }
     }

@@ -95,7 +95,7 @@ namespace WarehouseManagement.Database
 
             sql.Query($"INSERT INTO tbl_orders (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at, courier) VALUES" +
                 $"('" + order_id + "', '" + waybill + "', '" + CurrentUser.Instance.userID + "', '" + sender_id + "', '" + receiver_id + "', '" + product_id + "', '" + book_info.quantity + "', '" + total + "', '" + book_info.remarks + "'," +
-                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','','"+book_info.courier+"')");
+                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','"+book_info.courier+"')");
             if (sql.HasException(true)) return;
         }
 

@@ -21,19 +21,25 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     /// </summary>
     public partial class CancelOrder : Window
     {
-        public CancelOrder(string order_id)
+        string sCourier;
+        public CancelOrder(string order_id, string courier)
         {
             InitializeComponent();
             tbOtherReason.Visibility = Visibility.Collapsed;
             this.SizeToContent = SizeToContent.Height;
             tbOrderId.Text = order_id;
+            this.sCourier = courier;
             reasons();
         }
 
         private void btnCancelOrder_Click(object sender, RoutedEventArgs e)
         {
             Cancel_api cancel_api = new Cancel_api();
-            cancel_api.api_cancel(tbOrderId.Text, cbReason.Text);
+            if(cancel_api.api_cancel(tbOrderId.Text, cbReason.Text, sCourier))
+            {
+                this.DialogResult = true;
+                Close();
+            }
 
         }
         public void reasons()
