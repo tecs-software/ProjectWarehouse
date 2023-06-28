@@ -71,6 +71,7 @@
                 Text="Receiver Information" FontSize="20" FontWeight="Light"/>
 
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="2"
                      Grid.Column="1"
                      materialDesign:HintAssist.Hint="Receiver Name" FontSize="15"
@@ -82,6 +83,7 @@
 
             </StackPanel>
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="3"
                      Grid.Column="1"
                      materialDesign:HintAssist.Hint="Contact Number" FontSize="15"
@@ -98,6 +100,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="3"
                      Grid.Column="0"
                      materialDesign:HintAssist.Hint="Province" FontSize="15"
@@ -107,6 +110,7 @@
                      Margin="10,0,10,10"
                      x:Name="txtProvince"/>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="3"
                      Grid.Column="1"
                      materialDesign:HintAssist.Hint="City" FontSize="15"
@@ -116,6 +120,7 @@
                      Margin="0,0,10,10"
                      x:Name="txtCity"/>
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="3"
                      Grid.Column="2"
                      materialDesign:HintAssist.Hint="Barangay" FontSize="15"
@@ -135,6 +140,7 @@
                      Margin="10,0,10,10"
                      x:Name="txtAddress"/>
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="5"
                      Grid.Column="1"
                      materialDesign:HintAssist.Hint="Date Created" FontSize="15"
@@ -151,6 +157,7 @@
                 Text="Order Information" FontSize="20" FontWeight="Light"/>
 
                 <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="2"
                      Grid.Column="1"
                      materialDesign:HintAssist.Hint="Product Name" FontSize="15"
@@ -162,6 +169,7 @@
 
             </StackPanel>
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="3"
                      Grid.Column="2"
                      materialDesign:HintAssist.Hint="Quantity" FontSize="15"
@@ -171,6 +179,7 @@
                      Margin="10,0,10,10"
                      x:Name="txtQuantity"/>
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="4"
                      Grid.Column="2"
                      materialDesign:HintAssist.Hint="Weight" FontSize="15"
@@ -180,6 +189,7 @@
                      Margin="10,0,10,10"
                      x:Name="txtWeight"/>
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="Auto"
+                     IsReadOnly="True"
                      Grid.Row="5"
                      Grid.Column="2"
                      materialDesign:HintAssist.Hint="Remarks" FontSize="15"

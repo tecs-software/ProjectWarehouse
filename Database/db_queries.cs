@@ -295,5 +295,24 @@ namespace WarehouseManagement.Database
                 return false;
             }
         }
+        public bool check_waybill(TextBox waybill)
+        {
+            sql.Query($"SELECT waybill_number FROM tbl_orders");
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    if (waybill.Text == dr[0].ToString())
+                        return true;
+                    else
+                        return false;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
