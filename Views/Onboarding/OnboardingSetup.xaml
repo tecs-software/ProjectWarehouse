@@ -116,6 +116,16 @@
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtAddress" materialDesign:HintAssist.Hint="Complete Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
+                                <Button 
+                                    HorizontalAlignment="Stretch"
+                                    Margin="24,24,24,0"
+                                    VerticalAlignment="Center" 
+                                    x:Name="btnSubmit_sender" 
+                                    Content="Submit" 
+                                    IsDefault="True" 
+                                    FontSize="15"
+                                    Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
+                                    Height="40" Click="btnSubmit_Click"/>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">

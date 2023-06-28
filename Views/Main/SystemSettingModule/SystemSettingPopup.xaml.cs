@@ -22,6 +22,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         public SystemSettingPopup()
         {
             InitializeComponent();
+
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -64,6 +65,21 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 default:
                     return;
             }
+        }
+
+        private void cmbCity_DropDownClosed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbProvince_DropDownClosed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

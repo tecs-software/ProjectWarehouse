@@ -16,6 +16,31 @@ namespace WarehouseManagement.Controller
     public class Order_Inquiry_api
     {
         sql_control sql = new sql_control();
+        public void insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName)
+        {
+            int inquiry_count = int.Parse(sql.ReturnResult($"SELECT COUNT(waybill#) FROM tbl_order_inquiry WHERE waybill# = '"+waybill+"'"));
+            if(inquiry_count > 0 )
+            {
+                
+            }
+            else
+            {
+                string address = txtProvince.Text + "/" + txtCity.Text + "/" + txtBarangay.Text;
+                sql.AddParam("@waybill", waybill);
+                sql.AddParam("@name", txtReceiverName.Text);
+                sql.AddParam("@contact", txtContactNumber.Text);
+                sql.AddParam("@address", address);
+                sql.AddParam("@product", txtProductName.Text);
+                sql.AddParam("@qty", txtQuantity.Text);
+                sql.AddParam("@weight", txtWeight.Text);
+                sql.AddParam("@remarks", txtRemarks.Text);
+
+                sql.Query($"INSERT INTO tbl_order_inquiry (waybill#, receiver_name, contact_number, address, product_name, qty, weight, remarks) " +
+                    $"VALUES (@waybill, @name, @contact, @address, @product, @qty, @weight, @remarks)");
+                if (sql.HasException(true)) return;
+                MessageBox.Show("data inserted");
+            }
+        }
         public void inquiry_api(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName)
         {
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/queryOrder";

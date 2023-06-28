@@ -306,10 +306,10 @@ BEGIN
 		[waybill#] [varchar](50) NOT NULL,
 		[scan_type] [varchar](50) NOT NULL,
         [description] [varchar](255) NOT NULL,
-        [scan_time] DATETIME DEFAULT GETDATE(),
+        [scan_time] DATETIME DEFAULT GETDATE()
 		)
 END
-
+GO
 --Cejo tries store proc
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_couriers')
 BEGIN
@@ -319,6 +319,22 @@ BEGIN
     [api_key] [varchar](255) NOT NULL,
     [eccompany_id] [varchar](50) NOT NULL,
     [customer_id] [varchar](50) NOT NULL,
+    )')
+END
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
+BEGIN
+    EXEC('
+    CREATE TABLE [dbo].[tbl_order_inquiry](
+	[order_inquiry_id] [int] IDENTITY(1,1) NOT NULL,
+	[waybill#] [varchar](50) NOT NULL,
+	[receiver_name] [varchar](50) NOT NULL,
+	[contact_number] [varchar](50) NOT NULL,
+	[address] [varchar](255) NOT NULL,
+	[product_name] [varchar](100) NOT NULL,
+	[qty] [varchar](50) NOT NULL,
+	[weight] [varchar](50) NOT NULL,
+	[remarks] [varchar](50) NOT NULL
     )')
 END
 

@@ -209,8 +209,8 @@ namespace WarehouseManagement.Database
                 }
             }
 
-            //for total products sold
-            sql.Query($"SELECT COALESCE(SUM(quantity),0) FROM tbl_orders WHERE status = 'Delivered'");
+            //for total projected sales
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -303,9 +303,10 @@ namespace WarehouseManagement.Database
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
                     if (waybill.Text == dr[0].ToString())
-                        return true;
-                    else
-                        return false;
+                    {
+                        
+                    }
+                        
                 }
                 return true;
             }

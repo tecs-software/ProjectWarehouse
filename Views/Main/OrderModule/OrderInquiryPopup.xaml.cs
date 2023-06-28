@@ -42,20 +42,27 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
 
         }
-        private void txtBarcode_KeyUp(object sender, KeyEventArgs e)
-        {
-            if(txtBarcode.Text != "")
-            {
-                if (queries.check_waybill(txtBarcode))
-                    order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
-                else
-                    MessageBox.Show("Waybill not found.");
-            }
-        }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
+            order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
+        }
 
+        private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) // Check if Enter key is pressed
+            {
+                if (txtBarcode.Text != "")
+                {
+                    if (queries.check_waybill(txtBarcode))
+                        order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
+                    else
+                    {
+                        //do nothing
+                    }
+                        
+                }
+            }
         }
     }
     
