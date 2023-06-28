@@ -44,10 +44,18 @@ namespace WarehouseManagement.Views.Main.OrderModule
         }
         private void txtBarcode_KeyUp(object sender, KeyEventArgs e)
         {
-            if(queries.check_waybill(txtBarcode))
-                order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
-            else
-                MessageBox.Show("Waybill not found.");
+            if(txtBarcode.Text != "")
+            {
+                if (queries.check_waybill(txtBarcode))
+                    order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
+                else
+                    MessageBox.Show("Waybill not found.");
+            }
+        }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
     

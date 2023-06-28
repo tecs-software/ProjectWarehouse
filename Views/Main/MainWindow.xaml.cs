@@ -19,6 +19,7 @@ using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Login;
 using WarehouseManagement.Views.Main.DashboardModule;
+using WarehouseManagement.Views.Main.DeliverModule;
 using WarehouseManagement.Views.Main.EmployeeModule;
 using WarehouseManagement.Views.Main.InventoryModule;
 using WarehouseManagement.Views.Main.OrderModule;
@@ -103,7 +104,7 @@ namespace WarehouseManagement.Views.Main
                         }
 
                         break;
-                   
+
                     // Add more cases for other module names if needed
 
                     default:
@@ -230,6 +231,16 @@ namespace WarehouseManagement.Views.Main
         private void btn_minimize_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void btnDeliver_Checked(object sender, RoutedEventArgs e)
+        {
+            Trial_Controller.MessagePopup();
+
+            if (!(PageContent.Content is DeliveryView))
+            {
+                PageContent.Content = new DeliveryView();
+            }
         }
     }
 }

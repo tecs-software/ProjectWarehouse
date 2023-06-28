@@ -1,0 +1,86 @@
+﻿<Page x:Class="WarehouseManagement.Views.Main.DeliverModule.DeliveryView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WarehouseManagement.Views.Main.DeliverModule"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="InventoryView"
+      Background="White">
+
+
+    <Grid x:Name="mainGrid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{StaticResource primaryColor2}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="auto" Margin="20,15,0,15" Width="auto">
+
+                <Border CornerRadius="20" Background="{StaticResource searchBarColor1}"  Width="400" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="40" Width="20" Margin="15,4,0,0" Foreground="Gray"/>
+                        <TextBox 
+                                FontWeight="Light" 
+                                FontSize="17" 
+                                Width="350"
+                                Foreground="White"
+                                BorderBrush="Transparent"
+                                Padding="5"
+                                CaretBrush="White"
+                                materialDesign:HintAssist.IsFloating="False"
+                                materialDesign:HintAssist.Hint="Search for product"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                x:Name="tbSearchProduct"
+                              
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}" TextChanged="tbSearchProduct_TextChanged"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+               
+                <Button x:Name="btnNewDelivery" BorderBrush="{StaticResource buttonBorder4}" Height="40" Width="170" FontSize="15" Background="{StaticResource buttonBorder4}" Margin="0,0,20,0" Click="btnNewDelivery_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="TruckPlusOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
+                        <TextBlock Text="New Delivery"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Name="gridTable">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0"  Background="{StaticResource primaryColor3}">
+                <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="Menu" Height="auto"/>
+                </ScrollViewer>
+            </StackPanel>
+
+            <DockPanel x:Name="dockPanelTable" Grid.Column="1" Height="Auto" VerticalAlignment="Top">
+                <local:DeliveryTable  x:Name="deliveryTable" />
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Page>

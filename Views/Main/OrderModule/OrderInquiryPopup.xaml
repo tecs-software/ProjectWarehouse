@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         Background="Transparent"
-        Title="AddProduct" Height="400" Width="1100">
+        Title="AddProduct" Height="440" Width="1100">
 
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
@@ -198,6 +198,15 @@
                      BorderBrush="Black"
                      Margin="10,0,10,10"
                      x:Name="txtRemarks"/>
+            <Button x:Name="btnConfirm" HorizontalAlignment="Stretch"
+                    Grid.Row="6"
+                     Grid.Column="1" 
+                    Grid.ColumnSpan="2"
+                    BorderBrush="{StaticResource buttonBorder4}" Height="40" FontSize="15" Background="{StaticResource buttonBorder4}" Margin="10,10,10,0" Click="btnConfirm_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Confirm"/>
+                </StackPanel>
+            </Button>
         </Grid>
     </Border>
 </Window>
