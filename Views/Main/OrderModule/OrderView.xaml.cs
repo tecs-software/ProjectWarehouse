@@ -207,6 +207,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
             }
         }
 
+        private void btnOrderInquiry_Click(object sender, RoutedEventArgs e)
+        {
+            new OrderInquiryPopup().ShowDialog();
+        }
+
 
 
         //public async void refreshTable()
