@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 
 namespace WarehouseManagement.Views.Main.DeliverModule
 {
@@ -24,15 +25,24 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             InitializeComponent();
         }
-
+        Show_order_inquiry show_parcel_data = new Show_order_inquiry();
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        public void refresh_table()
+        {
+            show_parcel_data.show_inquiry_data(tblProducts);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void tblProducts_Loaded(object sender, RoutedEventArgs e)
+        {
+            show_parcel_data.show_inquiry_data(tblProducts);
         }
     }
 }

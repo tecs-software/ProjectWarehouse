@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,33 +27,67 @@ namespace WarehouseManagement.Controller
 
         public void show_orders(DataGrid dg)
         {
-            sql.Query($"SELECT * FROM tbl_orders");
-            if (sql.HasException(true)) return;
-            if(sql.DBDT.Rows.Count > 0)
+            if(CurrentUser.Instance.userID == 1)
             {
-                List<Orders> orders = new List<Orders>();
-                foreach (DataRow dr in sql.DBDT.Rows)
+                sql.Query($"SELECT * FROM tbl_orders");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    Orders order = new Orders
+                    List<Orders> orders = new List<Orders>();
+                    foreach (DataRow dr in sql.DBDT.Rows)
                     {
-                        // Assign values from the DataRow to the properties of the Order object
+                        Orders order = new Orders
+                        {
+                            // Assign values from the DataRow to the properties of the Order object
 
-                        ID = dr[0].ToString(),
-                        Waybill = dr[2].ToString(),
-                        status = dr[10].ToString(),
-                        customer_name = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = '" + dr[5].ToString() + "'"),
-                        address = sql.ReturnResult($"SELECT receiver_address FROM tbl_receiver WHERE receiver_id = '" + dr[5].ToString() + "'"),
-                        product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '" + dr[6].ToString() + "'"),
-                        courier = dr[1].ToString(),
-                        quantity = dr[7].ToString(),
-                        total = dr[8].ToString()
+                            ID = dr[0].ToString(),
+                            Waybill = dr[2].ToString(),
+                            status = dr[10].ToString(),
+                            customer_name = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = '" + dr[5].ToString() + "'"),
+                            address = sql.ReturnResult($"SELECT receiver_address FROM tbl_receiver WHERE receiver_id = '" + dr[5].ToString() + "'"),
+                            product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '" + dr[6].ToString() + "'"),
+                            courier = dr[1].ToString(),
+                            quantity = dr[7].ToString(),
+                            total = dr[8].ToString()
 
-                        // Assign other properties as needed
-                    };
-                    orders.Add(order);
+                            // Assign other properties as needed
+                        };
+                        orders.Add(order);
 
+                    }
+                    dg.ItemsSource = orders;
                 }
-                dg.ItemsSource = orders;
+            }
+            else
+            {
+                sql.Query($"SELECT * FROM tbl_orders WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    List<Orders> orders = new List<Orders>();
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        Orders order = new Orders
+                        {
+                            // Assign values from the DataRow to the properties of the Order object
+
+                            ID = dr[0].ToString(),
+                            Waybill = dr[2].ToString(),
+                            status = dr[10].ToString(),
+                            customer_name = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = '" + dr[5].ToString() + "'"),
+                            address = sql.ReturnResult($"SELECT receiver_address FROM tbl_receiver WHERE receiver_id = '" + dr[5].ToString() + "'"),
+                            product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '" + dr[6].ToString() + "'"),
+                            courier = dr[1].ToString(),
+                            quantity = dr[7].ToString(),
+                            total = dr[8].ToString()
+
+                            // Assign other properties as needed
+                        };
+                        orders.Add(order);
+
+                    }
+                    dg.ItemsSource = orders;
+                }
             }
         }
         

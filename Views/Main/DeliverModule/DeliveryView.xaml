@@ -50,7 +50,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-               
+
                 <Button x:Name="btnNewDelivery" BorderBrush="{StaticResource buttonBorder4}" Height="40" Width="170" FontSize="15" Background="{StaticResource buttonBorder4}" Margin="0,0,20,0" Click="btnNewDelivery_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="TruckPlusOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
@@ -61,11 +61,13 @@
 
         </Grid>
 
-        <Grid Grid.Row="1" Name="gridTable">
+        <Grid Grid.Row="1" Name="grid_parcel" Loaded="grid_parcel_Loaded">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="320*"/>
+                <ColumnDefinition Width="204*"/>
+                <ColumnDefinition Width="1257*"/>
+                <ColumnDefinition Width="139*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -78,7 +80,7 @@
                 </ScrollViewer>
             </StackPanel>
 
-            <DockPanel x:Name="dockPanelTable" Grid.Column="1" Height="Auto" VerticalAlignment="Top">
+            <DockPanel x:Name="dockPanelTable" Grid.Column="1" Height="Auto" VerticalAlignment="Top" Grid.ColumnSpan="3">
                 <local:DeliveryTable  x:Name="deliveryTable" />
             </DockPanel>
         </Grid>

@@ -29,7 +29,7 @@ namespace WarehouseManagement.Controller
         db_queries queries = new db_queries();
         public bool api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
         {
-            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = global.key;
             string logistics_interface = @"
             {

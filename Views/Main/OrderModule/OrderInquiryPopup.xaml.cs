@@ -46,6 +46,8 @@ namespace WarehouseManagement.Views.Main.OrderModule
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
+            this.DialogResult = true;
+            this.Close();
         }
 
         private void txtBarcode_KeyDown(object sender, KeyEventArgs e)

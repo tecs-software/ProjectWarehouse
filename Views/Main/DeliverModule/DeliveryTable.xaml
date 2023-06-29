@@ -29,23 +29,23 @@
             SelectionMode="Single"
             x:Name="tblProducts"
             ItemsSource="{Binding Items}"
-            ColumnHeaderStyle="{StaticResource HeaderStyle}">
+            ColumnHeaderStyle="{StaticResource HeaderStyle}" Loaded="tblProducts_Loaded">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="WAYBILL NUMBER"
-                                    Binding="{Binding waybill_number}"
+                                    Binding="{Binding waybill}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     Width="1*"/>
 
                 <DataGridTextColumn Header="RECEIVER NAME"
-                                    Binding="{Binding receiver_name}"
+                                    Binding="{Binding receiver}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     Width="1*"/>
 
                 <DataGridTextColumn Header="CONTACT NUMBER"
-                                    Binding="{Binding contact_number}"
+                                    Binding="{Binding contact}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     Width="1*"/>
@@ -57,13 +57,13 @@
                                     Width="1.2*"/>
 
                 <DataGridTextColumn Header="PRODUCT NAME"
-                                            Binding="{Binding product_name}"
+                                            Binding="{Binding product}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                             Width="1*"/>
 
                 <DataGridTextColumn Header="QTY"
-                                            Binding="{Binding quantity}"
+                                            Binding="{Binding qty}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                             Width="0.3*"/>
