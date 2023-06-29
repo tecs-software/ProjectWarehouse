@@ -10,6 +10,7 @@ using System.Windows;
 using WWarehouseManagement.Database;
 using System.Windows.Controls;
 using System.Windows.Automation.Peers;
+using System.Diagnostics.Eventing.Reader;
 
 namespace WarehouseManagement.Controller
 {
@@ -55,8 +56,6 @@ namespace WarehouseManagement.Controller
                 ""startdate"": """",
                 ""enddate"": """"  
             }";
-
-
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
             payloadObj.serialnumber = waybill;
             payloadObj.startdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -88,51 +87,49 @@ namespace WarehouseManagement.Controller
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
-
                     dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
                     string logisticProviderId = responseObject.logisticproviderid;
                     dynamic responseItems = responseObject.responseitems;
                     dynamic orderList = responseItems[0].orderList;
 
-                    foreach (var order in orderList)
+                    if(orderList == null)
                     {
-                        dynamic receiver = order.receiver;
-                        dynamic items = order.items;
-
-                        //receivers response
-                        string receiverName = receiver.name;
-                        string receiverPhone = receiver.phone;
-                        string receiverMobile = receiver.mobile;
-                        string receiverProvince = receiver.prov;
-                        string receiverCity = receiver.city;
-                        string receiverArea = receiver.area;
-                        string receiverAddress = receiver.address;
-
-                        txtReceiverName.Text = receiverName;
-                        txtContactNumber.Text = receiverPhone;
-                        txtAddress.Text = receiverAddress;
-                        txtProvince.Text = receiverProvince;
-                        txtCity.Text = receiverCity;
-                        txtBarangay.Text = receiverArea;
-
-                        string order_created = order.createordertime;
-                        string weight = order.weight;
-                        string remarks = order.remark;
-                        string quantity = order.totalquantity;
-                        txtDateCreated.Text = DateTime.Parse(order_created).ToString("yyyy-MMM-dd HH:mm:ss");
-                        txtRemarks.Text = remarks;
-                        txtWeight.Text = weight;
-                        txtQuantity.Text = quantity;
-
-
-
-                        foreach (var item in items)
+                        //do nothing
+                    }
+                    else
+                    {
+                        foreach (var order in orderList)
                         {
-                            //items response
-                            string product_name = item.itemname;
-                            string product_value = item.itemvalue;
+                            dynamic receiver = order.receiver;
+                            dynamic items = order.items;
 
-                            txtProductName.Text = product_name;
+                            //receivers response
+                            string receiverName = receiver.name;
+                            string receiverPhone = receiver.phone;
+                            string receiverMobile = receiver.mobile;
+                            string receiverProvince = receiver.prov;
+                            string receiverCity = receiver.city;
+                            string receiverArea = receiver.area;
+                            string receiverAddress = receiver.address;
+
+                            txtReceiverName.Text = receiverName;
+                            txtContactNumber.Text = receiverPhone;
+                            txtAddress.Text = receiverAddress;
+                            txtProvince.Text = receiverProvince;
+                            txtCity.Text = receiverCity;
+                            txtBarangay.Text = receiverArea;
+
+                            string order_created = order.createordertime;
+                            string weight = order.weight;
+                            string remarks = order.remark;
+                            string quantity = order.totalquantity;
+                            txtDateCreated.Text = DateTime.Parse(order_created).ToString("yyyy-MMM-dd HH:mm:ss");
+                            txtRemarks.Text = remarks;
+                            txtWeight.Text = weight;
+                            txtQuantity.Text = quantity;
+
+                            string goodsNames = order.goodsNames;
+                            txtProductName.Text = goodsNames;
                         }
                     }
                 }

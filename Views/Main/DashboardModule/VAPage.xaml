@@ -42,7 +42,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Total Adspent" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <Label Content="Total Adspent/ Allotted Budget" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="1,487,200" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
@@ -67,7 +67,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Commisions" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <Label Content="Commissions" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
@@ -94,7 +94,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Total Orders/Qouta" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <Label Content="Total Orders/ Target Quota" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>

@@ -43,7 +43,7 @@
 
             <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
 
-                <TextBlock Text="Order Inquiry" FontSize="20" FontWeight="Light" x:Name="lbProduct"/>
+                <TextBlock Text="Parcel Details" FontSize="20" FontWeight="Light" x:Name="lbProduct"/>
 
                 <Button x:Name="btnClose"
                         HorizontalAlignment="Right"

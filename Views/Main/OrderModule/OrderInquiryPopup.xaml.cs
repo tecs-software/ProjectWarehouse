@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -54,13 +54,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
             {
                 if (txtBarcode.Text != "")
                 {
-                    if (queries.check_waybill(txtBarcode))
-                        order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
-                    else
-                    {
-                        //do nothing
-                    }
-                        
+                    order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
                 }
             }
         }

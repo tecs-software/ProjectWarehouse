@@ -133,7 +133,7 @@
                              x:Name="btnDeliver"
                              Cursor="Hand" Checked="btnDeliver_Checked">
                     <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
-                        <TextBlock Text="Out-For-Delivery" VerticalAlignment="Center"
+                        <TextBlock Text="Order Inquiry" VerticalAlignment="Center"
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
                 </RadioButton>

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Helpers;
+using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
@@ -32,13 +33,14 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         public void insert_item()
         {
-            sql.Query($"SELECT * FROM tbl_products");
+            int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = "+ int.Parse(CurrentUser.Instance.userID.ToString()) + ""));
+            sql.Query($"SELECT * FROM tbl_products WHERE sender_id = '"+sender_id+"'");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
-                    cbItem.Items.Add(dr[1]);
+                    cbItem.Items.Add(dr[2]);
                 }
             }
         }

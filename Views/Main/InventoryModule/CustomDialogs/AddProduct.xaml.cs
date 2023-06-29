@@ -98,9 +98,15 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
         private async void btnProceed_Click(object sender, RoutedEventArgs e)
         {
-            if (Util.IsAnyTextBoxEmpty(tbItemName, tbAcquisitionCost))
+            if (Util.IsAnyTextBoxEmpty(tbItemName, tbAcquisitionCost) || Util.IsAnyComboBoxItemEmpty(cmbSellerName))
             {
                 MessageBox.Show("Do not leave required fields empty");
+                return;
+            }
+
+            if (cmbSellerName.Text == "")
+            {
+                MessageBox.Show("Please select shop name");
                 return;
             }
 

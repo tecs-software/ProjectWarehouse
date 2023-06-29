@@ -297,7 +297,7 @@ namespace WarehouseManagement.Database
         }
         public bool check_waybill(TextBox waybill)
         {
-            sql.Query($"SELECT waybill_number FROM tbl_orders");
+            sql.Query($"SELECT waybill# FROM tbl_order_inquiry");
             if(sql.DBDT.Rows.Count > 0)
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
