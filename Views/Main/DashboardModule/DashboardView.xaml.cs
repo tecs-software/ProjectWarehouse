@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Views.Main.OrderModule;
 using WarehouseManagement.Database;
+using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.DashboardModule
 {
@@ -28,13 +29,26 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         private SalesReportPage? salesReportPage;
         private ExpensesReportPage? expensesReportPage;
         private SummaryPage? summaryPage;
+        private VAPage? VaPage;
+
         db_queries queries = new db_queries();
 
         public DashboardView()
         {
             InitializeComponent();
             summaryPage = new SummaryPage();
+            VaPage = new VAPage();
             cbSales.SelectedIndex = 0;
+
+            if (CurrentUser.Instance.RoleName != "admin")
+            {
+                PageContent.Content = VaPage;
+                dateFrom.Visibility = Visibility.Hidden;
+                dateTo.Visibility = Visibility.Hidden;
+                btnClear.Visibility = Visibility.Hidden;
+                lblClear.Visibility = Visibility.Hidden;
+                cmbContainer.Visibility = Visibility.Hidden;
+            }
         }
 
         private void cbSales_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,14 +73,16 @@ namespace WarehouseManagement.Views.Main.DashboardModule
 
         private void PageContent_Loaded(object sender, RoutedEventArgs e)
         {
-            startDatePicker.DisplayDateEnd = DateTime.Now;
-            endDatePicker.DisplayDateEnd = DateTime.Now;
+            if (CurrentUser.Instance.RoleName == "admin")
+            {
+                startDatePicker.DisplayDateEnd = DateTime.Now;
+                endDatePicker.DisplayDateEnd = DateTime.Now;
 
-            startDatePicker.SelectedDate = DateTime.Now.AddDays(-7);
-            endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
+                startDatePicker.SelectedDate = DateTime.Now.AddDays(-7);
+                endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
 
-            queries.sales_graph(startDatePicker,endDatePicker,summaryPage.salesChart);
-
+                queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+            }
         }
 
         private void startDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
