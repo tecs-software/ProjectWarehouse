@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="ModifyEmployee" Height="560" Width="400">
+        Title="ModifyEmployee" Height="600" Width="400">
     
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
@@ -24,6 +24,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
@@ -140,8 +142,19 @@
                 x:Name="tbRate"
                 Margin="0,5,0,5" Grid.ColumnSpan="2"/>
             </Grid>
-
-            <Grid Grid.Row="7" Margin="20,0,20,0">
+            
+            <Grid Grid.Row="7" VerticalAlignment="Center" Margin="20,0,20,0">
+                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="0"
+                      Grid.Row="2"
+                      Margin="0,5,0,5"
+                      materialDesign:HintAssist.Hint="Shop Name" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      x:Name="cmbSellerName"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+            </Grid>
+            <Grid Grid.Row="8" Margin="20,0,20,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>

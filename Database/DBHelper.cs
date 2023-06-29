@@ -10,6 +10,7 @@ using System.Transactions;
 using System.Windows;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
+using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Database
 {

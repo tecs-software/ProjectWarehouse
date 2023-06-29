@@ -7,6 +7,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_users')
 BEGIN
     CREATE TABLE [dbo].[tbl_users](
         [user_id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        [sender_id] [int] DEFAULT 1,
         [first_name] [varchar](50) NULL,
         [middle_name] [varchar](50) NULL,
         [last_name] [varchar](50) NULL,
@@ -55,6 +56,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_products')
 BEGIN
     CREATE TABLE [dbo].[tbl_products](
         [product_id] [varchar](50) NOT NULL PRIMARY KEY,
+        [sender_id] [int] DEFAULT 1,
         [item_name] [varchar](50) NULL,
         [acq_cost] [decimal](18, 2) NULL,
         [nominated_price] [decimal](18, 2) NULL,

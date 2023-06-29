@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
@@ -46,6 +47,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
         public AddProduct(Product? product)     
         {
             InitializeComponent();
+            UserController.LoadSender(cmbSellerName);
             this.SizeToContent = SizeToContent.Height;
             this.product = product;
             SetValues();
@@ -63,6 +65,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 DBHelper db = new();
                 isUpdate = true;
                 tbProductId.Text = product.ProductId;
+                InventoryController.LoadSender(product.ProductId, cmbSellerName);
 
                 IEnumerable<string> columnNames = new List<string>()
                 {
@@ -115,8 +118,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
             using DBHelper db = new DBHelper();
 
-            string[] productColumns = { "item_name", "acq_cost", "barcode", "unit_quantity", "nominated_price", "status", "reorder_point", "timestamp" };
-            string[] productValues = { newProduct.ItemName, newProduct.AcqCost.ToString(), newProduct.Barcode, newProduct.UnitQuantity.ToString(), newProduct.NominatedPrice.ToString(), newProduct.Status, "100", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") };
+            string[] productColumns = { "item_name", "acq_cost", "barcode", "unit_quantity", "nominated_price", "status", "reorder_point","sender_id", "timestamp" };
+            string[] productValues = { newProduct.ItemName, newProduct.AcqCost.ToString(), newProduct.Barcode, newProduct.UnitQuantity.ToString(), newProduct.NominatedPrice.ToString(), newProduct.Status, "100", UserController.GetSenderID(cmbSellerName.Text).ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") };
 
             bool operationResult;
 

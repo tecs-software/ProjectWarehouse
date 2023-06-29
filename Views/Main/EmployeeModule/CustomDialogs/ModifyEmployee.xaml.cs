@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 
@@ -27,9 +28,10 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
         public ModifyEmployee()
         {
             InitializeComponent();
+            UserController.LoadSender(cmbSellerName);
         }
 
-        public async void SetData(string? userId, string? firstName, string? middleName, string? lastName, string? email, string? contact)
+        public async void SetData(string? userId, string? firstName, string? middleName, string? lastName, string? email, string? contact, string? shopName)
         {
             DBHelper db = new();
             id = userId;
@@ -40,6 +42,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
             tbContact.Text = contact;
             previousRate = Converter.StringToDecimal(await db.GetValue("tbl_wage", "hourly_rate", "user_id", userId)) ;
             tbRate.Text = previousRate.ToString();
+            cmbSellerName.Text = UserController.GetSenderName(id);
         }
 
         private async void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -72,11 +75,14 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
 
                         if (await db.UpdateData("tbl_wage", new string[] { "hourly_rate" }, new string[] { rate.ToString() }, "user_id", id))
                         {
+                            //Update SenderID
+                            UserController.UpdateSender(id, cmbSellerName.Text);
                             MessageBox.Show("Employee details have been updated successfully");
                         }
                     }
                     else
-                    {
+                    {       
+                        UserController.UpdateSender(id, cmbSellerName.Text);
                         MessageBox.Show("Employee details have been updated successfully");
                     }
                 }
