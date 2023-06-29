@@ -3,29 +3,14 @@ using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
-using ZXing;
-using ZXing.Common;
-using ZXing.Rendering;
 
 namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 {
@@ -164,26 +149,44 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                                                                                 sellingExpenses.rtsMargin.ToString(),
                                                                              }, "product_id", newProduct.ProductId);
                     }
-                    //For generating barcode
-                    //GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
-                    //myBarcode.SaveAsPng($"./imageres/{tbItemName.Text}.png");
 
                     Clear();
+
+                    await GenerateBarcode(tbItemName.Text, tbBarcode.Text);
+
                     OnTableFilterRequested(null);
                 }
                 else
                 {
-                    //GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(tbBarcode.Text, BarcodeWriterEncoding.Code128);
-                    //myBarcode.SaveAsPng($"./images/{tbItemName.Text}.png");
                     MessageBox.Show("Product updated successfully");
                    
                     this.DialogResult = true;
                     this.Close();
+
+                    await GenerateBarcode(tbItemName.Text, tbBarcode.Text);
                 }
             }
             else
             {
                 MessageBox.Show(isUpdate ? "Error updating product" : "Error inserting product");
+            }
+        }
+
+        private async Task GenerateBarcode(string item, string barcode)
+        {
+            //For generating barcode
+            if (!string.IsNullOrEmpty(tbBarcode.Text) || tbBarcode.Text != "N/A")
+            {
+                await Task.Run(() =>
+                {
+                    try
+                    {
+                        GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(barcode, BarcodeWriterEncoding.Code128);
+                        myBarcode.SaveAsPng($"./images/{item}.png");
+                    }
+                    catch { };
+
+                });
             }
         }
 

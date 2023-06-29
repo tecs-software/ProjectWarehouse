@@ -8,8 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.BarCode" Version="23.5.0" />
-    <PackageReference Include="BarCode" Version="2023.6.1" />
+    <PackageReference Include="Aspose.BarCode" Version="23.5.0">
+      <GeneratePathProperty>True</GeneratePathProperty>
+    </PackageReference>
+    <PackageReference Include="BarCode" Version="2023.6.1">
+      <GeneratePathProperty>True</GeneratePathProperty>
+    </PackageReference>
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MaterialDesignColors" Version="2.1.5-ci281" />
     <PackageReference Include="MaterialDesignThemes" Version="4.10.0-ci281" />

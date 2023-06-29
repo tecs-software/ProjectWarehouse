@@ -51,7 +51,7 @@
                     <Label x:Name="lbl_gross" Content="18,363,750.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Visibility="Collapsed" Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -76,7 +76,7 @@
                     <Label x:Name ="lbl_total_order" Content="1,469,192" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+20%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Visibility="Collapsed" Grid.Row="3" Content="+20%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -101,7 +101,7 @@
                     <Label x:Name="lbl_products_sold" Content="1292" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Visibility="Collapsed" Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -127,7 +127,7 @@
                     <Label x:Name="lbl_expenses" Content="6,787,400.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+60%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Visibility="Collapsed" Grid.Row="3" Content="+60%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -153,7 +153,7 @@
                     <Label x:Name="lbl_Net_profit" Content="22,266,100.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Visibility="Collapsed" Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
