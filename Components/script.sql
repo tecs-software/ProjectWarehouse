@@ -313,18 +313,17 @@ GO
 --Cejo tries store proc
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_couriers')
 BEGIN
-    EXEC('CREATE TABLE [dbo].[tbl_couriers]
+    CREATE TABLE [dbo].[tbl_couriers]
     (courier_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [courier_name] [varchar](50) NOT NULL,
     [api_key] [varchar](255) NOT NULL,
     [eccompany_id] [varchar](50) NOT NULL,
     [customer_id] [varchar](50) NOT NULL,
-    )')
+    )
 END
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
 BEGIN
-    EXEC('
     CREATE TABLE [dbo].[tbl_order_inquiry](
 	[order_inquiry_id] [int] IDENTITY(1,1) NOT NULL,
 	[waybill#] [varchar](50) NOT NULL,
@@ -335,7 +334,7 @@ BEGIN
 	[qty] [varchar](50) NOT NULL,
 	[weight] [varchar](50) NOT NULL,
 	[remarks] [varchar](50) NOT NULL
-    )')
+    )
 END
 
 IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_sender_info')
