@@ -103,7 +103,7 @@ namespace WarehouseManagement.Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred: " + ex.Message);
+                MessageBox.Show("This parcel hasn't been processed by J&T Express.");
             }
         }
         public void update_status(DataGrid dataGrid)

@@ -30,7 +30,8 @@ namespace WarehouseManagement.Controller
                         product = dr[5].ToString(),
                         qty = dr[6].ToString(),
                         weight = dr[7].ToString(),
-                        remarks = dr[8].ToString()
+                        remarks = dr[8].ToString(),
+                        date = dr[9].ToString()
                     };
                     parcel_details.Add(parcel);
                 }
@@ -47,6 +48,7 @@ namespace WarehouseManagement.Controller
             public string qty { get; set; }
             public string weight { get; set; }
             public string remarks { get; set; }
+            public string date { get; set; }
         }
     }
 }

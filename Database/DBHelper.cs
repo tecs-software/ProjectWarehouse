@@ -1064,11 +1064,13 @@ namespace WarehouseManagement.Database
 
         public async void UpdateWorkHoursAndActiveUsers(int? userId, DateTime endTime)
         {
-            using DatabaseConnection? conn = new();
-
-            using (SqlConnection? connection = await conn.OpenConnection())
+            try
             {
-                string query = @"
+                using DatabaseConnection? conn = new();
+
+                using (SqlConnection? connection = await conn.OpenConnection())
+                {
+                    string query = @"
                 UPDATE tbl_work_hours
                 SET end_time = @endTime, hours_worked = DATEDIFF(minute, start_time, @endTime) / 60.0
                 WHERE user_id = @userId AND end_time IS NULL;
@@ -1077,14 +1079,16 @@ namespace WarehouseManagement.Database
                 SET logout_time = @endTime
                 WHERE user_id = @userId AND logout_time IS NULL;";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@userId", userId);
-                    command.Parameters.AddWithValue("@endTime", endTime);
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.Parameters.AddWithValue("@endTime", endTime);
 
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch { }
         }
 
         public async void InsertOrUpdateWorkHoursAndActiveUsers(int? userId, DateTime loginTime)

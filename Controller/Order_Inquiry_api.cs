@@ -17,7 +17,7 @@ namespace WarehouseManagement.Controller
     public class Order_Inquiry_api
     {
         sql_control sql = new sql_control();
-        public void insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName)
+        public void insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName, TextBox date)
         {
             int inquiry_count = int.Parse(sql.ReturnResult($"SELECT COUNT(waybill#) FROM tbl_order_inquiry WHERE waybill# = '"+waybill+"'"));
             if(inquiry_count > 0 )
@@ -35,9 +35,10 @@ namespace WarehouseManagement.Controller
                 sql.AddParam("@qty", txtQuantity.Text);
                 sql.AddParam("@weight", txtWeight.Text);
                 sql.AddParam("@remarks", txtRemarks.Text);
+                sql.AddParam("@date", txtDateCreated.Text);
 
-                sql.Query($"INSERT INTO tbl_order_inquiry (waybill#, receiver_name, contact_number, address, product_name, qty, weight, remarks) " +
-                    $"VALUES (@waybill, @name, @contact, @address, @product, @qty, @weight, @remarks)");
+                sql.Query($"INSERT INTO tbl_order_inquiry (waybill#, receiver_name, contact_number, address, product_name, qty, weight, remarks, date_created) " +
+                    $"VALUES (@waybill, @name, @contact, @address, @product, @qty, @weight, @remarks, @date)");
                 if (sql.HasException(true)) return;
                 MessageBox.Show("data inserted");
             }

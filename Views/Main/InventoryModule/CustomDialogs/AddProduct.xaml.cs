@@ -17,6 +17,7 @@ using System.IO;
 using System.Windows.Markup;
 using IronBarCode;
 using System.Windows.Interop;
+using System.Diagnostics;
 
 namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 {
@@ -183,21 +184,26 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
             {
                 await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
-                    // Code for generating the barcode and setting the source
                     try
                     {
+                        string exeFolderPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+                        string folderName = "barcodes";
+                        string folderPath = Path.Combine(exeFolderPath, folderName);
+
+                        // Check if the folder exists
+                        if (!Directory.Exists(folderPath))
+                        {
+                            // Create the folder
+                            Directory.CreateDirectory(folderPath);
+                        }
+
                         GeneratedBarcode barcode = BarcodeWriter.CreateBarcode(barcode_serial, BarcodeWriterEncoding.Code128);
 
                         System.Drawing.Bitmap barcodeBitmap = barcode.ToBitmap();
 
                         string imageName = image_name; // Assuming image_name is the TextBox containing the desired image name
 
-                        // Get the appropriate folder path based on the current operating system
-                        string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ProjectWarehouse", "Resources");
                         string filePath = Path.Combine(folderPath, $"{imageName}.png");
-
-                        // Create the directory if it doesn't exist
-                        Directory.CreateDirectory(folderPath);
 
                         // Save the barcode image to the specified file path
                         barcodeBitmap.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);

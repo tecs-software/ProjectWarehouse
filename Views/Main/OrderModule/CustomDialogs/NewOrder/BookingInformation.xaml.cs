@@ -29,7 +29,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         {
             InitializeComponent();
             insert_item();
-            radioJAndT.IsChecked = true;
         }
         public void insert_item()
         {

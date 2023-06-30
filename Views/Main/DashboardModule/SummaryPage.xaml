@@ -120,7 +120,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Total Expense" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <Label Content="Total Expenses" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
