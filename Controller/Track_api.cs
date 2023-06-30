@@ -23,8 +23,8 @@ namespace WarehouseManagement.Controller
         public void api_track(string waybill, string courier)
         {
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/track/trackForJson";
-            string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '"+courier+"'");
-            string key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '" + courier + "'");
+            string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '{courier}'");
+            string key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '{courier}'");
             string logistics_interface = @"
             {
                 ""billcode"": """",
@@ -103,7 +103,7 @@ namespace WarehouseManagement.Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred: " + ex.Message);
+                MessageBox.Show("This parcel hasn't been processed by J&T Express.");
             }
         }
         public void update_status(DataGrid dataGrid)

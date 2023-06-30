@@ -114,18 +114,18 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
                 string? orderId = selectedOrder.ID;
 
-
-
                 object id = dgtRespondentData.SelectedItem;
                 string waybill = (dgtRespondentData.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text;
                 string courier = (dgtRespondentData.SelectedCells[1].Column.GetCellContent(id) as TextBlock).Text;
-                CheckStatus cs = new CheckStatus(waybill,courier);
 
+
+
+                CheckStatus cs = new CheckStatus(waybill,courier);
                 cs.Owner = Window.GetWindow(this);
 
                 if (cs.ShowDialog() == true)
                 {
-
+                    refreshTable();
                 }
 
             }

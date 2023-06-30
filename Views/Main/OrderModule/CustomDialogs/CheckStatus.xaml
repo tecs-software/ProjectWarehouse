@@ -38,7 +38,7 @@
                             Style="{StaticResource SmallCloseButtonStyle}"
                             Background="{StaticResource textboxProfitAnalysisColor1}"
                             BorderBrush="Transparent"
-                            IsCancel="True">
+                            IsCancel="True" Click="btnClose_Click">
                 </Button>
             </Border>
 

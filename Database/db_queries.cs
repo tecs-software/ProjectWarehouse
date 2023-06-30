@@ -95,7 +95,7 @@ namespace WarehouseManagement.Database
 
             sql.Query($"INSERT INTO tbl_orders (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at, courier) VALUES" +
                 $"('" + order_id + "', '" + waybill + "', '" + CurrentUser.Instance.userID + "', '" + sender_id + "', '" + receiver_id + "', '" + product_id + "', '" + book_info.quantity + "', '" + total + "', '" + book_info.remarks + "'," +
-                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','"+book_info.courier+"')");
+                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','J&T')");
             if (sql.HasException(true)) return;
         }
 
@@ -221,7 +221,7 @@ namespace WarehouseManagement.Database
             }
 
             //for expenses
-            sql.Query($"SELECT COALESCE(SUM(acq_cost * unit_quantity),0) FROM tbl_products");
+            sql.Query($"SELECT COALESCE(SUM(total_expenses), 0) FROM tbl_selling_expenses");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
@@ -233,9 +233,8 @@ namespace WarehouseManagement.Database
             }
 
             //for net profit
-            decimal gross_sales = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'Delivered'"));
-            decimal total_product_cost = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(acq_cost * unit_quantity),0) FROM tbl_products"));
-            net_profit.Content = gross_sales - total_product_cost;
+            decimal netprofit = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(net_profit), 0) FROM tbl_selling_expenses"));
+            net_profit.Content = netprofit;
 
         }
         public bool check_sender_info()

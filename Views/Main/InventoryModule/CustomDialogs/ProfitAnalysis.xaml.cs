@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
@@ -148,6 +149,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
         private async void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
+            //eto yun
             if (mode == 1)
             {
                 if (product != null)
@@ -164,6 +166,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
                     product.NominatedPrice = Converter.StringToDecimal(string.IsNullOrEmpty(tbNominated.Text.Replace(",", "")) ? "0" : tbNominated.Text.Replace(",", ""));
                     this.DialogResult = true;
+                    profits_calculator.insert_profit(cbItems.Text, decimal.Parse(tbTotalCost.Text), decimal.Parse(tbNetProfit.Text));
                 }
             }
             else
@@ -193,11 +196,12 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                     if (updateNomiatedPrice && updateSellingExpenses != null)
                     {
                         MessageBox.Show("Nominated Price Updated Succesfully");
+                        
                     }
                 }
             }
         }
-
+        insert_profits profits_calculator = new insert_profits();
         private void btnEditProvision_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (tbTotalAdministrative.IsEnabled == true)
@@ -404,6 +408,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            profits_calculator.insert_profit(cbItems.Text, decimal.Parse(tbTotalCost.Text), decimal.Parse(tbNetProfit.Text));
             this.DialogResult = true;
             this.Close();
         }

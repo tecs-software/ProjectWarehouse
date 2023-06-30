@@ -31,12 +31,22 @@ namespace WarehouseManagement.Views.Onboarding
         {
             InitializeComponent();
             load_couriers();
+            txtFileNameProduct.Text = "Addressing_guide_with_can_do_delivery.csv";
+            Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
+            int numberofitems = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text).Rows.Count;
+            pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
+            lblTotalNumberOfItems.Text = numberofitems.ToString();
+            Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
+
+
+         
+
         }
         db_queries queries = new db_queries();
         private void load_couriers()
         {
             List<String> couriers = new List<String>();
-            couriers.Add("JnT");
+            couriers.Add("J&T");
 
             cmbCourier.ItemsSource = couriers;
         }
@@ -47,7 +57,14 @@ namespace WarehouseManagement.Views.Onboarding
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            btnImportAddress.IsEnabled = false;
+            workerImportAddress = new BackgroundWorker();
+            workerImportAddress.WorkerReportsProgress = true;
 
+            workerImportAddress.DoWork += WorkerImportRegion_DoWork;
+            workerImportAddress.RunWorkerCompleted += WorkerImportRegion_RunWorkerCompleted;
+
+            workerImportAddress.RunWorkerAsync();
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)

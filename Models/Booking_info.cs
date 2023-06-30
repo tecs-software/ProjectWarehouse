@@ -14,7 +14,6 @@ namespace WarehouseManagement.Models
         public string goods_value { get; set; } = string.Empty;
         public string bag_specification { get; set; } = string.Empty;
         public string remarks { get; set; } = string.Empty;
-        public string item_category { get; set; } = string.Empty;
-        public string courier { get; set; } = string.Empty;
+        public string courier { get; set; } = "J&T";
     }
 }

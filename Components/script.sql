@@ -81,7 +81,9 @@ BEGIN
         [platform_commission] [decimal](18, 2) NULL,
         [employee_commission] [decimal](18, 2) NULL,
         [shipping_fee] [decimal](18, 2) NULL,
-        [rts_margin] [decimal](18, 2) NULL
+        [rts_margin] [decimal](18, 2) NULL,
+        [total_expenses] [decimal] (18,2) NULL,
+        [net_profict] [decimal] (18,2) NULL
     )
 END
 GO
@@ -335,7 +337,8 @@ BEGIN
 	[product_name] [varchar](100) NOT NULL,
 	[qty] [varchar](50) NOT NULL,
 	[weight] [varchar](50) NOT NULL,
-	[remarks] [varchar](50) NOT NULL
+	[remarks] [varchar](50) NOT NULL,
+    [date_created] [varchar](50) NOT NULL
     )
 END
 

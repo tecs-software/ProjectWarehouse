@@ -114,12 +114,7 @@
                      Focusable="True"/>
 
 
-        <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,0,20">
-            <RadioButton x:Name="radioJAndT" GroupName="service" Content="J &amp; T"  FontSize="17" Margin="0,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
-            <RadioButton IsEnabled="False" x:Name="radioFlashExpress" GroupName="service" Content="Flash Express"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
-            <RadioButton IsEnabled="False" x:Name="radioLBC" GroupName="service" Content="LBC"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
-            <RadioButton IsEnabled="False" x:Name="radioNinjavan" GroupName="service" Content="Ninjavan"  FontSize="17" Margin="20,0,0,0" VerticalAlignment="Center" Checked="RadioButton_Checked"/>
-        </StackPanel>
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,0,20"/>
 
         <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,20,0,20">
             <TextBlock Text="Total Amount:" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" FontSize="20" VerticalAlignment="Center" FontWeight="Regular"/>
