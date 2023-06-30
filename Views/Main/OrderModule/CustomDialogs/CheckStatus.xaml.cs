@@ -21,18 +21,26 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     public partial class CheckStatus : Window
     {
         string sCourier;
+        update_order_status order_status = new update_order_status();
+        Track_api api_track = new Track_api();
+
         public CheckStatus(string waybill, string courier)
         {
             InitializeComponent();
             tbOrderId.Text = waybill;
+            sCourier = courier;
             initialize_status();
-            this.sCourier = courier;
         }
         public void initialize_status()
         {
-            Track_api api_track = new Track_api();
             api_track.api_track(tbOrderId.Text, sCourier);
             api_track.update_status(tblStatus);
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            order_status.get_order_status(tbOrderId.Text);
+            this.DialogResult = true;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace WarehouseManagement.Views.Onboarding
         private void load_couriers()
         {
             List<String> couriers = new List<String>();
-            couriers.Add("JnT");
+            couriers.Add("J&T");
 
             cmbCourier.ItemsSource = couriers;
         }
