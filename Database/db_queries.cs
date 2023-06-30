@@ -188,53 +188,57 @@ namespace WarehouseManagement.Database
         public void load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label lbl_expenses, Label net_profit)
         {
             //for total orders
-            sql.Query($"SELECT COUNT(*) FROM tbl_orders");
-            if (sql.HasException(true)) return;
-            if(sql.DBDT.Rows.Count > 0)
+            try
             {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                sql.Query($"SELECT COUNT(*) FROM tbl_orders");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    lbl_total_orders.Content = dr[0].ToString();
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        lbl_total_orders.Content = dr[0].ToString();
+                    }
                 }
-            }
 
-            //for gross sales
-            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'Delivered'");
-            if (sql.HasException(true)) return;
-            if(sql.DBDT.Rows.Count > 0)
-            {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                //for gross sales
+                sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'Delivered'");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    lbl_gross.Content = dr[0].ToString();
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        lbl_gross.Content = dr[0].ToString();
+                    }
                 }
-            }
 
-            //for total projected sales
-            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders");
-            if (sql.HasException(true)) return;
-            if (sql.DBDT.Rows.Count > 0)
-            {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                //for total projected sales
+                sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    lbl_products_sold.Content = dr[0].ToString();
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        lbl_products_sold.Content = dr[0].ToString();
+                    }
                 }
-            }
 
-            //for expenses
-            sql.Query($"SELECT COALESCE(SUM(total_expenses), 0) FROM tbl_selling_expenses");
-            if (sql.HasException(true)) return;
-            if(sql.DBDT.Rows.Count > 0)
-            {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                //for expenses
+                sql.Query($"SELECT COALESCE(SUM(total_expenses), 0) FROM tbl_selling_expenses");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    lbl_expenses.Content = decimal.Parse(dr[0].ToString());
-                    
-                }
-            }
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        lbl_expenses.Content = decimal.Parse(dr[0].ToString());
 
-            //for net profit
-            decimal netprofit = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(net_profit), 0) FROM tbl_selling_expenses"));
-            net_profit.Content = netprofit;
+                    }
+                }
+
+                //for net profit
+                decimal netprofit = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(net_profit), 0) FROM tbl_selling_expenses"));
+                net_profit.Content = netprofit;
+            }
+            catch { }
 
         }
         public bool check_sender_info()
@@ -256,7 +260,7 @@ namespace WarehouseManagement.Database
             List<DateTime> dateList = new List<DateTime>();
 
             //for revenue
-            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'Delivered' AND updated_at BETWEEN '" + start + "' AND '" + end + "' GROUP BY updated_at");
+            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'Delivered' AND updated_at BETWEEN '{start}' AND '{end}' GROUP BY updated_at");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {

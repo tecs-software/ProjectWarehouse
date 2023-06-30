@@ -83,7 +83,7 @@ BEGIN
         [shipping_fee] [decimal](18, 2) NULL,
         [rts_margin] [decimal](18, 2) NULL,
         [total_expenses] [decimal] (18,2) NULL,
-        [net_profict] [decimal] (18,2) NULL
+        [net_profit] [decimal] (18,2) NULL
     )
 END
 GO
