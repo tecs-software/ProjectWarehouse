@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Views.Login;
+using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.InitialSetup
 {
@@ -136,7 +137,7 @@ namespace WarehouseManagement.Views.InitialSetup
             }
             
         }
-
+        sql_control sql = new sql_control();
         private async Task SaveConnection(string connectionString)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -144,6 +145,7 @@ namespace WarehouseManagement.Views.InitialSetup
             config.ConnectionStrings.ConnectionStrings.Add(connectionStringSettings);
             await Task.Run(() => config.Save(ConfigurationSaveMode.Modified));
             ConfigurationManager.RefreshSection("connectionStrings");
+            sql.Query("INSERT INTO tbl_trial_key(Product_Key) VALUES ('N9TT-9G0A-B7FQ-RANC')");
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e)
