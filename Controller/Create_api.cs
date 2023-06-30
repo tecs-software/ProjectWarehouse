@@ -98,7 +98,8 @@ namespace WarehouseManagement.Controller
             payloadObj.receiver.city = receiver.City;
             payloadObj.receiver.area = receiver.Barangay;
             payloadObj.receiver.address = receiver.Address;
-            
+            payloadObj.txlogisticid = "TECS-" + GenerateTransactionID();
+
             //updating other fields
             payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             payloadObj.weight = booking_Info.weight;
@@ -116,41 +117,6 @@ namespace WarehouseManagement.Controller
                 firstItem["itemvalue"] = booking_Info.goods_value;
             }
 
-            sql.Query($"SELECT order_id FROM tbl_orders ORDER BY order_id DESC");
-            if (sql.HasException(true)) return false;
-            if (sql.DBDT.Rows.Count > 0)
-            {
-                string txlogisticid = sql.ReturnResult($"SELECT order_id FROM tbl_orders ORDER BY order_id DESC");
-                string[] parts = txlogisticid.Split('-');
-                if (parts.Length == 2)
-                {
-                    string prefix = parts[0];
-                    int numericPortion;
-
-                    if (int.TryParse(parts[1], out numericPortion))
-                    {
-                        // Increment the numeric portion
-                        numericPortion++;
-
-                        // Concatenate the prefix and the incremented numeric portion
-                        string newTxLogisticId = prefix + "-" + numericPortion.ToString();
-
-                        payloadObj.txlogisticid = newTxLogisticId;
-                    }
-                    else
-                    {
-                        
-                    }
-                }
-                else
-                {
-                    
-                }
-            }
-            else
-            {
-                payloadObj.txlogisticid = "ABC-" + new Random().Next(100000, 999999).ToString();
-            }
 
             string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
             //MessageBox.Show(updatedPayload);
@@ -200,7 +166,7 @@ namespace WarehouseManagement.Controller
 
                         queries.insert_receiver(receiver);
 
-                        queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info);
+                        queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
 
                         queries.insert_Incentives(booking_Info);
 
@@ -212,7 +178,6 @@ namespace WarehouseManagement.Controller
                     //if there's error on API
                     else
                     {
-                       
                         MessageBox.Show(response);
                         return false;
                     }
@@ -222,9 +187,30 @@ namespace WarehouseManagement.Controller
             }
             catch (Exception ex)
             {
-               
                 MessageBox.Show("An error occurred: " + ex.Message);
                 return false;
+            }
+        }
+        public long GenerateTransactionID()
+        {
+            var finalString = "";
+            var chars = "1234567";
+            var stringChars = new char[9];
+            var random = new Random();
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+            finalString = new String(stringChars);
+
+            sql.Query($"SELECT * FROM tbl_orders WHERE order_id = '{"TECS-" + finalString}'");
+            if (sql.DBDT.Rows.Count == 0)
+            {
+                return long.Parse(finalString);
+            }
+            else
+            {
+                return GenerateTransactionID();
             }
         }
         public static class MD5Util

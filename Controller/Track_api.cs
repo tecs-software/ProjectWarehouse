@@ -74,7 +74,7 @@ namespace WarehouseManagement.Controller
                         string scanType = detail.scantype;
                         string description = detail.desc;
 
-                        sql.Query($"SELECT * FROM tbl_status WHERE scan_time = '"+scanTime+"' AND waybill# = '"+waybill+"'");
+                        sql.Query($"SELECT * FROM tbl_status WHERE scan_time = '{scanTime}' AND waybill# = '{waybill}'");
                         if (sql.HasException(true)) return;
                         if(sql.DBDT.Rows.Count > 0)
                         {
@@ -87,14 +87,14 @@ namespace WarehouseManagement.Controller
                                 }
                                 else
                                 {
-                                    sql.Query($"INSERT INTO tbl_status (waybill#, scan_type, description, scan_time) VALUES ('" + waybill + "', '" + scanType.Replace('?', ' ') + "', '" + description.Replace('?', ' ') + "', '" + scanTime + "')");
+                                    sql.Query($"INSERT INTO tbl_status (waybill#, scan_type, description, scan_time) VALUES ('{waybill}', '" + scanType.Replace('【', ' ') + "', '" + description.Replace('】', ' ') + "', '" + scanTime + "')");
                                     if (sql.HasException(true)) return;
                                 }
                             }
                         }
                         else
                         {
-                            sql.Query($"INSERT INTO tbl_status (waybill#, scan_type, description, scan_time) VALUES ('" + waybill + "', '" + scanType.Replace('?', ' ') + "', '" + description.Replace('?', ' ') + "', '" + scanTime + "')");
+                            sql.Query($"INSERT INTO tbl_status (waybill#, scan_type, description, scan_time) VALUES ('{waybill}', '" + scanType.Replace('【', ' ') + "', '" + description.Replace('】', ' ') + "', '" + scanTime + "')");
                             if (sql.HasException(true)) return;
                         }
 

@@ -97,7 +97,7 @@
                       materialDesign:HintAssist.Foreground="Black"
                       x:Name="cbReason"
                       BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbReason_DropDownClosed"/>
 
             <TextBox 
                 Grid.Row="3" 

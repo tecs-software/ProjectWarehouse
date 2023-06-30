@@ -86,16 +86,17 @@ namespace WarehouseManagement.Database
             sql.Query($"INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) VALUES ('" + name + "', '" + _receiver.Phone + "', '" + _receiver.Address + "')");
             if (sql.HasException(true)) return;
         }
-        public void Insert_Orders(string order_id, string waybill, Booking_info book_info)
+        public void Insert_Orders(string order_id, string waybill, Booking_info book_info, string status)
         {
             string sender_id = sql.ReturnResult($"SELECT sender_id FROM tbl_sender ORDER BY sender_id DESC");
             string receiver_id = sql.ReturnResult($"SELECT receiver_id FROM tbl_receiver ORDER BY receiver_id DESC");
             string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name ='" + book_info.item_name + "'");
             decimal total = decimal.Parse(book_info.quantity) * decimal.Parse(book_info.goods_value);
 
-            sql.Query($"INSERT INTO tbl_orders (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at, courier) VALUES" +
-                $"('" + order_id + "', '" + waybill + "', '" + CurrentUser.Instance.userID + "', '" + sender_id + "', '" + receiver_id + "', '" + product_id + "', '" + book_info.quantity + "', '" + total + "', '" + book_info.remarks + "'," +
-                "'Pending', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','J&T')");
+
+            //dito papalitan couriers
+            sql.Query($"INSERT INTO tbl_orders (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at, courier) VALUES " +
+                $"('{order_id}', '{waybill}', '{CurrentUser.Instance.userID.ToString()}', '{sender_id}', '{receiver_id}', '{product_id}', {book_info.quantity}, {total}, '{book_info.remarks}', '{status}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', 'J&T' )");
             if (sql.HasException(true)) return;
         }
 
@@ -164,12 +165,11 @@ namespace WarehouseManagement.Database
                 cb.ItemsSource = baranggays;
             }
         }
-        public bool deduct_inventory(Booking_info book_info, Receiver _receiver)
+        public bool check_quantity(Booking_info book_info, Receiver _receiver)
         {
             int stock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '"+book_info.item_name+"'"));
             if(stock >= int.Parse(book_info.quantity))
             {
-                sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity - '" + int.Parse(book_info.quantity) + "' WHERE item_name = '" + book_info.item_name + "'");
                 return true;
                 
             }
@@ -180,65 +180,65 @@ namespace WarehouseManagement.Database
         }
         public void update_inventory_status(Booking_info book_info)
         {
-            int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '"+book_info.item_name+"'"));
+            //deducting the ordered quantity
+            sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity - {int.Parse(book_info.quantity)} WHERE item_name = '{book_info.item_name}'");
+            if (sql.HasException(true)) return;
+
+            //updating status
+            int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '{book_info.item_name}'"));
             string Status = newStock < 0 ? Util.status_out_of_stock : newStock == 0 ? Util.status_out_of_stock : newStock <= 100 ? Util.status_low_stock : Util.status_in_stock;
-            sql.Query($"UPDATE tbl_products set status = '"+Status+"' WHERE item_name = '"+book_info.item_name+"'");
+            sql.Query($"UPDATE tbl_products set status = '{Status}' WHERE item_name = '{book_info.item_name}'");
             if (sql.HasException(true)) return;
         }
         public void load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label lbl_expenses, Label net_profit)
         {
             //for total orders
-            try
+            sql.Query($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'CANCELLED'");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
             {
-                sql.Query($"SELECT COUNT(*) FROM tbl_orders");
-                if (sql.HasException(true)) return;
-                if (sql.DBDT.Rows.Count > 0)
+                foreach (DataRow dr in sql.DBDT.Rows)
                 {
-                    foreach (DataRow dr in sql.DBDT.Rows)
-                    {
-                        lbl_total_orders.Content = dr[0].ToString();
-                    }
+                    lbl_total_orders.Content = dr[0].ToString();
                 }
-
-                //for gross sales
-                sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'Delivered'");
-                if (sql.HasException(true)) return;
-                if (sql.DBDT.Rows.Count > 0)
-                {
-                    foreach (DataRow dr in sql.DBDT.Rows)
-                    {
-                        lbl_gross.Content = dr[0].ToString();
-                    }
-                }
-
-                //for total projected sales
-                sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders");
-                if (sql.HasException(true)) return;
-                if (sql.DBDT.Rows.Count > 0)
-                {
-                    foreach (DataRow dr in sql.DBDT.Rows)
-                    {
-                        lbl_products_sold.Content = dr[0].ToString();
-                    }
-                }
-
-                //for expenses
-                sql.Query($"SELECT COALESCE(SUM(total_expenses), 0) FROM tbl_selling_expenses");
-                if (sql.HasException(true)) return;
-                if (sql.DBDT.Rows.Count > 0)
-                {
-                    foreach (DataRow dr in sql.DBDT.Rows)
-                    {
-                        lbl_expenses.Content = decimal.Parse(dr[0].ToString());
-
-                    }
-                }
-
-                //for net profit
-                decimal netprofit = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(net_profit), 0) FROM tbl_selling_expenses"));
-                net_profit.Content = netprofit;
             }
-            catch { }
+
+            //for gross sales
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'DELIVERED'");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_gross.Content = dr[0].ToString();
+                }
+            }
+
+            //for total projected sales
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status != 'CANCELLED'");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_products_sold.Content = dr[0].ToString();
+                }
+            }
+
+            //for expenses
+            sql.Query($"SELECT COALESCE(SUM(total_expenses), 0) FROM tbl_selling_expenses");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    lbl_expenses.Content = decimal.Parse(dr[0].ToString());
+                }
+            }
+
+            //for net profit
+            string netprofit = sql.ReturnResult($"SELECT COALESCE(SUM(net_profit), 0) FROM tbl_selling_expenses");
+            net_profit.Content = netprofit;
 
         }
         public bool check_sender_info()
@@ -260,7 +260,7 @@ namespace WarehouseManagement.Database
             List<DateTime> dateList = new List<DateTime>();
 
             //for revenue
-            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'Delivered' AND updated_at BETWEEN '{start}' AND '{end}' GROUP BY updated_at");
+            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{start}' AND '{end}' GROUP BY updated_at");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {

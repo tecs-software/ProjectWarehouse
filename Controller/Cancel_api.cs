@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using static WarehouseManagement.Controller.Create_api;
 using System.Windows;
 using WWarehouseManagement.Database;
+using WarehouseManagement.Helpers;
 
 namespace WarehouseManagement.Controller
 {
     class Cancel_api
     {
         sql_control sql = new sql_control();
-        public bool api_cancel(string id, string reason, string courier)
+        public bool api_cancel(string id, string reason, string courier, string product)
         {
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/cancel";
             string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '" + courier + "'");
@@ -67,8 +68,15 @@ namespace WarehouseManagement.Controller
 
                     if(success == "true")
                     {
-                        sql.Query($"UPDATE tbl_orders SET status = 'CANCELLED', updated_at = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE order_id = '" + id + "'");
+                        sql.Query($"UPDATE tbl_orders SET remarks = '{reason}', status = 'CANCELLED', updated_at = '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' WHERE order_id = '{id}'");
                         MessageBox.Show("Order has been Cancelled");
+
+                        int order_qty = int.Parse(sql.ReturnResult($"SELECT quantity FROM tbl_orders WHERE order_id = '{id}'"));
+                        sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity+{order_qty} WHERE item_name = '{product}'");
+
+                        int stocks = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '{product}'"));
+                        string status = stocks < 0 ? Util.status_out_of_stock : (stocks == 0 ? Util.status_out_of_stock : (stocks <= 100 ? Util.status_low_stock : Util.status_in_stock));
+                        sql.Query($"UPDATE tbl_products SET status = '{status}' WHERE item_name = '{product}'");
                         return true;
                     }
                     else

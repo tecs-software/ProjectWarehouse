@@ -134,6 +134,6 @@
                     materialDesign:HintAssist.Foreground="Black"
                     BorderBrush="Black"
                     IsReadOnly="False"
-                    Focusable="True"/>
+                    Focusable="True" PreviewTextInput="tbAddress_PreviewTextInput"/>
     </Grid>
 </Page>

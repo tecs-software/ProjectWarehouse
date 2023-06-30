@@ -55,11 +55,11 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
             switch (tabItem)
             {
-                case "Courier Accounts":
-                   // courierAccountFrame.Source = new Uri("../ProductView/ProductList.xaml", UriKind.Relative);
-                    break;
                 case "Sender Information":
                     //senderInfoFrame.Source = new Uri("../ProductView/ProductInformation.xaml", UriKind.Relative);
+                    break;
+                case "Courier Accounts":
+                   // courierAccountFrame.Source = new Uri("../ProductView/ProductList.xaml", UriKind.Relative);
                     break;
                 case "Import Address":
                     importAddressFrame.Source = new Uri("../SystemSettingModule/FrameImportAddress.xaml", UriKind.Relative);
@@ -96,7 +96,13 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             {
                 if (queries.insert_sender(txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
                 {
-                    MessageBox.Show("Sender added");
+                    MessageBox.Show("Shop/Page added");
+                    txtAddress.Clear();
+                    txtPagename.Clear();
+                    txtPhone.Clear();
+                    cmbProvince.Text = "";
+                    cmbCity.Text = "";
+                    cmbBarangay.Text = "";
                 }
                 else
                 {

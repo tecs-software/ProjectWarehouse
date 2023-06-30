@@ -15,16 +15,16 @@ namespace WarehouseManagement.Controller
         public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
         public static void MessagePopup()
         {
-            if (Trial_Controller.IsTrialEnded())
-                MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
+            //if (Trial_Controller.IsTrialEnded())
+            //    MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
         }
         public static bool IsTrialEnded()
         {
-            int days = int.Parse(sql.ReturnResult("EXEC Sp_Trial_Validation"));
-            if (days <= 7)
-                return true;
-            else
-                return false;
+            //int days = int.Parse(sql.ReturnResult("EXEC Sp_Trial_Validation"));
+            //if (days <= 7)
+            //return true;
+            //else
+            return false;
         }
     }
 }

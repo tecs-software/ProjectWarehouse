@@ -22,40 +22,51 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     public partial class CancelOrder : Window
     {
         string sCourier;
-        public CancelOrder(string order_id, string courier)
+        string sProduct;
+        public CancelOrder(string order_id, string courier, string product)
         {
             InitializeComponent();
             tbOtherReason.Visibility = Visibility.Collapsed;
             this.SizeToContent = SizeToContent.Height;
             tbOrderId.Text = order_id;
             this.sCourier = courier;
+            this.sProduct = product;
             reasons();
         }
 
         private void btnCancelOrder_Click(object sender, RoutedEventArgs e)
         {
             Cancel_api cancel_api = new Cancel_api();
-            if(cancel_api.api_cancel(tbOrderId.Text, cbReason.Text, sCourier))
+            if(tbOtherReason.Visibility == Visibility.Visible)
             {
-                this.DialogResult = true;
-                Close();
+                if (cancel_api.api_cancel(tbOrderId.Text, tbOtherReason.Text, sCourier, sProduct))
+                {
+                    this.DialogResult = true;
+                    Close();
+                }
+            }
+            else
+            {
+                if (cancel_api.api_cancel(tbOrderId.Text, cbReason.Text, sCourier, sProduct))
+                {
+                    this.DialogResult = true;
+                    Close();
+                }
             }
 
         }
         public void reasons()
         {
-            List<String> reasons = new List<String>();
+            List<string> reasons = new List<string>();
             reasons.Add("Item is no longer needed.");
-            reasons.Add("Found a better deal elsewhere..");
+            reasons.Add("Found a better deal elsewhere.");
             reasons.Add("Ordered by mistake.");
             reasons.Add("Customer changed their mind.");
             reasons.Add("Incorrect item selected.");
             reasons.Add("Customer requested cancellation.");
+            reasons.Add("Others.");
 
-            for(int x = 0; x < 6;x++)
-            {
-                cbReason.Items.Add(reasons[x]);
-            }
+            cbReason.ItemsSource = reasons;
         }
         private void cbReason_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -69,6 +80,14 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 tbOtherReason.Visibility = Visibility.Collapsed;
                 this.SizeToContent = SizeToContent.Height;
             }
+        }
+
+        private void cbReason_DropDownClosed(object sender, EventArgs e)
+        {
+            if (cbReason.Text == "Others.")
+                tbOtherReason.Visibility = Visibility.Visible;
+            else
+                tbOtherReason.Visibility = Visibility.Collapsed;
         }
     }
 }

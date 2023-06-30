@@ -29,7 +29,7 @@ namespace WarehouseManagement.Controller
         {
             if(CurrentUser.Instance.userID == 1)
             {
-                sql.Query($"SELECT * FROM tbl_orders");
+                sql.Query($"SELECT * FROM tbl_orders WHERE status != 'FAILED' ORDER BY created_at ASC");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
@@ -48,7 +48,8 @@ namespace WarehouseManagement.Controller
                             product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '" + dr[6].ToString() + "'"),
                             courier = dr[1].ToString(),
                             quantity = dr[7].ToString(),
-                            total = dr[8].ToString()
+                            total = dr[8].ToString(),
+                            date_created = DateTime.Parse(dr[11].ToString()).ToString("MMM-dd-yyyy HH:mm:ss tt")
 
                             // Assign other properties as needed
                         };
@@ -60,7 +61,7 @@ namespace WarehouseManagement.Controller
             }
             else
             {
-                sql.Query($"SELECT * FROM tbl_orders WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}");
+                sql.Query($"SELECT * FROM tbl_orders WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())} AND status != 'FAILED' ORDER BY created_at ASC");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
@@ -79,7 +80,8 @@ namespace WarehouseManagement.Controller
                             product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '" + dr[6].ToString() + "'"),
                             courier = dr[1].ToString(),
                             quantity = dr[7].ToString(),
-                            total = dr[8].ToString()
+                            total = dr[8].ToString(),
+                            date_created = DateTime.Parse(dr[11].ToString()).ToString("MMM-dd-yyyy HH:mm:ss tt")
 
                             // Assign other properties as needed
                         };
@@ -103,6 +105,7 @@ namespace WarehouseManagement.Controller
         public string courier { get; set; }
         public string quantity { get; set; }
         public string total { get; set; }
+        public string date_created { get; set; }
 
     }
 }

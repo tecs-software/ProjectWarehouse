@@ -180,8 +180,9 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 object id = dgtRespondentData.SelectedItem;
                 string order_id = (dgtRespondentData.SelectedCells[0].Column.GetCellContent(id) as TextBlock).Text;
                 string courier = (dgtRespondentData.SelectedCells[1].Column.GetCellContent(id) as TextBlock).Text;
+                string product = (dgtRespondentData.SelectedCells[3].Column.GetCellContent(id) as TextBlock).Text;
 
-                CancelOrder ca = new CancelOrder(order_id, courier);
+                CancelOrder ca = new CancelOrder(order_id, courier, product);
 
                 ca.Owner = Window.GetWindow(this);
 
