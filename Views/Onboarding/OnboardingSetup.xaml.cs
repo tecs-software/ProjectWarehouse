@@ -37,10 +37,6 @@ namespace WarehouseManagement.Views.Onboarding
             pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
             lblTotalNumberOfItems.Text = numberofitems.ToString();
             Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
-
-
-         
-
         }
         db_queries queries = new db_queries();
         private void load_couriers()

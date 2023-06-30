@@ -13,7 +13,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="Auto" Width="500">
+        Title="LoginWindow" Height="Auto" Width="500" Loaded="Window_Loaded">
 
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
