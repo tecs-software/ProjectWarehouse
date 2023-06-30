@@ -27,7 +27,7 @@
                     CanUserDeleteRows="False"
                     GridLinesVisibility="All"
                     BorderBrush="#949494"
-                    Height="2000"
+                    Height="Auto"
                     VerticalAlignment="Stretch"
                     VerticalScrollBarVisibility="Auto"
                     TextBlock.TextAlignment="Left"

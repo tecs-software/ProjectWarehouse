@@ -39,9 +39,11 @@
         </Grid>
 
         <Border BorderBrush="#BBBBBB" VerticalAlignment="Stretch" Grid.Row="1" BorderThickness="0.5" Margin="0,30,0,0" >
-            <DockPanel x:Name="dockPanelTable" VerticalAlignment="Stretch">
-                <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
-            </DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <DockPanel x:Name="dockPanelTable" VerticalAlignment="Stretch">
+                    <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
+                </DockPanel>
+            </ScrollViewer>
         </Border>
 
 

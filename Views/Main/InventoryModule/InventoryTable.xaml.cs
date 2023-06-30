@@ -155,6 +155,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule
                     if (await db.UpdateData("tbl_products", new string[] { "status" }, new string[] { Util.status_discontinued }, "product_id", selectedProduct.ProductId))
                     {
                         await RefreshDataGrid();
+                        
+                        
                     }
                 }
             }

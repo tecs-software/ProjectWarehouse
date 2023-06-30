@@ -25,11 +25,25 @@ namespace WarehouseManagement.Views.Main.InventoryModule
     public partial class InventoryView : Page
     {
         private string status = null;
+        private int discontinuedCount;
+        private int lowStockCount;
+        private int outOfStockCount;
 
         public InventoryView()
         {
             InitializeComponent();
             showMenu();
+        }
+
+        private async Task UpdateCounts()
+        {
+            DBHelper db = new DBHelper();
+            (int discontinued, int lowStock, int outOfStock) counts = await db.GetProductsCount();
+            discontinuedCount = counts.discontinued;
+            lowStockCount = counts.lowStock;
+            outOfStockCount = counts.outOfStock;
+
+            await UpdateMenuItems(); // Update the menu items with the latest counts
         }
 
         private void tbSearchProduct_TextChanged(object sender, TextChangedEventArgs e)
@@ -49,17 +63,15 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             filters.Add("status", status);
             filters.Add("item_name", tbSearchProduct.Text);
             await inventoryTable.RefreshDataGrid(filters);
+            await UpdateCounts();
         }
 
         public async void showMenu()
         {
             DBHelper db = new DBHelper();
 
-            (int discontinued, int lowStock, int outOfStock) counts = await db.GetProductsCount();
+            await UpdateCounts();
 
-            int discontinued = counts.discontinued;
-            int lowStock = counts.lowStock;
-            int outOfStock = counts.outOfStock;
 
             var menuCategory = new List<SubMenuItem>();
             menuCategory.Add(new SubMenuItem("Sale", 20));
@@ -69,14 +81,35 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             var category = new MenuItem("Category", menuCategory);
 
             var menuStatus = new List<SubMenuItem>();
-            menuStatus.Add(new SubMenuItem("Low-Stock", lowStock));
-            menuStatus.Add(new SubMenuItem("Out of Stock", outOfStock));
-            menuStatus.Add(new SubMenuItem("Discontinued", discontinued));
+            menuStatus.Add(new SubMenuItem("Low-Stock", lowStockCount));
+            menuStatus.Add(new SubMenuItem("Out of Stock", outOfStockCount));
+            menuStatus.Add(new SubMenuItem("Discontinued", discontinuedCount));
 
             var status = new MenuItem("Status", menuStatus);
 
+            Menu.Children.Clear();
             //Menu.Children.Add(new InventoryMenu(category));
             Menu.Children.Add(new InventoryMenu(status));
+        }
+
+        private async Task UpdateMenuItems()
+        {
+            var menuStatus = new List<SubMenuItem>();
+            menuStatus.Add(new SubMenuItem("Low-Stock", lowStockCount));
+            menuStatus.Add(new SubMenuItem("Out of Stock", outOfStockCount));
+            menuStatus.Add(new SubMenuItem("Discontinued", discontinuedCount));
+
+            var statusMenuItem = new MenuItem("Status", menuStatus);
+
+            // Find the InventoryMenu control in the UI and update its DataContext
+            var inventoryMenu = Menu.Children.OfType<InventoryMenu>().FirstOrDefault();
+            if (inventoryMenu != null)
+            {
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    inventoryMenu.DataContext = statusMenuItem;
+                });
+            }
         }
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
@@ -93,7 +126,10 @@ namespace WarehouseManagement.Views.Main.InventoryModule
             if (dialog.ShowDialog() == true)
             {
                 tableFilter(null);
+               
             }
+
+            
         }
 
         private async void btnProfitAnalysis_Click(object sender, RoutedEventArgs e)

@@ -22,6 +22,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule
     /// </summary>
     public partial class InventoryMenu : UserControl
     {
+
         public InventoryMenu(MenuItem itemMenu)
         {
             InitializeComponent();
@@ -98,14 +99,15 @@ namespace WarehouseManagement.Views.Main.InventoryModule
 
             var inventoryModule = parent as InventoryView;
 
-            if(header != null)
+            if (header != null)
             {
                 switch (header.ToLower())
                 {
                     case "status":
-
+                        
                         inventoryModule?.tableFilter(null);
                         ListViewMenu.SelectedItem = null;
+                       
                         break;
                 }
 

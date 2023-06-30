@@ -90,6 +90,7 @@
                 </ScrollViewer>
             </StackPanel>
 
+         
             <Frame Grid.Column="1" x:Name="mainFrame" NavigationUIVisibility="Hidden" VerticalAlignment="Top"/>
 
         </Grid>

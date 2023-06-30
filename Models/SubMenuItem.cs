@@ -17,6 +17,5 @@ namespace WarehouseManagement.Models
             Name = name;
             Numbers = numbers;
         }
-
     }
 }

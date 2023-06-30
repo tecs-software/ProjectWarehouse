@@ -116,5 +116,10 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
                 }
             }
         }
+
+        private void tbl_payroll_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
+        }
     }
 }

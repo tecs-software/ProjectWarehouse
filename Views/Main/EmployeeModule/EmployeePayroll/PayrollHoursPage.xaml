@@ -25,7 +25,7 @@
                     CanUserResizeColumns="False"
                     CanUserDeleteRows="False"
                     RowHeight="100"
-                    Height="2000"
+                    Height="Auto"
                     GridLinesVisibility="All"
                     VerticalAlignment="Stretch"
                     BorderBrush="#949494"
