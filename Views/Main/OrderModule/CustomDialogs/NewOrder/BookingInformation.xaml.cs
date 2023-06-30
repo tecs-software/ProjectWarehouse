@@ -32,14 +32,29 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         public void insert_item()
         {
-            int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = "+ int.Parse(CurrentUser.Instance.userID.ToString()) + ""));
-            sql.Query($"SELECT * FROM tbl_products WHERE sender_id = '"+sender_id+"'");
-            if (sql.HasException(true)) return;
-            if(sql.DBDT.Rows.Count > 0)
+            if(CurrentUser.Instance.userID == 1)
             {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                sql.Query($"SELECT * FROM tbl_products");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    cbItem.Items.Add(dr[2]);
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        cbItem.Items.Add(dr[2]);
+                    }
+                }
+            }
+            else
+            {
+                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = " + int.Parse(CurrentUser.Instance.userID.ToString()) + ""));
+                sql.Query($"SELECT * FROM tbl_products WHERE sender_id = '" + sender_id + "'");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        cbItem.Items.Add(dr[2]);
+                    }
                 }
             }
         }
