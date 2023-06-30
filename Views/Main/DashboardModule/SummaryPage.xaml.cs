@@ -52,7 +52,13 @@ namespace WarehouseManagement.Views.Main.DashboardModule
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            queries.load_dashboard_summary(lbl_total_order, lbl_gross, lbl_products_sold, lbl_expenses,lbl_Net_profit);
+            try
+            {
+                queries.load_dashboard_summary(lbl_total_order, lbl_gross, lbl_products_sold, lbl_expenses, lbl_Net_profit);
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
