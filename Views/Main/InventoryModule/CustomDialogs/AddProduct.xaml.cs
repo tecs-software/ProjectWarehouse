@@ -276,11 +276,9 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
         }
         private void tbBarcode_KeyUp(object sender, KeyEventArgs e)
         {
-            GenerateBarcode(tbBarcode.Text, tbItemName.Text);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }
