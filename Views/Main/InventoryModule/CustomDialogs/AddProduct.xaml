@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         Background="Transparent"
-        Title="AddProduct" Height="Auto" Width="1200">
+        Title="AddProduct" Height="Auto" Width="1200" Loaded="Window_Loaded">
     
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
@@ -92,9 +92,8 @@
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
                      BorderBrush="Black"
-                     KeyDown="tbBarcode_KeyDown"
                      Margin="10,0,10,0"
-                     x:Name="tbBarcode"/>
+                     x:Name="tbBarcode" KeyUp="tbBarcode_KeyUp"/>
 
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="1"

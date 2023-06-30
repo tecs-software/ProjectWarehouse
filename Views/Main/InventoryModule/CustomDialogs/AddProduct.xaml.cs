@@ -1,5 +1,4 @@
-﻿using IronBarCode;
-using Newtonsoft.Json.Bson;
+﻿using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,10 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
+using ZXing;
+using ZXing.Common;
+using System.IO;
+using System.Windows.Markup;
+using IronBarCode;
+using System.Windows.Interop;
 
 namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 {
@@ -19,7 +25,6 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
     /// </summary>
     public partial class AddProduct : Window
     {
-        Bitmap barcodeImage = null;
         Product? product;
         SellingExpenses? sellingExpenses;
         public event EventHandler<string> TableFilterRequested;
@@ -29,7 +34,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
             TableFilterRequested?.Invoke(this, status);
         }
 
-        public AddProduct(Product? product)     
+        public AddProduct(Product? product)
         {
             InitializeComponent();
             UserController.LoadSender(cmbSellerName);
@@ -152,7 +157,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
                     Clear();
 
-                    await GenerateBarcode(tbItemName.Text, tbBarcode.Text);
+                    await GenerateBarcode(tbBarcode.Text, tbItemName.Text);
 
                     OnTableFilterRequested(null);
                 }
@@ -163,7 +168,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                     this.DialogResult = true;
                     this.Close();
 
-                    await GenerateBarcode(tbItemName.Text, tbBarcode.Text);
+                    await GenerateBarcode(tbBarcode.Text, tbItemName.Text);
                 }
             }
             else
@@ -171,21 +176,37 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 MessageBox.Show(isUpdate ? "Error updating product" : "Error inserting product");
             }
         }
-
-        private async Task GenerateBarcode(string item, string barcode)
+        private async Task GenerateBarcode(string barcode_serial, string image_name)
         {
             //For generating barcode
             if (!string.IsNullOrEmpty(tbBarcode.Text) || tbBarcode.Text != "N/A")
             {
-                await Task.Run(() =>
+                await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
+                    // Code for generating the barcode and setting the source
                     try
                     {
-                        GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(barcode, BarcodeWriterEncoding.Code128);
-                        myBarcode.SaveAsPng($"./images/{item}.png");
-                    }
-                    catch { };
+                        GeneratedBarcode barcode = BarcodeWriter.CreateBarcode(barcode_serial, BarcodeWriterEncoding.Code128);
 
+                        System.Drawing.Bitmap barcodeBitmap = barcode.ToBitmap();
+
+                        string imageName = image_name; // Assuming tbImageName is the TextBox containing the desired image name
+                        string filePath = $"C:\\Users\\Maverick\\source\\repos\\ProjectWarehouse\\Resources\\{imageName}.png"; // Append the desired name with the file extension
+
+                        // Save the barcode image to a file
+                        barcodeBitmap.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                        // Convert the bitmap to a WPF image source
+                        BitmapSource barcodeSource = Imaging.CreateBitmapSourceFromHBitmap(
+                            barcodeBitmap.GetHbitmap(),
+                            IntPtr.Zero,
+                            Int32Rect.Empty,
+                            BitmapSizeOptions.FromEmptyOptions());
+
+                        // Set the image source for the Image control
+                        pbBarcode.Source = barcodeSource;
+                    }
+                    catch { }
                 });
             }
         }
@@ -249,18 +270,17 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 this.DialogResult = true;
             }
         }
-
-      
-
-        private void tbBarcode_KeyDown(object sender, KeyEventArgs e)
-        {
-           
-        }
-
-
         private void tbItemName_LostFocus(object sender, RoutedEventArgs e)
         {
             tbItemName.Text = Converter.CapitalizeWords(tbItemName.Text, 2);
+        }
+        private void tbBarcode_KeyUp(object sender, KeyEventArgs e)
+        {
+            GenerateBarcode(tbBarcode.Text, tbItemName.Text);
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
