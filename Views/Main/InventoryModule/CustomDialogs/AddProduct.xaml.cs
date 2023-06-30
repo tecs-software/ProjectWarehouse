@@ -190,10 +190,16 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
                         System.Drawing.Bitmap barcodeBitmap = barcode.ToBitmap();
 
-                        string imageName = image_name; // Assuming tbImageName is the TextBox containing the desired image name
-                        string filePath = $"C:\\Users\\Maverick\\source\\repos\\ProjectWarehouse\\Resources\\{imageName}.png"; // Append the desired name with the file extension
+                        string imageName = image_name; // Assuming image_name is the TextBox containing the desired image name
 
-                        // Save the barcode image to a file
+                        // Get the appropriate folder path based on the current operating system
+                        string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ProjectWarehouse", "Resources");
+                        string filePath = Path.Combine(folderPath, $"{imageName}.png");
+
+                        // Create the directory if it doesn't exist
+                        Directory.CreateDirectory(folderPath);
+
+                        // Save the barcode image to the specified file path
                         barcodeBitmap.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
 
                         // Convert the bitmap to a WPF image source
