@@ -91,8 +91,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 //calling the method for api ordering
                 if(queries.check_quantity(booking_info, _receiver))
                 {
-                    bool success = await order_api.api_create(_receiver, booking_info, global_sender);
-                    if (success)
+                    if (await order_api.api_create(_receiver, booking_info, global_sender))
                     {
                         this.DialogResult = true;
                         this.Close();

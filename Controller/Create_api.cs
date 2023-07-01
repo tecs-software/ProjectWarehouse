@@ -20,6 +20,8 @@ using System.Data;
 using Newtonsoft.Json.Linq;
 using WarehouseManagement.Database;
 using WWarehouseManagement.Database;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace WarehouseManagement.Controller
 {
@@ -30,7 +32,7 @@ namespace WarehouseManagement.Controller
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
         {
             string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
-            string key = global.key;
+            string key = Decrypt(global.key);
             string logistics_interface = @"
             {
             ""actiontype"": ""add"",
@@ -231,6 +233,20 @@ namespace WarehouseManagement.Controller
                     return builder.ToString();
                 }
             }
+        }
+        public static string Decrypt(string encryptedText)
+        {
+            string key = "YourEncryptionKey"; // Replace with your desired encryption key
+
+            byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+
+            for (int i = 0; i < encryptedBytes.Length; i++)
+            {
+                encryptedBytes[i] = (byte)(encryptedBytes[i] ^ keyBytes[i % keyBytes.Length]);
+            }
+
+            return Encoding.UTF8.GetString(encryptedBytes);
         }
     }
 }

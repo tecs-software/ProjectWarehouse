@@ -19,7 +19,7 @@ namespace WarehouseManagement.Controller
         {
             string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/cancel";
             string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '" + courier + "'");
-            string key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '"+courier+"'");
+            string key = Decrypt(sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '{courier}'"));
             string logistics_interface = @"
             {
                 ""eccompanyid"": ""THIRDYNAL"",

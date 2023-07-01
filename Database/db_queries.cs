@@ -20,6 +20,7 @@ using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using WWarehouseManagement.Database;
 using System.Collections.Immutable;
 using System.Security.Cryptography;
+using System.IO;
 
 namespace WarehouseManagement.Database
 {
@@ -78,7 +79,7 @@ namespace WarehouseManagement.Database
         public void api_credentials(ComboBox courier, TextBox api_key, TextBox ec, TextBox customer_id)
         {
             sql.Query($"INSERT INTO tbl_couriers (courier_name, api_key, eccompany_id, customer_id) " +
-                $"VALUES ('{courier.Text}','{HashText(api_key.Text)}' ,'{ec.Text}', '{customer_id.Text}')");
+                $"VALUES ('{courier.Text}','{Encrypt(api_key.Text)}' ,'{ec.Text}', '{customer_id.Text}')");
             if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)
@@ -301,6 +302,20 @@ namespace WarehouseManagement.Database
 
                 return builder.ToString();
             }
+        }
+        public string Encrypt(string input)
+        {
+            string key = "YourEncryptionKey"; // Replace with your desired encryption key
+
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+
+            for (int i = 0; i < inputBytes.Length; i++)
+            {
+                inputBytes[i] = (byte)(inputBytes[i] ^ keyBytes[i % keyBytes.Length]);
+            }
+
+            return Convert.ToBase64String(inputBytes);
         }
     }
 }

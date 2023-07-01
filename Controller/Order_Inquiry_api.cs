@@ -47,7 +47,7 @@ namespace WarehouseManagement.Controller
         {
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/queryOrder";
             string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers");
-            string key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers");
+            string key = Decrypt(sql.ReturnResult($"SELECT api_key FROM tbl_couriers"));
             string logistics_interface = @"
             {
                 ""eccompanyid"": ""THIRDYNAL"",
