@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using WarehouseManagement.Models;
 using MenuItem = System.Windows.Controls.MenuItem;
+using NetFwTypeLib;
 
 namespace WarehouseManagement.Helpers
 {
@@ -368,6 +370,53 @@ namespace WarehouseManagement.Helpers
                 return $"{serverName}";
             }
             return $"{serverName}\\{instanceName}";
+        }
+
+        public static bool IsUserAdministrator()
+        {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        public static void AddFirewallRule()
+        {
+            // Create the firewall object
+            Type firewallType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
+            INetFwPolicy2 firewallPolicy = (INetFwPolicy2)Activator.CreateInstance(firewallType);
+
+            // Check if the rule already exists
+            foreach (INetFwRule existingRule in firewallPolicy.Rules)
+            {
+                if (existingRule.Name == "Warehouse Allow 1443" &&
+                    existingRule.Protocol == (int)NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP &&
+                    existingRule.LocalPorts == "1433" &&
+                    (existingRule.Profiles & ((int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE |
+                                              (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC |
+                                              (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN)) != 0)
+                {
+                    return;
+                }
+            }
+
+            INetFwRule firewallRule = (INetFwRule)Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FWRule"));
+
+            firewallRule.Enabled = true;
+            firewallRule.Action = NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
+            firewallRule.Protocol = (int)NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP;
+            firewallRule.LocalPorts = "1433";
+            firewallRule.Profiles = (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE |
+                                    (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC |
+                                    (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN;
+            firewallRule.Name = "Warehouse Allow 1443";
+
+            if (!IsUserAdministrator())
+            {
+                MessageBox.Show("Please restart the application as an administrator to ensure all features work correctly.");
+                return;
+            }
+
+            firewallPolicy.Rules.Add(firewallRule);
         }
     }
 }

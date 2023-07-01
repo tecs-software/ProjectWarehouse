@@ -83,7 +83,7 @@ namespace WarehouseManagement.Views.Onboarding
             }
             else
             {
-                if (Util.IsAnyTextBoxEmpty(txtCustomerID, txtEccompanyId, txtKey) || Util.IsAnyComboBoxItemEmpty(cmbCourier))
+                if (Util.IsAnyTextBoxEmpty(txtCustomerID, txtEccompanyId) || Util.IsAnyComboBoxItemEmpty(cmbCourier))
                 {
                     MessageBox.Show("Please complete all required fields on customer information.");
                     return;
@@ -92,7 +92,7 @@ namespace WarehouseManagement.Views.Onboarding
                 {
                     if (queries.insert_sender(txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
                     {
-                        queries.api_credentials(cmbCourier, txtKey, txtEccompanyId, txtCustomerID);
+                        queries.api_credentials(cmbCourier, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId, txtCustomerID);
                         MessageBox.Show("Information Setup completed");
                         MainWindow main = new MainWindow();
                         main.Show();

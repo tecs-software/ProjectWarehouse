@@ -98,6 +98,7 @@ namespace WarehouseManagement.Database
 
                     if (loginCount == 0)
                     {
+                        MessageBox.Show("dito");
                         // Create login
                         string createLoginSql = $"CREATE LOGIN {loginName} WITH PASSWORD = '{loginPassword}';";
                         SqlCommand createLoginCommand = new SqlCommand(createLoginSql, sqlConnection);
@@ -111,12 +112,16 @@ namespace WarehouseManagement.Database
                     }
                     else
                     {
-                        string checkLoginSql2 = $"USE {databaseName}; SELECT COUNT(*) FROM sys.syslogins WHERE name = '{loginName}'";
-                        SqlCommand checkLoginCommand2 = new SqlCommand(checkLoginSql, sqlConnection);
+                        MessageBox.Show("dito2");
+                        //check if login is added on database
+                        string checkLoginSql2 = $"USE {databaseName}; SELECT COUNT(*) FROM sys.database_principals WHERE name = '{loginName}' AND type = 'S'";
+                        SqlCommand checkLoginCommand2 = new SqlCommand(checkLoginSql2, sqlConnection);
                         int loginCount2 = (int)checkLoginCommand2.ExecuteScalar();
 
-                        if (loginCount == 0)
+
+                        if (loginCount2 == 0)
                         {
+                            MessageBox.Show("dito3");
                             string createUserSql = $"USE {databaseName}; CREATE USER {loginName} FOR LOGIN {loginName};";
                             string addDataReaderRoleSql = $"EXEC sp_addrolemember 'db_datareader', '{loginName}';";
                             string addDataWriterRoleSql = $"EXEC sp_addrolemember 'db_datawriter', '{loginName}';";

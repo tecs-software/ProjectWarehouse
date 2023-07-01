@@ -76,10 +76,10 @@ namespace WarehouseManagement.Database
                 }
             }
         }
-        public void api_credentials(ComboBox courier, TextBox api_key, TextBox ec, TextBox customer_id)
+        public void api_credentials(ComboBox courier, string api_key, TextBox ec, TextBox customer_id)
         {
             sql.Query($"INSERT INTO tbl_couriers (courier_name, api_key, eccompany_id, customer_id) " +
-                $"VALUES ('{courier.Text}','{Encrypt(api_key.Text)}' ,'{ec.Text}', '{customer_id.Text}')");
+                $"VALUES ('{courier.Text}','{Encrypt(api_key)}' ,'{ec.Text}', '{customer_id.Text}')");
             if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)
