@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,11 +33,76 @@ namespace WarehouseManagement.Views.Login
     /// </summary>
     public partial class LoginWindow : Window
     {
+        #region
+        [DllImport("TrialApp.dll", EntryPoint = "ReadSettingsStr", CharSet = CharSet.Ansi)]
+        static extern uint InitTrial(String aKeyCode, IntPtr aHWnd);
+        [DllImport("TrialApp.dll", EntryPoint = "DisplayRegistrationStr", CharSet = CharSet.Ansi)]
+        static extern uint DisplayRegistration(String aKeyCode, IntPtr aHWnd);
+
+        // The kLibraryKey is meant to prevent unauthorized use of the library.
+        // Do not share this key. Replace this key with your own from Advanced Installer 
+        // project > Licensing > Registration > Library Key
+        private const string kLibraryKey = "9F14215F9F14FC2E9A7E567D41D69FB6C2DCF1E938A40F73912EEBC3FF32F16FCA4BC36F897C";
+
+        private static void OnInit()
+        {
+            try
+            {
+                Process process = Process.GetCurrentProcess();
+                InitTrial(kLibraryKey, process.MainWindowHandle);
+            }
+            catch (DllNotFoundException ex)
+            {
+                // Trial dll is missing close the application immediately.
+                MessageBox.Show(ex.ToString());
+                Process.GetCurrentProcess().Kill();
+            }
+            catch (Exception ex1)
+            {
+                MessageBox.Show(ex1.ToString());
+            }
+        }
+
+        private void RegisterApp(object sender, EventArgs e)
+        {
+            try
+            {
+                Process process = Process.GetCurrentProcess();
+                DisplayRegistration(kLibraryKey, process.MainWindowHandle);
+            }
+            catch (DllNotFoundException ex)
+            {
+                // Trial dll is missing close the application immediately.
+                MessageBox.Show(ex.ToString());
+            }
+            catch (Exception ex1)
+            {
+                MessageBox.Show(ex1.ToString());
+            }
+        }
+
+        #endregion
         bool loading;
 
         public LoginWindow()
         {
             InitializeComponent();
+
+            //try
+            //{
+            //    Process process = Process.GetCurrentProcess();
+            //    DisplayRegistration(kLibraryKey, process.MainWindowHandle);
+            //}
+            //catch (DllNotFoundException ex)
+            //{
+            //    // Trial dll is missing close the application immediately.
+            //    MessageBox.Show(ex.ToString());
+            //}
+            //catch (Exception ex1)
+            //{
+            //    MessageBox.Show(ex1.ToString());
+            //}
+
             this.SizeToContent = SizeToContent.Height;
         }
 
@@ -190,6 +257,7 @@ namespace WarehouseManagement.Views.Login
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //OnInit();
             Trial_Controller.InsertTrialDay();
         }
     }
