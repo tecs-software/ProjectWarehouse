@@ -67,6 +67,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             await order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated);
             showTable();
+            clear_input_boxes();
         }
         private async void txtBarcode_KeyDown(object sender, KeyEventArgs e)
         {
