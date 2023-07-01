@@ -31,7 +31,7 @@ namespace WarehouseManagement.Controller
         db_queries queries = new db_queries();
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
         {
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(global.key);
             string logistics_interface = @"
             {
