@@ -5,6 +5,8 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Components\TECS icon.ico</ApplicationIcon>
+    <PackageIcon>TECS icon.ico</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +26,10 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Components\TECS icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +61,10 @@
     </None>
     <None Update="Components\table_province.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Components\TECS icon.ico" Link="Components\TECS icon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 

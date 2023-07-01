@@ -88,13 +88,19 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 booking_info.remarks = bookingInformationPage.tbRemarks.Text;
                 booking_info.quantity = bookingInformationPage.tbQuantity.Text;
 
+                btnNext.IsEnabled = false;
                 //calling the method for api ordering
-                if(queries.check_quantity(booking_info, _receiver))
+                if (queries.check_quantity(booking_info, _receiver))
                 {
                     if (await order_api.api_create(_receiver, booking_info, global_sender))
                     {
+                        btnNext.IsEnabled = true;
                         this.DialogResult = true;
                         this.Close();
+                    }
+                    else
+                    {
+                        btnNext.IsEnabled = true;
                     }
                 }
                 else
