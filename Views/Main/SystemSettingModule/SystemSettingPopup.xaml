@@ -86,7 +86,7 @@
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtPhone" materialDesign:HintAssist.Hint="Page Number (Shop Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBox MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Page Number (Shop Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <Grid>
@@ -107,7 +107,7 @@
                                 </Grid>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtAddress" materialDesign:HintAssist.Hint="Complete Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
-                                                             SelectionBrush="#FF1D2118"/>
+                                                             SelectionBrush="#FF1D2118" PreviewTextInput="txtAddress_PreviewTextInput"/>
                                 <Button 
                                     HorizontalAlignment="Stretch"
                                     Margin="24,24,24,0"

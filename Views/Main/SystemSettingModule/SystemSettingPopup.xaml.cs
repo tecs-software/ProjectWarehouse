@@ -116,5 +116,25 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         {
 
         }
+
+        private void txtAddress_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (HasSymbols(e.Text))
+            {
+                e.Handled = true; // Ignore the input
+            }
+        }
+        private bool HasSymbols(string text)
+        {
+            foreach (char c in text)
+            {
+                // Check if the character is not alphanumeric, space, ",", ".", or "-"
+                if (!char.IsLetterOrDigit(c) && c != ' ' && c != ',' && c != '.' && c != '-')
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -157,5 +157,31 @@ namespace WarehouseManagement.Views.Onboarding
 
             workerImportAddress.RunWorkerAsync();
         }
+
+        private void txtAddress_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void txtAddress_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+            // Check if the entered text contains symbols
+            if (HasSymbols(e.Text))
+            {
+                e.Handled = true; // Ignore the input
+            }
+        }
+        private bool HasSymbols(string text)
+        {
+            foreach (char c in text)
+            {
+                // Check if the character is not alphanumeric, space, ",", ".", or "-"
+                if (!char.IsLetterOrDigit(c) && c != ' ' && c != ',' && c != '.' && c != '-')
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
