@@ -39,6 +39,7 @@ namespace WarehouseManagement.Views.Main.DeliverModule
             OrderInquiryPopup orderInquiry = new OrderInquiryPopup();
             orderInquiry.RefreshTable += Dialog;
             orderInquiry.Show();
+
             deliveryTable.refresh_table();
         }
     }

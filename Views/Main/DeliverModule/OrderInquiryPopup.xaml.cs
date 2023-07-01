@@ -35,7 +35,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
             InitializeComponent();
             txtBarcode.Focus();
         }
-        public void OnTableFilterRequested()
+        public void showTable()
         {
             RefreshTable?.Invoke(this, EventArgs.Empty);
         }
@@ -47,11 +47,26 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
 
         }
-
+        private void clear_input_boxes()
+        {
+            txtBarcode.Text = "";
+            txtReceiverName.Text = "";
+            txtAddress.Text = "";
+            txtBarangay.Text = "";
+            txtCity.Text = "";
+            txtContactNumber.Text = "";
+            txtDateCreated.Text = "";
+            txtProductName.Text = "";
+            txtProvince.Text = "";
+            txtQuantity.Text = "";
+            txtRemarks.Text = "";
+            txtWeight.Text = "";
+            txtDateCreated.Text = "";
+        }
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             await order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated);
-            
+            showTable();
         }
         private async void txtBarcode_KeyDown(object sender, KeyEventArgs e)
         {
@@ -60,8 +75,18 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 if (txtBarcode.Text != "")
                 {
                     await order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
+                    DisableTextBoxForOneSecond(txtBarcode);
                 }
             }
+        }
+        private async void DisableTextBoxForOneSecond(TextBox textBox)
+        {
+            textBox.IsEnabled = false;
+
+            await Task.Delay(1000); // Wait for 1 second
+
+            textBox.IsEnabled = true;
+            txtBarcode.Focus();
         }
     }
     

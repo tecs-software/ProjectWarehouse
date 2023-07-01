@@ -40,7 +40,6 @@ namespace WarehouseManagement.Controller
                 sql.Query($"INSERT INTO tbl_order_inquiry (waybill#, receiver_name, contact_number, address, product_name, qty, weight, remarks, date_created) " +
                     $"VALUES (@waybill, @name, @contact, @address, @product, @qty, @weight, @remarks, @date)");
                 if (sql.HasException(true)) return;
-                MessageBox.Show("data inserted");
             }
         }
         public async Task inquiry_api(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName)
