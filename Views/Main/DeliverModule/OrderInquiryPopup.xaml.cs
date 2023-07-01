@@ -29,7 +29,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
     {
         db_queries queries = new db_queries();
         Order_Inquiry_api order_Inquiry = new Order_Inquiry_api();
-        public event EventHandler<string> refresh_table;
+        public event EventHandler RefreshTable;
         public OrderInquiryPopup()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         }
         public void OnTableFilterRequested()
         {
-            refresh_table?.Invoke(this, null);
+            RefreshTable?.Invoke(this, EventArgs.Empty);
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {

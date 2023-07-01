@@ -29,15 +29,16 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             
         }
-        private void dialog(object sender)
+        private void Dialog(object sender, EventArgs e)
         {
             deliveryTable.refresh_table();
         }
 
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
-            OrderInquiryPopup order_inquiry = new OrderInquiryPopup();
-            order_inquiry.OnTableFilterRequested += dialog;
+            OrderInquiryPopup orderInquiry = new OrderInquiryPopup();
+            orderInquiry.RefreshTable += Dialog;
+            orderInquiry.Show();
             deliveryTable.refresh_table();
         }
     }
