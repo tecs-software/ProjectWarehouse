@@ -35,7 +35,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
             InitializeComponent();
             txtBarcode.Focus();
         }
-        private void OnTableFilterRequested()
+        public void OnTableFilterRequested()
         {
             refresh_table?.Invoke(this, null);
         }

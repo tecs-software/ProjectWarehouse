@@ -36,7 +36,8 @@ namespace WarehouseManagement.Views.Main.DeliverModule
 
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
-            new OrderInquiryPopup().ShowDialog();
+            OrderInquiryPopup order_inquiry = new OrderInquiryPopup();
+            order_inquiry.OnTableFilterRequested += dialog;
             deliveryTable.refresh_table();
         }
     }

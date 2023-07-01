@@ -50,11 +50,6 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             Show_order_inquiry.show_inquiry_data(tblProducts);
         }
-        private void dialog(object sender)
-        {
-            refresh_table();
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
