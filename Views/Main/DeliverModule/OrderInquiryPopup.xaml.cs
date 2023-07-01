@@ -51,9 +51,8 @@ namespace WarehouseManagement.Views.Main.OrderModule
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             await order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated);
-            OnTableFilterRequested();
+            
         }
-
         private async void txtBarcode_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) // Check if Enter key is pressed

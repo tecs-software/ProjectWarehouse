@@ -29,6 +29,10 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             
         }
+        private void dialog(object sender)
+        {
+            deliveryTable.refresh_table();
+        }
 
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
