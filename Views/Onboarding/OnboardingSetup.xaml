@@ -96,7 +96,7 @@
                                                              SelectionBrush="#FF1D2118"/>
                                 <TextBox  MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Contact Number (Page/Shop Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
-                                                             SelectionBrush="#FF1D2118"/>
+                                                             SelectionBrush="#FF1D2118" PreviewTextInput="txtPhone_PreviewTextInput"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>

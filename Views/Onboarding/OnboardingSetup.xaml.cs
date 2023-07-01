@@ -183,5 +183,9 @@ namespace WarehouseManagement.Views.Onboarding
             }
             return false;
         }
+        private void txtPhone_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputValidation.Integer(sender, e);
+        }
     }
 }
