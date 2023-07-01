@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 
 namespace WarehouseManagement.Views.Main.DashboardModule
 {
@@ -23,6 +24,11 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         public VAPage()
         {
             InitializeComponent();
+        }
+        show_VA_dashboard_data VA_Dashboard = new show_VA_dashboard_data();
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            VA_Dashboard.show_VA_data(lbl_commisions);
         }
     }
 }

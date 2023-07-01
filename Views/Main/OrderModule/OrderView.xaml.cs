@@ -39,10 +39,10 @@ namespace WarehouseManagement.Views.Main.OrderModule
             
         }
 
-        private void refreshTable()
+        private async void refreshTable()
         {
             show_DT dt = new show_DT();
-            dt.show_orders(dgtRespondentData);
+            await dt.show_orders(dgtRespondentData);
         }
 
 

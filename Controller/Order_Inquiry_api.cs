@@ -17,7 +17,7 @@ namespace WarehouseManagement.Controller
     public class Order_Inquiry_api
     {
         sql_control sql = new sql_control();
-        public void insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName, TextBox date)
+        public async Task insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName, TextBox date)
         {
             int inquiry_count = int.Parse(sql.ReturnResult($"SELECT COUNT(waybill#) FROM tbl_order_inquiry WHERE waybill# = '"+waybill+"'"));
             if(inquiry_count > 0 )
@@ -43,7 +43,7 @@ namespace WarehouseManagement.Controller
                 MessageBox.Show("data inserted");
             }
         }
-        public void inquiry_api(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName)
+        public async Task inquiry_api(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName)
         {
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/queryOrder";
             string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers");
@@ -84,7 +84,7 @@ namespace WarehouseManagement.Controller
                     requestData.Add("eccompanyid", eccompanyid);
 
                     // Send the POST request
-                    byte[] responseBytes = client.UploadValues(url, requestData);
+                    byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);

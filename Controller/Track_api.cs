@@ -20,7 +20,7 @@ namespace WarehouseManagement.Controller
     {
         sql_control sql = new sql_control();
 
-        public void api_track(string waybill, string courier)
+        public async Task api_track(string waybill, string courier)
         {
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/track/trackForJson";
             string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '{courier}'");
@@ -54,7 +54,7 @@ namespace WarehouseManagement.Controller
                     requestData.Add("eccompanyid", eccompanyid);
 
                     // Send the POST request
-                    byte[] responseBytes = client.UploadValues(url, requestData);
+                    byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
@@ -106,7 +106,7 @@ namespace WarehouseManagement.Controller
                 MessageBox.Show("This parcel hasn't been processed by J&T Express.");
             }
         }
-        public void update_status(DataGrid dataGrid)
+        public async Task update_status(DataGrid dataGrid)
         {
             sql.Query($"SELECT * FROM tbl_status ORDER BY scan_time DESC");
             if (sql.HasException(true)) return;

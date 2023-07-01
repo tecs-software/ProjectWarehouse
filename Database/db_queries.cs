@@ -19,6 +19,7 @@ using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using WWarehouseManagement.Database;
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 
 namespace WarehouseManagement.Database
 {
@@ -76,8 +77,8 @@ namespace WarehouseManagement.Database
         }
         public void api_credentials(ComboBox courier, TextBox api_key, TextBox ec, TextBox customer_id)
         {
-            sql.Query($"INSERT INTO tbl_couriers (courier_name, api_key, eccompany_id, customer_id) VALUES" +
-                $"('"+courier.Text+"', '"+api_key.Text+"', '"+ec.Text+"', '"+customer_id.Text+"')");
+            sql.Query($"INSERT INTO tbl_couriers (courier_name, api_key, eccompany_id, customer_id) " +
+                $"VALUES ('{courier.Text}','{HashText(api_key.Text)}' ,'{ec.Text}', '{customer_id.Text}')");
             if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)
@@ -100,10 +101,10 @@ namespace WarehouseManagement.Database
             if (sql.HasException(true)) return;
         }
 
-        public void insert_Incentives(Booking_info book_Info)
+        public void insert_Incentives(Booking_info book_Info, string order_id)
         {
-            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = '"+book_Info.item_name+"'");
-            sql.Query($"SELECT employee_commission FROM tbl_selling_expenses WHERE product_id = '"+product_id+"'");
+            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = '{book_Info.item_name}'");
+            sql.Query($"SELECT employee_commission FROM tbl_selling_expenses WHERE product_id = '{product_id}'");
             if(sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
@@ -113,8 +114,8 @@ namespace WarehouseManagement.Database
 
                     decimal total_commi = commisions * decimal.Parse(book_Info.quantity);
 
-                    sql.Query($"INSERT INTO tbl_incentives (user_id, incentive_for, quantity, total_incentive, is_valid) " +
-                        $"VALUES ('"+CurrentUser.Instance.userID+"', '"+product_id+"', '"+int.Parse(book_Info.quantity)+"', '"+total_commi+"', 1)");
+                    sql.Query($"INSERT INTO tbl_incentives (user_id, incentive_for, quantity, total_incentive, is_valid) VALUES " +
+                        $"({CurrentUser.Instance.userID}, '{order_id}', {book_Info.quantity}, {total_commi}, 1)");
                     if (sql.HasException(true)) return;
 
                 }
@@ -190,7 +191,7 @@ namespace WarehouseManagement.Database
             sql.Query($"UPDATE tbl_products set status = '{Status}' WHERE item_name = '{book_info.item_name}'");
             if (sql.HasException(true)) return;
         }
-        public void load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label lbl_expenses, Label net_profit)
+        public async Task load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label lbl_expenses, Label net_profit)
         {
             //for total orders
             sql.Query($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'CANCELLED'");
@@ -254,7 +255,7 @@ namespace WarehouseManagement.Database
             }
         }
 
-        public void sales_graph(DatePicker start, DatePicker end, CartesianChart chart)
+        public async Task sales_graph(DatePicker start, DatePicker end, CartesianChart chart)
         {
             ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
             List<DateTime> dateList = new List<DateTime>();
@@ -269,7 +270,7 @@ namespace WarehouseManagement.Database
                     revenueData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
                     dateList.Add(DateTime.Parse(dr[1].ToString()));
                 }
-                List<string> dateLabels = dateList.Select(date => date.ToString("dd/MM/yyyy")).ToList();
+                List<string> dateLabels = dateList.Select(date => date.ToString("MM/dd/yy h:mm:ss tt")).ToList();
 
                 chart.AxisX.Clear();
                 chart.AxisX.Add(new Axis
@@ -286,36 +287,19 @@ namespace WarehouseManagement.Database
                 });
             }
         }
-        public bool check_addresses()
+        public string HashText(string text)
         {
-            int addreses = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_address_delivery"));
-            if(addreses > 0)
+            using (SHA256 sha256 = SHA256.Create())
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool check_waybill(TextBox waybill)
-        {
-            sql.Query($"SELECT waybill# FROM tbl_order_inquiry");
-            if(sql.DBDT.Rows.Count > 0)
-            {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
                 {
-                    if (waybill.Text == dr[0].ToString())
-                    {
-                        
-                    }
-                        
+                    builder.Append(hashBytes[i].ToString("x2"));
                 }
-                return true;
-            }
-            else
-            {
-                return false;
+
+                return builder.ToString();
             }
         }
     }

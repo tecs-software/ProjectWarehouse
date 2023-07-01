@@ -88,13 +88,13 @@
                                 </StackPanel>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                        <TabItem Header="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
-                                <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Sender Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Company Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
-                                <TextBox  MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Page Number (Company Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBox  MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Contact Number (Page/Shop Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <Grid>

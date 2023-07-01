@@ -907,6 +907,7 @@ namespace WarehouseManagement.Database
                     hoursAdapter.Fill(hoursTable);
 
                     // Calculate commissions for each user
+
                     SqlCommand commisionCommand = new SqlCommand("SELECT user_id, SUM(commission_amount) AS total_commision FROM tbl_commissions WHERE issued = 0 GROUP BY user_id", connection);
                     SqlDataAdapter commisionAdapter = new SqlDataAdapter(commisionCommand);
                     DataTable commisionTable = new DataTable();

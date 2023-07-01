@@ -158,7 +158,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
                     Clear();
 
-                    await GenerateBarcode(tbBarcode.Text, tbItemName.Text);
+                    //await GenerateBarcode(tbBarcode.Text, tbItemName.Text);
 
                     OnTableFilterRequested(null);
                 }
@@ -169,7 +169,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                     this.DialogResult = true;
                     this.Close();
 
-                    await GenerateBarcode(tbBarcode.Text, tbItemName.Text);
+                    //await GenerateBarcode(tbBarcode.Text, tbItemName.Text);
                 }
             }
             else

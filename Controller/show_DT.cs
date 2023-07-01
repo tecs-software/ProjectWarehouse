@@ -25,11 +25,11 @@ namespace WarehouseManagement.Controller
     {
         sql_control sql = new sql_control();
 
-        public void show_orders(DataGrid dg)
+        public async Task show_orders(DataGrid dg)
         {
             if(CurrentUser.Instance.userID == 1)
             {
-                sql.Query($"SELECT * FROM tbl_orders WHERE status != 'FAILED' ORDER BY created_at ASC");
+                sql.Query($"SELECT * FROM tbl_orders WHERE status != 'FAILED' ORDER BY created_at DESC");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
@@ -61,7 +61,7 @@ namespace WarehouseManagement.Controller
             }
             else
             {
-                sql.Query($"SELECT * FROM tbl_orders WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())} AND status != 'FAILED' ORDER BY created_at ASC");
+                sql.Query($"SELECT * FROM tbl_orders WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())} ORDER BY created_at DESC");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {

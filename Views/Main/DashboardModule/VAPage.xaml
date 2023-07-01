@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
        d:DesignHeight="1080" d:DesignWidth="1920"
       Background="#F1F4F5"
-      Title="SalesReportPage">
+      Title="SalesReportPage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -71,7 +71,7 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="13,953,600.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label x:Name="lbl_commisions" Content="13,953,600.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>

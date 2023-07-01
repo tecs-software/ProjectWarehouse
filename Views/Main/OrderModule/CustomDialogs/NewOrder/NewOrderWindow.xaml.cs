@@ -50,7 +50,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             this.SizeToContent = SizeToContent.Height;
         }
 
-        private void btnNext_Click(object sender, RoutedEventArgs e)
+        private async void btnNext_Click(object sender, RoutedEventArgs e)
         {
             if (mainFrame.Content is ReceiverInformation)
             {
@@ -91,7 +91,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 //calling the method for api ordering
                 if(queries.check_quantity(booking_info, _receiver))
                 {
-                    if(order_api.api_create(_receiver, booking_info, global_sender))
+                    bool success = await order_api.api_create(_receiver, booking_info, global_sender);
+                    if (success)
                     {
                         this.DialogResult = true;
                         this.Close();

@@ -15,9 +15,9 @@ namespace WarehouseManagement.Controller
     class Cancel_api
     {
         sql_control sql = new sql_control();
-        public bool api_cancel(string id, string reason, string courier, string product)
+        public async Task<bool> api_cancel(string id, string reason, string courier, string product)
         {
-            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/cancel";
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/cancel";
             string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '" + courier + "'");
             string key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '"+courier+"'");
             string logistics_interface = @"
@@ -54,7 +54,7 @@ namespace WarehouseManagement.Controller
                     requestData.Add("eccompanyid", eccompanyid);
 
                     // Send the POST request
-                    byte[] responseBytes = client.UploadValues(url, requestData);
+                    byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
@@ -77,6 +77,9 @@ namespace WarehouseManagement.Controller
                         int stocks = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '{product}'"));
                         string status = stocks < 0 ? Util.status_out_of_stock : (stocks == 0 ? Util.status_out_of_stock : (stocks <= 100 ? Util.status_low_stock : Util.status_in_stock));
                         sql.Query($"UPDATE tbl_products SET status = '{status}' WHERE item_name = '{product}'");
+
+                        //invalidating the incentives
+                        sql.Query($"UPDATE tbl_incentives SET is_valid = 0 WHERE incentive_for = '{id}'");
                         return true;
                     }
                     else

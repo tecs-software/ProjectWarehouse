@@ -34,12 +34,13 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             reasons();
         }
 
-        private void btnCancelOrder_Click(object sender, RoutedEventArgs e)
+        private async void btnCancelOrder_Click(object sender, RoutedEventArgs e)
         {
             Cancel_api cancel_api = new Cancel_api();
             if(tbOtherReason.Visibility == Visibility.Visible)
             {
-                if (cancel_api.api_cancel(tbOrderId.Text, tbOtherReason.Text, sCourier, sProduct))
+                
+                if (await cancel_api.api_cancel(tbOrderId.Text, tbOtherReason.Text, sCourier, sProduct))
                 {
                     this.DialogResult = true;
                     Close();
@@ -47,7 +48,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             }
             else
             {
-                if (cancel_api.api_cancel(tbOrderId.Text, cbReason.Text, sCourier, sProduct))
+                if (await cancel_api.api_cancel(tbOrderId.Text, cbReason.Text, sCourier, sProduct))
                 {
                     this.DialogResult = true;
                     Close();

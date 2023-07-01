@@ -43,20 +43,20 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         }
 
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated);
+            await order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated);
             this.DialogResult = true;
             this.Close();
         }
 
-        private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
+        private async void txtBarcode_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) // Check if Enter key is pressed
             {
                 if (txtBarcode.Text != "")
                 {
-                    order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
+                    await order_Inquiry.inquiry_api(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName);
                 }
             }
         }

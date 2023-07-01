@@ -31,15 +31,15 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             sCourier = courier;
             initialize_status();
         }
-        public void initialize_status()
+        public async void initialize_status()
         {
-            api_track.api_track(tbOrderId.Text, sCourier);
-            api_track.update_status(tblStatus);
+            await api_track.api_track(tbOrderId.Text, sCourier);
+            await api_track.update_status(tblStatus);
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private async void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            order_status.get_order_status(tbOrderId.Text);
+            await order_status.get_order_status(tbOrderId.Text);
             this.DialogResult = true;
         }
     }

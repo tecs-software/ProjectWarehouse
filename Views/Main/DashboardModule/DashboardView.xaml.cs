@@ -71,7 +71,7 @@ namespace WarehouseManagement.Views.Main.DashboardModule
             }
         }
 
-        private void PageContent_Loaded(object sender, RoutedEventArgs e)
+        private async void PageContent_Loaded(object sender, RoutedEventArgs e)
         {
             if (CurrentUser.Instance.RoleName == "admin")
             {
@@ -81,19 +81,19 @@ namespace WarehouseManagement.Views.Main.DashboardModule
                 startDatePicker.SelectedDate = DateTime.Now.AddDays(-7);
                 endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
 
-                queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+                await queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
             }
         }
 
-        private void startDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
+        private async void startDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
         {
             endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
-            queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+            await queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
         }
 
-        private void endDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
+        private async void endDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
         {
-            queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+            await queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
         }
     }
 }

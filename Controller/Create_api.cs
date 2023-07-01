@@ -27,9 +27,9 @@ namespace WarehouseManagement.Controller
     {
         sql_control sql = new sql_control();
         db_queries queries = new db_queries();
-        public bool api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
+        public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
         {
-            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = global.key;
             string logistics_interface = @"
             {
@@ -137,7 +137,7 @@ namespace WarehouseManagement.Controller
                     requestData.Add("eccompanyid", global.eccompany_id);
 
                     // Send the POST request
-                    byte[] responseBytes = client.UploadValues(url, requestData);
+                    byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
@@ -168,7 +168,7 @@ namespace WarehouseManagement.Controller
 
                         queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
 
-                        queries.insert_Incentives(booking_Info);
+                        queries.insert_Incentives(booking_Info, txLogisticIdString);
 
                         queries.update_inventory_status(booking_Info);
 
