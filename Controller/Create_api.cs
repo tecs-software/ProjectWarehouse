@@ -178,7 +178,7 @@ namespace WarehouseManagement.Controller
                     //if there's error on API
                     else
                     {
-                        MessageBox.Show(response);
+                        MessageBox.Show("Please double check the details provided.");
                         return false;
                     }
 
