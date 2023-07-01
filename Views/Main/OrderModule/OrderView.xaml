@@ -74,12 +74,6 @@
                         <TextBlock Text="Return to Seller"/>
                     </StackPanel>
                 </Button>
-                <Button Visibility="Collapsed" x:Name="btnOrderInquiry" BorderBrush="{StaticResource buttonBorder3}" Height="40" Width="170" FontSize="15" Background="Transparent" Margin="0,0,10,0" Click="btnOrderInquiry_Click">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="BoxLocationOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
-                        <TextBlock Text="Order Inquiry"/>
-                    </StackPanel>
-                </Button>
                 <Button BorderBrush="{StaticResource secondaryColor}" Height="40" Width="140" x:Name="btnOrder" Click="btnOrder_Click"  FontSize="15" Background="{StaticResource secondaryColor}" Margin="0,0,20,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="Plus" Height="20" Width="auto" Margin="0,0,4,0"/>

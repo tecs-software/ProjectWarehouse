@@ -37,7 +37,7 @@ namespace WWarehouseManagement.Database
             }
             else
             {
-                MessageBox.Show("No connection");
+                //MessageBox.Show("No connection");
             }
 
         }

@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
+using WarehouseManagement.Views.Main.DeliverModule;
 using static WarehouseManagement.Controller.Create_api;
 
 namespace WarehouseManagement.Views.Main.OrderModule
@@ -28,12 +29,16 @@ namespace WarehouseManagement.Views.Main.OrderModule
     {
         db_queries queries = new db_queries();
         Order_Inquiry_api order_Inquiry = new Order_Inquiry_api();
+        public event EventHandler<string> refresh_table;
         public OrderInquiryPopup()
         {
             InitializeComponent();
             txtBarcode.Focus();
         }
-
+        private void OnTableFilterRequested()
+        {
+            refresh_table?.Invoke(this, null);
+        }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -46,8 +51,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             await order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated);
-            this.DialogResult = true;
-            this.Close();
+            OnTableFilterRequested();
         }
 
         private async void txtBarcode_KeyDown(object sender, KeyEventArgs e)

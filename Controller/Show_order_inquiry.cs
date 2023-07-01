@@ -12,8 +12,8 @@ namespace WarehouseManagement.Controller
     
     public class Show_order_inquiry
     {
-        sql_control sql = new sql_control();
-        public void show_inquiry_data(DataGrid dt)
+        static sql_control sql = new sql_control();
+        public static void show_inquiry_data(DataGrid dt)
         {
             sql.Query($"SELECT * FROM tbl_order_inquiry");
             if(sql.DBDT.Rows.Count > 0)
@@ -37,6 +37,15 @@ namespace WarehouseManagement.Controller
                 }
                 dt.ItemsSource = parcel_details;
             }
+            else
+            {
+                dt.ItemsSource = null;
+            }
+        }
+        public static void soft_delete(string waybill)
+        {
+            sql.Query($"DELETE FROM tbl_order_inquiry WHERE waybill# = '{waybill}'");
+            if (sql.HasException(true)) return;
         }
         public class parcel_data
         {

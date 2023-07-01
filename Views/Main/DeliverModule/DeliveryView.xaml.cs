@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WarehouseManagement.Controller;
 using WarehouseManagement.Views.Main.OrderModule;
 
 namespace WarehouseManagement.Views.Main.DeliverModule
@@ -26,23 +25,16 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             InitializeComponent();
         }
-        
         private void tbSearchProduct_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            
         }
 
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
-            if(new OrderInquiryPopup().ShowDialog() == true)
-            {
-                deliveryTable.refresh_table();
-            }
-        }
-
-        private void grid_parcel_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            new OrderInquiryPopup().ShowDialog();
+            deliveryTable.refresh_table();
         }
     }
 }
+

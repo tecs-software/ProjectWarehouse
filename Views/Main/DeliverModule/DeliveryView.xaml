@@ -43,7 +43,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 x:Name="tbSearchProduct"
-                              
+
                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" TextChanged="tbSearchProduct_TextChanged"/>
                     </StackPanel>
                 </Border>
@@ -54,20 +54,18 @@
                 <Button x:Name="btnNewDelivery" BorderBrush="{StaticResource buttonBorder4}" Height="40" Width="170" FontSize="15" Background="{StaticResource buttonBorder4}" Margin="0,0,20,0" Click="btnNewDelivery_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="TruckPlusOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
-                        <TextBlock Text="Parcel Inquiry"/>
+                        <TextBlock Text="New Delivery"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
 
         </Grid>
 
-        <Grid Grid.Row="1" Name="grid_parcel" Loaded="grid_parcel_Loaded">
+        <Grid Grid.Row="1" Name="gridTable">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="320*"/>
-                <ColumnDefinition Width="204*"/>
-                <ColumnDefinition Width="1257*"/>
-                <ColumnDefinition Width="139*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -79,7 +77,6 @@
                     <StackPanel x:Name="Menu" Height="auto"/>
                 </ScrollViewer>
             </StackPanel>
-
             <DockPanel x:Name="dockPanelTable" Grid.Column="1" Height="Auto" VerticalAlignment="Top" Grid.ColumnSpan="3">
                 <local:DeliveryTable  x:Name="deliveryTable" />
             </DockPanel>

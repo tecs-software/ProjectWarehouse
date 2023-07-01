@@ -207,14 +207,6 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 refreshTable();
             }
         }
-
-        private void btnOrderInquiry_Click(object sender, RoutedEventArgs e)
-        {
-            new OrderInquiryPopup().ShowDialog();
-        }
-
-
-
         //public async void refreshTable()
         //{
         //    string searchFilter =  tbSearch.Text;
