@@ -207,6 +207,16 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 refreshTable();
             }
         }
+
+        private void cb_shops_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            cb_shops.SelectedIndex = 0;
+        }
         //public async void refreshTable()
         //{
         //    string searchFilter =  tbSearch.Text;

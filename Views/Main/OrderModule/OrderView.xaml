@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Background="White"
-      Title="OrderView">
+      Title="OrderView" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -68,7 +68,23 @@
             </StackPanel>
             
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button x:Name="btnReturntoSeller" BorderBrush="{StaticResource buttonBorder2}" Height="40" Width="170" FontSize="15" Background="Transparent" Margin="0,0,10,0" Click="btnReturntoSeller_Click">
+                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Width="250"
+                      Padding="10,0,10,0"
+                      Height="40"
+                      HorizontalAlignment="Right"
+                      FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      BorderBrush="Black"
+                      x:Name="cb_shops"
+                      SelectionChanged="cb_shops_SelectionChanged"
+                      Background="{StaticResource textboxProfitAnalysisColor1}">
+
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="All Shops"/>
+                    </ComboBox.Items>
+                </ComboBox>
+                <Button x:Name="btnReturntoSeller" BorderBrush="{StaticResource buttonBorder2}" Height="40" Width="170" FontSize="15" Background="Transparent" Margin="10,0,10,0" Click="btnReturntoSeller_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="TruckDeliveryOutline" Height="20" Width="auto" Margin="0,0,4,0"/>
                         <TextBlock Text="Return to Seller"/>

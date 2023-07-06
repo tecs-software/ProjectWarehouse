@@ -286,7 +286,7 @@ BEGIN
 		receiver_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 		[receiver_name] [varchar](50) NOT NULL,
 		[receiver_phone] [varchar](50) NOT NULL,
-        [receiver_address] [varchar](50) NOT NULL,
+        [receiver_address] [varchar](255) NOT NULL,
 		)
 END
 

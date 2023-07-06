@@ -24,6 +24,7 @@ using WarehouseManagement.Views.Main.EmployeeModule;
 using WarehouseManagement.Views.Main.InventoryModule;
 using WarehouseManagement.Views.Main.OrderModule;
 using WarehouseManagement.Views.Main.SalesModule;
+using WarehouseManagement.Views.Main.ShopModule;
 using WarehouseManagement.Views.Main.SystemSettingModule;
 using MenuItem = System.Windows.Controls.MenuItem;
 
@@ -240,6 +241,14 @@ namespace WarehouseManagement.Views.Main
             if (!(PageContent.Content is DeliveryView))
             {
                 PageContent.Content = new DeliveryView();
+            }
+        }
+
+        private void btn_Shops_Pages_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!(PageContent.Content is ShopView))
+            {
+                PageContent.Content = new ShopView();
             }
         }
     }

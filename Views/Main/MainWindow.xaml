@@ -137,6 +137,19 @@
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
                 </RadioButton>
+                <RadioButton Grid.Column="5" 
+                            
+                             MinWidth="200"
+                             Visibility="Visible"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             x:Name="btn_Shops_Pages"
+                             Cursor="Hand" Checked="btn_Shops_Pages_Checked">
+                    <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Shop/Pages" VerticalAlignment="Center"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                </RadioButton>
                 
 
                 <StackPanel Grid.Column="6" Orientation="Horizontal" VerticalAlignment="Stretch"  HorizontalAlignment="Right" Height="Auto" Width="Auto" Margin="0,0,20,0" >
