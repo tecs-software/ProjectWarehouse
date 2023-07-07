@@ -217,6 +217,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             cb_shops.SelectedIndex = 0;
         }
+
+        private void btnBulkOrder_Click(object sender, RoutedEventArgs e)
+        {
+            new BulkOrderPopup().ShowDialog();
+        }
         //public async void refreshTable()
         //{
         //    string searchFilter =  tbSearch.Text;

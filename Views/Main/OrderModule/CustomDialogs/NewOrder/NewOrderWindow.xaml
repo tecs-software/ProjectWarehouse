@@ -12,8 +12,26 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Title="NewOrderWindow" Height="Auto" Width="800">
-    
-    <Border CornerRadius="10"
+    <materialDesign:DialogHost x:Name="dialog" BorderBrush="{DynamicResource MaterialDesignDivider}">
+        <materialDesign:DialogHost.DialogContent>
+            <Grid HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                        <TextBlock Foreground="Gray"  FontSize="14" Width="270" Margin="5,5,5,5" TextWrapping="Wrap" x:Name="txtMessageDialog" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+                        <Button x:Name="btnYes" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Width="72" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center"   Background="#FADA40" BorderBrush="#FADA40" Foreground="Black" Click="btnYes_Click">
+                            Yes
+                        </Button>
+                        <Button  x:Name="btnNo" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"  Width="72" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center"  Background="White" BorderBrush="White" Foreground="Black" Click="btnNo_Click">
+                            No
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+        <Border CornerRadius="10"
         Background="White"
         BorderBrush="Black"
         BorderThickness="1">
@@ -80,4 +98,5 @@
         </Grid>
 
     </Border>
+    </materialDesign:DialogHost>
 </Window>

@@ -10,19 +10,33 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WarehouseManagement.Views.Main.SuspiciousModule
+namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 {
     /// <summary>
-    /// Interaction logic for SuspiciousTable.xaml
+    /// Interaction logic for BulkOrderPopup.xaml
     /// </summary>
-    public partial class SuspiciousTable : UserControl
+    public partial class BulkOrderPopup : Window
     {
-        public SuspiciousTable()
+        public BulkOrderPopup()
         {
             InitializeComponent();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void btnImport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
 
         private void btnAction_Click(object sender, RoutedEventArgs e)

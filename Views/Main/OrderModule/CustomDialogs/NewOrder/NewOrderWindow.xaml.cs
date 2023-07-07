@@ -37,6 +37,24 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         Create_api order_api = new Create_api();
         db_queries queries = new db_queries();
 
+        void CustomMessageBox(String message, Boolean questionType)
+        {
+            btnYes.Visibility = Visibility.Visible;
+            btnNo.Visibility = Visibility.Visible;
+            txtMessageDialog.Text = message;
+            if (questionType)
+            {
+                btnYes.Content = "Yes";
+                btnNo.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnYes.Content = "Okay";
+                btnNo.Visibility = Visibility.Collapsed;
+            }
+            dialog.IsOpen = true;
+        }
+
         public NewOrderWindow()
         {
             InitializeComponent();
@@ -49,9 +67,16 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             mainFrame.Navigate(GetOrCreateReceiverInformationPage());
             this.SizeToContent = SizeToContent.Height;
         }
-
+        public bool isValidReceiver { get; set; } = true;
         private async void btnNext_Click(object sender, RoutedEventArgs e)
         {
+            //write a validation from database ( Check if the user is suspicious) = > isValidReceiver = true
+
+            if (isValidReceiver)
+            {
+                CustomMessageBox("The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?", true);
+            }
+            //------------------------------
             if (mainFrame.Content is ReceiverInformation)
             {
                 if (Util.IsAnyTextBoxEmpty(receiverInformationPage.tbFirstName, receiverInformationPage.tbLastName, receiverInformationPage.tbPhone, receiverInformationPage.tbAddress))
@@ -143,11 +168,24 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             if (bookingInformationPage == null)
             {
                 bookingInformationPage = new BookingInformation();
-                
             }
             
             return bookingInformationPage;
         }
-        
+
+        private void btnYes_Click(object sender, RoutedEventArgs e)
+        {
+            if(txtMessageDialog.Text == "The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?")
+            {
+                isValidReceiver = false;
+            }
+            mainFrame.Navigate(GetOrCreateBookingInformationPage());
+
+        }
+
+        private void btnNo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
