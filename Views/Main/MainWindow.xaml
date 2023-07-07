@@ -40,13 +40,13 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <RadioButton Grid.Column="0"
-                             Width="Auto"
                              MinWidth="200"
-                              Visibility="Collapsed"
+                             Visibility="Collapsed"
                              Checked="btnDashboardModule_Checked"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"
@@ -109,22 +109,6 @@
                 </RadioButton>
 
                 <RadioButton Grid.Column="4" 
-                             Checked="btnSalesModule_Checked"
-                             MinWidth="200"
-                             Visibility="Collapsed"
-                             Style="{StaticResource menuButton}"
-                             Tag="{StaticResource primaryColor1}"
-                             x:Name="btnSalesModule"
-                             Cursor="Hand">
-
-                    <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
-                        <TextBlock Text="Sales" VerticalAlignment="Center"
-                               Style="{StaticResource textBlockTab}"/>
-                    </StackPanel>
-
-                </RadioButton>
-
-                <RadioButton Grid.Column="4" 
                             
                              MinWidth="200"
                              Visibility="Visible"
@@ -137,6 +121,7 @@
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
                 </RadioButton>
+                
                 <RadioButton Grid.Column="5" 
                             
                              MinWidth="200"
@@ -150,9 +135,23 @@
                                Style="{StaticResource textBlockTab}"/>
                     </StackPanel>
                 </RadioButton>
-                
 
-                <StackPanel Grid.Column="6" Orientation="Horizontal" VerticalAlignment="Stretch"  HorizontalAlignment="Right" Height="Auto" Width="Auto" Margin="0,0,20,0" >
+                <RadioButton Grid.Column="6" 
+                            
+                             MinWidth="200"
+                             Visibility="Visible"
+                             Style="{StaticResource menuButton}"
+                             Tag="{StaticResource primaryColor1}"
+                             x:Name="btn_Suspicious_Order"
+                             Cursor="Hand" Checked="btn_Suspicious_Order_Checked">
+                    <StackPanel Orientation="Horizontal"  Margin="20,0,20,0" VerticalAlignment="Center">
+                        <TextBlock Text="Suspicious Order" VerticalAlignment="Center"
+                               Style="{StaticResource textBlockTab}"/>
+                    </StackPanel>
+                </RadioButton>
+
+
+                <StackPanel Grid.Column="7" Orientation="Horizontal" VerticalAlignment="Stretch"  HorizontalAlignment="Right" Height="Auto" Width="Auto" Margin="20,0,20,0" >
 
                     <materialDesign:PackIcon Kind="AccountCircle" Foreground="#8B8B8B" Height="40" Width="40" MouseDown="PackIcon_MouseDown" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
