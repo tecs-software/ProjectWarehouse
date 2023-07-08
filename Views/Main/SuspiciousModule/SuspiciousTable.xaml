@@ -29,21 +29,21 @@
             SelectionMode="Single"
             x:Name="tblProducts"
             ItemsSource="{Binding Items}"
-            ColumnHeaderStyle="{StaticResource HeaderStyle}">
+            ColumnHeaderStyle="{StaticResource HeaderStyle}" Loaded="tblProducts_Loaded">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="BOOKER"
-                                                Binding="{Binding name}"
+                                                Binding="{Binding booker_name}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                 <DataGridTextColumn Header="POSITION"
-                                                Binding="{Binding shop_name}"
+                                                Binding="{Binding role}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                 <DataGridTextColumn Header="SHOP NAME"
-                                                Binding="{Binding shop_name}"
+                                                Binding="{Binding shop}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
@@ -68,7 +68,7 @@
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1.5*"/>
                 <DataGridTextColumn Header="TOTAL PRICE"
-                                                Binding="{Binding total_price}"
+                                                Binding="{Binding price}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width=".65*"/>
@@ -78,7 +78,7 @@
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1*"/>
                 <DataGridTextColumn Header="LAST UPDATE"
-                                                Binding="{Binding last_update}"
+                                                Binding="{Binding booked_date}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                                 Width="1.3*"/>
@@ -86,8 +86,7 @@
                 <DataGridTemplateColumn Header="ACTION" Width="0.55*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnAction" 
-                                            Click="btnAction_Click"
+                            <Button x:Name="btnAction"
                                             DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},Path=DataContext}"
                                             BorderThickness="0"
                                             Background="Transparent">

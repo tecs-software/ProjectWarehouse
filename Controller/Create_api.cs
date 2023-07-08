@@ -29,9 +29,10 @@ namespace WarehouseManagement.Controller
     {
         sql_control sql = new sql_control();
         db_queries queries = new db_queries();
-        public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global)
+        SuspiciousController suspiciouscontroller = new SuspiciousController();
+        public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, GlobalModel global, bool suspicious)
         {
-            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(global.key);
             string logistics_interface = @"
             {
@@ -143,6 +144,7 @@ namespace WarehouseManagement.Controller
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
+                    MessageBox.Show(response);
 
                     //to decode the response
                     dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
@@ -166,13 +168,32 @@ namespace WarehouseManagement.Controller
                         string mailNoString = mailNo.ToString();
                         string sortingCodeString = sortingCode.ToString();
 
-                        queries.insert_receiver(receiver);
+                        //true = insert suspicious
+                        if (suspicious)
+                        {
+                            queries.insert_receiver(receiver);
 
-                        queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
+                            queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
 
-                        queries.insert_Incentives(booking_Info, txLogisticIdString);
+                            queries.insert_Incentives(booking_Info, txLogisticIdString);
 
-                        queries.update_inventory_status(booking_Info);
+                            queries.update_inventory_status(booking_Info);
+
+                            suspiciouscontroller.InsertSuspiciousData();
+
+                        }
+                        else
+                        {
+                            
+
+                            queries.insert_receiver(receiver);
+
+                            queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
+
+                            queries.insert_Incentives(booking_Info, txLogisticIdString);
+
+                            queries.update_inventory_status(booking_Info);
+                        }
 
                         MessageBox.Show("Order has been Created");
                         return true;

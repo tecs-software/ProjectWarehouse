@@ -46,8 +46,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             }
             else
             {
-                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = " + int.Parse(CurrentUser.Instance.userID.ToString()) + ""));
-                sql.Query($"SELECT * FROM tbl_products WHERE sender_id = '" + sender_id + "'");
+                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}"));
+                sql.Query($"SELECT * FROM tbl_products WHERE sender_id = {sender_id}");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
@@ -66,7 +66,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void cbItem_DropDownClosed(object sender, EventArgs e)
         {
-            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '" + cbItem.Text + "'");
+            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '{cbItem.Text}'");
         }
 
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)

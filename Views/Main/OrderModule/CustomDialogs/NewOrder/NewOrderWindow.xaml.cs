@@ -67,16 +67,9 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             mainFrame.Navigate(GetOrCreateReceiverInformationPage());
             this.SizeToContent = SizeToContent.Height;
         }
-        public bool isValidReceiver { get; set; } = true;
+        SuspiciousController controller = new SuspiciousController();
         private async void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            //write a validation from database ( Check if the user is suspicious) = > isValidReceiver = true
-
-            if (isValidReceiver)
-            {
-                CustomMessageBox("The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?", true);
-            }
-            //------------------------------
             if (mainFrame.Content is ReceiverInformation)
             {
                 if (Util.IsAnyTextBoxEmpty(receiverInformationPage.tbFirstName, receiverInformationPage.tbLastName, receiverInformationPage.tbPhone, receiverInformationPage.tbAddress))
@@ -84,7 +77,19 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                     MessageBox.Show("Fill up required fields");
                     return;
                 }
-                mainFrame.Navigate(GetOrCreateBookingInformationPage());
+                else
+                {
+                    //validation for suspicious order
+                    if (controller.SuspiciousValidation(receiverInformationPage.tbFirstName, receiverInformationPage.tbPhone))
+                    {
+                        CustomMessageBox("The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?", true);
+                    }
+                    else
+                    {
+                        mainFrame.Navigate(GetOrCreateBookingInformationPage());
+                    }
+                }
+               
             }
             else
             {
@@ -117,7 +122,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 //calling the method for api ordering
                 if (queries.check_quantity(booking_info, _receiver))
                 {
-                    if (await order_api.api_create(_receiver, booking_info, global_sender))
+                    if (await order_api.api_create(_receiver, booking_info, global_sender, isSuspicious))
                     {
                         btnNext.IsEnabled = true;
                         this.DialogResult = true;
@@ -172,12 +177,12 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             
             return bookingInformationPage;
         }
-
+        public bool isSuspicious { get; set; } = false;
         private void btnYes_Click(object sender, RoutedEventArgs e)
         {
             if(txtMessageDialog.Text == "The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?")
             {
-                isValidReceiver = false;
+                isSuspicious = true;
             }
             mainFrame.Navigate(GetOrCreateBookingInformationPage());
 

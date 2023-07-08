@@ -306,7 +306,7 @@ END
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_status')
 BEGIN
     CREATE TABLE [dbo].[tbl_status](
-		status_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		status_id INT IDENTITY(1,1) PRIMARY KEY,
 		[waybill#] [varchar](50) NOT NULL,
 		[scan_type] [varchar](50) NOT NULL,
         [description] [varchar](255) NOT NULL,
@@ -318,7 +318,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_couriers')
 BEGIN
     CREATE TABLE [dbo].[tbl_couriers]
-    (courier_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    (courier_id INT IDENTITY(1,1) PRIMARY KEY,
     [courier_name] [varchar](50) NOT NULL,
     [api_key] [varchar](255) NOT NULL,
     [eccompany_id] [varchar](50) NOT NULL,
@@ -329,7 +329,7 @@ END
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
 BEGIN
     CREATE TABLE [dbo].[tbl_order_inquiry](
-	[order_inquiry_id] [int] IDENTITY(1,1) NOT NULL,
+	[order_inquiry_id] INT IDENTITY(1,1) PRIMARY KEY,
 	[waybill#] [varchar](50) NOT NULL,
 	[receiver_name] [varchar](50) NOT NULL,
 	[contact_number] [varchar](50) NOT NULL,
@@ -339,6 +339,23 @@ BEGIN
 	[weight] [varchar](50) NOT NULL,
 	[remarks] [varchar](50) NOT NULL,
     [date_created] [varchar](50) NOT NULL
+    )
+END
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_suspicious_order')
+BEGIN
+    CREATE TABLE [dbo].[tbl_suspicious_order](
+	[suspicious_order_id] INT IDENTITY(1,1) PRIMARY KEY,
+	[user_id] INT NOT NULL,
+	[role_id] INT NOT NULL,
+	[sender_id] INT NOT NULL,
+	[product_id] [nvarchar](50) NOT NULL,
+	[receiver_id] INT NOT NULL,
+	[waybill] [varchar](100) NOT NULL,
+	[courier] [varchar](50) NOT NULL,
+	[status] [varchar](50) NOT NULL,
+    [booked_date] DATETIME DEFAULT GETDATE(),
+    [price] [decimal](18,2) NOT NULL
     )
 END
 

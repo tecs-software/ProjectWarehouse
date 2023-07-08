@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 
 namespace WarehouseManagement.Views.Main.SuspiciousModule
 {
@@ -23,11 +24,21 @@ namespace WarehouseManagement.Views.Main.SuspiciousModule
         public SuspiciousTable()
         {
             InitializeComponent();
+            
         }
-
+        SuspiciousController suspicious_controller = new SuspiciousController();
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        public void ShowSuspiciousData()
+        {
+            suspicious_controller.showSuspiciousData(tblProducts);
+        }
+
+        private void tblProducts_Loaded(object sender, RoutedEventArgs e)
+        {
+            ShowSuspiciousData();
         }
     }
 }
