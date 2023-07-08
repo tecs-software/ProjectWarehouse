@@ -292,5 +292,10 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
         }
+
+        private void tbAcquisitionCost_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
     }
 }

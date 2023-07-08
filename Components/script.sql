@@ -20,6 +20,19 @@ BEGIN
     )
 END
 GO
+-- Create tbl_users table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_expenses')
+BEGIN
+   CREATE TABLE tbl_expenses(
+	    ID INT PRIMARY KEY IDENTITY(1,1),
+	    UserID INT,
+	    AdSpent DECIMAL(18,2),
+	    Utilities DECIMAL(18,2),
+	    Miscellaneous DECIMAL(18,2),
+	    [Date] DateTime2 DEFAULT GETDATE()
+   )
+END
+GO
 --Create tbl_trial
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_trial')
 BEGIN
@@ -450,3 +463,67 @@ BEGIN
     END;
 	');
 END;
+--StoreProc for Insertion of Expenses_Insert
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpExpenses_Insert')
+BEGIN
+	EXEC('
+	CREATE PROC SpExpenses_Insert
+    @UserID INT,
+    @AdSpent DECIMAL(18,2),
+    @Utilities DECIMAL(18,2),
+    @Miscellaneous DECIMAL(18,2)
+    AS
+    BEGIN
+	    INSERT INTO tbl_expenses(AdSpent, Utilities, Miscellaneous, UserID) VALUES 
+	    (@AdSpent, @Utilities, @Miscellaneous, @UserID)
+    END;
+	');
+END;
+--StoreProc for Getting Data of expenses
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpExpenses_GetData')
+BEGIN
+	EXEC('
+	CREATE PROC SpExpenses_GetData
+    AS
+    BEGIN
+	    SELECT ID, UserID, AdSpent, Utilities, Miscellaneous, SUM(AdSpent) + SUM(Utilities) + SUM(Miscellaneous)
+	    FROM tbl_expenses
+	    GROUP BY ID,UserID,AdSpent, Utilities, Miscellaneous 
+	    UNION ALL
+	    SELECT 0 AS ID, 0 AS UserID, 
+		       SUM(AdSpent) AS TotalAdSpent, 
+		       SUM(Utilities) AS TotalUtilities, 
+		       SUM(Miscellaneous) AS TotalMiscellaneous,
+		       SUM(AdSpent) + SUM(Utilities) + SUM(Miscellaneous) AS GrandTotal
+	    FROM tbl_expenses
+    END;
+	');
+
+END;
+--StoreProc for Getting Data of expenses filter by Date
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpExpenses_GetDataFilterByDate')
+BEGIN
+	EXEC('
+	CREATE PROC SpExpenses_GetDataFilterByDate
+    @DateFrom Date,
+    @DateCountAdd INT
+    AS
+    BEGIN
+	    DECLARE @DateTo Date = DATEADD(DAY, -@DateCountAdd, @DateFrom)
+
+	    SELECT ID, UserID, AdSpent, Utilities, Miscellaneous, SUM(AdSpent) + SUM(Utilities) + SUM(Miscellaneous)
+	    FROM tbl_expenses WHERE [Date] BETWEEN @DateTo AND  @DateFrom 
+	    GROUP BY ID, UserID, AdSpent, Utilities, Miscellaneous 
+	    UNION ALL
+	    SELECT NULL AS ID, NULL AS UserID, 
+		       SUM(AdSpent) AS TotalAdSpent, 
+		       SUM(Utilities) AS TotalUtilities, 
+		       SUM(Miscellaneous) AS TotalMiscellaneous,
+		       SUM(AdSpent) + SUM(Utilities) + SUM(Miscellaneous) AS GrandTotal
+	    FROM tbl_expenses  WHERE [Date] BETWEEN @DateTo AND  @DateFrom 
+    END
+	');
+END;
+
+
+

@@ -87,7 +87,7 @@ namespace WarehouseManagement.Views.Login
         public LoginWindow()
         {
             InitializeComponent();
-
+            tbUsername.Focus();
             //try
             //{
             //    Process process = Process.GetCurrentProcess();

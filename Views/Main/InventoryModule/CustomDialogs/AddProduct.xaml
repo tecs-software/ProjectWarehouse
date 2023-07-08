@@ -83,7 +83,7 @@
                      materialDesign:HintAssist.Foreground="Black"
                      BorderBrush="Black"
                      Margin="10,0,10,0"
-                     x:Name="tbAcquisitionCost"/>
+                     x:Name="tbAcquisitionCost" TextChanged="tbAcquisitionCost_TextChanged"/>
 
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="1"

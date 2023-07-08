@@ -124,6 +124,44 @@
                         <TabItem x:Name="importAddress" Header="Import Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Collapsed">
                             <Frame x:Name="importAddressFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
                         </TabItem>
+                        <TabItem x:Name="expenses" Header="Expenses" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition MaxHeight="80" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0,24,0,0">
+                                    <TextBlock Foreground="#636363" FontSize="20" Text="Expenses" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,24,8"/>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="24,8,8,0" x:Name="txtAdSpent" materialDesign:HintAssist.Hint="Ad Spent" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Stretch" 
+                                                             SelectionBrush="#FF1D2118" PreviewTextInput="DecimalValidationTextBox"/>
+                                        <TextBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,8,8,0" x:Name="txtUtilities" materialDesign:HintAssist.Hint="Utilities" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Stretch" 
+                                                             SelectionBrush="#FF1D2118" PreviewTextInput="DecimalValidationTextBox"/>
+                                        <TextBox Grid.Column="2" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txtMiscellaneous" materialDesign:HintAssist.Hint="Miscellaneous" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Stretch" 
+                                                             SelectionBrush="#FF1D2118" PreviewTextInput="DecimalValidationTextBox"/>
+                                    </Grid>
+                                   
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Button FontSize="16" x:Name="btnConfirmExpenses" Content="Confirm" Style="{StaticResource MaterialDesignRaisedLightButton}" MinWidth="50"
+                                                        Foreground="White" Height="45" Background="{StaticResource secondaryColor}" FontWeight="Light"
+                                                        BorderBrush="{StaticResource secondaryColor}" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"
+                                                        materialDesign:ElevationAssist.Elevation="Dp3" Click="btnConfirmExpenses_Click" />
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
                     </TabControl.Items>
                 </TabControl>
             </StackPanel>

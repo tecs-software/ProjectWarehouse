@@ -18,7 +18,6 @@ namespace WarehouseManagement.Controller
         static sql_control sql = new sql_control();
         public static DataTable dataTableAddress { get; set; }
         public static Boolean ConfirmedToImport { get; set; }
-
         public static DataTable GetDataTableFromCSVFile(string csv_file_path)
         {
             DataTable csvData = new DataTable();

@@ -11,8 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
+using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.SystemSettingModule
 {
@@ -21,10 +23,19 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
     /// </summary>
     public partial class SystemSettingPopup : Window
     {
+        void Clear()
+        {
+            txtMiscellaneous.Text = "";
+            txtAdSpent.Text = "";
+            txtUtilities.Text = "";
+        }
+        private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            InputValidation.Decimal(sender, e);
+        }
         public SystemSettingPopup()
         {
             InitializeComponent();
-
         }
         db_queries queries = new db_queries();
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -135,6 +146,29 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 }
             }
             return false;
+        }
+
+        private void btnImportAddress_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+       
+        private void btnConfirmExpenses_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtAdSpent.Text == "" && txtUtilities.Text == "" && txtMiscellaneous.Text == "")
+                MessageBox.Show("Please complete all fields");
+            else
+            {
+                Expenses expenses = new Expenses() {
+                    UserID = CurrentUser.Instance.userID,
+                    AdSpent = decimal.Parse(txtAdSpent.Text),
+                    Utilities = decimal.Parse(txtUtilities.Text),
+                    Miscellaneous = decimal.Parse(txtMiscellaneous.Text),
+                };
+                ExpensesController.InsertExpenses(expenses);
+                MessageBox.Show("Data Inserted Successfully.");
+                Clear();
+            }
         }
     }
 }

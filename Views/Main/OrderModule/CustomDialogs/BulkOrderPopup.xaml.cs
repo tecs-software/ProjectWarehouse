@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 {
@@ -31,7 +33,16 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                //txtFileNameProduct.Text = openFileDialog.FileName;
+                Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+                int numberofitems = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName).Rows.Count;
+                //pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
+                //lblTotalNumberOfItems.Text = numberofitems.ToString();
+                Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
