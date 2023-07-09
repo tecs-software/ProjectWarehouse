@@ -20,15 +20,22 @@ namespace WarehouseManagement.Controller
 
         public async static Task showTotalExpenses(System.Windows.Controls.Label total_expenses, int days)
         {
-            await sql.Query($"EXEC SpExpenses_GetDataFilterByDate '{DateTime.Now.AddDays(1)}', {days}");
-            if (sql.HasException(true)) return;
-            if(sql.DBDT.Rows.Count > 0)
+            await Task.Run(() =>
             {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                sql.Query($"EXEC SpExpenses_GetDataFilterByDate '{DateTime.Now.AddDays(1)}', {days}");
+                if (sql.HasException(true)) return;
+
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    total_expenses.Content = dr[5].ToString();
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        total_expenses.Dispatcher.Invoke(() =>
+                        {
+                            total_expenses.Content = dr[5].ToString();
+                        });
+                    }
                 }
-            }
+            });
         }
     }
 }
