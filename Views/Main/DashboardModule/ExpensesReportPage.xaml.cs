@@ -26,32 +26,6 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         public ExpensesReportPage()
         {
             InitializeComponent();
-            setChart();
-            setTotalExpenses();
-        }
-
-        private void setChart()
-        {
-            ChartValues<double> expensesData = new ChartValues<double>();
-            Random random = new Random();
-            int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-            for (int day = 1; day <= daysInMonth; day++)
-            {
-                double expenses = random.Next(500000, 2000000) / 100.0; // Random expenses value between 500000 and 2000000, divided by 100 for decimal places
-                expensesData.Add(expenses);
-            }
-
-            // Set the sample data to the expensesChart
-            salesChart.Series.Clear();
-            salesChart.Series.Add(new LineSeries
-            {
-                Title = "Total Expenses",
-                Values = expensesData
-            });
-        }
-        private void setTotalExpenses()
-        {
-            ExpensesController.showTotalExpenses(lbl_total_expenses, 1);
         }
     }
 }

@@ -38,6 +38,7 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         {
             InitializeComponent();
             summaryPage = new SummaryPage();
+            expensesReportPage = new ExpensesReportPage();
             VaPage = new VAPage();
             cbSales.SelectedIndex = 0;
             btn_D1.Focus();
@@ -95,10 +96,14 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         {
             // summary page
             await queries.sales_graph(days, summaryPage.salesChart);
-            ExpensesController.showTotalExpenses(summaryPage.lbl_expenses, days);
+            await ExpensesController.showTotalExpenses(summaryPage.lbl_expenses, days);
             await queries.load_dashboard_summary(summaryPage.lbl_total_order, summaryPage.lbl_gross, summaryPage.lbl_products_sold, summaryPage.lbl_Net_profit, days);
-
-            //expenses page
+            expensesData(days);
+        }
+        private async void expensesData(int days)
+        {
+            await ExpensesController.showExpensesData(expensesReportPage.lbl_total_expenses, expensesReportPage.lbl_AdSpent, expensesReportPage.lbl_Utilities, expensesReportPage.lbl_Miscellaneous, days);
+            ExpensesController.showExpensesGraphs(days, expensesReportPage.expensesChart);
         }
     }
 }

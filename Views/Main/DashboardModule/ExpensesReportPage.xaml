@@ -142,7 +142,7 @@
                 BorderThickness="1"
                  Margin="15">
 
-            <lvc:CartesianChart x:Name="salesChart" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="20,50,20,50">
+            <lvc:CartesianChart x:Name="expensesChart" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="20,50,20,50">
             </lvc:CartesianChart>
 
         </Border>

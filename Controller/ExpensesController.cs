@@ -9,6 +9,9 @@ using System.Windows.Controls;
 using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
 using System.Windows;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+using LiveCharts;
 
 namespace WarehouseManagement.Controller
 {
@@ -36,6 +39,59 @@ namespace WarehouseManagement.Controller
                     }
                 }
             });
+        }
+        public async static Task showExpensesData(System.Windows.Controls.Label total_expenses, System.Windows.Controls.Label adspent, System.Windows.Controls.Label utilities, System.Windows.Controls.Label misc, int days)
+        {
+            await Task.Run(() =>
+            {
+                sql.Query($"EXEC SpExpenses_GetDataFilterByDate '{DateTime.Now.AddDays(1)}', {days}");
+                if (sql.HasException(true)) return;
+
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        total_expenses.Dispatcher.Invoke(() =>
+                        {
+                            adspent.Content = dr[2].ToString();
+                            utilities.Content = dr[3].ToString();
+                            misc.Content = dr[4].ToString();
+                            total_expenses.Content = dr[5].ToString();
+                        });
+                    }
+                }
+            });
+        }
+        public static void showExpensesGraphs(int days, CartesianChart chart)
+        {
+            ChartValues<ObservableValue> expensesData = new ChartValues<ObservableValue>();
+            List<DateTime> dateList = new List<DateTime>();
+
+            sql.Query($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) AS total_expenses, CAST(Date AS DATE) AS date FROM tbl_expenses WHERE Date BETWEEN '{DateTime.Now.AddDays(-days).ToString("yyyy-MM-dd")}' AND '{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}' GROUP BY CAST(Date AS DATE)");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    expensesData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
+                    dateList.Add(DateTime.Parse(dr[1].ToString()));
+                }
+                List<string> dateLabels = dateList.Select(date => date.ToString("MM/dd/yy h:mm:ss tt")).ToList();
+
+                chart.AxisX.Clear();
+                chart.AxisX.Add(new Axis
+                {
+                    Title = "Date",
+                    Labels = dateLabels
+                });
+
+                chart.Series.Clear();
+                chart.Series.Add(new LineSeries
+                {
+                    Title = "Total Expenses",
+                    Values = expensesData,
+                });
+            }
         }
     }
 }
