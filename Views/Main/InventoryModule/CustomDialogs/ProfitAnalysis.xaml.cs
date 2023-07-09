@@ -166,7 +166,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
                     product.NominatedPrice = Converter.StringToDecimal(string.IsNullOrEmpty(tbNominated.Text.Replace(",", "")) ? "0" : tbNominated.Text.Replace(",", ""));
                     this.DialogResult = true;
-                    profits_calculator.insert_profit(cbItems.Text, decimal.Parse(tbTotalCost.Text), decimal.Parse(tbNetProfit.Text));
+                    //profits_calculator.insert_profit(cbItems.Text, decimal.Parse(tbTotalCost.Text), decimal.Parse(tbNetProfit.Text));
                 }
             }
             else
@@ -408,7 +408,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            profits_calculator.insert_profit(cbItems.Text, decimal.Parse(tbTotalCost.Text), decimal.Parse(tbNetProfit.Text));
+            //profits_calculator.insert_profit(cbItems.Text, decimal.Parse(tbTotalCost.Text), decimal.Parse(tbNetProfit.Text));
             this.DialogResult = true;
             this.Close();
         }

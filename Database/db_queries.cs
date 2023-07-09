@@ -192,10 +192,10 @@ namespace WarehouseManagement.Database
             sql.Query($"UPDATE tbl_products set status = '{Status}' WHERE item_name = '{book_info.item_name}'");
             if (sql.HasException(true)) return;
         }
-        public async Task load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label lbl_expenses, Label net_profit)
+        public async Task load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label net_profit, int days)
         {
             //for total orders
-            sql.Query($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'CANCELLED'");
+            sql.Query($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -206,7 +206,7 @@ namespace WarehouseManagement.Database
             }
 
             //for gross sales
-            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'DELIVERED'");
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -217,7 +217,7 @@ namespace WarehouseManagement.Database
             }
 
             //for total projected sales
-            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status != 'CANCELLED'");
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -227,20 +227,11 @@ namespace WarehouseManagement.Database
                 }
             }
 
-            //for expenses
-            sql.Query($"SELECT COALESCE(SUM(total_expenses), 0) FROM tbl_selling_expenses");
-            if (sql.HasException(true)) return;
-            if (sql.DBDT.Rows.Count > 0)
-            {
-                foreach (DataRow dr in sql.DBDT.Rows)
-                {
-                    lbl_expenses.Content = decimal.Parse(dr[0].ToString());
-                }
-            }
+            //for netprofit
+            decimal total_sales = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(total), 0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'"));
+            decimal total_expenses = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) FROM tbl_expenses WHERE Date BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'"));
 
-            //for net profit
-            string netprofit = sql.ReturnResult($"SELECT COALESCE(SUM(net_profit), 0) FROM tbl_selling_expenses");
-            net_profit.Content = netprofit;
+            net_profit.Content = total_sales - total_expenses;
 
         }
         public bool check_sender_info()
@@ -256,13 +247,13 @@ namespace WarehouseManagement.Database
             }
         }
 
-        public async Task sales_graph(DatePicker start, DatePicker end, CartesianChart chart)
+        public async Task sales_graph(int days, CartesianChart chart)
         {
             ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
             List<DateTime> dateList = new List<DateTime>();
 
             //for revenue
-            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{start}' AND '{end}' GROUP BY updated_at");
+            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{DateTime.Now.AddDays(-days).ToString("yyyy-MM-dd")}' AND '{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}' GROUP BY updated_at");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {

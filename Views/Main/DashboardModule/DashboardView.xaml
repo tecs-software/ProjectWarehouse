@@ -21,78 +21,25 @@
 
         <StackPanel  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource primaryColor1}" Orientation="Horizontal">
 
-            <Border Height="40" Width="150" Background="#4E575C" Margin="20,15,10,15" CornerRadius="5" x:Name="dateFrom">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    
+            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D1"  FontSize="15" Background="#4E575C" Margin="0,0,10,0" Click="btn_D1_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
-                    <DatePicker x:Name="startDatePicker" Foreground="#BCBCBC" FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center" DisplayDateStart="5/1/2023" CalendarClosed="startDatePicker_CalendarClosed" >
-                        <DatePicker.Style>
-                            <Style TargetType="DatePicker">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="DatePicker">
-                                            <Grid>
-                                                <Button x:Name="PART_Button" Content="{Binding SelectedDate, StringFormat='{}{0:dd/MM/yyyy}', RelativeSource={RelativeSource TemplatedParent}}"
-                                    Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                                                <Popup x:Name="PART_Popup" AllowsTransparency="True" PlacementTarget="{Binding ElementName=PART_Button}"
-                                   Placement="Bottom" StaysOpen="False">
-                                                    <Calendar SelectedDate="{Binding SelectedDate, RelativeSource={RelativeSource TemplatedParent}}"
-                                          DisplayDate="{Binding SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
-                                                </Popup>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsEnabled" Value="False">
-                                                    <Setter TargetName="PART_Button" Property="IsEnabled" Value="False" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DatePicker.Style>
-                    </DatePicker>
+                    <TextBlock Text="1D"/>
                 </StackPanel>
-            </Border>
-
-            <Border Height="40" Width="150" Background="#4E575C" Margin="0,10,15,10" CornerRadius="5" x:Name="dateTo">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
-
-                    <DatePicker x:Name="endDatePicker" Foreground="#BCBCBC" FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center" CalendarClosed="endDatePicker_CalendarClosed" >
-                        <DatePicker.Style>
-                            <Style TargetType="DatePicker">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="DatePicker">
-                                            <Grid>
-                                                <Button x:Name="PART_Button" Content="{Binding SelectedDate, StringFormat='{}{0:dd/MM/yyyy}', RelativeSource={RelativeSource TemplatedParent}}"
-                                    Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                                                <Popup x:Name="PART_Popup" AllowsTransparency="True" PlacementTarget="{Binding ElementName=PART_Button}"
-                                   Placement="Bottom" StaysOpen="False">
-                                                    <Calendar SelectedDate="{Binding SelectedDate, RelativeSource={RelativeSource TemplatedParent}}"
-                                          DisplayDate="{Binding SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
-                                                </Popup>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsEnabled" Value="False">
-                                                    <Setter TargetName="PART_Button" Property="IsEnabled" Value="False" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DatePicker.Style>
-                    </DatePicker>
-
-                </StackPanel>
-            </Border>
-
-            <Button x:Name="btnClear" Style="{StaticResource MaterialDesignIconButton}" Height="25" Width="25" Background="#618EE7" BorderBrush="#618EE7">
-                <materialDesign:PackIcon Kind="Close" Height="15" Width="15"  Foreground="White"/>
             </Button>
 
-            <Label x:Name="lblClear" Content="Clear Date" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#BCBCBC"/>
+            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D7" Click="btn_D7_Click"  FontSize="15" Background="#4E575C" Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
+                    <TextBlock Text="7D"/>
+                </StackPanel>
+            </Button>
+            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D30" Click="btn_D30_Click"  FontSize="15" Background="#4E575C" Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
+                    <TextBlock Text="30D"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <StackPanel x:Name="cmbContainer" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource primaryColor1}" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,20,0">

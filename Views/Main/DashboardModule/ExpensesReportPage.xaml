@@ -47,7 +47,7 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="6,787,400.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label Content="6,787,400.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" x:Name="lbl_total_expenses"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
@@ -69,40 +69,14 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Cost of Goods" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
+                <Label Content="Miscellaneous" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="3,243,800.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label Content="3,243,800.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" x:Name="lbl_Miscellaneous"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+20%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
-
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="2" 
-                Grid.Column="3"  
-                CornerRadius="10"
-                Background="#FEFFFE"
-                BorderThickness="1"
-                Margin="15">
-
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Content="RTS" Grid.Row="0" FontSize="25" Foreground="#8E8E8D"/>
-
-                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="622,500.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
-                </StackPanel>
-
-                <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -125,7 +99,7 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="1,384,750.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label Content="1,384,750.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" x:Name="lbl_AdSpent"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+60%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
@@ -151,7 +125,7 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Label Content="₱" FontSize="30" VerticalAlignment="Top" Margin="0,3,0,0" Foreground="#333433"/>
-                    <Label Content="753,900.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold"/>
+                    <Label Content="753,900.00" Foreground="#333433" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" x:Name="lbl_Utilities"/>
                 </StackPanel>
 
                 <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>

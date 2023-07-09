@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 
 namespace WarehouseManagement.Views.Main.DashboardModule
 {
@@ -26,6 +27,7 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         {
             InitializeComponent();
             setChart();
+            setTotalExpenses();
         }
 
         private void setChart()
@@ -46,6 +48,10 @@ namespace WarehouseManagement.Views.Main.DashboardModule
                 Title = "Total Expenses",
                 Values = expensesData
             });
+        }
+        private void setTotalExpenses()
+        {
+            ExpensesController.showTotalExpenses(lbl_total_expenses, 1);
         }
     }
 }

@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Background="#F1F4F5"
-      Title="SummaryPage" Loaded="Page_Loaded"
+      Title="SummaryPage"
       >
 
     <Grid>

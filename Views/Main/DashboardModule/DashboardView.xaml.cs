@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Views.Main.OrderModule;
 using WarehouseManagement.Database;
 using WarehouseManagement.Models;
+using WarehouseManagement.Controller;
 
 namespace WarehouseManagement.Views.Main.DashboardModule
 {
@@ -39,14 +40,11 @@ namespace WarehouseManagement.Views.Main.DashboardModule
             summaryPage = new SummaryPage();
             VaPage = new VAPage();
             cbSales.SelectedIndex = 0;
+            btn_D1.Focus();
 
             if (CurrentUser.Instance.RoleName != "admin")
             {
                 PageContent.Content = VaPage;
-                dateFrom.Visibility = Visibility.Hidden;
-                dateTo.Visibility = Visibility.Hidden;
-                btnClear.Visibility = Visibility.Hidden;
-                lblClear.Visibility = Visibility.Hidden;
                 cmbContainer.Visibility = Visibility.Hidden;
             }
         }
@@ -75,25 +73,32 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         {
             if (CurrentUser.Instance.RoleName == "admin")
             {
-                startDatePicker.DisplayDateEnd = DateTime.Now;
-                endDatePicker.DisplayDateEnd = DateTime.Now;
-
-                startDatePicker.SelectedDate = DateTime.Now.AddDays(-7);
-                endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
-
-                await queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+                dashboardDatas(1);
             }
         }
 
-        private async void startDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
+        private async void btn_D7_Click(object sender, RoutedEventArgs e)
         {
-            endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
-            await queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+            dashboardDatas(7);
         }
 
-        private async void endDatePicker_CalendarClosed(object sender, RoutedEventArgs e)
+        private async void btn_D1_Click(object sender, RoutedEventArgs e)
         {
-            await queries.sales_graph(startDatePicker, endDatePicker, summaryPage.salesChart);
+            dashboardDatas(1);
+        }
+
+        private async void btn_D30_Click(object sender, RoutedEventArgs e)
+        {
+            dashboardDatas(30);
+        }
+        private async void dashboardDatas(int days)
+        {
+            // summary page
+            await queries.sales_graph(days, summaryPage.salesChart);
+            ExpensesController.showTotalExpenses(summaryPage.lbl_expenses, days);
+            await queries.load_dashboard_summary(summaryPage.lbl_total_order, summaryPage.lbl_gross, summaryPage.lbl_products_sold, summaryPage.lbl_Net_profit, days);
+
+            //expenses page
         }
     }
 }
