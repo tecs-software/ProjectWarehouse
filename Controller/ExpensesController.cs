@@ -12,6 +12,8 @@ using System.Windows;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
 using LiveCharts;
+using SixLabors.ImageSharp.Drawing.Processing;
+using System.Diagnostics.Eventing.Reader;
 
 namespace WarehouseManagement.Controller
 {
@@ -34,7 +36,7 @@ namespace WarehouseManagement.Controller
                     {
                         total_expenses.Dispatcher.Invoke(() =>
                         {
-                            if (dr[5].ToString() == "0")
+                            if (dr[5].ToString() == "" || dr[5].ToString() == null)
                                 total_expenses.Content = "0";
                             else
                                 total_expenses.Content = dr[5].ToString();
@@ -56,10 +58,22 @@ namespace WarehouseManagement.Controller
                     {
                         total_expenses.Dispatcher.Invoke(() =>
                         {
-                            adspent.Content = dr[2].ToString();
-                            utilities.Content = dr[3].ToString();
-                            misc.Content = dr[4].ToString();
-                            total_expenses.Content = dr[5].ToString();
+                            if (dr[5].ToString() == "" || dr[5].ToString() == null)
+                            {
+                                adspent.Content = "0";
+                                utilities.Content = "0";
+                                misc.Content = "0";
+                                total_expenses.Content = "0";
+                            }
+                            else
+                            {
+                                adspent.Content = dr[2].ToString();
+                                utilities.Content = dr[3].ToString();
+                                misc.Content = dr[4].ToString();
+                                total_expenses.Content = dr[5].ToString();
+                            }
+
+
                         });
                     }
                 }

@@ -176,7 +176,7 @@ namespace WarehouseManagement.Controller
             if(missingItemNames.Count > 0)
             {
                 string message = "The following cells are missing or empty:\n" + string.Join("\n", missingItemNames);
-                MessageBox.Show(message, "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(message, "Missing item name", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else

@@ -21,20 +21,20 @@
 
         <StackPanel  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource primaryColor1}" Orientation="Horizontal">
 
-            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D1"  FontSize="15" Background="#4E575C" Margin="0,0,10,0" Click="btn_D1_Click">
+            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D1"  FontSize="15" Background="#4E575C" Margin="10,10,10,10" Click="btn_D1_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
                     <TextBlock Text="1D"/>
                 </StackPanel>
             </Button>
 
-            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D7" Click="btn_D7_Click"  FontSize="15" Background="#4E575C" Margin="0,0,10,0">
+            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D7" Click="btn_D7_Click"  FontSize="15" Background="#4E575C" Margin="5,10,10,10">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
                     <TextBlock Text="7D"/>
                 </StackPanel>
             </Button>
-            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D30" Click="btn_D30_Click"  FontSize="15" Background="#4E575C" Margin="0,0,10,0">
+            <Button BorderBrush="#4E575C" Height="40" Width="140" x:Name="btn_D30" Click="btn_D30_Click"  FontSize="15" Background="#4E575C" Margin="5,10,10,10">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
                     <TextBlock Text="30D"/>
