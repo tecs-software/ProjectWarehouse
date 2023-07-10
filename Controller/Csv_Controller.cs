@@ -108,7 +108,7 @@ namespace WarehouseManagement.Controller
                 }
             }
         }
-        public static void checkNullCells(DataGrid dg) 
+        public static bool checkNullCells(DataGrid dg) 
         {
             List<string> missingCells = new List<string>();
 
@@ -131,24 +131,26 @@ namespace WarehouseManagement.Controller
                 }
             }
             if (missingCells.Count > 0)
-            {
-                string message = "The following cells are missing or empty:\n" + string.Join("\n", missingCells);
-                MessageBox.Show(message, "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+                return false;
             else
-            {
-                
-            }
+                return true;
         }
-        public static void checkItemNameColumn(DataGrid dg, ComboBox cb)
+        public static bool checkItemNameColumn(DataGrid dg, ComboBox cb)
         {
+            bool condition  = false;
+            
             foreach (var item in dg.Items)
             {
                 if(cb.Text == string.Empty)
                 {
-                    MessageBox.Show("item name not selected");
+                    condition = false;
+                }
+                else
+                {
+                    condition = true;
                 }
             }
+            return condition;
         }
     }
 }

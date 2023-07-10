@@ -77,8 +77,19 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            Csv_Controller.checkNullCells(dtBulkOrders);
-            Csv_Controller.checkItemNameColumn(dtBulkOrders, cb);
+            if (!Csv_Controller.checkNullCells(dtBulkOrders))
+            {
+                MessageBox.Show("Please complete all fields.", "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (!Csv_Controller.checkItemNameColumn(dtBulkOrders, cb))
+            {
+                MessageBox.Show("Item name not selected");
+            }
+            else
+            {
+               
+            }
+           
         }
     }
 }
