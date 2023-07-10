@@ -44,7 +44,7 @@ namespace WarehouseManagement.Controller
         {
             if(shop_list.SelectedIndex == 0)
             {
-                sql.Query($"SELECT * FROM tbl_orders");
+                sql.Query($"SELECT * FROM tbl_orders ORDER BY created_at DESC");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
@@ -74,7 +74,7 @@ namespace WarehouseManagement.Controller
             }
             else
             {
-                int? shop_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_sender WHERE sender_name = '{shop_list.Text}'"));
+                int? shop_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_sender WHERE sender_name = '{shop_list.Text}' ORDER BY created_at DESC"));
 
                 sql.Query($"SELECT * FROM tbl_orders WHERE sender_id = {shop_id}");
                 if (sql.HasException(true)) return;

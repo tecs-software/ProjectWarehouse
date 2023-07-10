@@ -50,7 +50,8 @@ namespace WarehouseManagement.Database
         }
         public void get_sender(GlobalModel sender)
         {
-            sql.Query($"SELECT * FROM tbl_sender");
+            int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {CurrentUser.Instance.userID}"));
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
@@ -90,7 +91,7 @@ namespace WarehouseManagement.Database
         }
         public void Insert_Orders(string order_id, string waybill, Booking_info book_info, string status)
         {
-            string sender_id = sql.ReturnResult($"SELECT sender_id FROM tbl_sender ORDER BY sender_id DESC");
+            string sender_id = sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {CurrentUser.Instance.userID}");
             string receiver_id = sql.ReturnResult($"SELECT receiver_id FROM tbl_receiver ORDER BY receiver_id DESC");
             string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name ='" + book_info.item_name + "'");
             decimal total = decimal.Parse(book_info.quantity) * decimal.Parse(book_info.goods_value);

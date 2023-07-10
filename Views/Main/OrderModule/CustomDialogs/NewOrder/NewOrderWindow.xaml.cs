@@ -98,7 +98,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                     MessageBox.Show("Fill up required fields");
                     return;
                 }
-                queries.get_sender(global_sender);
 
                 //receiver frame
                 _receiver.FirstName = receiverInformationPage.tbFirstName.Text;
