@@ -84,10 +84,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             else
             {
                 Csv_Controller.dataTableBulkOrders = Csv_Controller.PopulateToDataTable(dtBulkOrders);
-                foreach(DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
-                {
-
-                }
+                //Push to Create_API
+                
             }
            
         }
