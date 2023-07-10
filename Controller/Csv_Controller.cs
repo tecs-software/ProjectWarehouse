@@ -131,7 +131,11 @@ namespace WarehouseManagement.Controller
                 }
             }
             if (missingCells.Count > 0)
+            {
+                string message = "The following cells are missing or empty:\n" + string.Join("\n", missingCells);
+                MessageBox.Show(message, "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
+            }
             else
                 return true;
         }
@@ -171,25 +175,13 @@ namespace WarehouseManagement.Controller
             {
                 string message = "The following cells are missing or empty:\n" + string.Join("\n", missingItemNames);
                 MessageBox.Show(message, "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
             }
             else
             {
-
+                return true;
             }
-            bool condition  = false;
             
-            foreach (var item in dg.Items)
-            {
-                if(cb.Text == string.Empty)
-                {
-                    condition = false;
-                }
-                else
-                {
-                    condition = true;
-                }
-            }
-            return condition;
         }
         public static DataTable DataTable_Creation()
         {
