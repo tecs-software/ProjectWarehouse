@@ -152,5 +152,12 @@ namespace WarehouseManagement.Controller
             }
             return condition;
         }
+        public static DataTable DataTable_Creation()
+        {
+            DataTable dt_BulkOrder = new DataTable();
+            dt_BulkOrder.Clear();
+
+            return dt_BulkOrder;
+        }
     }
 }
