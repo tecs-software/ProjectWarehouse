@@ -13,29 +13,47 @@
         Closing="Window_Closing"
         Background="Transparent"
         Title="AddProduct" Height="575" Width="1000">
+    <materialDesign:DialogHost x:Name="dialog" BorderBrush="{DynamicResource MaterialDesignDivider}">
+        <materialDesign:DialogHost.DialogContent>
+            <Grid HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                        <TextBlock Foreground="Gray"  FontSize="14" Width="270" Margin="5,5,5,5" TextWrapping="Wrap" x:Name="txtMessageDialog" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"/>
+                    </StackPanel>
 
-    <Border CornerRadius="10" Background="White"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+                        <Button x:Name="btnYes" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Width="72" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center"   Background="{StaticResource buttonBorder2}" BorderBrush="{StaticResource buttonBorder2}" Foreground="White" Click="btnYes_Click">
+                            Yes
+                        </Button>
+                        <Button  x:Name="btnNo" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"  Width="72" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center"  Background="{StaticResource secondaryColor}" BorderBrush="{StaticResource secondaryColor}" Foreground="White" Click="btnNo_Click">
+                            No
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+        <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
             BorderThickness="1">
 
-        <Grid Margin="15">
+            <Grid Margin="15">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
 
-            <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
+                <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
 
-                <TextBlock Text="Bulk Orders" FontSize="20" FontWeight="Light" x:Name="lbProduct"/>
+                    <TextBlock Text="Bulk Orders" FontSize="20" FontWeight="Light" x:Name="lbProduct"/>
 
-                <Button x:Name="btnClose"
+                    <Button x:Name="btnClose"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Grid.Row="0"
@@ -43,17 +61,16 @@
                         Background="{StaticResource textboxProfitAnalysisColor1}"
                         BorderBrush="Transparent"
                         IsCancel="True" Click="btnClose_Click">
-                </Button>
-            </DockPanel>
+                    </Button>
+                </DockPanel>
 
-            <Button Grid.Row="1" HorizontalAlignment="Left" Width="200"
+                <Button Grid.Row="1" HorizontalAlignment="Left" Width="200"
                      Grid.Column="0" Content="Import from CSV" Margin="0,0,8,16"
                 BorderBrush="{StaticResource buttonBorder3}" Height="45" x:Name="btnImport" FontSize="15" Background="{StaticResource buttonBorder3}" Click="btnImport_Click">
+                </Button>
 
-            </Button>
-            
-            <Grid Grid.Row="2" VerticalAlignment="Top">
-                <DataGrid ItemsSource="{Binding Path=myList}"
+                <Grid Grid.Row="2" VerticalAlignment="Top">
+                    <DataGrid ItemsSource="{Binding Path=myList}"
                                 CanUserAddRows="False"
                                 AutoGenerateColumns="True"
                                 HeadersVisibility="Column"
@@ -67,29 +84,29 @@
                                 CanUserResizeColumns="False"
                                 TextBlock.TextAlignment="Left" AutoGeneratingColumn="dtBulkOrders_AutoGeneratingColumn"
                                 >
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Item Name">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Item Name">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox
                                       Margin="0,0,0,0"
                                       materialDesign:HintAssist.Hint="Item Name" FontSize="13"
                                       materialDesign:HintAssist.Foreground="Black"
                                       x:Name="cmbSellerName"
                                       BorderBrush="Black"
                                       Background="{StaticResource textboxProfitAnalysisColor1}" Loaded="cmbSellerName_Loaded"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-            
-            <Button Grid.Row="4" HorizontalAlignment="Stretch"
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Button Grid.Row="4" HorizontalAlignment="Stretch"
                      Grid.Column="0" Content="Confirm" Margin="8,8,8,0"
                 BorderBrush="{StaticResource secondaryColor}" Height="45" x:Name="btnConfirm" FontSize="15" Background="{StaticResource secondaryColor}" Click="btnConfirm_Click">
 
-            </Button>
-        </Grid>
-    </Border>
+                </Button>
+            </Grid>
+        </Border>
+    </materialDesign:DialogHost>
 </Window>

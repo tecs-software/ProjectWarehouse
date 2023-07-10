@@ -490,6 +490,33 @@ BEGIN
     ');
 END;
 
+
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_temptable')
+BEGIN
+    EXEC('
+    CREATE PROC SPadd_temptable
+	@quantity INT,
+	@product_name NVARCHAR(255),
+	@receiver_name NVARCHAR(255),
+	@receiver_phone NVARCHAR(255),
+	@receiver_address NVARCHAR(255),
+	@receiver_province NVARCHAR(255),
+	@receiver_city NVARCHAR(255),
+	@receiver_area NVARCHAR(255),
+	@parcel_name NVARCHAR,
+	@weight DECIMAL (18, 2),
+	@total_parcel INT,
+	@parcel_value DECIMAL(18, 2),
+	@cod DECIMAL(18, 2),
+	@remarks NVARCHAR(255)
+	AS
+    BEGIN
+		INSERT INTO tbl_bulk_order_temp (Quantity, ItemName, ReceiverName, ReceiverContactNumber, ReceiverAddress, ReceiverProvince, ReceiverCity, ReceiverRegion, ParcelName, Weight,
+		TotalParcel, ParcelValue, COD, Remarks) VALUES (@quantity, @product_name, @receiver_name, @receiver_phone, @receiver_address, @receiver_province, @receiver_city, @receiver_area,
+		@parcel_name, @weight, @total_parcel, @parcel_value, @cod, @remarks)
+    END;
+    ');
+END;
     
 --CREATION OF STORE PROCS
 

@@ -222,7 +222,7 @@ namespace WarehouseManagement.Controller
                 string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
                 string key = Decrypt(GlobalModel.key);
                 string logistics_interface = @"
-            {
+                    {
                         ""actiontype"": ""add"",
                         ""environment"": ""staging:yes"",
                         ""eccompanyid"": ""THIRDYNAL"",
@@ -262,7 +262,7 @@ namespace WarehouseManagement.Controller
                                 ""desc"": ""Strap wide leg pants""
                             }
                         ]
-                        }";
+                    }";
                 string msg_type = "ORDERCREATE";
 
                 dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
@@ -280,9 +280,9 @@ namespace WarehouseManagement.Controller
                 payloadObj.sender.area = GlobalModel.sender_area;
                 payloadObj.sender.address = GlobalModel.sender_address;
 
-                foreach (bulk_model details in model)
+                //updating receiver information
+                foreach(bulk_model details in model)
                 {
-                    //updating receiver information
                     payloadObj.receiver.name = details.receiver_name;
                     payloadObj.receiver.phone = details.receiver_phone;
                     payloadObj.receiver.mobile = details.receiver_phone;
@@ -397,6 +397,7 @@ namespace WarehouseManagement.Controller
                         MessageBox.Show("An error occurred: " + ex.Message);
                     }
                 }
+
             });
             btn.IsEnabled = true;
         }

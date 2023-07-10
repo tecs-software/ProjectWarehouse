@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,8 +33,10 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
         Create_api bulk_api = new Create_api();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = true;
             Close();
         }
+        
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
@@ -103,21 +106,51 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                         remarks = dr[2].ToString(),
                         product_name = dr[0].ToString(),
                         total = decimal.Parse(dr[13].ToString()),
-                        quantity = int.Parse(dr[1].ToString())
+                        quantity = int.Parse(dr[1].ToString()),
+
+                        //etc
+                        cod = decimal.Parse(dr[14].ToString()),
+                        parcel_value = decimal.Parse(dr[13].ToString()),
+                        parcel_name = dr[10].ToString(),
+                        total_parcel = int.Parse(dr[12].ToString())
 
                     };
                     Csv_Controller.model.Add(model);
                 }
-
                 await bulk_api.create_bulk_api(Csv_Controller.model, false, btnConfirm);
                 if (btnConfirm.IsEnabled)
                 {
                     btnConfirm.IsEnabled = true;
                     MessageBox.Show("Orders has been Created");
-                    this.DialogResult = true;
-                    this.Close();
                 }
+                //bulk_inserts.show_temp_table(dtBulkOrders);
             }
+        }
+        void CustomMessageBox(String message, Boolean questionType)
+        {
+            btnYes.Visibility = Visibility.Visible;
+            btnNo.Visibility = Visibility.Visible;
+            txtMessageDialog.Text = message;
+            if (questionType)
+            {
+                btnYes.Content = "Yes";
+                btnNo.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnYes.Content = "Okay";
+                btnNo.Visibility = Visibility.Collapsed;
+            }
+            dialog.IsOpen = true;
+        }
+        private void btnNo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnYes_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

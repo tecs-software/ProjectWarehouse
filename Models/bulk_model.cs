@@ -23,5 +23,11 @@ namespace WarehouseManagement.Models
         public decimal total { get; set; }
         public int quantity { get; set; }
         public int weight { get; set; }
+
+        //etc
+        public decimal parcel_value { get; set; }
+        public decimal cod { get; set; }
+        public string parcel_name { get; set; }
+        public int total_parcel { get; set; }
     }
 }

@@ -182,9 +182,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 isSuspicious = true;
             }
             mainFrame.Navigate(GetOrCreateBookingInformationPage());
-
         }
-
         private void btnNo_Click(object sender, RoutedEventArgs e)
         {
 
