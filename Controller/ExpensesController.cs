@@ -34,7 +34,10 @@ namespace WarehouseManagement.Controller
                     {
                         total_expenses.Dispatcher.Invoke(() =>
                         {
-                            total_expenses.Content = dr[5].ToString();
+                            if (dr[5].ToString() == "0")
+                                total_expenses.Content = "0";
+                            else
+                                total_expenses.Content = dr[5].ToString();
                         });
                     }
                 }

@@ -68,5 +68,17 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 }
             }
         }
+        public static ComboBox cb { get; set; }
+        private void cmbSellerName_Loaded(object sender, RoutedEventArgs e)
+        {
+            cb = sender as ComboBox;
+            Csv_Controller.insertItems(cb);
+        }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            Csv_Controller.checkNullCells(dtBulkOrders);
+            Csv_Controller.checkItemNameColumn(dtBulkOrders, cb);
+        }
     }
 }

@@ -68,17 +68,16 @@
                                 TextBlock.TextAlignment="Left" AutoGeneratingColumn="dtBulkOrders_AutoGeneratingColumn"
                                 >
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Item Name">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                                   
-                                       Margin="8,0,0,0"
-                                      materialDesign:HintAssist.Hint="Shop Name" FontSize="15"
+                                    <ComboBox
+                                      Margin="0,0,0,0"
+                                      materialDesign:HintAssist.Hint="Item Name" FontSize="13"
                                       materialDesign:HintAssist.Foreground="Black"
                                       x:Name="cmbSellerName"
                                       BorderBrush="Black"
-                                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                                      Background="{StaticResource textboxProfitAnalysisColor1}" Loaded="cmbSellerName_Loaded"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -87,7 +86,7 @@
             </Grid>
             <Button Grid.Row="4" HorizontalAlignment="Stretch"
                      Grid.Column="0" Content="Confirm" Margin="8,8,8,0"
-                BorderBrush="{StaticResource secondaryColor}" Height="45" x:Name="btnConfirm" FontSize="15" Background="{StaticResource secondaryColor}">
+                BorderBrush="{StaticResource secondaryColor}" Height="45" x:Name="btnConfirm" FontSize="15" Background="{StaticResource secondaryColor}" Click="btnConfirm_Click">
 
             </Button>
         </Grid>

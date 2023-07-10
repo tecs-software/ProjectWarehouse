@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
+using System.Windows;
 
 namespace WarehouseManagement.Controller
 {
@@ -75,6 +77,77 @@ namespace WarehouseManagement.Controller
                 //txtCount.Text = totalImported.ToString();
                 txtCount.Dispatcher.Invoke(DispatcherPriority.Normal,
                 new System.Action(() => { txtCount.Text = totalImported.ToString(); pbLoad.Value = totalImported; }));
+            }
+        }
+        public static void insertItems(ComboBox cb)
+        {
+            cb.Items.Clear();
+            if(CurrentUser.Instance.userID == 1)
+            {
+                sql.Query($"SELECT item_name FROM tbl_products");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        cb.Items.Add(dr[0].ToString());
+                    }
+                }
+            }
+            else
+            {
+                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {CurrentUser.Instance.userID}"));
+                sql.Query($"SELECT item_name FROM tbl_products WHERE sender_id = {sender_id}");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        cb.Items.Add(dr[0]);
+                    }
+                }
+            }
+        }
+        public static void checkNullCells(DataGrid dg) 
+        {
+            List<string> missingCells = new List<string>();
+
+            foreach (DataRowView rowView in dg.Items)
+            {
+                DataRow row = rowView.Row;
+
+                foreach (DataGridColumn column in dg.Columns)
+                {
+                    if (column is DataGridTextColumn textColumn)
+                    {
+                        string cellValue = row[textColumn.SortMemberPath]?.ToString();
+
+                        if (string.IsNullOrEmpty(cellValue))
+                        {
+                            string cellInfo = $"Row {row.Table.Rows.IndexOf(row) + 1}, Column {column.Header}";
+                            missingCells.Add(cellInfo);
+                        }
+                    }
+                }
+            }
+            if (missingCells.Count > 0)
+            {
+                string message = "The following cells are missing or empty:\n" + string.Join("\n", missingCells);
+                MessageBox.Show(message, "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                
+            }
+        }
+        public static void checkItemNameColumn(DataGrid dg, ComboBox cb)
+        {
+            foreach (var item in dg.Items)
+            {
+                if(cb.Text == string.Empty)
+                {
+                    MessageBox.Show("item name not selected");
+                }
             }
         }
     }
