@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WarehouseManagement.Controller;
+using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 {
@@ -24,10 +25,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     {
         public BulkOrderPopup()
         {
-            Csv_Controller.dataTableBulkOrders = null;
             InitializeComponent();
+            Csv_Controller.dataTableBulkOrders = null;
+            Csv_Controller.model = new List<bulk_model>();
         }
-
+        Create_api bulk_api = new Create_api();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -85,7 +87,29 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             {
                 Csv_Controller.dataTableBulkOrders = Csv_Controller.PopulateToDataTable(dtBulkOrders);
                 //Push to Create_API
+                foreach(DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                {
+                    bulk_model model = new bulk_model()
+                    {
+                        //receiver payload
+                        receiver_name = dr[3].ToString(),
+                        receiver_address = dr[5].ToString(),
+                        receiver_phone = dr[4].ToString(),
+                        receiver_province = dr[6].ToString(),
+                        receiver_city = dr[7].ToString(),
+                        receiver_area = dr[8].ToString(),
+
+                        //other fields
+                        remarks = dr[2].ToString(),
+                        product_name = dr[0].ToString(),
+                        total = decimal.Parse(dr[13].ToString()),
+                        quantity = int.Parse(dr[1].ToString())
+
+                    };
+                    Csv_Controller.model.Add(model);
+                }
                 
+                bulk_api.create_bulk_api(Csv_Controller.model, false);
             }
            
         }

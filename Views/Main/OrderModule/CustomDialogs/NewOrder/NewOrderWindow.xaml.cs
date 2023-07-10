@@ -31,7 +31,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         private BookingInformation bookingInformationPage;
 
         //models
-        GlobalModel global_sender = new GlobalModel();
         Receiver _receiver = new Receiver();
         Booking_info booking_info = new Booking_info();
         Create_api order_api = new Create_api();
@@ -98,7 +97,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                     MessageBox.Show("Fill up required fields");
                     return;
                 }
-
                 //receiver frame
                 _receiver.FirstName = receiverInformationPage.tbFirstName.Text;
                 _receiver.MiddleName = receiverInformationPage.tbMiddleName.Text;
@@ -121,7 +119,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 //calling the method for api ordering
                 if (queries.check_quantity(booking_info, _receiver))
                 {
-                    if (await order_api.api_create(_receiver, booking_info, global_sender, isSuspicious))
+                    if (await order_api.api_create(_receiver, booking_info, isSuspicious))
                     {
                         btnNext.IsEnabled = true;
                         this.DialogResult = true;

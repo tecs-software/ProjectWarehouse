@@ -406,9 +406,90 @@ BEGIN
     BEGIN
         INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address) VALUES
         (@sender_name, @sender_province, @sender_city, @sender_baranggay, @sender_phone, @sender_address)
-    END
+    END;
     ');
 END;
+
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_receiver')
+BEGIN
+    EXEC('
+    CREATE PROC SPadd_receiver
+    @receiver_name VARCHAR(255),
+    @receiver_phone VARCHAR(100),
+    @receiver_address VARCHAR(100)
+    AS
+    BEGIN
+        INSERT INTO tbl_receiver(receiver_name, receiver_phone, receiver_address) VALUES
+        (@receiver_name, @receiver_phone,@receiver_address)
+    END;
+    ');
+END;
+
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_orders')
+BEGIN
+    EXEC('
+    CREATE PROC SPadd_orders
+	@order_id VARCHAR(255),
+	@courier VARCHAR(50),
+	@waybill_number VARCHAR(255),
+	@user_id INT,
+	@product_name VARCHAR(255),
+	@quantity INT,
+	@total DECIMAL (18, 2),
+	@remarks VARCHAR(255),
+	@status VARCHAR(255),
+	@receiver_phone VARCHAR(255),
+	@receiver_address VARCHAR(255)
+	AS
+    BEGIN
+		DECLARE @receiver_id INT = (SELECT TOP 1(receiver_id) FROM tbl_receiver WHERE receiver_phone = @receiver_phone AND receiver_address = @receiver_address ORDER BY receiver_id DESC)
+		DECLARE @product_id VARCHAR(255) = (SELECT product_id FROM tbl_products WHERE item_name = @product_name)
+
+        INSERT INTO tbl_orders(order_id, courier, waybill_number, user_id, receiver_id, product_id, quantity, total, remarks, status) VALUES
+        (@order_id, @courier, @waybill_number, @user_id, @receiver_id, @product_id, @quantity, @total, @remarks, @status)
+		
+    END;
+    ');
+END;
+
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_incentives')
+BEGIN
+    EXEC('
+    CREATE PROC SPadd_incentives
+	@user_id INT,
+	@order_id VARCHAR(255),
+	@quantity INT,
+	@is_valid BIT,
+	@product_name VARCHAR(255)
+	AS
+    BEGIN
+		DECLARE @product_id VARCHAR(255) = (SELECT product_id FROM tbl_products WHERE item_name = @product_name)
+		DECLARE @employee_commission DECIMAL (18,2) = (SELECT employee_commission FROM tbl_selling_expenses WHERE product_id = @product_id)
+
+		DECLARE @total_commissions DECIMAL (18, 2) = (@employee_commission * @quantity)
+
+		INSERT INTO tbl_incentives(user_id, incentive_for, quantity, total_incentive, is_valid) VALUES
+		(@user_id, @product_id, @quantity, @total_commissions, @is_valid)
+		
+    END;
+    ');
+END;
+
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPupdate_stocks')
+BEGIN
+    EXEC('
+    CREATE PROC SPupdate_stocks
+	@quantity INT,
+	@product_name VARCHAR(255)
+	AS
+    BEGIN
+		DECLARE @product_id VARCHAR(255) = (SELECT product_id FROM tbl_products WHERE item_name = @product_name)
+
+		UPDATE tbl_products SET unit_quantity = unit_quantity - @quantity WHERE product_id = @product_id
+    END;
+    ');
+END;
+
     
 --CREATION OF STORE PROCS
 

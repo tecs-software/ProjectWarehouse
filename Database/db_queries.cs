@@ -48,7 +48,7 @@ namespace WarehouseManagement.Database
             }
 
         }
-        public void get_sender(GlobalModel sender)
+        public void get_sender()
         {
             int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {CurrentUser.Instance.userID}"));
             sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
@@ -57,12 +57,12 @@ namespace WarehouseManagement.Database
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
-                    sender.sender_name = dr[1].ToString();
-                    sender.sender_province = dr[2].ToString();
-                    sender.sender_city = dr[3].ToString();
-                    sender.sender_area = dr[4].ToString();
-                    sender.sender_phone = dr[5].ToString();
-                    sender.sender_address = dr[6].ToString();
+                    GlobalModel.sender_name = dr[1].ToString();
+                    GlobalModel.sender_province = dr[2].ToString();
+                    GlobalModel.sender_city = dr[3].ToString();
+                    GlobalModel.sender_area = dr[4].ToString();
+                    GlobalModel.sender_phone = dr[5].ToString();
+                    GlobalModel.sender_address = dr[6].ToString();
                 }
             }
 
@@ -71,9 +71,9 @@ namespace WarehouseManagement.Database
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
-                    sender.key = dr[2].ToString();
-                    sender.eccompany_id = dr[3].ToString();
-                    sender.customer_id = dr[4].ToString();
+                    GlobalModel.key = dr[2].ToString();
+                    GlobalModel.eccompany_id = dr[3].ToString();
+                    GlobalModel.customer_id = dr[4].ToString();
                 }
             }
         }

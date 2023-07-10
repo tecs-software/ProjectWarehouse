@@ -33,7 +33,6 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         private VAPage? VaPage;
 
         db_queries queries = new db_queries();
-        GlobalModel global = new GlobalModel();
 
         public DashboardView()
         {
@@ -73,7 +72,7 @@ namespace WarehouseManagement.Views.Main.DashboardModule
 
         private async void PageContent_Loaded(object sender, RoutedEventArgs e)
         {
-            queries.get_sender(global);
+            queries.get_sender();
             if (CurrentUser.Instance.RoleName == "admin")
             {
                 dashboardDatas(1);

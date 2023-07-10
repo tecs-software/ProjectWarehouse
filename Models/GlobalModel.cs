@@ -20,18 +20,16 @@ namespace WarehouseManagement.Models
 {
     public class GlobalModel
     {
-        sql_control sql = new sql_control();
+        public static string sender_name { get; set; } = string.Empty;
+        public static string sender_province { get; set; } = string.Empty;
+        public static string sender_city { get; set; } = string.Empty;
+        public static string sender_area { get; set; } = string.Empty;
+        public static string sender_phone { get; set; } = string.Empty;
+        public static string sender_address { get; set; } = string.Empty;
 
-        public string sender_name { get; set; } = string.Empty;
-        public string sender_province { get; set; } = string.Empty;
-        public string sender_city { get; set; } = string.Empty;
-        public string sender_area { get; set; } = string.Empty;
-        public string sender_phone { get; set; } = string.Empty;
-        public string sender_address { get; set; } = string.Empty;
-
-        public string key { get; set; }= string.Empty;
-        public string eccompany_id { get; set; } = string.Empty;
-        public string customer_id { get; set; } = string.Empty;
+        public static string key { get; set; }= string.Empty;
+        public static string eccompany_id { get; set; } = string.Empty;
+        public static string customer_id { get; set; } = string.Empty;
 
     }
 }

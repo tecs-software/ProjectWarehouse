@@ -185,16 +185,17 @@ namespace WarehouseManagement.Controller
             }
             
         }
+        public static List<bulk_model> model { get; set; }
         public static DataTable DataTable_Creation()
         {
             DataTable dt_BulkOrder = new DataTable();
             dt_BulkOrder.Clear();
-            dt_BulkOrder.Columns.Add("Item Name");
+            dt_BulkOrder.Columns.Add("Item Name"); //dr[0]
             dt_BulkOrder.Columns.Add("Quantity");
 
             dt_BulkOrder.Columns.Add("Remarks");
             dt_BulkOrder.Columns.Add("Receiver Name");
-            dt_BulkOrder.Columns.Add("Receiver Phone Number");
+            dt_BulkOrder.Columns.Add("Receiver Phone Number"); // 4
             dt_BulkOrder.Columns.Add("Receiver Address");
             dt_BulkOrder.Columns.Add("Receiver Province");
             dt_BulkOrder.Columns.Add("Receiver City");
