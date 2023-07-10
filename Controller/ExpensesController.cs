@@ -72,8 +72,6 @@ namespace WarehouseManagement.Controller
                                 misc.Content = dr[4].ToString();
                                 total_expenses.Content = dr[5].ToString();
                             }
-
-
                         });
                     }
                 }

@@ -214,195 +214,191 @@ namespace WarehouseManagement.Controller
             }
         }
         //api bulk orders
-        public async Task<bool> create_bulk_api(List<bulk_model> model, bool suspicious)
+        public async Task create_bulk_api(List<bulk_model> model, bool suspicious, Button btn)
         {
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
-            string key = Decrypt(GlobalModel.key);
-            string logistics_interface = @"
+            btn.IsEnabled = false;
+            await Task.Run(async () =>
             {
-            ""actiontype"": ""add"",
-            ""environment"": ""staging:yes"",
-            ""eccompanyid"": ""THIRDYNAL"",
-            ""customerid"": ""CS-V0234"",
-            ""txlogisticid"": ""1547191-2707123"",
-            ""ordertype"": ""1"",
-            ""servicetype"": ""6"",
-            ""deliverytype"": ""1"",
-            ""sender"": {
-                ""name"": ""grace"",
-                ""mobile"": ""09951455616"",
-                ""prov"": ""METRO-MANILA"",
-                ""city"": ""TAGUIG"",
-                ""area"": ""BAGUMBAYAN"",
-                ""address"": ""#20 1st AVE. STA. MARIA INDUSTRIAL BAGUMBAYAN TAGUIG CITY""
-            },
-            ""receiver"": {
-                ""name"": ""Kathea de guzman"",
-                ""mobile"": ""0917 536 7871"",
-                ""phone"": """",
-                ""prov"": ""METRO-MANILA"",
-                ""city"": ""QUEZON-CITY"",
-                ""area"": ""BAGONG LIPUNAN"",
-                ""address"": ""#20 1st AVE. STA. MARIA INDUSTRIAL BAGUMBAYAN TAGUIG CITY""
-            },
-            ""createordertime"": ""2020-07-09 22:48:26"",
-            ""paytype"": ""1"",
-            ""weight"": ""0.1"",
-            ""itemsvalue"": ""1599"",
-            ""totalquantity"": ""1"",
-            ""remark"": """",
-            ""items"": [
-                {
-                    ""itemname"": ""Strap wide leg pants"",
-                    ""number"": ""1"",
-                    ""itemvalue"": ""1599.000"",
-                    ""desc"": ""Strap wide leg pants""
-                }
-            ]
-            }";
-            string msg_type = "ORDERCREATE";
-
-            dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
-
-            //for VIP code
-            payloadObj.eccompanyid = GlobalModel.eccompany_id;
-            payloadObj.customerid = GlobalModel.customer_id;
-
-            //updating sender information
-            payloadObj.sender.name = GlobalModel.sender_name;
-            payloadObj.sender.phone = GlobalModel.sender_phone;
-            payloadObj.sender.mobile = GlobalModel.sender_phone;
-            payloadObj.sender.prov = GlobalModel.sender_province;
-            payloadObj.sender.city = GlobalModel.sender_city;
-            payloadObj.sender.area = GlobalModel.sender_area;
-            payloadObj.sender.address = GlobalModel.sender_address;
-
-            foreach(bulk_model details in model)
+                string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+                string key = Decrypt(GlobalModel.key);
+                string logistics_interface = @"
             {
-                //updating receiver information
-                payloadObj.receiver.name = details.receiver_name;
-                payloadObj.receiver.phone = details.receiver_phone;
-                payloadObj.receiver.mobile = details.receiver_phone;
-                payloadObj.receiver.prov = details.receiver_province;
-                payloadObj.receiver.city = details.receiver_city;
-                payloadObj.receiver.area = details.receiver_area;
-                payloadObj.receiver.address = details.receiver_address;
-                payloadObj.txlogisticid = "TECS-" + GenerateTransactionID();
+                        ""actiontype"": ""add"",
+                        ""environment"": ""staging:yes"",
+                        ""eccompanyid"": ""THIRDYNAL"",
+                        ""customerid"": ""CS-V0234"",
+                        ""txlogisticid"": ""1547191-2707123"",
+                        ""ordertype"": ""1"",
+                        ""servicetype"": ""6"",
+                        ""deliverytype"": ""1"",
+                        ""sender"": {
+                            ""name"": ""grace"",
+                            ""mobile"": ""09951455616"",
+                            ""prov"": ""METRO-MANILA"",
+                            ""city"": ""TAGUIG"",
+                            ""area"": ""BAGUMBAYAN"",
+                            ""address"": ""#20 1st AVE. STA. MARIA INDUSTRIAL BAGUMBAYAN TAGUIG CITY""
+                        },
+                        ""receiver"": {
+                            ""name"": ""Kathea de guzman"",
+                            ""mobile"": ""0917 536 7871"",
+                            ""phone"": """",
+                            ""prov"": ""METRO-MANILA"",
+                            ""city"": ""QUEZON-CITY"",
+                            ""area"": ""BAGONG LIPUNAN"",
+                            ""address"": ""#20 1st AVE. STA. MARIA INDUSTRIAL BAGUMBAYAN TAGUIG CITY""
+                        },
+                        ""createordertime"": ""2020-07-09 22:48:26"",
+                        ""paytype"": ""1"",
+                        ""weight"": ""0.1"",
+                        ""itemsvalue"": ""1599"",
+                        ""totalquantity"": ""1"",
+                        ""remark"": """",
+                        ""items"": [
+                            {
+                                ""itemname"": ""Strap wide leg pants"",
+                                ""number"": ""1"",
+                                ""itemvalue"": ""1599.000"",
+                                ""desc"": ""Strap wide leg pants""
+                            }
+                        ]
+                        }";
+                string msg_type = "ORDERCREATE";
 
-                //updating other fields
-                payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                payloadObj.weight = details.weight;
-                payloadObj.itemsvalue = details.total;
-                payloadObj.totalquantity = details.quantity;
-                payloadObj.remark = details.remarks;
+                dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
-                //updating items field
-                var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
-                if (itemsArray != null && itemsArray.Count > 0)
+                //for VIP code
+                payloadObj.eccompanyid = GlobalModel.eccompany_id;
+                payloadObj.customerid = GlobalModel.customer_id;
+
+                //updating sender information
+                payloadObj.sender.name = GlobalModel.sender_name;
+                payloadObj.sender.phone = GlobalModel.sender_phone;
+                payloadObj.sender.mobile = GlobalModel.sender_phone;
+                payloadObj.sender.prov = GlobalModel.sender_province;
+                payloadObj.sender.city = GlobalModel.sender_city;
+                payloadObj.sender.area = GlobalModel.sender_area;
+                payloadObj.sender.address = GlobalModel.sender_address;
+
+                foreach (bulk_model details in model)
                 {
-                    var firstItem = itemsArray[0];
-                    firstItem["itemname"] = details.product_name;
-                    firstItem["number"] = details.quantity;
-                    firstItem["itemvalue"] = details.total;
-                }
+                    //updating receiver information
+                    payloadObj.receiver.name = details.receiver_name;
+                    payloadObj.receiver.phone = details.receiver_phone;
+                    payloadObj.receiver.mobile = details.receiver_phone;
+                    payloadObj.receiver.prov = details.receiver_province;
+                    payloadObj.receiver.city = details.receiver_city;
+                    payloadObj.receiver.area = details.receiver_area;
+                    payloadObj.receiver.address = details.receiver_address;
+                    payloadObj.txlogisticid = "TECS-" + GenerateTransactionID();
 
-                string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
-                //MessageBox.Show(updatedPayload);
-                try
-                {
-                    // Step 3: Sign the JSON content and secret key
-                    string data_digest = MD5Util.GetMD5Hash(updatedPayload + key);
-                    string encodedDataDigest = Convert.ToBase64String(Encoding.UTF8.GetBytes(data_digest));
+                    //updating other fields
+                    payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    payloadObj.weight = details.weight;
+                    payloadObj.itemsvalue = details.total;
+                    payloadObj.totalquantity = details.quantity;
+                    payloadObj.remark = details.remarks;
 
-                    // Step 4: Send HTTP POST request
-                    using (WebClient client = new WebClient())
+                    //updating items field
+                    var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
+                    if (itemsArray != null && itemsArray.Count > 0)
                     {
-                        // Prepare request parameters
-                        NameValueCollection requestData = new NameValueCollection();
-                        requestData.Add("logistics_interface", updatedPayload);
-                        requestData.Add("data_digest", encodedDataDigest);
-                        requestData.Add("msg_type", msg_type);
-                        requestData.Add("eccompanyid", GlobalModel.eccompany_id);
-
-                        // Send the POST request
-                        byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
-
-                        // Decode and display the response
-                        string response = Encoding.UTF8.GetString(responseBytes);
-                        MessageBox.Show(response);
-
-                        //to decode the response
-                        dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
-                        string logisticProviderId = responseObject.logisticproviderid;
-                        dynamic responseItems = responseObject.responseitems[0];
-                        string success = responseItems.success;
-                        string reason = responseItems.reason;
-                        string txLogisticId = responseItems.txlogisticid;
-                        string mailNo = responseItems.mailno;
-                        string sortingCode = responseItems.sortingcode;
-
-                        // Store the parameters in separate strings
-                        string logisticProviderIdString = logisticProviderId.ToString();
-                        string successString = success.ToString();
-                        string reasonString = reason.ToString();
-
-                        //if there is no error
-                        if (successString == "true")
-                        {
-                            string txLogisticIdString = txLogisticId.ToString();
-                            string mailNoString = mailNo.ToString();
-                            string sortingCodeString = sortingCode.ToString();
-
-                            //true = insert suspicious
-                            if (suspicious)
-                            {
-
-                                bulk_inserts.bulk_receiver(details);
-
-                                bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
-
-                                bulk_inserts.bulk_incentives(details, txLogisticIdString);
-
-                                bulk_inserts.bulk_update_quantity(details);
-
-                                bulk_inserts.bulk_update_stocks(details);
-
-                                suspiciouscontroller.InsertSuspiciousData();
-
-                            }
-                            else
-                            {
-                                bulk_inserts.bulk_receiver(details);
-
-                                bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
-
-                                bulk_inserts.bulk_incentives(details, txLogisticIdString);
-
-                                bulk_inserts.bulk_update_quantity(details);
-
-                                bulk_inserts.bulk_update_stocks(details);
-                            }
-
-                            MessageBox.Show("Order has been Created");
-                            return true;
-                        }
-                        //if there's error on API
-                        else
-                        {
-                            MessageBox.Show("Please double check the details provided.");
-                            return false;
-                        }
-
+                        var firstItem = itemsArray[0];
+                        firstItem["itemname"] = details.product_name;
+                        firstItem["number"] = details.quantity;
+                        firstItem["itemvalue"] = details.total;
                     }
 
+                    string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
+                    //MessageBox.Show(updatedPayload);
+                    try
+                    {
+                        // Step 3: Sign the JSON content and secret key
+                        string data_digest = MD5Util.GetMD5Hash(updatedPayload + key);
+                        string encodedDataDigest = Convert.ToBase64String(Encoding.UTF8.GetBytes(data_digest));
+
+                        // Step 4: Send HTTP POST request
+                        using (WebClient client = new WebClient())
+                        {
+                            // Prepare request parameters
+                            NameValueCollection requestData = new NameValueCollection();
+                            requestData.Add("logistics_interface", updatedPayload);
+                            requestData.Add("data_digest", encodedDataDigest);
+                            requestData.Add("msg_type", msg_type);
+                            requestData.Add("eccompanyid", GlobalModel.eccompany_id);
+
+                            // Send the POST request
+                            byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
+
+                            // Decode and display the response
+                            string response = Encoding.UTF8.GetString(responseBytes);
+
+                            //to decode the response
+                            dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
+                            string logisticProviderId = responseObject.logisticproviderid;
+                            dynamic responseItems = responseObject.responseitems[0];
+                            string success = responseItems.success;
+                            string reason = responseItems.reason;
+                            string txLogisticId = responseItems.txlogisticid;
+                            string mailNo = responseItems.mailno;
+                            string sortingCode = responseItems.sortingcode;
+
+                            // Store the parameters in separate strings
+                            string logisticProviderIdString = logisticProviderId.ToString();
+                            string successString = success.ToString();
+                            string reasonString = reason.ToString();
+
+                            //if there is no error
+                            if (successString == "true")
+                            {
+                                string txLogisticIdString = txLogisticId.ToString();
+                                string mailNoString = mailNo.ToString();
+                                string sortingCodeString = sortingCode.ToString();
+
+                                //true = insert suspicious
+                                if (suspicious)
+                                {
+
+                                    bulk_inserts.bulk_receiver(details);
+
+                                    bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
+
+                                    bulk_inserts.bulk_incentives(details, txLogisticIdString);
+
+                                    bulk_inserts.bulk_update_quantity(details);
+
+                                    bulk_inserts.bulk_update_stocks(details);
+
+                                    suspiciouscontroller.InsertSuspiciousData();
+
+                                }
+                                else
+                                {
+                                    bulk_inserts.bulk_receiver(details);
+
+                                    bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
+
+                                    bulk_inserts.bulk_incentives(details, txLogisticIdString);
+
+                                    bulk_inserts.bulk_update_quantity(details);
+
+                                    bulk_inserts.bulk_update_stocks(details);
+                                }
+                            }
+                            //if there's error on API
+                            else
+                            {
+                                MessageBox.Show("Please double check the details provided.");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("An error occurred: " + ex.Message);
-                    return false;
-                }
-            }
-            return false;
+            });
+            btn.IsEnabled = true;
         }
         public long GenerateTransactionID()
         {

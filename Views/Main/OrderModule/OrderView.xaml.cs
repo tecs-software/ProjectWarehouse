@@ -220,7 +220,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         private void btnBulkOrder_Click(object sender, RoutedEventArgs e)
         {
-            new BulkOrderPopup().ShowDialog();
+
+            if (new BulkOrderPopup().ShowDialog() == true)
+            {
+                refreshTable();
+            }
         }
         //public async void refreshTable()
         //{

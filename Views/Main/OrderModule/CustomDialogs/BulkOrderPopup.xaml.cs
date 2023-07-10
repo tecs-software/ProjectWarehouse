@@ -79,7 +79,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             Csv_Controller.insertItems(cb);
         }
 
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if (!Csv_Controller.checkNullCells(dtBulkOrders) && !Csv_Controller.checkItemNameColumn(dtBulkOrders, cb))
             { }
@@ -108,10 +108,16 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                     };
                     Csv_Controller.model.Add(model);
                 }
-                
-                bulk_api.create_bulk_api(Csv_Controller.model, false);
+
+                await bulk_api.create_bulk_api(Csv_Controller.model, false, btnConfirm);
+                if (btnConfirm.IsEnabled)
+                {
+                    btnConfirm.IsEnabled = true;
+                    MessageBox.Show("Orders has been Created");
+                    this.DialogResult = true;
+                    this.Close();
+                }
             }
-           
         }
     }
 }
