@@ -142,12 +142,43 @@ namespace WarehouseManagement.Controller
         }
         public static void checkItemNameColumn(DataGrid dg, ComboBox cb)
         {
-            foreach (var item in dg.Items)
+            List<string> missingItemNames = new List<string>();
+
+            foreach (DataRowView rowView in dg.Items)
             {
-                if(cb.Text == string.Empty)
+                // Access the underlying DataRow
+                DataRow row = rowView.Row;
+
+                // Check if the row is empty
+                if (row == null)
                 {
-                    MessageBox.Show("item name not selected");
+                    missingItemNames.Add("Empty row found.");
+                    continue;
                 }
+
+                // Loop through the columns in the row
+                for (int i = 0; i < row.ItemArray.Length; i++)
+                {
+                    // Access the value in the cell
+                    var cellValue = row[i].ToString();
+
+                    // Check if the cell value is empty
+                    if (string.IsNullOrEmpty(cellValue))
+                    {
+                        int rowIndex = row.Table.Rows.IndexOf(row) + 1;
+                        missingItemNames.Add($"Empty cell found in row {rowIndex}, column {i + 1}");
+                        break; // Skip remaining cells in the row
+                    }
+                }
+            }
+            if(missingItemNames.Count > 0)
+            {
+                string message = "The following cells are missing or empty:\n" + string.Join("\n", missingItemNames);
+                MessageBox.Show(message, "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+
             }
         }
     }
