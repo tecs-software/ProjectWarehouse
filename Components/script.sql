@@ -33,6 +33,28 @@ BEGIN
    )
 END
 GO
+-- Create tbl_bulk_order_temp table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_bulk_order_temp')
+BEGIN
+   CREATE TABLE tbl_bulk_order_temp(
+		ID INT PRIMARY KEY IDENTITY(1,1),
+		Quantity INT,
+		ItemName NVARCHAR(255),
+		ReceiverName NVARCHAR(255),
+		ReceiverContactNumber NVARCHAR(50),
+		ReceiverAddress NVARCHAR(255),
+		ReceiverProvince NVARCHAR(255),
+		ReceiverCity NVARCHAR(255),
+		ReceiverRegion NVARCHAR(255),
+		ParcelName NVARCHAR(255),
+		[Weight] DECIMAL(18,2),
+		TotalParcel INT,
+		ParcelValue DECIMAL(18,2),
+		COD DECIMAL(18,2),
+		Remarks NVARCHAR(255)
+	)
+END
+GO
 --Create tbl_trial
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_trial')
 BEGIN
@@ -522,6 +544,54 @@ BEGIN
     END
 	');
 END;
-
+--StoreProc for Saving  tbl_bulk_order_temp data
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpSave_BulkOrderTemp')
+BEGIN
+	EXEC('
+	CREATE PROC SpSave_BulkOrderTemp
+	@ID INT,
+	@ItemName NVARCHAR(255),
+	@Quantity INT,
+	@ReceiverName NVARCHAR(255),
+	@ReceiverContactNumber NVARCHAR(50),
+	@ReceiverAddress NVARCHAR(255),
+	@ReceiverProvince NVARCHAR(255),
+	@ReceiverCity NVARCHAR(255),
+	@ReceiverRegion NVARCHAR(255),
+	@ParcelName NVARCHAR(255),
+	@Weight DECIMAL(18,2),
+	@TotalParcel INT,
+	@ParcelValue DECIMAL(18,2),
+	@COD DECIMAL(18,2),
+	@Remarks NVARCHAR(255)
+	AS
+	BEGIN
+		IF @ID = 0 
+		BEGIN
+			INSERT INTO tbl_bulk_order_temp(ItemName,Quantity,ReceiverName,ReceiverContactNumber,ReceiverAddress,ReceiverProvince,ReceiverCity,ReceiverRegion,ParcelName,[Weight], TotalParcel,ParcelValue,COD, Remarks) VALUES
+			(@ItemName, @Quantity, @ReceiverName, @ReceiverContactNumber, @ReceiverAddress, @ReceiverProvince, @ReceiverCity, @ReceiverRegion, @ParcelName, @Weight, @TotalParcel, @ParcelValue, @COD, @Remarks);
+		END;
+		ELSE
+		BEGIN
+			UPDATE tbl_bulk_order_temp SET
+				ItemName = @ItemName,
+				Quantity = @Quantity,
+				ReceiverName = @ReceiverName,
+				ReceiverContactNumber = @ReceiverContactNumber,
+				ReceiverAddress = @ReceiverAddress,
+				ReceiverProvince = @ReceiverProvince,
+				ReceiverCity = @ReceiverCity,
+				ReceiverRegion = @ReceiverRegion,
+				ParcelName = @ParcelName,
+				[Weight] = @Weight,
+				TotalParcel = @TotalParcel,
+				ParcelValue = @ParcelValue,
+				COD = @COD,
+				Remarks = @Remarks
+			WHERE ID = @ID
+		END;
+	END;
+	');
+END;
 
 

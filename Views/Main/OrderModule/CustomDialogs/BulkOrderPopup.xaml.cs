@@ -42,6 +42,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 //pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
                 //lblTotalNumberOfItems.Text = numberofitems.ToString();
                 Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+                dtBulkOrders.ItemsSource = Csv_Controller.dataTableAddress.DefaultView;
             }
         }
 
@@ -53,6 +54,19 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void dtBulkOrders_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(decimal))
+            {
+                DataGridTextColumn dataGridTextColumn = e.Column as DataGridTextColumn;
+                if (dataGridTextColumn != null)
+                {
+                    dataGridTextColumn.Binding.StringFormat = $"#,##0.#0";
+
+                }
+            }
         }
     }
 }
