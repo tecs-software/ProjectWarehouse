@@ -135,6 +135,7 @@ namespace WarehouseManagement.Controller
             else
                 return true;
         }
+
         public static bool checkItemNameColumn(DataGrid dg, ComboBox cb)
         {
             List<string> missingItemNames = new List<string>();
@@ -194,6 +195,8 @@ namespace WarehouseManagement.Controller
         {
             DataTable dt_BulkOrder = new DataTable();
             dt_BulkOrder.Clear();
+            dt_BulkOrder.Columns.Add("Item Name");
+            dt_BulkOrder.Columns.Add("Quantity");
 
             return dt_BulkOrder;
         }
