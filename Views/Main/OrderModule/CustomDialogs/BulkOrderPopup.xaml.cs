@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     {
         public BulkOrderPopup()
         {
+            Csv_Controller.dataTableBulkOrders = null;
             InitializeComponent();
         }
 
@@ -78,12 +80,14 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if (!Csv_Controller.checkNullCells(dtBulkOrders) && !Csv_Controller.checkItemNameColumn(dtBulkOrders, cb))
-            {
-                
-            }
+            { }
             else
             {
-               
+                Csv_Controller.dataTableBulkOrders = Csv_Controller.PopulateToDataTable(dtBulkOrders);
+                foreach(DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                {
+
+                }
             }
            
         }

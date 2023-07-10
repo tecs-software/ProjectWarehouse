@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
 using System.Windows;
+using System.Windows.Media;
 
 namespace WarehouseManagement.Controller
 {
@@ -20,6 +21,7 @@ namespace WarehouseManagement.Controller
         static sql_control sql = new sql_control();
         public static DataTable dataTableAddress { get; set; }
         public static Boolean ConfirmedToImport { get; set; }
+        public static DataTable dataTableBulkOrders { get; set; }
         public static DataTable GetDataTableFromCSVFile(string csv_file_path)
         {
             DataTable csvData = new DataTable();
@@ -187,24 +189,84 @@ namespace WarehouseManagement.Controller
         {
             DataTable dt_BulkOrder = new DataTable();
             dt_BulkOrder.Clear();
-            dt_BulkOrder.Columns.Add("ItemName");
+            dt_BulkOrder.Columns.Add("Item Name");
             dt_BulkOrder.Columns.Add("Quantity");
 
             dt_BulkOrder.Columns.Add("Remarks");
-            dt_BulkOrder.Columns.Add("ReceiverName");
-            dt_BulkOrder.Columns.Add("ReceiverPhoneNumber");
-            dt_BulkOrder.Columns.Add("ReceiverAddress");
-            dt_BulkOrder.Columns.Add("ReceiverProvince");
-            dt_BulkOrder.Columns.Add("ReceiverCity");
-            dt_BulkOrder.Columns.Add("ReceiverRegion");
-            dt_BulkOrder.Columns.Add("ExpressType");
-            dt_BulkOrder.Columns.Add("ParcelName");
+            dt_BulkOrder.Columns.Add("Receiver Name");
+            dt_BulkOrder.Columns.Add("Receiver Phone Number");
+            dt_BulkOrder.Columns.Add("Receiver Address");
+            dt_BulkOrder.Columns.Add("Receiver Province");
+            dt_BulkOrder.Columns.Add("Receiver City");
+            dt_BulkOrder.Columns.Add("Receiver Region");
+            dt_BulkOrder.Columns.Add("Express Type");
+            dt_BulkOrder.Columns.Add("Parcel Name");
             dt_BulkOrder.Columns.Add("Weight");
-            dt_BulkOrder.Columns.Add("TotalParcel");
-            dt_BulkOrder.Columns.Add("ParcelValue");
+            dt_BulkOrder.Columns.Add("Total Parcel");
+            dt_BulkOrder.Columns.Add("Parcel Value");
             dt_BulkOrder.Columns.Add("COD");
 
             return dt_BulkOrder;
         }
+        public static DataTable PopulateToDataTable(DataGrid dataGrid)
+        {
+            DataTable dt_BulkOrder = DataTable_Creation();
+
+            foreach (var item in dataGrid.Items)
+            {
+                var dataGridRow = dataGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+                if (dataGridRow != null)
+                {
+                    DataRow row = dt_BulkOrder.NewRow();
+                    for (int columnIndex = 0; columnIndex < dataGrid.Columns.Count; columnIndex++)
+                    {
+                        var column = dataGrid.Columns[columnIndex];
+                        if (column is DataGridTextColumn textColumn)
+                        {
+
+                            var cellContent = column.GetCellContent(dataGridRow);
+                            if (cellContent is TextBlock textBlock)
+                            { 
+                                row[textColumn.Header.ToString()] = textBlock.Text;
+                            }
+                        }
+                        else if (column is DataGridTemplateColumn templateColumn)
+                        {
+                            var cellContent = column.GetCellContent(dataGridRow);
+                            if (cellContent is FrameworkElement frameworkElement)
+                            {
+                                var comboBox = FindVisualChild<ComboBox>(frameworkElement);
+                                if (comboBox != null)
+                                {
+                                    row[templateColumn.Header.ToString()] = comboBox.Text;
+                                }
+                            }
+                        }
+                    }
+                    dt_BulkOrder.Rows.Add(row);
+                }
+            }
+            return dt_BulkOrder;
+        }
+
+        private static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+        {
+            if (obj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(obj, i);
+                    if (child is T found)
+                        return found;
+
+                    var descendant = FindVisualChild<T>(child);
+                    if (descendant != null)
+                        return descendant;
+                }
+            }
+
+            return null;
+        }
+
     }
 }

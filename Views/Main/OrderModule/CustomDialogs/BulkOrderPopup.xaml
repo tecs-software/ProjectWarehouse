@@ -84,6 +84,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
+            
             <Button Grid.Row="4" HorizontalAlignment="Stretch"
                      Grid.Column="0" Content="Confirm" Margin="8,8,8,0"
                 BorderBrush="{StaticResource secondaryColor}" Height="45" x:Name="btnConfirm" FontSize="15" Background="{StaticResource secondaryColor}" Click="btnConfirm_Click">
