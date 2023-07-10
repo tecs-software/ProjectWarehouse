@@ -195,8 +195,22 @@ namespace WarehouseManagement.Controller
         {
             DataTable dt_BulkOrder = new DataTable();
             dt_BulkOrder.Clear();
-            dt_BulkOrder.Columns.Add("Item Name");
+            dt_BulkOrder.Columns.Add("ItemName");
             dt_BulkOrder.Columns.Add("Quantity");
+
+            dt_BulkOrder.Columns.Add("Remarks");
+            dt_BulkOrder.Columns.Add("ReceiverName");
+            dt_BulkOrder.Columns.Add("ReceiverPhoneNumber");
+            dt_BulkOrder.Columns.Add("ReceiverAddress");
+            dt_BulkOrder.Columns.Add("ReceiverProvince");
+            dt_BulkOrder.Columns.Add("ReceiverCity");
+            dt_BulkOrder.Columns.Add("ReceiverRegion");
+            dt_BulkOrder.Columns.Add("ExpressType");
+            dt_BulkOrder.Columns.Add("ParcelName");
+            dt_BulkOrder.Columns.Add("Weight");
+            dt_BulkOrder.Columns.Add("TotalParcel");
+            dt_BulkOrder.Columns.Add("ParcelValue");
+            dt_BulkOrder.Columns.Add("COD");
 
             return dt_BulkOrder;
         }
