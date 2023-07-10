@@ -330,6 +330,7 @@ namespace WarehouseManagement.Controller
                         // Decode and display the response
                         string response = Encoding.UTF8.GetString(responseBytes);
                         MessageBox.Show(response);
+
                         //to decode the response
                         dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
                         string logisticProviderId = responseObject.logisticproviderid;
