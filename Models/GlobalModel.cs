@@ -20,6 +20,7 @@ namespace WarehouseManagement.Models
 {
     public class GlobalModel
     {
+        public static int sender_id { get; set; }
         public static string sender_name { get; set; } = string.Empty;
         public static string sender_province { get; set; } = string.Empty;
         public static string sender_city { get; set; } = string.Empty;

@@ -439,14 +439,15 @@ BEGIN
 	@remarks VARCHAR(255),
 	@status VARCHAR(255),
 	@receiver_phone VARCHAR(255),
-	@receiver_address VARCHAR(255)
+	@receiver_address VARCHAR(255),
+	@sender_id INT
 	AS
     BEGIN
 		DECLARE @receiver_id INT = (SELECT TOP 1(receiver_id) FROM tbl_receiver WHERE receiver_phone = @receiver_phone AND receiver_address = @receiver_address ORDER BY receiver_id DESC)
 		DECLARE @product_id VARCHAR(255) = (SELECT product_id FROM tbl_products WHERE item_name = @product_name)
 
-        INSERT INTO tbl_orders(order_id, courier, waybill_number, user_id, receiver_id, product_id, quantity, total, remarks, status) VALUES
-        (@order_id, @courier, @waybill_number, @user_id, @receiver_id, @product_id, @quantity, @total, @remarks, @status)
+        INSERT INTO tbl_orders(order_id, courier, waybill_number, user_id, receiver_id, product_id, quantity, total, remarks, status, sender_id) VALUES
+        (@order_id, @courier, @waybill_number, @user_id, @receiver_id, @product_id, @quantity, @total, @remarks, @status, @sender_id)
 		
     END;
     ');

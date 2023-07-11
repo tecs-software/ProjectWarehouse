@@ -219,7 +219,7 @@ namespace WarehouseManagement.Controller
             btn.IsEnabled = false;
             await Task.Run(async () =>
             {
-                string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+                string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
                 string key = Decrypt(GlobalModel.key);
                 string logistics_interface = @"
                     {
@@ -266,6 +266,7 @@ namespace WarehouseManagement.Controller
                 string msg_type = "ORDERCREATE";
 
                 dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
+
 
                 //for VIP code
                 payloadObj.eccompanyid = GlobalModel.eccompany_id;

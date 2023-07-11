@@ -57,6 +57,7 @@ namespace WarehouseManagement.Database
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
+                    GlobalModel.sender_id = int.Parse(dr[0].ToString());
                     GlobalModel.sender_name = dr[1].ToString();
                     GlobalModel.sender_province = dr[2].ToString();
                     GlobalModel.sender_city = dr[3].ToString();
