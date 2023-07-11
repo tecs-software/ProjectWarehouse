@@ -219,12 +219,12 @@ namespace WarehouseManagement.Controller
             btn.IsEnabled = false;
             await Task.Run(async () =>
             {
-                string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+                string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
                 string key = Decrypt(GlobalModel.key);
                 string logistics_interface = @"
                     {
                         ""actiontype"": ""add"",
-                        ""environment"": ""staging:yes"",
+                        ""environment"": ""production:yes"",
                         ""eccompanyid"": ""THIRDYNAL"",
                         ""customerid"": ""CS-V0234"",
                         ""txlogisticid"": ""1547191-2707123"",
