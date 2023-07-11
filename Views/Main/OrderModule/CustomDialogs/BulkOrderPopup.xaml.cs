@@ -41,16 +41,24 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                //txtFileNameProduct.Text = openFileDialog.FileName;
-                Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
-                int numberofitems = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName).Rows.Count;
-                //pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
-                //lblTotalNumberOfItems.Text = numberofitems.ToString();
-                Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
-                dtBulkOrders.ItemsSource = Csv_Controller.dataTableAddress.DefaultView;
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    //txtFileNameProduct.Text = openFileDialog.FileName;
+                    Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+                    int numberofitems = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName).Rows.Count;
+                    //pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
+                    //lblTotalNumberOfItems.Text = numberofitems.ToString();
+                    Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+                    dtBulkOrders.ItemsSource = Csv_Controller.dataTableAddress.DefaultView;
+                }
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -85,12 +93,14 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if (!Csv_Controller.checkNullCells(dtBulkOrders) && !Csv_Controller.checkItemNameColumn(dtBulkOrders, cb))
-            { }
+            {
+                
+            }
             else
             {
                 Csv_Controller.dataTableBulkOrders = Csv_Controller.PopulateToDataTable(dtBulkOrders);
                 //Push to Create_API
-                foreach(DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
                 {
                     bulk_model model = new bulk_model()
                     {
@@ -123,7 +133,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                     btnConfirm.IsEnabled = true;
                     MessageBox.Show("Orders has been Created");
                 }
-                //bulk_inserts.show_temp_table(dtBulkOrders);
+                bulk_inserts.show_temp_table(dtBulkOrders);
             }
         }
         void CustomMessageBox(String message, Boolean questionType)

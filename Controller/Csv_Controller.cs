@@ -237,9 +237,15 @@ namespace WarehouseManagement.Controller
                             if (cellContent is FrameworkElement frameworkElement)
                             {
                                 var comboBox = FindVisualChild<ComboBox>(frameworkElement);
+                                var textBox = FindVisualChild<TextBox>(frameworkElement);
+
                                 if (comboBox != null)
                                 {
                                     row[templateColumn.Header.ToString()] = comboBox.Text;
+                                }
+                                else if (textBox != null)
+                                {
+                                    row[templateColumn.Header.ToString()] = textBox.Text;
                                 }
                             }
                         }

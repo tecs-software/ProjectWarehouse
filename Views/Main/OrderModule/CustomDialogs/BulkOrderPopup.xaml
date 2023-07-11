@@ -98,9 +98,23 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Quantity" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox
+                                      Margin="0,0,0,0"
+                                      MaxLength="4"
+                                      materialDesign:HintAssist.Hint="Quantity" FontSize="13"
+                                      materialDesign:HintAssist.Foreground="Black"
+                                      x:Name="txtQuantity"
+                                      />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
+               
                 <Button Grid.Row="4" HorizontalAlignment="Stretch"
                      Grid.Column="0" Content="Confirm" Margin="8,8,8,0"
                 BorderBrush="{StaticResource secondaryColor}" Height="45" x:Name="btnConfirm" FontSize="15" Background="{StaticResource secondaryColor}" Click="btnConfirm_Click">
