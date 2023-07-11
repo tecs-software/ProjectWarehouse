@@ -21,7 +21,7 @@ namespace WarehouseManagement.Controller
         public static bool IsTrialEnded()
         {
             int days = int.Parse(sql.ReturnResult("EXEC Sp_Trial_Validation"));
-            if (days >= 4)
+            if (days >= 14)
                 return true;
             else
                 return false;
