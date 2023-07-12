@@ -31,7 +31,7 @@ namespace WarehouseManagement.Database
         sql_control sql = new sql_control();
         public bool insert_sender(TextBox id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
         {
-            sql.AddParam("@id", id.Text);
+            sql.AddParam("@id", int.Parse(id.Text));
             sql.AddParam("@name", page_name.Text);
             sql.AddParam("@phone", page_number.Text);
             sql.AddParam("@province", cb_province.Text);

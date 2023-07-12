@@ -30,6 +30,7 @@ namespace WarehouseManagement.Views.Onboarding
         public OnboardingSetup()
         {
             InitializeComponent();
+            txtId.Text = "0";
             load_couriers();
             txtFileNameProduct.Text = "Addressing_guide_with_can_do_delivery.csv";
             Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
@@ -99,6 +100,7 @@ namespace WarehouseManagement.Views.Onboarding
                     }
                     else
                     {
+                        MessageBox.Show("Debug");
                         return;
                     }
                 }

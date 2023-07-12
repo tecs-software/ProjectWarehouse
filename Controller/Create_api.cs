@@ -372,7 +372,6 @@ namespace WarehouseManagement.Controller
 
                                     bulk_inserts.bulk_temp_insert(details);
                                     //suspiciouscontroller.InsertSuspiciousData();
-
                                 }
                                 else
                                 {
