@@ -79,15 +79,11 @@ namespace WarehouseManagement.Controller
 
         public static void show_temp_table(DataGrid dg)
         {
-            MessageBox.Show("These are the suspicious datas");
             sql.Query($"SELECT * FROM tbl_bulk_order_temp");
-            if (sql.HasException(true))
-            {
-                return;
-            }
-
+            if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
+                MessageBox.Show("These are the suspicious datas");
                 // Clear the existing columns
                 dg.Columns.Clear();
 
