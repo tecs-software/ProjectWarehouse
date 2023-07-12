@@ -94,7 +94,7 @@
                                       materialDesign:HintAssist.Foreground="Black"
                                       x:Name="cmbSellerName"
                                       BorderBrush="Black"
-                                      Background="{StaticResource textboxProfitAnalysisColor1}" Loaded="cmbSellerName_Loaded"/>
+                                      Background="{StaticResource textboxProfitAnalysisColor1}" Loaded="cmbSellerName_Loaded" DropDownClosed="cmbSellerName_DropDownClosed"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -106,7 +106,7 @@
                                       MaxLength="4"
                                       materialDesign:HintAssist.Hint="Quantity" FontSize="13"
                                       materialDesign:HintAssist.Foreground="Black"
-                                      x:Name="txtQuantity"
+                                      x:Name="txtQuantity" Loaded="txtQuantity_Loaded"
                                       />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

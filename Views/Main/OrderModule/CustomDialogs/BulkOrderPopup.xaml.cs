@@ -84,56 +84,63 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             }
         }
         public static ComboBox cb { get; set; }
+        public static TextBox tb { get; set; }
         private void cmbSellerName_Loaded(object sender, RoutedEventArgs e)
         {
             cb = sender as ComboBox;
             Csv_Controller.insertItems(cb);
         }
-
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            if (!Csv_Controller.checkNullCells(dtBulkOrders) && !Csv_Controller.checkItemNameColumn(dtBulkOrders, cb))
+            if (!Csv_Controller.checkItemNameColumn(dtBulkOrders, cb) && !Csv_Controller.checkNullCells(dtBulkOrders, tb))
             {
                 
             }
             else
             {
-                Csv_Controller.dataTableBulkOrders = Csv_Controller.PopulateToDataTable(dtBulkOrders);
-                //Push to Create_API
-                foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                try
                 {
-                    bulk_model model = new bulk_model()
+                    Csv_Controller.dataTableBulkOrders = Csv_Controller.PopulateToDataTable(dtBulkOrders);
+                    //Push to Create_API
+                    foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
                     {
-                        //receiver payload
-                        receiver_name = dr[3].ToString(),
-                        receiver_address = dr[5].ToString(),
-                        receiver_phone = dr[4].ToString(),
-                        receiver_province = dr[6].ToString(),
-                        receiver_city = dr[7].ToString(),
-                        receiver_area = dr[8].ToString(),
+                        bulk_model model = new bulk_model()
+                        {
+                            //receiver payload
+                            receiver_name = dr[3].ToString(),
+                            receiver_address = dr[5].ToString(),
+                            receiver_phone = dr[4].ToString(),
+                            receiver_province = dr[6].ToString(),
+                            receiver_city = dr[7].ToString(),
+                            receiver_area = dr[8].ToString(),
 
-                        //other fields
-                        remarks = dr[2].ToString(),
-                        product_name = dr[0].ToString(),
-                        total = decimal.Parse(dr[13].ToString()),
-                        quantity = int.Parse(dr[1].ToString()),
+                            //other fields
+                            remarks = dr[2].ToString(),
+                            product_name = dr[0].ToString(),
+                            total = decimal.Parse(dr[13].ToString()),
+                            quantity = int.Parse(dr[1].ToString()),
 
-                        //etc
-                        cod = decimal.Parse(dr[14].ToString()),
-                        parcel_value = decimal.Parse(dr[13].ToString()),
-                        parcel_name = dr[10].ToString(),
-                        total_parcel = int.Parse(dr[12].ToString())
+                            //etc
+                            cod = decimal.Parse(dr[14].ToString()),
+                            parcel_value = decimal.Parse(dr[13].ToString()),
+                            parcel_name = dr[10].ToString(),
+                            total_parcel = int.Parse(dr[12].ToString())
 
-                    };
-                    Csv_Controller.model.Add(model);
+                        };
+                        Csv_Controller.model.Add(model);
+                    }
+                    await bulk_api.create_bulk_api(Csv_Controller.model, false, btnConfirm);
+                    if (btnConfirm.IsEnabled)
+                    {
+                        btnConfirm.IsEnabled = true;
+                        MessageBox.Show("Orders has been Created");
+                    }
+                    //bulk_inserts.show_temp_table(dtBulkOrders);
                 }
-                await bulk_api.create_bulk_api(Csv_Controller.model, false, btnConfirm);
-                if (btnConfirm.IsEnabled)
+                catch (Exception ex)
                 {
-                    btnConfirm.IsEnabled = true;
-                    MessageBox.Show("Orders has been Created");
+
                 }
-                bulk_inserts.show_temp_table(dtBulkOrders);
             }
         }
         void CustomMessageBox(String message, Boolean questionType)
@@ -161,6 +168,16 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
         private void btnYes_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void cmbSellerName_DropDownClosed(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void txtQuantity_Loaded(object sender, RoutedEventArgs e)
+        {
+            tb = sender as TextBox;
         }
     }
 }

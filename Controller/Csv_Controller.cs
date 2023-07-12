@@ -110,10 +110,15 @@ namespace WarehouseManagement.Controller
                 }
             }
         }
-        public static bool checkNullCells(DataGrid dg) 
+        public static bool checkNullCells(DataGrid dg, TextBox tb) 
         {
             List<string> missingCells = new List<string>();
 
+            int columnIndex = 1;
+            if (tb.Text == "")
+            {
+                missingCells.Add($"Quantity not set for column Quantity");
+            }
             foreach (DataRowView rowView in dg.Items)
             {
                 DataRow row = rowView.Row;
@@ -146,34 +151,14 @@ namespace WarehouseManagement.Controller
         {
             List<string> missingItemNames = new List<string>();
 
-            foreach (DataRowView rowView in dg.Items)
+            int columnIndex = 0; // Index of the first column
+
+            if (cb.Text == null || cb.Text == "")
             {
-                // Access the underlying DataRow
-                DataRow row = rowView.Row;
-
-                // Check if the row is empty
-                if (row == null)
-                {
-                    missingItemNames.Add("Empty row found.");
-                    continue;
-                }
-
-                // Loop through the columns in the row
-                for (int i = 0; i < row.ItemArray.Length; i++)
-                {
-                    // Access the value in the cell
-                    var cellValue = row[i].ToString();
-
-                    // Check if the cell value is empty
-                    if (string.IsNullOrEmpty(cellValue))
-                    {
-                        int rowIndex = row.Table.Rows.IndexOf(row) + 1;
-                        missingItemNames.Add($"Empty cell found in row {rowIndex}, column {i + 1}");
-                        break; // Skip remaining cells in the row
-                    }
-                }
+                missingItemNames.Add($"No item selected in ComboBox for column Item Name");
             }
-            if(missingItemNames.Count > 0)
+
+            if (missingItemNames.Count > 0)
             {
                 string message = "The following cells are missing or empty:\n" + string.Join("\n", missingItemNames);
                 MessageBox.Show(message, "Missing item name", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -183,7 +168,6 @@ namespace WarehouseManagement.Controller
             {
                 return true;
             }
-            
         }
         public static List<bulk_model> model { get; set; }
         public static DataTable DataTable_Creation()
