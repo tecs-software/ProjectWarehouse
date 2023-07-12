@@ -21,12 +21,29 @@ namespace WarehouseManagement.Controller
         static sql_control sql = new sql_control();
         
 
-        public static void bulk_receiver(bulk_model model) => sql.Query($"EXEC SPadd_receiver '{model.receiver_name}', '{model.receiver_phone}', '{model.receiver_address}'");
-        public static void bulk_orders(bulk_model model, string waybill, string order_id) => sql.Query($"EXEC SPadd_orders '{order_id}', 'J&T', '{waybill}', {CurrentUser.Instance.userID}, '{model.product_name}'," +
-            $"{model.quantity}, {model.total}, '{model.remarks}', 'PENDING', '{model.receiver_phone}', '{model.receiver_address}', {GlobalModel.sender_id}");
-        public static void bulk_incentives(bulk_model model, string order_id) => sql.Query($"EXEC SPadd_incentives {CurrentUser.Instance.userID}, '{order_id}', {model.quantity}," +
+        public static void bulk_receiver(bulk_model model) 
+        {
+            sql.Query($"EXEC SPadd_receiver '{model.receiver_name}', '{model.receiver_phone}', '{model.receiver_address}'");
+            if (sql.HasException(true)) return;
+        }
+        public static void bulk_orders(bulk_model model, string waybill, string order_id) 
+        {
+            sql.Query($"EXEC SPadd_orders '{order_id}', 'J&T', '{waybill}', {CurrentUser.Instance.userID}, '{model.product_name}'," +
+                $"{model.quantity}, {model.total}, '{model.remarks}', 'PENDING', '{model.receiver_phone}', '{model.receiver_address}', {GlobalModel.sender_id}");
+            if (sql.HasException(true)) return;
+        }
+        
+        public static void bulk_incentives(bulk_model model, string order_id)
+        {
+            sql.Query($"EXEC SPadd_incentives {CurrentUser.Instance.userID}, '{order_id}', {model.quantity}," +
             $"{1}, '{model.product_name}'");
-        public static void bulk_update_quantity(bulk_model model) => sql.Query($"EXEC SPupdate_stocks {model.quantity}, '{model.product_name}'");
+            if (sql.HasException(true)) return;
+        }
+        public static void bulk_update_quantity(bulk_model model)
+        {
+            sql.Query($"EXEC SPupdate_stocks {model.quantity}, '{model.product_name}'");
+            if (sql.HasException(true)) return;
+        }
         public static void bulk_update_stocks(bulk_model model)
         {
             int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '{model.product_name}'"));

@@ -396,6 +396,7 @@ IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_sender_info')
 BEGIN
     EXEC('
     CREATE PROC SPadd_sender_info
+	@sender_id VARCHAR(255),
     @sender_name VARCHAR(255),
     @sender_province VARCHAR(100),
     @sender_city VARCHAR(100),
@@ -404,8 +405,22 @@ BEGIN
     @sender_address VARCHAR(255)
     AS
     BEGIN
-        INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address) VALUES
-        (@sender_name, @sender_province, @sender_city, @sender_baranggay, @sender_phone, @sender_address)
+      IF @sender_id = 0
+		BEGIN
+			INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address) VALUES
+			(@sender_name, @sender_province, @sender_city, @sender_baranggay, @sender_phone, @sender_address)
+	  END
+	  ELSE
+	  BEGIN
+			UPDATE tbl_sender SET
+				sender_name = @sender_name,
+				sender_province = @sender_province,
+				sender_city = @sender_city,
+				sender_baranggay = @sender_baranggay,
+				sender_phone = @sender_phone,
+				sender_address = @sender_address
+			WHERE sender_id = @sender_id
+	  END
     END;
     ');
 END;
