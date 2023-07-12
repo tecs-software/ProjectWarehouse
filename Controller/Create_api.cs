@@ -214,7 +214,7 @@ namespace WarehouseManagement.Controller
             }
         }
         //api bulk orders
-        public async Task create_bulk_api(List<bulk_model> model, bool suspicious, Button btn)
+        public async Task create_bulk_api(List<bulk_model> model, Button btn)
         {
             btn.IsEnabled = false;
             await Task.Run(async () =>
@@ -357,7 +357,7 @@ namespace WarehouseManagement.Controller
                                 string sortingCodeString = sortingCode.ToString();
 
                                 //true = insert suspicious
-                                if (suspicious)
+                                if (bulk_inserts.bulk_suspicious(details))
                                 {
 
                                     bulk_inserts.bulk_receiver(details);
@@ -370,8 +370,9 @@ namespace WarehouseManagement.Controller
 
                                     bulk_inserts.bulk_update_stocks(details);
 
+                                    bulk_inserts.bulk_temp_insert(details);
                                     //suspiciouscontroller.InsertSuspiciousData();
-                                    bulk_inserts.bulk_suspicious(details);
+
                                 }
                                 else
                                 {

@@ -38,6 +38,6 @@ namespace WarehouseManagement.Controller
             else
                 return false;
         }
-        public static void UpdateStatus(string id) => sql.Query($"UPDATE tbl_orders SET status = 'Returned to Sender' WHERE order_id = '{id}' ");
+        public static void UpdateStatus(string id) => sql.Query($"UPDATE tbl_orders SET status = 'RTS' WHERE order_id = '{id}' ");
     }
 }

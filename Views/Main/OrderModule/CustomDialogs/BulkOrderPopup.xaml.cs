@@ -129,7 +129,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                         };
                         Csv_Controller.model.Add(model);
                     }
-                    await bulk_api.create_bulk_api(Csv_Controller.model, false, btnConfirm);
+                    await bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm);
                     if (btnConfirm.IsEnabled)
                     {
                         btnConfirm.IsEnabled = true;
