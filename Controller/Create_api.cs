@@ -360,15 +360,15 @@ namespace WarehouseManagement.Controller
                                 if (bulk_inserts.bulk_suspicious(details))
                                 {
 
-                                    bulk_inserts.bulk_receiver(details);
+                                    //bulk_inserts.bulk_receiver(details);
 
-                                    bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
+                                    //bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
 
-                                    bulk_inserts.bulk_incentives(details, txLogisticIdString);
+                                    //bulk_inserts.bulk_incentives(details, txLogisticIdString);
 
-                                    bulk_inserts.bulk_update_quantity(details);
+                                    //bulk_inserts.bulk_update_quantity(details);
 
-                                    bulk_inserts.bulk_update_stocks(details);
+                                    //bulk_inserts.bulk_update_stocks(details);
 
                                     bulk_inserts.bulk_temp_insert(details);
                                     //suspiciouscontroller.InsertSuspiciousData();
