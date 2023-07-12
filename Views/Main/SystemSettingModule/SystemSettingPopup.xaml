@@ -39,12 +39,11 @@
                             IsCancel="True" Click="btnClose_Click">
                 </Button>
 
-
             </DockPanel>
             <StackPanel Grid.Row="1">
                 <TabControl x:Name="setting_tab" Width="auto" SelectionChanged="TabControl_SelectionChanged" Loaded="TabControl_Loaded" Height="500" >
                     <TabControl.Items>
-                        <TabItem Header="Courier Accounts" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Collapsed">
+                        <TabItem Header="Courier Accounts" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Visible">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
                                 <TextBlock FontStyle="Italic" HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Note: (These information will be your connection api to couriers. As of now JnT is the only courier available.)" TextWrapping="Wrap" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Regular" Margin="24,24,0,0"/>
@@ -65,25 +64,33 @@
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtEccompanyId" materialDesign:HintAssist.Hint="EcCompany ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtKey" materialDesign:HintAssist.Hint="Private Key" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBox Visibility="Collapsed" HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtKey" materialDesign:HintAssist.Hint="Private Key" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <Button 
                                     HorizontalAlignment="Stretch"
                                     Margin="24,24,24,0"
                                     VerticalAlignment="Center" 
-                                    x:Name="btnSubmit" 
+                                    x:Name="btnSubmitCourier" 
                                     Content="Submit" 
                                     IsDefault="True" 
                                     FontSize="15"
                                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
-                                    Height="40" Click="btnSubmit_Click"/>
+                                    Height="40" Click="btnSubmitCourier_Click"/>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" IsSelected="True">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
-                                <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <Grid VerticalAlignment="Center" >
+                                    <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,24,0,0"/>
+                                    <ComboBox Grid.Column="0" HorizontalAlignment="Right" Margin="24,8,24,0" x:Name="cmbAction" materialDesign:HintAssist.Hint="Action" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" Width="150" DropDownClosed="cmbAction_DropDownClosed"
+                                                             />
+                                </Grid>
+                                <TextBox Visibility="Collapsed" HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtId" materialDesign:HintAssist.Hint="ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <TextBox MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Page Number (Shop Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
@@ -110,10 +117,10 @@
                                                              SelectionBrush="#FF1D2118" PreviewTextInput="txtAddress_PreviewTextInput"/>
                                 <Button 
                                     HorizontalAlignment="Stretch"
-                                    Margin="24,24,24,0"
+                                    Margin="24,24,24,8"
                                     VerticalAlignment="Center" 
                                     x:Name="btnSubmit_sender" 
-                                    Content="Submit" 
+                                    Content="Add" 
                                     IsDefault="True" 
                                     FontSize="15"
                                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 

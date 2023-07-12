@@ -370,8 +370,8 @@ namespace WarehouseManagement.Controller
 
                                     bulk_inserts.bulk_update_stocks(details);
 
-                                    suspiciouscontroller.InsertSuspiciousData();
-
+                                    //suspiciouscontroller.InsertSuspiciousData();
+                                    bulk_inserts.bulk_suspicious(details);
                                 }
                                 else
                                 {

@@ -21,14 +21,17 @@ using WWarehouseManagement.Database;
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.IO;
+using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder;
+using WarehouseManagement.Views.Main.SystemSettingModule;
 
 namespace WarehouseManagement.Database
 {
     public class db_queries
     {
         sql_control sql = new sql_control();
-        public bool insert_sender(TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
+        public bool insert_sender(TextBox id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
         {
+            sql.AddParam("@id", id.Text);
             sql.AddParam("@name", page_name.Text);
             sql.AddParam("@phone", page_number.Text);
             sql.AddParam("@province", cb_province.Text);
@@ -36,7 +39,7 @@ namespace WarehouseManagement.Database
             sql.AddParam("@baranggay", cb_baranggay.Text);
             sql.AddParam("@address", address.Text);
 
-            sql.Query("EXEC SPadd_sender_info @name, @province, @city, @baranggay, @phone, @address");
+            sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address");
             int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
             if(count > 0)
             {
@@ -46,7 +49,57 @@ namespace WarehouseManagement.Database
             {
                 return false;
             }
+        }
+        public void UpdateCourier(string courierName,string customerId, string eCompanyId) =>
+            sql.Query($"UPDATE tbl_couriers SET courier_name = '{courierName}', eccompany_id = '{eCompanyId}', customer_id = '{customerId}' ");
+        public void PopulateShop(ComboBox cmb)
+        {
+            cmb.Items.Clear();
+            sql.Query("SELECT sender_name FROM tbl_sender");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    cmb.Items.Add(dr[0].ToString());
+                }
+            }
+            cmb.Items.Add("Add");
+        }
+        public void DisplaySender(string name, SystemSettingPopup systemSetting)
+        {
+            string barangay = "", city = "";
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = '{name}' ");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    systemSetting.txtId.Text = dr[0].ToString();
+                    systemSetting.txtPagename.Text = dr[1].ToString();
+                    systemSetting.txtPhone.Text = dr[5].ToString();
+                    systemSetting.txtAddress.Text = dr[6].ToString();
 
+                    systemSetting.cmbProvince.Text = dr[2].ToString();
+                    barangay = dr[4].ToString();
+                    city = dr[3].ToString();
+                }
+                systemSetting.cmbCity.Items.Clear();
+                systemSetting.cmbBarangay.Items.Clear();
+
+                sql.Query($"SELECT City, AreaName FROM tbl_address_delivery WHERE Province = '{systemSetting.cmbProvince.Text}' ");
+                if (sql.HasException(true)) return;
+                if(sql.DBDT.Rows.Count > 0)
+                {
+                    foreach(DataRow dr in sql.DBDT.Rows)
+                    {
+                        systemSetting.cmbCity.Items.Add(dr[0].ToString());
+                        systemSetting.cmbBarangay.Items.Add(dr[1].ToString());
+                    }
+                    systemSetting.cmbCity.Text = city;
+                    systemSetting.cmbBarangay.Text = barangay;
+                }
+            }
         }
         public void get_sender()
         {
@@ -141,34 +194,40 @@ namespace WarehouseManagement.Database
         }
         public void city(ComboBox cb, string province)
         {
+            cb.Items.Clear();
             sql.Query($"SELECT distinct city FROM tbl_address_delivery WHERE province = '"+province+ "' AND CanDeliver = '1' ORDER BY city ASC");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
-                List<string> cities = new List<string>();
                 foreach (DataRow dr in sql.DBDT.Rows)
                 {
-                    cities.Add(dr[0].ToString());
+                    cb.Items.Add(dr[0].ToString());
                 }
-
-                cb.ItemsSource = cities;
             }
         }
         public void baranggay(ComboBox cb, string city)
         {
+            cb.Items.Clear();
             sql.Query($"SELECT distinct AreaName FROM tbl_address_delivery WHERE city = '" + city + "' ORDER BY AreaName ASC");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
-                List<string> baranggays = new List<string>();
                 foreach (DataRow dr in sql.DBDT.Rows)
                 {
-                    baranggays.Add(dr[0].ToString());
+                    cb.Items.Add(dr[0].ToString());
                 }
 
-                cb.ItemsSource = baranggays;
             }
         }
+        public bool ValidateSenderName(string name, int id)
+        {
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = '{name}' ");
+            if (sql.DBDT.Rows.Count > 0)
+                return false;
+            else
+                return true;
+        }
+        
         public bool check_quantity(Booking_info book_info, Receiver _receiver)
         {
             int stock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '"+book_info.item_name+"'"));

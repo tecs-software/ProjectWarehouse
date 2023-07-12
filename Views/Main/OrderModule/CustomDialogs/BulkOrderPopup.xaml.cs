@@ -135,7 +135,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                         btnConfirm.IsEnabled = true;
                         MessageBox.Show("Orders has been Created");
                     }
-                    //bulk_inserts.show_temp_table(dtBulkOrders);
+                    bulk_inserts.show_temp_table(dtBulkOrders);
                 }
                 catch (Exception ex)
                 {

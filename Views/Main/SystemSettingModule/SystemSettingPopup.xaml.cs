@@ -23,11 +23,18 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
     /// </summary>
     public partial class SystemSettingPopup : Window
     {
+        db_queries queries = new db_queries();
         void Clear()
         {
             txtMiscellaneous.Text = "";
             txtAdSpent.Text = "";
             txtUtilities.Text = "";
+        }
+        void PopulateCourier(ComboBox cmb)
+        {
+            cmb.Items.Clear();
+            cmb.Items.Add("J&T");
+            cmb.Text = "J&T";
         }
         private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
         {
@@ -36,8 +43,12 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         public SystemSettingPopup()
         {
             InitializeComponent();
+            //code for sender information
+            txtId.Text = "0";
+            queries.PopulateShop(cmbAction);
+            //code for courier information
+            PopulateCourier(cmbCourier);
         }
-        db_queries queries = new db_queries();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -50,15 +61,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
-            //switch (tabItem)
-            //{
-            //    case "Product List":
-            //        productListFrame.Source = new Uri("../ProductView/ProductList.xaml", UriKind.Relative);
-            //        break;
-            //    default:
-            //        return;
-            //}
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,19 +107,31 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             }
             else
             {
-                if (queries.insert_sender(txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                if (queries.ValidateSenderName(txtPagename.Text, int.Parse(txtId.Text)))
                 {
-                    MessageBox.Show("Shop/Page added");
-                    txtAddress.Clear();
-                    txtPagename.Clear();
-                    txtPhone.Clear();
-                    cmbProvince.Text = "";
-                    cmbCity.Text = "";
-                    cmbBarangay.Text = "";
+                    if (queries.insert_sender(txtId, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                    {
+                        MessageBox.Show("Shop/Page Save");
+                        txtAddress.Clear();
+                        txtPagename.Clear();
+                        txtId.Text = "0";
+                        btnSubmit_sender.Content = "Add";
+                        txtPhone.Clear();
+                        cmbProvince.Text = "";
+                        cmbCity.Text = "";
+                        cmbBarangay.Text = "";
+
+                        queries.PopulateShop(cmbAction);
+                        cmbAction.SelectedIndex = -1;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 else
                 {
-                    return;
+                   MessageBox.Show("Shop already existed");
                 }
             }
 
@@ -169,6 +183,40 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 MessageBox.Show("Data Inserted Successfully.");
                 Clear();
             }
+        }
+
+        private void cmbAction_DropDownClosed(object sender, EventArgs e)
+        {
+            if (cmbAction.SelectedIndex != -1)
+            {
+                if (cmbAction.Text == "Add")
+                {
+                    txtId.Text = "0";
+                    btnSubmit_sender.Content = "Add";
+                }
+                else
+                {
+                    queries.DisplaySender(cmbAction.Text, this);
+                    btnSubmit_sender.Content = "Update";
+                }
+            }
+        }
+
+        private void btnSubmitCourier_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtCustomerID.Text == "" || txtEccompanyId.Text == "")
+                MessageBox.Show("Please complete all fields");
+            else
+            {
+                GlobalModel.eccompany_id = txtEccompanyId.Text;
+                GlobalModel.customer_id = txtCustomerID.Text;
+                queries.UpdateCourier(cmbCourier.Text, txtCustomerID.Text, txtEccompanyId.Text);
+                MessageBox.Show("Credentials has been updated.");
+                txtEccompanyId.Text = "";
+                cmbCourier.SelectedIndex = -1;
+                txtCustomerID.Text = "";
+            }
+
         }
     }
 }

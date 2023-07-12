@@ -91,6 +91,9 @@
                         <TabItem Header="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtId" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             Text="0" Visibility="Collapsed" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             SelectionBrush="#FF1D2118"/>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
