@@ -183,7 +183,6 @@ namespace WarehouseManagement.Controller
                         }
                         else
                         {
-                            
 
                             queries.insert_receiver(receiver);
 
@@ -214,7 +213,7 @@ namespace WarehouseManagement.Controller
             }
         }
         //api bulk orders
-        public async Task create_bulk_api(List<bulk_model> model, Button btn)
+        public async Task create_bulk_api(List<bulk_model> model, Button btn, bool granted)
         {
             btn.IsEnabled = false;
             await Task.Run(async () =>
@@ -360,18 +359,22 @@ namespace WarehouseManagement.Controller
                                 if (bulk_inserts.bulk_suspicious(details))
                                 {
 
-                                    //bulk_inserts.bulk_receiver(details);
-
-                                    //bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
-
-                                    //bulk_inserts.bulk_incentives(details, txLogisticIdString);
-
-                                    //bulk_inserts.bulk_update_quantity(details);
-
-                                    //bulk_inserts.bulk_update_stocks(details);
-
                                     bulk_inserts.bulk_temp_insert(details);
-                                    //suspiciouscontroller.InsertSuspiciousData();
+                                    // if VA or USER accept the risks of pushing suspicious orders
+                                    if(granted)
+                                    {
+                                        bulk_inserts.bulk_receiver(details);
+
+                                        bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
+
+                                        bulk_inserts.bulk_incentives(details, txLogisticIdString);
+
+                                        bulk_inserts.bulk_update_quantity(details);
+
+                                        bulk_inserts.bulk_update_stocks(details);
+
+                                        bulk_inserts.insertSuspiciousTable(mailNoString);
+                                    }
                                 }
                                 else
                                 {

@@ -116,6 +116,7 @@
                                 CanUserReorderColumns="False"
                                 CanUserResizeColumns="False"
                                 TextBlock.TextAlignment="Left"
+                                VerticalScrollBarVisibility="Visible"
                                ColumnHeaderStyle="{StaticResource HeaderStyle}">
 
                         <DataGrid.Columns>

@@ -110,15 +110,10 @@ namespace WarehouseManagement.Controller
                 }
             }
         }
-        public static bool checkNullCells(DataGrid dg, TextBox tb) 
+        public static bool checkNullCells(DataGrid dg) 
         {
             List<string> missingCells = new List<string>();
 
-            int columnIndex = 1;
-            if (tb.Text == "")
-            {
-                missingCells.Add($"Quantity not set for column Quantity");
-            }
             foreach (DataRowView rowView in dg.Items)
             {
                 DataRow row = rowView.Row;
@@ -146,6 +141,27 @@ namespace WarehouseManagement.Controller
             else
                 return true;
         }
+        public static bool checkQuantityColumn(TextBox tb)
+        {
+            List<string> missingItemNames = new List<string>();
+
+            if (tb.Text == null || tb.Text == "")
+            {
+                missingItemNames.Add($"Quantity not declared on column Quantity");
+            }
+
+            if (missingItemNames.Count > 0)
+            {
+                string message = "The following cells are missing or empty:\n" + string.Join("\n", missingItemNames);
+                MessageBox.Show(message, "Missing item name", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
 
         public static bool checkItemNameColumn(DataGrid dg, ComboBox cb)
         {

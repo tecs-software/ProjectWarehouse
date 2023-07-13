@@ -15,7 +15,7 @@
             HeadersVisibility="Column"
             GridLinesVisibility="All"
             BorderBrush="#949494"
-            VerticalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Visible"
             Background="White"
             Grid.Row="0"
             RowHeight="40"

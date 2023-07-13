@@ -136,7 +136,8 @@
                                 CanUserReorderColumns="False"
                                 CanUserResizeColumns="False"
                                 TextBlock.TextAlignment="Left"
-                               ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                                VerticalScrollBarVisibility="Visible"
+                                ColumnHeaderStyle="{StaticResource HeaderStyle}">
                         
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ORDER ID"

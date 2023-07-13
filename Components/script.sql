@@ -691,7 +691,7 @@ BEGIN
 			ParcelValue [Parcel Value],
 			COD,
 			Remarks
-		FROM tbl_bulk_order_temp
+			FROM tbl_bulk_order_temp
 	END;
 	');
 END;
