@@ -124,7 +124,9 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                             cod = decimal.Parse(dr[14].ToString()),
                             parcel_value = decimal.Parse(dr[13].ToString()),
                             parcel_name = dr[10].ToString(),
-                            total_parcel = int.Parse(dr[12].ToString())
+                            total_parcel = int.Parse(dr[12].ToString()),
+                            weight = decimal.Parse(dr[11].ToString())
+                            
 
                         };
                         Csv_Controller.model.Add(model);

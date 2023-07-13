@@ -519,7 +519,7 @@ BEGIN
 	@receiver_province NVARCHAR(255),
 	@receiver_city NVARCHAR(255),
 	@receiver_area NVARCHAR(255),
-	@parcel_name NVARCHAR,
+	@parcel_name NVARCHAR(255),
 	@weight DECIMAL (18, 2),
 	@total_parcel INT,
 	@parcel_value DECIMAL(18, 2),
