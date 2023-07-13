@@ -25,7 +25,6 @@
             AutoGenerateColumns="False"
             HeadersVisibility="Column"
             GridLinesVisibility="All"
-
             BorderBrush="#949494"
             Height="auto"
             Background="White"

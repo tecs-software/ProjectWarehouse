@@ -9,9 +9,8 @@
              d:DesignHeight="1080" d:DesignWidth="1920">
     <Grid>
         <DataGrid
-             ScrollViewer.VerticalScrollBarVisibility="Visible"
-                            
-                                MaxHeight="590"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
+            MaxHeight="590"
             DockPanel.Dock="Top"
             CanUserAddRows="False"
             AutoGenerateColumns="False"
@@ -20,6 +19,7 @@
             BorderBrush="#949494"
             VerticalScrollBarVisibility="Visible"
             Background="White"
+            
             Grid.Row="0"
             RowHeight="40"
             IsReadOnly="True"
