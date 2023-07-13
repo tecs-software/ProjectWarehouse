@@ -22,7 +22,7 @@ namespace WarehouseManagement.Models
         public string? product_name { get; set; } //items
         public decimal? total { get; set; }
         public int? quantity { get; set; }
-        public int? weight { get; set; }
+        public decimal? weight { get; set; }
 
         //etc
         public decimal? parcel_value { get; set; }
