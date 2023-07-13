@@ -73,9 +73,30 @@ namespace WarehouseManagement.Controller
             }
             return isMatchFound; // Return the result after the condition
         }
-        public static void bulk_temp_insert(bulk_model model) => sql.Query($"EXEC SPadd_temptable {model.quantity}, '{model.product_name}', '{model.receiver_name}'," +
-            $"'{model.receiver_phone}', '{model.receiver_address}', '{model.receiver_province}', '{model.receiver_city}', '{model.receiver_area}', '{model.parcel_name}'," +
-            $"{model.weight}, {model.total_parcel}, {model.parcel_value}, {model.cod}, '{model.remarks}'");
+        public static void bulk_temp_insert(bulk_model model)
+        {
+            MessageBox.Show("Weight"+model.weight.ToString());
+            sql.AddParam("@quantity", model.quantity);
+            sql.AddParam("@productName", model.product_name);
+            sql.AddParam("@receiverName", model.receiver_name);
+            sql.AddParam("@receiver_phone", model.receiver_phone);
+            sql.AddParam("@receiver_address", model.receiver_address);
+            sql.AddParam("@receiver_province", model.receiver_province);
+            sql.AddParam("@receiver_city", model.receiver_city);
+            sql.AddParam("@receiver_area", model.receiver_area);
+            sql.AddParam("@parcel_name", model.parcel_name);
+
+            sql.AddParam("@weight", model.weight);
+            sql.AddParam("@total_parcel", model.total_parcel);
+            sql.AddParam("@parcel_value", model.parcel_value);
+            sql.AddParam("@cod", model.cod);
+            sql.AddParam("@remarks", model.remarks);
+
+            sql.Query($"EXEC SPadd_temptable @quantity, @productName, @receiverName, @receiver_phone, @receiver_address, @receiver_province, @receiver_city, @receiver_area, @parcel_name, " +
+            $" @weight, @total_parcel, @parcel_value, @cod, @remarks ");
+            if (sql.HasException(true)) return;
+            MessageBox.Show("RTS");
+        }
 
         public static void show_temp_table(DataGrid dg)
         {
