@@ -16,12 +16,16 @@
         </Grid.RowDefinitions>
 
         <DataGrid 
+            
                     Grid.Row="0"
                     CanUserAddRows="False"
                     AutoGenerateColumns="False"
                     HeadersVisibility="Column"
                     IsReadOnly="True"
                     CanUserSortColumns="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                VerticalScrollBarVisibility="Auto"
+                                MaxHeight="590"
                     CanUserReorderColumns="False"
                     CanUserResizeColumns="False"
                     CanUserDeleteRows="False"
@@ -29,7 +33,7 @@
                     BorderBrush="#949494"
                     Height="Auto"
                     VerticalAlignment="Stretch"
-                    VerticalScrollBarVisibility="Auto"
+                
                     TextBlock.TextAlignment="Left"
                     Background="White"
                     PreviewMouseWheel="tb_payroll_review_PreviewMouseWheel"

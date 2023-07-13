@@ -17,15 +17,18 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <DataGrid
+                   ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                VerticalScrollBarVisibility="Auto"
+                                MaxHeight="590"
             Grid.Row="1"
             CanUserAddRows="False"
             AutoGenerateColumns="False"
             HeadersVisibility="Column"
             GridLinesVisibility="All"
+
             BorderBrush="#949494"
             Height="auto"
             Background="White"
-            VerticalScrollBarVisibility="Auto"
             RowHeight="40"
             VerticalAlignment="Stretch"
             IsReadOnly="True"

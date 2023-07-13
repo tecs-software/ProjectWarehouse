@@ -108,6 +108,9 @@
                                 AutoGenerateColumns="False"
                                 HeadersVisibility="Column"
                                 x:Name="dgt_shops"
+                               ScrollViewer.VerticalScrollBarVisibility="Visible"
+                       
+                                MaxHeight="590"
                                 RowHeight="40"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"

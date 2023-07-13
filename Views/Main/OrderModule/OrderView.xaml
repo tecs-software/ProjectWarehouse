@@ -123,12 +123,15 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0">
-                    <DataGrid ItemsSource="{Binding Path=myList}"
+                        <DataGrid ItemsSource="{Binding Path=myList}"  
                                 CanUserAddRows="False"
                                 AutoGenerateColumns="False"
                                 HeadersVisibility="Column"
                                 x:Name="dgtRespondentData"
                                 RowHeight="40"
+                                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                VerticalScrollBarVisibility="Auto"
+                                MaxHeight="590"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
                                 IsReadOnly="True"
@@ -136,7 +139,6 @@
                                 CanUserReorderColumns="False"
                                 CanUserResizeColumns="False"
                                 TextBlock.TextAlignment="Left"
-                                VerticalScrollBarVisibility="Visible"
                                 ColumnHeaderStyle="{StaticResource HeaderStyle}">
                         
                         <DataGrid.Columns>
@@ -203,113 +205,6 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-
-                    <!--
-                    <DataGrid   
-                        CanUserAddRows="False"
-                        AutoGenerateColumns="False"
-                        HeadersVisibility="Column"
-                        x:Name="tblOrders"
-                        RowHeight="40"
-                        VerticalAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        IsReadOnly="True"
-                        CanUserSortColumns="True"
-                        CanUserReorderColumns="False"
-                        CanUserResizeColumns="False"
-                        TextBlock.TextAlignment="Left"
-                        ColumnHeaderStyle="{StaticResource HeaderStyle}">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ORDER ID"
-                                                Binding="{Binding order_id}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="0.5*"/>
-                            <DataGridTextColumn Header="DATE"
-                                                Binding="{Binding created_at, StringFormat='MMMM dd, yyyy hh:mm:ss'}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="0.8*"/>
-                            
-                            <DataGridTemplateColumn Header="STATUS" Width="0.8*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Border CornerRadius="5" VerticalAlignment="Center" Height="25">
-                                            <TextBlock Text="{Binding status}" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" />
-                                            <Border.Style>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding status}" Value="IN PROGRESS">
-                                                            <Setter Property="Background" Value="#618EE7"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding status}" Value="COMPLETED">
-                                                            <Setter Property="Background" Value="#04B5AD"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding status}" Value="VOIDED">
-                                                            <Setter Property="Background" Value="#858585"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                        </Border>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            
-                            <DataGridTextColumn Header="USER"
-                                                Binding="{Binding username}" 
-                                                x:Name="usernameColumn"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="0.7*"/>
-                            <DataGridTextColumn Header="RECEIVER"
-                                                Binding="{Binding receiver_name}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1*"/>
-                            <DataGridTextColumn Header="PRODUCT"
-                                                Binding="{Binding item_name}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1*"/>
-                            <DataGridTextColumn Header="QUANTITY"
-                                                Binding="{Binding quantity}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="0.6*"/>
-                            <DataGridTextColumn Header="TOTAL PRICE"
-                                                Binding="{Binding total, StringFormat='{}₱{0:#,0.00}'}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="0.6*"/>
-                            <DataGridTextColumn Header="COURIER"
-                                                Binding="{Binding courier}"
-                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="0.7*"/>
-                            
-                            
-
-                            <DataGridTemplateColumn Header="ACTION" Width="0.55*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button x:Name="btnAction" 
-                                            Click="btnAction_Click"
-                                            DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},Path=DataContext}"
-                                            BorderThickness="0"
-                                            Background="Transparent">
-                                            <Canvas Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <Path Fill="#000000" Data="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z" />
-                                            </Canvas>
-                                        </Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                     -->
-
                 </StackPanel>
             </Grid>
         </Grid>
