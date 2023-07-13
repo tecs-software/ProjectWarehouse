@@ -73,16 +73,9 @@ namespace WarehouseManagement.Controller
             }
             return isMatchFound; // Return the result after the condition
         }
-        public static void bulk_temp_insert(bulk_model model)
-        {
-
-            MessageBox.Show(model.weight.ToString());
-            sql.Query($"EXEC SPadd_temptable {model.quantity}, '{model.product_name}', '{model.receiver_name}'," +
+        public static void bulk_temp_insert(bulk_model model) => sql.Query($"EXEC SPadd_temptable {model.quantity}, '{model.product_name}', '{model.receiver_name}'," +
             $"'{model.receiver_phone}', '{model.receiver_address}', '{model.receiver_province}', '{model.receiver_city}', '{model.receiver_area}', '{model.parcel_name}'," +
             $"{model.weight}, {model.total_parcel}, {model.parcel_value}, {model.cod}, '{model.remarks}'");
-            if (sql.HasException(true)) return;
-
-        }
 
         public static void show_temp_table(DataGrid dg)
         {
