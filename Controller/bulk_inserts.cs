@@ -75,7 +75,6 @@ namespace WarehouseManagement.Controller
         }
         public static void bulk_temp_insert(bulk_model model)
         {
-            MessageBox.Show("Weight"+model.weight.ToString());
             sql.AddParam("@quantity", model.quantity);
             sql.AddParam("@productName", model.product_name);
             sql.AddParam("@receiverName", model.receiver_name);
@@ -95,33 +94,21 @@ namespace WarehouseManagement.Controller
             sql.Query($"EXEC SPadd_temptable @quantity, @productName, @receiverName, @receiver_phone, @receiver_address, @receiver_province, @receiver_city, @receiver_area, @parcel_name, " +
             $" @weight, @total_parcel, @parcel_value, @cod, @remarks ");
             if (sql.HasException(true)) return;
-            MessageBox.Show("RTS");
         }
 
-        public static void show_temp_table(DataGrid dg)
+        public static void show_temp_table(DataGrid dgBulkOrder,DataGrid dgSuspicious)
         {
-            sql.Query($"SELECT * FROM tbl_bulk_order_temp");
+            sql.Query($"EXEC SpDisplay_SuspeciousBulk");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
                 MessageBox.Show("These are the suspicious datas");
-                // Clear the existing columns
-                dg.Columns.Clear();
-
-                // Create columns based on the database column names
-                foreach (DataColumn column in sql.DBDT.Columns)
-                {
-                    DataGridTextColumn dataGridColumn = new DataGridTextColumn();
-                    dataGridColumn.Header = column.ColumnName;
-                    dataGridColumn.Binding = new Binding(column.ColumnName);
-                    dg.Columns.Add(dataGridColumn);
-                }
-
-                // Clear the existing items
-                dg.ItemsSource = null;
+                dgBulkOrder.Visibility = Visibility.Collapsed;
+                dgSuspicious.Visibility = Visibility.Visible;
 
                 // Set the DataTable as the ItemsSource for the DataGrid
-                dg.ItemsSource = sql.DBDT.DefaultView;
+                dgSuspicious.ItemsSource = sql.DBDT.DefaultView;
+               
             }
         }
     }

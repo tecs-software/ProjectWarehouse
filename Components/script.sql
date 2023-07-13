@@ -668,6 +668,34 @@ BEGIN
     END
 	');
 END;
+--StoreProc for Displaying suspucious bulk order
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpDisplay_SuspeciousBulk')
+BEGIN
+	EXEC('
+	CREATE PROC SpDisplay_SuspeciousBulk
+	AS
+	BEGIN
+		SELECT 
+			ID,
+			Quantity,
+			ItemName [Item Name],
+			ReceiverName [Receiver Name],
+			ReceiverContactNumber [Receiver Contact Number],
+			ReceiverAddress [Receiver Address],
+			ReceiverProvince [Receiver Province],
+			ReceiverCity [Receiver City],
+			ReceiverRegion [Receiver Region],
+			ParcelName [Parcel Name],
+			[Weight],
+			TotalParcel [Total Parcel],
+			ParcelValue [Parcel Value],
+			COD,
+			Remarks
+		FROM tbl_bulk_order_temp
+	END;
+	');
+END;
+
 --StoreProc for Saving  tbl_bulk_order_temp data
 IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SpSave_BulkOrderTemp')
 BEGIN
