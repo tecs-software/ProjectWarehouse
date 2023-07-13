@@ -55,10 +55,10 @@
                       x:Name="cbSales"
                       SelectionChanged="cbSales_SelectionChanged"
                       Background="{StaticResource textboxProfitAnalysisColor1}">
-
+                                
                 <ComboBox.Items>
                     <ComboBoxItem Content="Dashboard Summary" />
-                    <ComboBoxItem Content="Sales Report" />
+                    <!--<ComboBoxItem Content="Sales Report" />-->
                     <ComboBoxItem Content="Expenses Report " />
                 </ComboBox.Items>
             </ComboBox>

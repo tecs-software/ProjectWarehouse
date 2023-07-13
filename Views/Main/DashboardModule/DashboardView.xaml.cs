@@ -57,16 +57,17 @@ namespace WarehouseManagement.Views.Main.DashboardModule
                 case 0:
                     PageContent.Content = summaryPage;
                     break;
+             
                 case 1:
-                    if (salesReportPage == null)
-                        salesReportPage = new SalesReportPage();
-                    PageContent.Content = salesReportPage;
-                    break;
-                case 2:
                     if (expensesReportPage == null)
                         expensesReportPage = new ExpensesReportPage();
                     PageContent.Content = expensesReportPage;
                     break;
+                //case 1:
+                //    if (salesReportPage == null)
+                //        salesReportPage = new SalesReportPage();
+                //    PageContent.Content = salesReportPage;
+                //    break;
             }
         }
 
