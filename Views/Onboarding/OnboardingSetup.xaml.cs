@@ -94,7 +94,7 @@ namespace WarehouseManagement.Views.Onboarding
                     txtId.Text = "0";
                     if (queries.insert_sender(txtId, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
                     {
-                        queries.api_credentials(cmbCourier, "8049bdb499fc06b6fde3e476a87987ef", txtEccompanyId, txtCustomerID);
+                        queries.api_credentials(cmbCourier, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId, txtCustomerID);
                         MessageBox.Show("Information Setup completed");
                         MainWindow main = new MainWindow();
                         main.Show();
