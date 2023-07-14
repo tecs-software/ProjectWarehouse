@@ -26,9 +26,9 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         db_queries queries = new db_queries();
         void Clear()
         {
-            txtMiscellaneous.Text = "";
-            txtAdSpent.Text = "";
-            txtUtilities.Text = "";
+            txtMiscellaneous.Text = "0";
+            txtAdSpent.Text = "0";
+            txtUtilities.Text = "0";
         }
         void PopulateCourier(ComboBox cmb)
         {
@@ -48,6 +48,11 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             queries.PopulateShop(cmbAction);
             //code for courier information
             PopulateCourier(cmbCourier);
+
+            txtMiscellaneous.Text = "0";
+            txtAdSpent.Text = "0";
+            txtUtilities.Text = "0";
+
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -162,7 +167,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
        
         private void btnConfirmExpenses_Click(object sender, RoutedEventArgs e)
         {
-            if (txtAdSpent.Text == "" && txtUtilities.Text == "" && txtMiscellaneous.Text == "")
+            if (txtAdSpent.Text == "" || txtUtilities.Text == "" || txtMiscellaneous.Text == "")
                 MessageBox.Show("Please complete all fields");
             else
             {

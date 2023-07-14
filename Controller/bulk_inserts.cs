@@ -28,8 +28,10 @@ namespace WarehouseManagement.Controller
         }
         public static void bulk_orders(bulk_model model, string waybill, string order_id) 
         {
+            int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = '{model.product_name}'"));
+
             sql.Query($"EXEC SPadd_orders '{order_id}', 'J&T', '{waybill}', {CurrentUser.Instance.userID}, '{model.product_name}'," +
-                $"{model.quantity}, {model.total}, '{model.remarks}', 'PENDING', '{model.receiver_phone}', '{model.receiver_address}', {GlobalModel.sender_id}");
+                $"{model.quantity}, {model.total}, '{model.remarks}', 'PENDING', '{model.receiver_phone}', '{model.receiver_address}', {sender_id}");
             if (sql.HasException(true)) return;
         }
         
