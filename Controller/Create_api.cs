@@ -218,7 +218,7 @@ namespace WarehouseManagement.Controller
             btn.IsEnabled = false;
             await Task.Run(async () =>
             {
-                string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+                string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
                 string key = Decrypt(GlobalModel.key);
                 string logistics_interface = @"
                     {
