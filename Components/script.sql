@@ -396,7 +396,7 @@ IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_sender_info')
 BEGIN
     EXEC('
     CREATE PROC SPadd_sender_info
-	@sender_id VARCHAR(255),
+	@sender_id INT,
     @sender_name VARCHAR(255),
     @sender_province VARCHAR(100),
     @sender_city VARCHAR(100),

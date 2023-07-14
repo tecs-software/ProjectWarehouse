@@ -107,31 +107,24 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             }
             else
             {
-                if (queries.ValidateSenderName(txtPagename.Text, int.Parse(txtId.Text)))
+                if (queries.insert_sender(txtId, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
                 {
-                    if (queries.insert_sender(txtId, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
-                    {
-                        MessageBox.Show("Shop/Page Save");
-                        txtAddress.Clear();
-                        txtPagename.Clear();
-                        txtId.Text = "0";
-                        btnSubmit_sender.Content = "Add";
-                        txtPhone.Clear();
-                        cmbProvince.Text = "";
-                        cmbCity.Text = "";
-                        cmbBarangay.Text = "";
+                    MessageBox.Show("Shop/Page Save");
+                    txtAddress.Clear();
+                    txtPagename.Clear();
+                    txtId.Text = "0";
+                    btnSubmit_sender.Content = "Add";
+                    txtPhone.Clear();
+                    cmbProvince.Text = "";
+                    cmbCity.Text = "";
+                    cmbBarangay.Text = "";
 
-                        queries.PopulateShop(cmbAction);
-                        cmbAction.SelectedIndex = -1;
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    queries.PopulateShop(cmbAction);
+                    cmbAction.SelectedIndex = -1;
                 }
                 else
                 {
-                   MessageBox.Show("Shop already existed");
+                    return;
                 }
             }
 
