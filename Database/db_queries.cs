@@ -148,7 +148,22 @@ namespace WarehouseManagement.Database
         }
         public void Insert_Orders(string order_id, string waybill, Booking_info book_info, string status)
         {
-            string? product_id = string.Empty;
+            //string? product_id = string.Empty;
+
+            //sql.Query($"SELECT product_id FROM tbl_product WHERE product_name = @select_product ");
+            //if(sql.HasException(true))
+            //if (sql.DBDT.Rows.Count > 0)
+            //{
+            //    foreach (DataRow dr in sql.DBDT.Rows)
+            //    {
+            //        product_id = dr[0].ToString();
+            //        MessageBox.Show("dr" + dr[0].ToString());
+            //    }
+            //}
+            sql.AddParam("@select_product", book_info.item_name);
+            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = @select_product ");
+            MessageBox.Show(product_id);
+            MessageBox.Show(book_info.item_name);
 
             string receiver_id = sql.ReturnResult($"SELECT receiver_id FROM tbl_receiver ORDER BY receiver_id DESC");
 
@@ -156,17 +171,10 @@ namespace WarehouseManagement.Database
 
             decimal total = decimal.Parse(book_info.quantity) * decimal.Parse(book_info.goods_value);
 
-            sql.AddParam("@item_name", book_info.item_name);
-            sql.Query("SELECT product_id FROM tbl_product WHERE product_name = @item_name ");
-            if(sql.DBDT.Rows.Count > 0)
-            {
-                foreach(DataRow dr in sql.DBDT.Rows)
-                {
-                    product_id = dr[0].ToString();
-                }
-            }
+           
 
-            MessageBox.Show(product_id);
+           
+
             sql.AddParam("@remarks", book_info.remarks);
 
             //dito papalitan couriers
