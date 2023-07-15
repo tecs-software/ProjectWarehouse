@@ -156,7 +156,16 @@ namespace WarehouseManagement.Database
 
             decimal total = decimal.Parse(book_info.quantity) * decimal.Parse(book_info.goods_value);
 
-            sql.AddParam("@item_name", book_info);
+            sql.AddParam("@item_name", book_info.item_name);
+            sql.Query("SELECT product_id FROM tbl_product WHERE product_name = @item_name ");
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    product_id = dr[0].ToString();
+                }
+            }
+
             MessageBox.Show(product_id);
             sql.AddParam("@remarks", book_info.remarks);
 
