@@ -68,8 +68,9 @@ namespace WarehouseManagement.Database
         }
         public void DisplaySender(string name, SystemSettingPopup systemSetting)
         {
+            sql.AddParam("@name", name);
             string barangay = "", city = "";
-            sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = '{name}' ");
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = @name ");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
@@ -140,27 +141,35 @@ namespace WarehouseManagement.Database
         public void insert_receiver(Receiver _receiver)
         {
             string name = _receiver.FirstName + " " + _receiver.LastName;
-            sql.Query($"INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) VALUES ('" + name + "', '" + _receiver.Phone + "', '" + _receiver.Address + "')");
+            sql.AddParam("@name", name);
+            sql.AddParam("@address", _receiver.Address);
+            sql.Query($"INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) VALUES (@name, '" + _receiver.Phone + "', @address)");
             if (sql.HasException(true)) return;
         }
         public void Insert_Orders(string order_id, string waybill, Booking_info book_info, string status)
         {
-            
+            string? product_id = string.Empty;
+
             string receiver_id = sql.ReturnResult($"SELECT receiver_id FROM tbl_receiver ORDER BY receiver_id DESC");
-            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = '{book_info.item_name}'");
+
             string sender_id = sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE product_id = '{product_id}'");
+
             decimal total = decimal.Parse(book_info.quantity) * decimal.Parse(book_info.goods_value);
 
+            sql.AddParam("@item_name", book_info);
+            MessageBox.Show(product_id);
+            sql.AddParam("@remarks", book_info.remarks);
 
             //dito papalitan couriers
             sql.Query($"INSERT INTO tbl_orders (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at, courier) VALUES " +
-                $"('{order_id}', '{waybill}', '{CurrentUser.Instance.userID.ToString()}', '{sender_id}', '{receiver_id}', '{product_id}', {book_info.quantity}, {total}, '{book_info.remarks}', '{status}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', 'J&T' )");
+                $"('{order_id}', '{waybill}', '{CurrentUser.Instance.userID.ToString()}', '{sender_id}', '{receiver_id}', '{product_id}', {book_info.quantity}, {total}, @remarks, '{status}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', 'J&T' )");
             if (sql.HasException(true)) return;
         }
 
         public void insert_Incentives(Booking_info book_Info, string order_id)
         {
-            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = '{book_Info.item_name}'");
+            sql.AddParam("@item_name", book_Info.item_name);
+            string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = @item_name");
             sql.Query($"SELECT employee_commission FROM tbl_selling_expenses WHERE product_id = '{product_id}'");
             if(sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
@@ -244,8 +253,10 @@ namespace WarehouseManagement.Database
         }
         public void update_inventory_status(Booking_info book_info)
         {
+            sql.AddParam("@item_name", book_info.item_name);
+
             //deducting the ordered quantity
-            sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity - {int.Parse(book_info.quantity)} WHERE item_name = '{book_info.item_name}'");
+            sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity - {int.Parse(book_info.quantity)} WHERE item_name = @item_name");
             if (sql.HasException(true)) return;
 
             //updating status

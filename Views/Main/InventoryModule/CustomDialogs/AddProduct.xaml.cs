@@ -297,5 +297,10 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
         {
 
         }
+
+        private void cmbSellerName_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

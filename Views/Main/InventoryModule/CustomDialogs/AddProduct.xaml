@@ -152,7 +152,7 @@
                       materialDesign:HintAssist.Foreground="Black"
                       x:Name="cmbSellerName"
                       BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                      Background="{StaticResource textboxProfitAnalysisColor1}" SelectionChanged="cmbSellerName_SelectionChanged"/>
             <StackPanel Grid.Row="3" Margin="8,8,0,0"
                     Grid.Column="0">
                 <Image x:Name="pbBarcode" Stretch="Uniform" MaxWidth="150" MaxHeight="150" Margin="0,8,0,0"  HorizontalAlignment="Center" VerticalAlignment="Center">

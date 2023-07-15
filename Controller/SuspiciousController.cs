@@ -17,7 +17,7 @@ namespace WarehouseManagement.Controller
         sql_control sql = new sql_control();
         public bool SuspiciousValidation(TextBox tb_name, TextBox tb_phone)
         {
-            sql.Query($"SELECT receiver_id FROM tbl_orders WHERE status = 'CANCELLED' OR status = 'RTS'");
+            sql.Query($"SELECT receiver_id FROM tbl_orders WHERE status = 'CANCELLED' OR status = 'RTS' OR status = 'RETURNED TO SENDER'");
 
             if (sql.DBDT.Rows.Count > 0)
             {
