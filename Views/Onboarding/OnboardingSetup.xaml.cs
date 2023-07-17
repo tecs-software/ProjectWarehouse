@@ -30,7 +30,6 @@ namespace WarehouseManagement.Views.Onboarding
         public OnboardingSetup()
         {
             InitializeComponent();
-            txtId.Text = "0";
             load_couriers();
             txtFileNameProduct.Text = "Addressing_guide_with_can_do_delivery.csv";
             Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
@@ -91,8 +90,7 @@ namespace WarehouseManagement.Views.Onboarding
                 }
                 else
                 {
-                    txtId.Text = "0";
-                    if (queries.insert_sender(txtId, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                    if (queries.insert_sender("0", txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
                     {
                         queries.api_credentials(cmbCourier, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId, txtCustomerID);
                         MessageBox.Show("Information Setup completed");
@@ -101,6 +99,7 @@ namespace WarehouseManagement.Views.Onboarding
                     }
                     else
                     {
+                        MessageBox.Show("debunk");
                         return;
                     }
                 }

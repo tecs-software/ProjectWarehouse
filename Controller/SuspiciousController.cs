@@ -15,8 +15,10 @@ namespace WarehouseManagement.Controller
     public class SuspiciousController
     {
         sql_control sql = new sql_control();
-        public bool SuspiciousValidation(TextBox tb_name, TextBox tb_phone)
+        public bool SuspiciousValidation(TextBox tb_name, TextBox tb_last, TextBox tb_phone)
         {
+            string suspicious_name = tb_name.Text + " " + tb_last.Text;
+            
             sql.Query($"SELECT receiver_id FROM tbl_orders WHERE status = 'CANCELLED' OR status = 'RTS' OR status = 'RETURNED TO SENDER'");
 
             if (sql.DBDT.Rows.Count > 0)
@@ -28,16 +30,14 @@ namespace WarehouseManagement.Controller
                     string? name = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[0].ToString())}");
                     string? phone = sql.ReturnResult($"SELECT receiver_phone FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[0].ToString())}");
 
-                    if (tb_name.Text == name && tb_phone.Text == phone)
+                    if (suspicious_name == name && tb_phone.Text == phone)
                     {
                         isMatchFound = true;
                         break; // Exit the loop since a match is found
                     }
                 }
-
                 return isMatchFound; // Return the result after the loop
             }
-
             return false; // Return false if no rows in tbl_orders
         }
 

@@ -169,49 +169,6 @@ namespace WWarehouseManagement.Database
             }
         }
 
-        public string GetResult(string Query)
-        {
-            // RESET QUERY STATS
-            RecordCount = 0;
-            Exception = "";
-            string r1 = "";
-            try
-            {
-                DBCon.Open();
-
-                // CREATE DB COMMAND
-                DBCmd = new SqlCommand(Query, DBCon);
-
-                // LOAD PARAMS INTO DB COMMAND
-                Params.ForEach(p => DBCmd.Parameters.Add(p));
-
-
-                // EXECUTE COMMAND & FILL DATASET
-                DBDT = new DataTable();
-                DBDA = new SqlDataAdapter(DBCmd);
-                object result = DBCmd.ExecuteScalar();
-                if (result != null)
-                {
-                    r1 = result.ToString();
-                }
-                RecordCount = DBDA.Fill(DBDT);
-                return r1;
-            }
-            catch (System.Exception ex)
-            {
-                // CAPTURE ERROR
-                Exception = "ExecQuery Error: \n" + ex.Message;
-                return "";
-            }
-            finally
-            {
-                // CLOSE CONNECTION
-                if (DBCon.State == ConnectionState.Open)
-                    DBCon.Close();
-            }
-        }
-
-
 
         // ADD PARAMS
         public void AddParam(string Name, object Value)

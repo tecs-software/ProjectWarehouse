@@ -29,9 +29,9 @@ namespace WarehouseManagement.Database
     public class db_queries
     {
         sql_control sql = new sql_control();
-        public bool insert_sender(TextBox id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
+        public bool insert_sender(string id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
         {
-            sql.AddParam("@id", int.Parse(id.Text));
+            sql.AddParam("@id", int.Parse(id));
             sql.AddParam("@name", page_name.Text);
             sql.AddParam("@phone", page_number.Text);
             sql.AddParam("@province", cb_province.Text);
@@ -164,7 +164,7 @@ namespace WarehouseManagement.Database
             sql.AddParam("@select_product", book_info.item_name);
             string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = @select_product ");
 
-            string receiver_id = sql.ReturnResult($"SELECT receiver_id FROM tbl_receiver ORDER BY receiver_id DESC");
+            string receiver_id = sql.ReturnResult($"SELECT TOP 1(receiver_id) FROM tbl_receiver ORDER BY receiver_id DESC");
 
             string sender_id = sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE product_id = '{product_id}'");
 
@@ -279,8 +279,14 @@ namespace WarehouseManagement.Database
         }
         public async Task load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label net_profit, int days)
         {
+            string start_time = DateTime.Now.AddDays(-days).ToString();
+            string end_time = DateTime.Now.ToString();
+
+            sql.AddParam("@startTime", start_time);
+            sql.AddParam("@endTime", end_time);
+
             //for total orders
-            sql.Query($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'");
+            sql.Query($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN @startTime AND @endTime");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -290,8 +296,11 @@ namespace WarehouseManagement.Database
                 }
             }
 
+            sql.AddParam("@startTime", start_time);
+            sql.AddParam("@endTime", end_time);
+
             //for gross sales
-            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'");
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN @startTime AND @endTime");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -301,8 +310,10 @@ namespace WarehouseManagement.Database
                 }
             }
 
+            sql.AddParam("@startTime", start_time);
+            sql.AddParam("@endTime", end_time);
             //for total projected sales
-            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'");
+            sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN @startTime AND @endTime");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -312,9 +323,14 @@ namespace WarehouseManagement.Database
                 }
             }
 
+            sql.AddParam("@startTime", start_time);
+            sql.AddParam("@endTime", end_time);
             //for netprofit
-            decimal total_sales = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(total), 0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'"));
-            decimal total_expenses = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) FROM tbl_expenses WHERE Date BETWEEN '{DateTime.Now.AddDays(-days)}' AND '{DateTime.Now}'"));
+            decimal total_sales = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(total), 0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN @startTime AND @endTime"));
+            
+            sql.AddParam("@startTime", start_time);
+            sql.AddParam("@endTime", end_time);
+            decimal total_expenses = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) FROM tbl_expenses WHERE Date BETWEEN @startTime AND @endTime"));
 
             net_profit.Content = total_sales - total_expenses;
 
@@ -335,25 +351,29 @@ namespace WarehouseManagement.Database
         public async Task sales_graph(int days, CartesianChart chart)
         {
             ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
-            List<DateTime> dateList = new List<DateTime>();
+            List<string> dateList = new List<string>();
 
+            string start_time = DateTime.Now.AddDays(-days).ToString();
+            string end_time = DateTime.Now.AddDays(1).ToString();
+
+            sql.AddParam("@start_time", start_time);
+            sql.AddParam("@end_time", end_time);
             //for revenue
-            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN '{DateTime.Now.AddDays(-days).ToString("yyyy-MM-dd")}' AND '{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}' GROUP BY updated_at");
+            sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN @start_time AND @end_time GROUP BY updated_at");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
-                foreach(DataRow dr in sql.DBDT.Rows)
+                foreach (DataRow dr in sql.DBDT.Rows)
                 {
                     revenueData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
-                    dateList.Add(DateTime.Parse(dr[1].ToString()));
+                    dateList.Add(DateTime.Parse(dr[1].ToString()).ToString("MM/dd/yyyy"));
                 }
-                List<string> dateLabels = dateList.Select(date => date.ToString("MM/dd/yy h:mm:ss tt")).ToList();
 
                 chart.AxisX.Clear();
                 chart.AxisX.Add(new Axis
                 {
                     Title = "Date",
-                    Labels = dateLabels
+                    Labels = dateList
                 });
 
                 chart.Series.Clear();
@@ -362,6 +382,11 @@ namespace WarehouseManagement.Database
                     Title = "Total Revenue",
                     Values = revenueData,
                 });
+            }
+            else
+            {
+                chart.Series.Clear();
+                chart.AxisX.Clear();
             }
         }
         public string HashText(string text)

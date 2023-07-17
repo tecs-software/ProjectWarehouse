@@ -112,7 +112,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             }
             else
             {
-                if (queries.insert_sender(txtId, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
                 {
                     MessageBox.Show("Shop/Page Save");
                     txtAddress.Clear();

@@ -79,7 +79,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 else
                 {
                     //validation for suspicious order
-                    if (controller.SuspiciousValidation(receiverInformationPage.tbFirstName, receiverInformationPage.tbPhone))
+                    if (controller.SuspiciousValidation(receiverInformationPage.tbFirstName,receiverInformationPage.tbLastName, receiverInformationPage.tbPhone))
                     {
                         CustomMessageBox("The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?", true);
                     }
