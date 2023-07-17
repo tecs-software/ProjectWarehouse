@@ -10,6 +10,7 @@
     <Grid>
         <DataGrid
             ScrollViewer.VerticalScrollBarVisibility="Visible"
+            HorizontalScrollBarVisibility="Auto"
             MaxHeight="590"
             DockPanel.Dock="Top"
             CanUserAddRows="False"
@@ -17,9 +18,8 @@
             HeadersVisibility="Column"
             GridLinesVisibility="All"
             BorderBrush="#949494"
-            VerticalScrollBarVisibility="Visible"
+            VerticalScrollBarVisibility="Auto"
             Background="White"
-            
             Grid.Row="0"
             RowHeight="40"
             IsReadOnly="True"
@@ -32,28 +32,29 @@
             SelectionMode="Single"
             x:Name="tblProducts"
             ItemsSource="{Binding Items}"
-            ColumnHeaderStyle="{StaticResource HeaderStyle}">
+            ColumnHeaderStyle="{StaticResource HeaderStyle}"
+            Margin="0,0,0,0">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="PRODUCT ID"
+                <DataGridTextColumn x:Name="productID" Header="PRODUCT ID"
                                     Binding="{Binding product_id}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="1*"/>
+                                    Width="200"/>
 
-                <DataGridTextColumn Header="PRODUCT NAME"
+                <DataGridTextColumn x:Name="productName" Header="PRODUCT NAME"
                                     Binding="{Binding item_name}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="2*"/>
+                                    Width="250"/>
 
-                <DataGridTextColumn Header="PRICE"
+                <DataGridTextColumn x:Name="productPrice" Header="PRICE"
                                     Binding="{Binding nominated_price, StringFormat='{}₱{0:#,0.00}'}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="0.8*"/>
+                                    Width="150"/>
 
-                <DataGridTemplateColumn Header="STATUS" Width="1*">
+                <DataGridTemplateColumn x:Name="productStatus" Header="STATUS" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border CornerRadius="5" VerticalAlignment="Center" Height="25">
@@ -81,26 +82,26 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="STOCK"
+                <DataGridTextColumn x:Name="productStock" Header="STOCK"
                                             Binding="{Binding unit_quantity}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="0.6*"/>
+                                            Width="100"/>
 
-                <DataGridTextColumn Header="REORDER UNIT"
+                <DataGridTextColumn x:Name="productReorderUnit" Header="REORDER UNIT"
                                             Binding="{Binding reorder_point}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="0.9*"/>
+                                            Width="150"/>
 
-                <DataGridTextColumn Header="LAST RE-STOCK DATE"
+                <DataGridTextColumn x:Name="productLastRestock" Header="LAST RE-STOCK DATE"
                                             Binding="{Binding timestamp, StringFormat='MMMM dd, yyyy hh:mm:ss'}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="1.2*">
+                                            Width="180">
                 </DataGridTextColumn>
 
-                <DataGridTemplateColumn Header="ACTION" Width="0.55*">
+                <DataGridTemplateColumn x:Name="productAction" Header="ACTION" Width="90">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnAction" 

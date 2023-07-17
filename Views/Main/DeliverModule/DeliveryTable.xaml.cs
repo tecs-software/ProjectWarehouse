@@ -28,6 +28,26 @@ namespace WarehouseManagement.Views.Main.DeliverModule
             InitializeComponent();
         }
 
+        private void SetColumnWidth()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+
+            if (screenWidth < 1920 || screenHeight < 1080)
+            {
+                waybillNo.Width = 150;
+                productName.Width = 250;
+                recieverName.Width = 250;
+            }
+            else
+            {
+                productName.Width = new DataGridLength(2, DataGridLengthUnitType.Star);
+                recieverName.Width = new DataGridLength(2, DataGridLengthUnitType.Star);
+                waybillNo.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+
+            }
+        }
+
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.MenuItem item1 = new System.Windows.Controls.MenuItem() { Header = "Delete Row" };
@@ -52,8 +72,10 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
+            SetColumnWidth();
         }
+
+
 
         private void tblProducts_Loaded(object sender, RoutedEventArgs e)
         {

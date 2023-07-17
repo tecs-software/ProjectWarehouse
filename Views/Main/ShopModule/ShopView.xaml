@@ -109,7 +109,7 @@
                                 HeadersVisibility="Column"
                                 x:Name="dgt_shops"
                                ScrollViewer.VerticalScrollBarVisibility="Visible"
-                       
+                                HorizontalScrollBarVisibility="Auto"
                                 MaxHeight="590"
                                 RowHeight="40"
                                 VerticalAlignment="Center"
@@ -119,57 +119,57 @@
                                 CanUserReorderColumns="False"
                                 CanUserResizeColumns="False"
                                 TextBlock.TextAlignment="Left"
-                                VerticalScrollBarVisibility="Visible"
+                                VerticalScrollBarVisibility="Auto"
                                ColumnHeaderStyle="{StaticResource HeaderStyle}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="BOOKER"
+                            <DataGridTextColumn x:Name="bookerName" Header="BOOKER"
                                                 Binding="{Binding name}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1*"/>
+                                                Width="150"/>
                             <DataGridTextColumn Header="SHOP NAME"
                                                 Binding="{Binding shop_name}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1*"/>
-                            <DataGridTextColumn Header="WAYBILL#"
+                                                Width="150"/>
+                            <DataGridTextColumn x:Name="waybillNo" Header="WAYBILL#"
                                                 Binding="{Binding waybill}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1*"/>
+                                                Width="150"/>
                             <DataGridTextColumn Header="COURIER"
                                                 Binding="{Binding courier}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="0.53*"/>
-                            <DataGridTextColumn Header="PRODUCT"
+                                                Width="150"/>
+                            <DataGridTextColumn x:Name="productName" Header="PRODUCT"
                                                 Binding="{Binding product}" 
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1.3*"/>
-                            <DataGridTextColumn Header="RECEIVER"
+                                                Width="250"/>
+                            <DataGridTextColumn x:Name="recieverName" Header="RECEIVER"
                                                 Binding="{Binding receiver}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1.5*"/>
+                                                Width="250"/>
                             <DataGridTextColumn Header="TOTAL PRICE"
                                                 Binding="{Binding total_price}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width=".65*"/>
+                                                Width="120"/>
                             <DataGridTextColumn Header="STATUS"
                                                 Binding="{Binding status}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1*"/>
+                                                Width="150"/>
                             <DataGridTextColumn Header="LAST UPDATE"
                                                 Binding="{Binding last_update}"
                                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                                Width="1.3*"/>
+                                                Width="180"/>
 
-                            <DataGridTemplateColumn Header="ACTION" Width="0.55*">
+                            <DataGridTemplateColumn Header="ACTION" Width="90">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button x:Name="btnAction" 

@@ -28,12 +28,32 @@ namespace WarehouseManagement.Views.Main.OrderModule
 {
     public partial class OrderView : Page
     {
-       
+        private void SetColumnWidth()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+
+            if (screenWidth < 1920 || screenHeight < 1080)
+            {
+                orderID.Width = 200;
+                waybillNo.Width = 200;
+                productName.Width = 250;
+                recieverName.Width = 250;
+            }
+            else
+            {
+                orderID.Width = new DataGridLength(1.5, DataGridLengthUnitType.Star);
+                waybillNo.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+                productName.Width = new DataGridLength(1.5, DataGridLengthUnitType.Star);
+                recieverName.Width = new DataGridLength(1.5, DataGridLengthUnitType.Star);
+            }
+        }
+
         public OrderView()
         {
             InitializeComponent();
             showOrderMenu();
-
+            SetColumnWidth();
             //refreshTable();
             refreshTable();
             

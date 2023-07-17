@@ -13,7 +13,7 @@
         Closing="Window_Closing"
         Background="Transparent"
         AllowsTransparency="True"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="{x:Static SystemParameters.PrimaryScreenHeight}" Width="{x:Static SystemParameters.PrimaryScreenWidth}">
 
     <Border CornerRadius="10" Background="{StaticResource ResourceKey=primaryColor1}"
             BorderBrush="#3c3c3c"
@@ -45,8 +45,8 @@
                 </Grid.ColumnDefinitions>
 
                 <RadioButton Grid.Column="0"
-                             MinWidth="200"
-                             Visibility="Collapsed"
+                             MinWidth="150"
+                             Visibility="Visible"
                              Checked="btnDashboardModule_Checked"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"
@@ -62,8 +62,8 @@
 
                 <RadioButton Grid.Column="1" 
                              Checked="btnInventoryModule_Checked"
-                             MinWidth="200"
-                              Visibility="Collapsed"
+                             MinWidth="150"
+                              Visibility="Visible"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"
                              Name="btnInventoryModule"
@@ -78,8 +78,8 @@
 
                 <RadioButton Grid.Column="2" 
                              Checked="btnOrderModule_Checked"
-                             MinWidth="200"
-                              Visibility="Collapsed"
+                             MinWidth="150"
+                              Visibility="Visible"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"
                              Name="btnOrderModule"
@@ -94,8 +94,8 @@
 
                 <RadioButton Grid.Column="3" 
                              Checked="btnEmployeeModule_Checked"
-                             MinWidth="200"
-                             Visibility="Collapsed"
+                             MinWidth="150"
+                             Visibility="Visible"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"
                              x:Name="btnEmployeeModule"
@@ -110,7 +110,7 @@
 
                 <RadioButton Grid.Column="4" 
                             
-                             MinWidth="200"
+                             MinWidth="150"
                              Visibility="Visible"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"
@@ -124,7 +124,7 @@
                 
                 <RadioButton Grid.Column="5" 
                             
-                             MinWidth="200"
+                             MinWidth="150"
                              Visibility="Visible"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"
@@ -138,7 +138,7 @@
 
                 <RadioButton Grid.Column="6" 
                             
-                             MinWidth="200"
+                             MinWidth="150"
                              Visibility="Visible"
                              Style="{StaticResource menuButton}"
                              Tag="{StaticResource primaryColor1}"

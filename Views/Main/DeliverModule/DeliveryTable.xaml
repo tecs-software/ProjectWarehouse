@@ -34,58 +34,58 @@
             ColumnHeaderStyle="{StaticResource HeaderStyle}" Loaded="tblProducts_Loaded">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="WAYBILL NUMBER"
+                <DataGridTextColumn x:Name="waybillNo" Header="WAYBILL NUMBER"
                                     Binding="{Binding waybill}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="1*"/>
+                                    Width="150"/>
 
-                <DataGridTextColumn Header="RECEIVER NAME"
+                <DataGridTextColumn x:Name="recieverName" Header="RECEIVER NAME"
                                     Binding="{Binding receiver}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="1*"/>
+                                    Width="250"/>
 
                 <DataGridTextColumn Header="CONTACT NUMBER"
                                     Binding="{Binding contact}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="1*"/>
+                                    Width="180"/>
 
                 <DataGridTextColumn Header="ADDRESS"
                                     Binding="{Binding address}"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="1.2*"/>
+                                    Width="200"/>
 
-                <DataGridTextColumn Header="PRODUCT NAME"
+                <DataGridTextColumn x:Name="productName" Header="PRODUCT NAME"
                                             Binding="{Binding product}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="1*"/>
+                                            Width="250"/>
 
                 <DataGridTextColumn Header="QTY"
                                             Binding="{Binding qty}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="0.3*"/>
+                                            Width="80"/>
 
                 <DataGridTextColumn Header="WEIGHT"
                                             Binding="{Binding weight}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="0.5*"/>
+                                            Width="100"/>
                 <DataGridTextColumn Header="REMARKS"
                                             Binding="{Binding remarks}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="0.8*"/>
+                                            Width="150"/>
                 <DataGridTextColumn Header="DATE CREATED"
                                             Binding="{Binding date, StringFormat='MMMM dd, yyyy hh:mm:ss'}"
                                             ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                            Width="0.8*"/>
-                <DataGridTemplateColumn Header="ACTION" Width="0.55*">
+                                            Width="180"/>
+                <DataGridTemplateColumn Header="ACTION" Width="90">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnAction" 

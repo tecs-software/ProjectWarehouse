@@ -26,6 +26,27 @@ namespace WarehouseManagement.Views.Main.ShopModule
         {
             InitializeComponent();
             insert_shops();
+            SetColumnWidth();
+        }
+        private void SetColumnWidth()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+
+            if (screenWidth < 1920 || screenHeight < 1080)
+            {
+                bookerName.Width = 250;
+                waybillNo.Width = 200;
+                productName.Width = 250;
+                recieverName.Width = 250;
+            }
+            else
+            {
+                bookerName.Width = new DataGridLength(1.3, DataGridLengthUnitType.Star);
+                waybillNo.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+                productName.Width = new DataGridLength(1.3, DataGridLengthUnitType.Star);
+                recieverName.Width = new DataGridLength(1.5, DataGridLengthUnitType.Star);
+            }
         }
         private void insert_shops()
         {

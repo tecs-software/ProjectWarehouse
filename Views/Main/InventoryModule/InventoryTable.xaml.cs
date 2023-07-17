@@ -34,6 +34,22 @@ namespace WarehouseManagement.Views.Main.InventoryModule
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             PopulateDataGrid();
+            SetColumnWidth();
+        }
+
+        private void SetColumnWidth()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+
+            if (screenWidth < 1920 || screenHeight < 1080)
+            {
+                productName.Width = 250;
+            }
+            else
+            {
+                productName.Width = new DataGridLength(2, DataGridLengthUnitType.Star);
+            }
         }
 
         private async void PopulateDataGrid()
