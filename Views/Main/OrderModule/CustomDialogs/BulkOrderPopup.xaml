@@ -71,7 +71,7 @@
                 </Button>
 
                 <Grid Grid.Row="2" VerticalAlignment="Top">
-                    <DataGrid ItemsSource="{Binding Path=myList}"
+                    <DataGrid
                                 CanUserAddRows="False"
                                 AutoGenerateColumns="True"
                                ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -110,7 +110,7 @@
                                       MaxLength="4"
                                       materialDesign:HintAssist.Hint="Quantity" FontSize="13"
                                       materialDesign:HintAssist.Foreground="Black"
-                                      x:Name="txtQuantity" Loaded="txtQuantity_Loaded"
+                                      x:Name="txtQuantity" Loaded="txtQuantity_Loaded" LostFocus="txtQuantity_LostFocus"
                                       />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

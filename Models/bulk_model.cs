@@ -8,6 +8,11 @@ namespace WarehouseManagement.Models
 {
     public class bulk_model
     {
+        // datagrid values
+        public string ID{ get; set; }
+        public string item_quantity { get; set; }
+        public string item_name { get; set; }
+
         // receivers
         public string? receiver_name { get; set; }
         public string? receiver_phone { get; set; }

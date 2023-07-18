@@ -22,6 +22,62 @@ namespace WarehouseManagement.Controller
         public static DataTable dataTableAddress { get; set; }
         public static Boolean ConfirmedToImport { get; set; }
         public static DataTable dataTableBulkOrders { get; set; }
+
+        public static DataTable GetDataTableFromCSVFileBulk(string csv_file_path)
+        {
+            int count = 0;
+            DataTable csvData = new DataTable();
+            try
+            {
+                using (TextFieldParser csvReader = new TextFieldParser(csv_file_path))
+                {
+                    csvReader.SetDelimiters(new string[] { "," });
+                    csvReader.HasFieldsEnclosedInQuotes = true;
+                    string[] colFields = csvReader.ReadFields();
+
+                    // Add the new column "bulk number" to the DataTable
+                    DataColumn bulkNumberColumn = new DataColumn("bulk number");
+                    bulkNumberColumn.AllowDBNull = true;
+                    csvData.Columns.Add(bulkNumberColumn);
+
+                    foreach (string column in colFields)
+                    {
+                        DataColumn dataColumn = new DataColumn(column);
+                        dataColumn.AllowDBNull = true;
+                        csvData.Columns.Add(dataColumn);
+                    }
+
+                    while (!csvReader.EndOfData)
+                    {
+                        string[] fieldData = csvReader.ReadFields();
+
+                        //Making empty value as null
+                        for (int i = 0; i < fieldData.Length; i++)
+                        {
+                            if (fieldData[i] == "")
+                            {
+                                fieldData[i] = null;
+                            }
+                        }
+
+                        // Add a placeholder value for the "bulk number" column (you can change this value accordingly)
+                        string bulkNumberValue = count.ToString(); // Replace "XYZ" with an appropriate value for your scenario
+
+                        // Insert the "bulk number" value as the first element in the fieldData array
+                        List<string> dataWithBulkNumber = new List<string> { bulkNumberValue };
+                        dataWithBulkNumber.AddRange(fieldData);
+
+                        csvData.Rows.Add(dataWithBulkNumber.ToArray());
+                        count++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return csvData;
+        }
         public static DataTable GetDataTableFromCSVFile(string csv_file_path)
         {
             DataTable csvData = new DataTable();
