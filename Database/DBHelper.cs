@@ -1034,7 +1034,7 @@ namespace WarehouseManagement.Database
                         double regularPay = (hoursWorked - overtime) * hourlyRate;
                         double overtimePay = overtime * 80;
                         double totalIncentive = incentive + commission;
-                        double grossPay = ((hoursWorked - overtime) * hourlyRate) + commission + reimbursement + (overtime * 80) - deduction;
+                        double grossPay = ((hoursWorked - overtime) * hourlyRate) + totalIncentive + reimbursement + (overtime * 80) - deduction;
                         //double grossPay = hourlyRate * hoursWorked + commission + (overtime * hourlyRate) + reimbursement;
 
                         // Add data row to payroll data table
@@ -1468,7 +1468,7 @@ namespace WarehouseManagement.Database
             using (SqlConnection? connection = await conn.OpenConnection())
             {
                 {
-                    string query = "SELECT role_id, role_name, hourly_rate FROM tbl_roles";
+                    string query = "SELECT role_id, role_name, hourly_rate FROM tbl_roles WHERE role_id != 1";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {

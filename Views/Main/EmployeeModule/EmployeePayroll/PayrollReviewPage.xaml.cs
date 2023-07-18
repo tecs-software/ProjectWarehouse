@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseManagement.Database;
+using WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs;
 
 namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
 {
@@ -77,9 +78,31 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.EmployeePayroll
             tb_payroll_review.ItemsSource = dataTable.DefaultView;
         }
 
-        private void btnDeductions_Click(object sender, RoutedEventArgs e)
+        private async void btnDeductions_Click(object sender, RoutedEventArgs e)
         {
+            if (tb_payroll_review.SelectedItems.Count > 0)
+            {
+                DataRowView selectedRow = (DataRowView)tb_payroll_review.SelectedItems[0];
+                string userId = selectedRow["user_id"].ToString();
+                string name = selectedRow["name"].ToString();
 
+                Additionals add = new Additionals();
+
+                add.Owner = Window.GetWindow(this); // set the parent page as the owner of the window
+
+                add.SetData("deduction", userId, name, 0);
+
+                if (add.ShowDialog() == true)
+                {
+                    DBHelper db = new DBHelper();
+
+                    if (await db.InsertData("tbl_deductions", new string[] { "user_id", "description", "amount", "is_valid" }, new string[] { userId, add.description, add.amount, "0" }))
+                    {
+                        refreshTable();
+                    }
+
+                }
+            }
         }
 
         private void tb_payroll_review_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

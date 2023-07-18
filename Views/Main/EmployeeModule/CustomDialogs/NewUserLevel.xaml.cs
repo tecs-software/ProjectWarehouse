@@ -78,6 +78,11 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                 "Modify Order",
                 "View Employee",
                 "Modify Employee",
+                "Modify Order Inquiry",
+                "View Order Inquiry",
+                "Modify Shop/Pages",
+                "View Shop/Pages",
+                "View Suspicious Order",
                 "Modify System Settings"
             };
 
@@ -108,6 +113,23 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                 return;
             }
 
+            if (tbRoleName.Text.ToLower().Equals("admin"))
+            {
+                MessageBox.Show("Admin is not allowed");
+                return;
+            }
+
+            DBHelper db = new DBHelper();
+
+            if (!isUpdate)
+            {
+                if (await db.IsDataExistsAsync("tbl_roles", "role_name", tbRoleName.Text))
+                {
+                    MessageBox.Show("Role already exists!");
+                    return;
+                }
+            }
+
             string roleName = tbRoleName.Text;
             decimal hourlyRate = Converter.StringToDecimal(tbHourlyRate.Text);
 
@@ -120,7 +142,6 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                 }
             }
 
-            DBHelper db = new DBHelper();
             bool success = await db.InsertOrUpdateRole(roleName, hourlyRate, moduleAccessList, id);
 
             if (success)
@@ -131,11 +152,11 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
             {
                 if (isUpdate)
                 {
-                    MessageBox.Show("Failed to add role.");
+                    MessageBox.Show("Failed to update role.");
                 }
                 else
                 {
-
+                    MessageBox.Show("Failed to add role");
                 }
             }
         }
