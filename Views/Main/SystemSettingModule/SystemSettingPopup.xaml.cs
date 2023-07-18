@@ -105,6 +105,12 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Shop/Pages"))
+            {
+                MessageBox.Show("You don't have enough permission to add or update shop/pages");
+                return;
+            }
+
             if (Util.IsAnyTextBoxEmpty(txtAddress, txtPagename, txtPhone) || Util.IsAnyComboBoxItemEmpty(cmbProvince) || Util.IsAnyComboBoxItemEmpty(cmbCity) || Util.IsAnyComboBoxItemEmpty(cmbBarangay))
             {
                 MessageBox.Show("Please complete all required fields on sender information.");

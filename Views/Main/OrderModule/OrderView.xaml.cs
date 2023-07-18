@@ -82,6 +82,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
 
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Order"))
+            {
+                return;
+            }
+
             NewOrderWindow newOrderWindow = new NewOrderWindow();
 
             newOrderWindow.Owner = Window.GetWindow(this);
@@ -181,6 +186,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
         private async void Cancel_Order_Click(object sender, RoutedEventArgs e)
         {
 
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Order"))
+            {
+                return;
+            }
+
 
             if (dgtRespondentData.SelectedItems.Count > 0)
             {
@@ -221,6 +231,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         private void btnReturntoSeller_Click(object sender, RoutedEventArgs e)
         {
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Order"))
+            {
+                return;
+            }
+
             new ReturnSellerPopup().ShowDialog();
             if (Order_Controller.isConfirmedToReturn)
             {
@@ -240,6 +255,10 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         private void btnBulkOrder_Click(object sender, RoutedEventArgs e)
         {
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Order"))
+            {
+                return;
+            }
 
             if (new BulkOrderPopup().ShowDialog() == true)
             {

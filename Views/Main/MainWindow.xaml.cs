@@ -107,6 +107,45 @@ namespace WarehouseManagement.Views.Main
 
                         break;
 
+                    case "View Order Inquiry":
+
+                        btnDeliver.Visibility = Visibility.Visible;
+
+                        if (!initialPage)
+                        {
+                            initialPage = true;
+                            btnDeliver.IsChecked = true;
+                            PageContent.Content = new DeliveryView();
+                        }
+
+                        break;
+
+                    case "View Shop/Pages":
+
+                        btn_Shops_Pages.Visibility = Visibility.Visible;
+
+                        if (!initialPage)
+                        {
+                            initialPage = true;
+                            btn_Shops_Pages.IsChecked = true;
+                            PageContent.Content = new ShopView();
+                        }
+
+                        break;
+
+                    case "View Suspicious Order":
+
+                        btn_Suspicious_Order.Visibility = Visibility.Visible;
+
+                        if (!initialPage)
+                        {
+                            initialPage = true;
+                            btn_Suspicious_Order.IsChecked = true;
+                            PageContent.Content = new SuspiciousView();
+                        }
+
+                        break;
+
                     // Add more cases for other module names if needed
 
                     default:

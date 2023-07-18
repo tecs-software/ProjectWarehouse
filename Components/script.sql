@@ -175,8 +175,38 @@ BEGIN
         (@roleId, 'Modify Order'),
         (@roleId, 'View Employee'),
         (@roleId, 'Modify Employee'),
-        (@roleId, 'Modify System Settings')
+        (@roleId, 'View System Settings'),
+		(@roleId, 'Modify Order Inquiry'),
+        (@roleId, 'View Order Inquiry'), 
+		(@roleId, 'Modify Shop/Pages'),
+        (@roleId, 'View Shop/Pages'),
+        (@roleId, 'View Suspicious Order')
 END
+
+BEGIN
+-- Check if the specified module names exist for role_id = 1
+IF NOT EXISTS (
+    SELECT *
+    FROM tbl_module_access
+    WHERE role_id = 1
+        AND module_name IN (
+            'Modify Order Inquiry',
+            'View Order Inquiry',
+            'Modify Shop/Pages',
+            'View Shop/Pages',
+            'View Suspicious Order'
+        )
+)
+    -- Insert the missing module names for role_id = 1
+    INSERT INTO tbl_module_access (role_id, module_name)
+    VALUES
+        (1, 'Modify Order Inquiry'),
+        (1, 'View Order Inquiry'),
+        (1, 'Modify Shop/Pages'),
+        (1, 'View Shop/Pages'),
+        (1, 'View Suspicious Order');
+END
+
 
 -- Create tbl_access_level table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_access_level')

@@ -39,6 +39,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
                 FROM tbl_roles r
                 LEFT JOIN tbl_access_level al ON r.role_id = al.role_id
                 LEFT JOIN tbl_module_access ma ON r.role_id = ma.role_id
+                WHERE r.role_id != 1
                 GROUP BY r.role_id, r.role_name, r.hourly_rate
                 ORDER BY permission_count DESC";
 

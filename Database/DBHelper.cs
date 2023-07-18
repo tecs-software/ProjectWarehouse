@@ -1468,7 +1468,7 @@ namespace WarehouseManagement.Database
             using (SqlConnection? connection = await conn.OpenConnection())
             {
                 {
-                    string query = "SELECT role_id, role_name, hourly_rate FROM tbl_roles";
+                    string query = "SELECT role_id, role_name, hourly_rate FROM tbl_roles WHERE role_id != 1";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {

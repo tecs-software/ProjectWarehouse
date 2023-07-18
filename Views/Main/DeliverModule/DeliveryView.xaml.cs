@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.OrderModule;
 
 namespace WarehouseManagement.Views.Main.DeliverModule
@@ -36,6 +37,11 @@ namespace WarehouseManagement.Views.Main.DeliverModule
 
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Order Inquiry"))
+            {
+                return;
+            }
+
             OrderInquiryPopup orderInquiry = new OrderInquiryPopup();
             orderInquiry.RefreshTable += Dialog;
             orderInquiry.Show();
