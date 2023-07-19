@@ -70,17 +70,17 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 if (openFileDialog.ShowDialog() == true)
                 {
                     //txtFileNameProduct.Text = openFileDialog.FileName;
-                    Csv_Controller.GetDataTableFromCSVFileBulk(openFileDialog.FileName);
-                    int numberofitems = Csv_Controller.GetDataTableFromCSVFileBulk(openFileDialog.FileName).Rows.Count;
+                    Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+                    int numberofitems = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName).Rows.Count;
                     //pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
                     //lblTotalNumberOfItems.Text = numberofitems.ToString();
-                    Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFileBulk(openFileDialog.FileName);
+                    Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
                     dtBulkOrders.ItemsSource = Csv_Controller.dataTableAddress.DefaultView;
 
                     dtBulkOrders.Visibility = Visibility.Visible;
                     dtSuspiciousOrders.Visibility = Visibility.Collapsed;
 
-                    dtBulkOrders.Columns[2].IsReadOnly = true;
+                    //dtBulkOrders.Columns[2].IsReadOnly = true;
                 }
             }
             catch(Exception ex)

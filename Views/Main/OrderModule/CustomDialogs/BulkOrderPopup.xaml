@@ -88,34 +88,6 @@
                                 CanUserResizeColumns="False"
                                 TextBlock.TextAlignment="Left" AutoGeneratingColumn="dtBulkOrders_AutoGeneratingColumn"
                                 >
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Item Name">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ComboBox
-                                      Margin="0,0,0,0"
-                                      materialDesign:HintAssist.Hint="Item Name" FontSize="13"
-                                      materialDesign:HintAssist.Foreground="Black"
-                                      x:Name="cmbSellerName"
-                                      BorderBrush="Black"
-                                      Background="{StaticResource textboxProfitAnalysisColor1}" Loaded="cmbSellerName_Loaded" DropDownClosed="cmbSellerName_DropDownClosed"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Quantity" >
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox
-                                      Margin="0,0,0,0"
-                                      MaxLength="4"
-                                      materialDesign:HintAssist.Hint="Quantity" FontSize="13"
-                                      materialDesign:HintAssist.Foreground="Black"
-                                      x:Name="txtQuantity" Loaded="txtQuantity_Loaded" LostFocus="txtQuantity_LostFocus"
-                                      />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
                     </DataGrid>
 
                     <DataGrid
