@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="ModifyEmployee" Height="600" Width="400">
+        Title="ModifyEmployee" Height="600" Width="600">
     
     <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
@@ -25,11 +25,16 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" VerticalAlignment="Center" Margin="20,20,20,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Center" Margin="20,20,20,10">
 
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" Text="Manage Employee" Margin="0,10,0,20" Foreground="#3C3C3C" FontSize="20" FontWeight="Medium" x:Name="lblTitle"/>
 
@@ -47,7 +52,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" VerticalAlignment="Center" Margin="20,0,20,0" >
+            <Grid Grid.Row="1" VerticalAlignment="Center" Margin="20,0,10,0" >
 
                 <TextBox 
                     Grid.Column="1"
@@ -63,7 +68,7 @@
                     Margin="0,5,0,5"/>
             </Grid>
 
-            <Grid Grid.Row="2" VerticalAlignment="Center" Margin="20,0,20,0" >
+            <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,20,0" >
 
                 <TextBox 
                 Grid.Column="1"
@@ -79,7 +84,7 @@
                 Margin="0,5,0,5"/>
             </Grid>
 
-            <Grid Grid.Row="3" VerticalAlignment="Center" Margin="20,0,20,0">
+            <Grid Grid.Row="3" VerticalAlignment="Center" Margin="20,0,10,0">
 
                 <TextBox 
                 Grid.Column="1"
@@ -95,23 +100,57 @@
                 Margin="0,5,0,5"/>
             </Grid>
 
-            <Grid Grid.Row="4" VerticalAlignment="Center" Margin="20,0,20,0">
+            <Grid Grid.Row="4" VerticalAlignment="Center" Margin="20,20,10,0">
 
                 <TextBox 
-                Grid.Column="1"
-                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
-                Width="Auto"
-                materialDesign:HintAssist.Hint="Email" 
-                FontSize="14"
-                Background="{StaticResource textboxProfitAnalysisColor1}"
-                materialDesign:HintAssist.Background="Transparent"
-                materialDesign:HintAssist.Foreground="#3C3C3C"
-                BorderBrush="Transparent"
-                x:Name="tbEmail"
-                Margin="0,5,0,5"/>
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="Username" 
+                    FontSize="14"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    BorderBrush="Transparent"
+                    x:Name="tbUsername"
+                    Margin="0,5,0,5"/>
             </Grid>
 
-            <Grid Grid.Row="5" VerticalAlignment="Center" Margin="20,0,20,0">
+            <Grid Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="10,20,20,0">
+
+                <PasswordBox 
+                    x:Name="tbPassword"
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedPasswordBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="New Password"
+                    PasswordChar="•"
+                    FontSize="13"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    Margin="0,5,0,5"
+                    BorderBrush="Transparent">
+                </PasswordBox>
+            </Grid>
+
+            <Grid Grid.Row="5" VerticalAlignment="Center" Margin="20,0,10,0">
+
+                <TextBox 
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="Email" 
+                    FontSize="14"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    BorderBrush="Transparent"
+                    x:Name="tbEmail"
+                    Margin="0,5,0,5"/>
+            </Grid>
+
+            <Grid Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,20,0">
 
                 <TextBox 
                 Grid.Column="1"
@@ -127,54 +166,62 @@
                 Margin="0,5,0,5" Grid.ColumnSpan="2"/>
             </Grid>
 
-            <Grid Grid.Row="6" VerticalAlignment="Center" Margin="20,0,20,0">
-
-                <TextBox 
-                Grid.Column="1"
-                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
-                Width="Auto"
-                materialDesign:HintAssist.Hint="Rate Per hour" 
-                FontSize="14"
-                Background="{StaticResource textboxProfitAnalysisColor1}"
-                materialDesign:HintAssist.Background="Transparent"
-                materialDesign:HintAssist.Foreground="#3C3C3C"
-                BorderBrush="Transparent"
-                x:Name="tbRate"
-                Margin="0,5,0,5" Grid.ColumnSpan="2"/>
-            </Grid>
-            
-            <Grid Grid.Row="7" VerticalAlignment="Center" Margin="20,0,20,0">
+            <Grid Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="20,20,10,0">
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="0"
                       Grid.Row="2"
                       Margin="0,5,0,5"
-                      materialDesign:HintAssist.Hint="Shop Name" FontSize="15"
+                      materialDesign:HintAssist.Hint="User Level" FontSize="13"
+                      materialDesign:HintAssist.Foreground="Black"
+                      x:Name="cbRole"
+                      BorderBrush="Black"
+                      Height="50"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+            </Grid>
+
+            <Grid Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="10,20,20,0">
+
+                <TextBox 
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                    Width="Auto"
+                    materialDesign:HintAssist.Hint="Rate Per hour" 
+                    FontSize="14"
+                    Background="{StaticResource textboxProfitAnalysisColor1}"
+                    materialDesign:HintAssist.Background="Transparent"
+                    materialDesign:HintAssist.Foreground="#3C3C3C"
+                    BorderBrush="Transparent"
+                    x:Name="tbRate"
+                    Margin="0,5,0,5" Grid.ColumnSpan="2"/>
+            </Grid>
+            
+            <Grid Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="20,0,10,0">
+                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="0"
+                      Grid.Row="2"
+                      Margin="0,5,0,5"
+                      materialDesign:HintAssist.Hint="Shop Name" FontSize="13"
                       materialDesign:HintAssist.Foreground="Black"
                       x:Name="cmbSellerName"
                       BorderBrush="Black"
+                      Height="50"
                       Background="{StaticResource textboxProfitAnalysisColor1}"/>
             </Grid>
-            <Grid Grid.Row="8" Margin="20,0,20,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                
-                <Button 
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Stretch" 
+
+            <Button 
                     Click="btnUpdate_Click"
-                    VerticalAlignment="Center" 
                     x:Name="btnUpdate" 
                     Content="Update" 
+                    Grid.Row="9"
+                    Grid.Column="1"
+                    Margin="10,0,20,0"
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Center" 
                     IsDefault="True" 
                     FontSize="15"
-                    Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
-                    Height="40" 
-                    Margin="0,20,0,20"/>
-            </Grid>
-            
+                    Background="{StaticResource secondaryColor}" BorderBrush="{StaticResource secondaryColor}" 
+                    Height="50" />
+
         </Grid>
     </Border>
 </Window>

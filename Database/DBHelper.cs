@@ -1330,6 +1330,28 @@ namespace WarehouseManagement.Database
             }
         }
 
+        public async Task<bool> CheckRoleExistsInAccessLevel(string roleId)
+        {
+            using (DatabaseConnection dbConnection = new DatabaseConnection())
+            {
+                SqlConnection? connection = await dbConnection.OpenConnection();
+
+                if (connection != null)
+                {
+                    SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM tbl_access_level WHERE role_id = @roleId;", connection);
+                    command.Parameters.AddWithValue("@roleId", roleId);
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
+                }
+
+                CloseConnection();
+            }
+
+            return false;
+        }
+
         public async Task <List<Dictionary<string, object>>> GetUserFinancialData(int userId)
         {
             List<Dictionary<string, object>> financialData = new List<Dictionary<string, object>>();
@@ -1478,7 +1500,7 @@ namespace WarehouseManagement.Database
                         {
                             Roles role = new Roles();
                             role.roleID = reader.GetInt32(0);
-                            role.roleName = Converter.CapitalizeWords(reader.GetString(1), 2);
+                            role.roleName = reader.GetString(1);
                             decimal? hourlyRateNullable = reader.IsDBNull(2) ? (decimal?)null : reader.GetDecimal(2);
                             role.hourlyRate = hourlyRateNullable ?? 0;
 
@@ -1700,6 +1722,60 @@ namespace WarehouseManagement.Database
                 
                 CloseConnection();
             }  
+        }
+
+        public async Task<bool> DeleteRole(string roleId)
+        {
+            using (DatabaseConnection dbConnection = new DatabaseConnection())
+            {
+                SqlConnection? connection = await dbConnection.OpenConnection();
+
+                if (connection != null)
+                {
+                    SqlTransaction? transaction = null;
+
+                    try
+                    {
+                        // Start a new transaction
+                        transaction = connection.BeginTransaction();
+
+                        // Delete records from tbl_module_access
+                        SqlCommand deleteModuleAccessCommand = new SqlCommand("DELETE FROM tbl_module_access WHERE role_id = @roleId;", connection, transaction);
+                        deleteModuleAccessCommand.Parameters.AddWithValue("@roleId", roleId);
+                        deleteModuleAccessCommand.ExecuteNonQuery();
+
+                        // Update tbl_access_level to set role_id to null
+                        SqlCommand updateAccessLevelCommand = new SqlCommand("UPDATE tbl_access_level SET role_id = NULL WHERE role_id = @roleId;", connection, transaction);
+                        updateAccessLevelCommand.Parameters.AddWithValue("@roleId", roleId);
+                        updateAccessLevelCommand.ExecuteNonQuery();
+
+                        // Delete record from tbl_roles
+                        SqlCommand deleteRoleCommand = new SqlCommand("DELETE FROM tbl_roles WHERE role_id = @roleId;", connection, transaction);
+                        deleteRoleCommand.Parameters.AddWithValue("@roleId", roleId);
+                        deleteRoleCommand.ExecuteNonQuery();
+
+                        // Commit the transaction if all queries succeeded
+                        transaction.Commit();
+
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        // Rollback the transaction if any error occurs
+                        transaction?.Rollback();
+                        return false;
+                    }
+                    finally
+                    {
+                        // Ensure the transaction and connection are closed
+                        transaction?.Dispose();
+                    }
+                }
+
+                CloseConnection();
+            }
+
+            return false;
         }
 
         public async Task <bool> HasInvalidPayrollRecords()

@@ -138,6 +138,17 @@ namespace WarehouseManagement.Helpers
             }
         }
 
+        public static SecureString PBtoSecureString(PasswordBox pass)
+        {
+            SecureString password = new SecureString();
+            foreach (char c in pass.Password)
+            {
+                password.AppendChar(c);
+            }
+            return password;
+        }
+
+
         public static bool SecurePasswordsMatch(SecureString securePassword1, SecureString securePassword2)
         {
             IntPtr bstr1 = IntPtr.Zero;

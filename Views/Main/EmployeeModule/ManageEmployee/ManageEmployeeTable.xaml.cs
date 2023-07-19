@@ -39,13 +39,13 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee
 
         public async Task ShowEmployees()
         {
-            string query = @"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, r.role_name, s.sender_name
-                FROM tbl_users u
-                LEFT JOIN tbl_wage w ON u.user_id = w.user_id
-                LEFT JOIN tbl_access_level al ON u.user_id = al.user_id
-                LEFT JOIN tbl_roles r ON al.role_id = r.role_id
-                LEFT JOIN tbl_sender s ON u.sender_id = s.sender_id
-                WHERE u.username <> '' AND w.user_id IS NOT NULL";
+            string query = @"SELECT u.user_id, u.first_name, u.middle_name, u.last_name, u.email, u.username, u.contact_number, u.status, ISNULL(r.role_name, 'N/A') AS role_name, s.sender_name
+                            FROM tbl_users u
+                            LEFT JOIN tbl_wage w ON u.user_id = w.user_id
+                            LEFT JOIN tbl_access_level al ON u.user_id = al.user_id
+                            LEFT JOIN tbl_roles r ON al.role_id = r.role_id
+                            LEFT JOIN tbl_sender s ON u.sender_id = s.sender_id
+                            WHERE u.username <> '' AND w.user_id IS NOT NULL";
 
             DataTable? dataTable = await DBHelper.GetTable(query);
 
@@ -167,7 +167,7 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee
             }
         }
 
-        private void ManageEmployee_Click(object sender, RoutedEventArgs e)
+        private async void ManageEmployee_Click(object sender, RoutedEventArgs e)
         {
             if (tblUsers.SelectedItems.Count > 0)
             {
@@ -177,20 +177,24 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.ManageEmployee
                     return;
 
                 string? userId = selectedRow["user_id"].ToString();
+                string? username = selectedRow["username"].ToString();
                 string? fname = selectedRow["first_name"].ToString();
                 string? mname = selectedRow["middle_name"].ToString();
                 string? lname = selectedRow["last_name"].ToString();
                 string? email = selectedRow["email"].ToString();
                 string? contact = selectedRow["contact_number"].ToString();
                 string? shopName = selectedRow["sender_name"].ToString();
+                string? role = selectedRow["role_name"].ToString();
 
                 ModifyEmployee em = new ModifyEmployee();
 
                 em.Owner = Window.GetWindow(this);
 
-                em.SetData(userId, fname, mname, lname, email, contact, shopName);
+                em.SetData(userId, fname, mname, lname, email, contact, shopName, username, role);
 
                 em.ShowDialog();
+
+                await ShowEmployees();
             }
         }
     }

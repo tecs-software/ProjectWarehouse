@@ -140,10 +140,21 @@ BEGIN
     CREATE TABLE [dbo].[tbl_roles](
         [role_id] [int] IDENTITY(1,1) PRIMARY KEY,
         [role_name] [varchar](50) NOT NULL,
-        [hourly_rate] [decimal](10, 2) NULL
+        [hourly_rate] [decimal](10, 2) NULL,
+		[enabled] [bit] NOT NULL DEFAULT 1,
     )
 END
 GO
+
+-- Check if column 'enabled' exists in tbl_roles
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'enabled' AND Object_ID = Object_ID(N'dbo.tbl_roles'))
+BEGIN
+    -- Add column 'enabled' to tbl_roles
+    ALTER TABLE dbo.tbl_roles
+    ADD [enabled] [bit] NOT NULL DEFAULT 1
+END
+GO
+
 
 -- Create tbl_module_access table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_module_access')
@@ -214,11 +225,25 @@ BEGIN
     CREATE TABLE [dbo].[tbl_access_level](
         [id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
         [user_id] [int] NOT NULL,
-        [role_id] [int] NOT NULL,
+        [role_id] [int] NULL,
         CONSTRAINT FK_tbl_access_level_tbl_roles FOREIGN KEY ([role_id]) REFERENCES [dbo].tbl_roles
     )
 END
 GO
+
+-- Check if [role_id] [int] column is NOT NULL
+IF EXISTS (
+    SELECT * 
+    FROM sys.columns 
+    WHERE Name = N'role_id' 
+    AND Object_ID = Object_ID(N'dbo.tbl_access_level')
+    AND is_nullable = 0
+)
+BEGIN
+    -- Alter [role_id] column to allow NULL values
+    ALTER TABLE dbo.tbl_access_level
+    ALTER COLUMN [role_id] [int] NULL
+END
 
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_work_hours')

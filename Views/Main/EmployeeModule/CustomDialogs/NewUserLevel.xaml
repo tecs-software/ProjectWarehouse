@@ -87,12 +87,12 @@
                     Margin="0,20,20,20"/>
                 
                 <Button 
-                    Grid.Row="5"
-                    HorizontalAlignment="Right" 
-                    VerticalAlignment="Center" 
                     x:Name="btnSave" 
                     Content="Save" 
                     Click="btnSave_Click"
+                    Grid.Row="5"
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
                     Width="100"
                     IsDefault="True" 
                     FontSize="15"

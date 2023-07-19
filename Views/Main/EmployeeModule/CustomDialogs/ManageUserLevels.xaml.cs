@@ -91,11 +91,38 @@ namespace WarehouseManagement.Views.Main.EmployeeModule.CustomDialogs
             }
         }
 
-        
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+
+        private async void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (tblUserLevels.SelectedItem == null)
+                return;
 
+            string? roleId = ((DataRowView)tblUserLevels.SelectedItem)["role_id"].ToString();
+
+            // Prompt for confirmation
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this role?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.No)
+                return;
+
+            DBHelper db = new DBHelper();
+
+            if (await db.CheckRoleExistsInAccessLevel(roleId))
+            {
+                MessageBox.Show("Unable to delete the role. There are existing users associated with this role in the system.");
+                return;
+            }
+            else
+            {
+                if (await db.DeleteRole(roleId))
+                {
+                    RefreshTable();
+                }
+                else
+                {
+                    MessageBox.Show("Unable to delete the role. System Error.");
+                }
+            }
         }
     }
 }
