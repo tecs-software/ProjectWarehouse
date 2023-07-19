@@ -186,7 +186,7 @@ BEGIN
         (@roleId, 'Modify Order'),
         (@roleId, 'View Employee'),
         (@roleId, 'Modify Employee'),
-        (@roleId, 'View System Settings'),
+        (@roleId, 'Modify System Settings'),
 		(@roleId, 'Modify Order Inquiry'),
         (@roleId, 'View Order Inquiry'), 
 		(@roleId, 'Modify Shop/Pages'),
