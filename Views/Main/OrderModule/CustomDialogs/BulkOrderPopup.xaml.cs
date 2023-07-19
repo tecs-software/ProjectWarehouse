@@ -143,11 +143,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                     DataGridCell cell = GetCell(dtBulkOrders, cellInfo);
                     if (cell != null && cell.Content is TextBlock textBlock)
                     {
-                        idValue = textBlock.Text;
-                        if (bulkDictionary.ContainsKey(idValue))
-                            cb.Text = bulkDictionary[idValue].item_name;
-                        else
-                            cb.SelectedIndex = -1;
+                        //idValue = textBlock.Text;
+                        //if (bulkDictionary.ContainsKey(idValue))
+                        //    //cb.Text = bulkDictionary[idValue].item_name;
+                        //else
+                        //    cb.SelectedIndex = -1;
                     }
                 }
 
@@ -170,18 +170,19 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                     DataGridCell cell = GetCell(dtBulkOrders, cellInfo);
                     if (cell != null && cell.Content is TextBlock textBlock)
                     {
-                        string idValue = textBlock.Text;
-                        if (bulkDictionary.ContainsKey(idValue))
-                            tb.Text = bulkDictionary[idValue].item_quantity;
-                        else
-                            tb.Text = string.Empty;
+                        //string idValue = textBlock.Text;
+                        //if (bulkDictionary.ContainsKey(idValue))
+                        //    tb.Text = bulkDictionary[idValue].item_quantity;
+                        //else
+                        //    tb.Text = string.Empty;
                     }
                 }
             }
         }
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            if (!Csv_Controller.checkQuantityColumn(tb) && !Csv_Controller.checkItemNameColumn(dtBulkOrders, cb) && !Csv_Controller.checkNullCells(dtBulkOrders))
+            
+            if (Csv_Controller.checkItemname(dtBulkOrders) || Csv_Controller.checkNullCells(dtBulkOrders) || Csv_Controller.checkquantity(dtBulkOrders))
             {
                 
             }
@@ -269,9 +270,9 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 
                 bulk_model model = new bulk_model()
                 {
-                    ID = selectedID,
-                    item_name = cmb.Text,
-                    item_quantity = quantity
+                    //ID = selectedID,
+                    //item_name = cmb.Text,
+                    //item_quantity = quantity
                 };
                 if (bulkDictionary.ContainsKey(selectedID))
                 {
@@ -314,9 +315,9 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 
                 bulk_model model = new bulk_model()
                 {
-                    ID = selectedID,
-                    item_quantity = tb.Text,
-                    item_name = selectedItem
+                    //ID = selectedID,
+                    //item_quantity = tb.Text,
+                    //item_name = selectedItem
                 };
                 if (bulkDictionary.ContainsKey(selectedID))
                 {

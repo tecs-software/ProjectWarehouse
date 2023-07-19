@@ -13,6 +13,7 @@ using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
 using System.Windows;
 using System.Windows.Media;
+using System.Data.Common;
 
 namespace WarehouseManagement.Controller
 {
@@ -192,54 +193,65 @@ namespace WarehouseManagement.Controller
             {
                 string message = "The following cells are missing or empty:\n" + string.Join("\n", missingCells);
                 MessageBox.Show(message, "Missing Cells", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
+                return true;
             }
             else
-                return true;
+                return false;
         }
-        public static bool checkQuantityColumn(TextBox tb)
+        public static bool checkquantity(DataGrid dg)
         {
-            List<string> missingItemNames = new List<string>();
+            List<string> missingCells = new List<string>();
 
-            if (tb.Text == null || tb.Text == "")
+            foreach (DataRowView rowView in dg.Items)
             {
-                missingItemNames.Add($"Quantity not declared on column Quantity");
+                DataRow row = rowView.Row;
+                if (rowView[1].ToString() == "0")
+                {
+                    string cellInfo = $"Row {row.Table.Rows.IndexOf(row) + 1}";
+                    missingCells.Add(cellInfo);
+                }
             }
 
-            if (missingItemNames.Count > 0)
+            if (missingCells.Count > 0)
             {
-                string message = "The following cells are missing or empty:\n" + string.Join("\n", missingItemNames);
-                MessageBox.Show(message, "Missing item name", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-            else
-            {
+                string message = "The following cells are 0:\n" + string.Join("\n", missingCells);
+                MessageBox.Show(message, "0 quantity", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return true;
             }
+            else
+                return false;
         }
 
-
-        public static bool checkItemNameColumn(DataGrid dg, ComboBox cb)
+        public static bool checkItemname(DataGrid dg)
         {
-            List<string> missingItemNames = new List<string>();
+            List<string> missingCells = new List<string>();
 
-            int columnIndex = 0; // Index of the first column
-
-            if (cb.Text == null || cb.Text == "")
+            foreach (DataRowView rowView in dg.Items)
             {
-                missingItemNames.Add($"No item selected in ComboBox for column Item Name");
+                DataRow row = rowView.Row;
+                sql.AddParam(@"item_name", rowView[0].ToString().ToUpper());
+
+                sql.Query($"SELECT item_name FROM tbl_products WHERE item_name = @item_name");
+                if (sql.DBDT.Rows.Count > 0)
+                {
+
+                }
+                else
+                {
+                    string cellInfo = $"Row {row.Table.Rows.IndexOf(row) + 1}";
+                    missingCells.Add(cellInfo);
+                }
             }
-
-            if (missingItemNames.Count > 0)
+            
+            
+            if (missingCells.Count > 0)
             {
-                string message = "The following cells are missing or empty:\n" + string.Join("\n", missingItemNames);
-                MessageBox.Show(message, "Missing item name", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-            else
-            {
+                string message = "The following cells are not equal to item name:\n" + string.Join("\n", missingCells);
+                MessageBox.Show(message, "incorrect item name", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return true;
             }
+            else
+                return false;
         }
         public static List<bulk_model> model { get; set; }
         public static DataTable DataTable_Creation()
