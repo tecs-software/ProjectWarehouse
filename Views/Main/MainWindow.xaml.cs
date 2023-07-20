@@ -231,8 +231,7 @@ namespace WarehouseManagement.Views.Main
         {
             MenuItem item1 = new MenuItem() { Header = "Logout" };
             MenuItem item2 = new MenuItem() { Header = "Account Settings" };
-
-            if (CurrentUser.Instance.ModuleAccessList.Contains("Modify System Settings"))
+            if (CurrentUser.Instance.ModuleAccessList.Contains("Modify System Settings") || CurrentUser.Instance.userID == 1)
             {
                 MenuItem item3 = new MenuItem() { Header = "System Settings" };
                 Util.ShowContextMenuForControl(sender as Control, item1, item2, item3);

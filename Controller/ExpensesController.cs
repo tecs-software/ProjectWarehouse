@@ -27,7 +27,9 @@ namespace WarehouseManagement.Controller
         {
             await Task.Run(() =>
             {
-                sql.Query($"EXEC SpExpenses_GetDataFilterByDate '{DateTime.Now.AddDays(1)}', {days}");
+                DateTime dateTime = DateTime.Now.AddDays(1).Date;
+                sql.AddParam("@date", dateTime);
+                sql.Query($"EXEC SpExpenses_GetDataFilterByDate @date, {days}");
                 if (sql.HasException(true)) return;
 
                 if (sql.DBDT.Rows.Count > 0)
@@ -49,7 +51,9 @@ namespace WarehouseManagement.Controller
         {
             await Task.Run(() =>
             {
-                sql.Query($"EXEC SpExpenses_GetDataFilterByDate '{DateTime.Now.AddDays(1)}', {days}");
+                DateTime dateTime = DateTime.Now.AddDays(1).Date;
+                sql.AddParam("@date", dateTime);
+                sql.Query($"EXEC SpExpenses_GetDataFilterByDate @date, {days}");
                 if (sql.HasException(true)) return;
 
                 if (sql.DBDT.Rows.Count > 0)
@@ -82,7 +86,12 @@ namespace WarehouseManagement.Controller
             ChartValues<ObservableValue> expensesData = new ChartValues<ObservableValue>();
             List<DateTime> dateList = new List<DateTime>();
 
-            sql.Query($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) AS total_expenses, CAST(Date AS DATE) AS date FROM tbl_expenses WHERE Date BETWEEN '{DateTime.Now.AddDays(-days).ToString("yyyy-MM-dd")}' AND '{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}' GROUP BY CAST(Date AS DATE)");
+
+            DateTime from = DateTime.Now.AddDays(-days).Date;
+            DateTime to = DateTime.Now.AddDays(1).Date;
+            sql.AddParam("@from", from);
+            sql.AddParam("@to", to);
+            sql.Query($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) AS total_expenses, CAST(Date AS DATE) AS date FROM tbl_expenses WHERE Date BETWEEN @from AND @to GROUP BY CAST(Date AS DATE)");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {

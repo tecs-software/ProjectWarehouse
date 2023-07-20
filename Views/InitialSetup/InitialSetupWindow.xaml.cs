@@ -98,44 +98,51 @@ namespace WarehouseManagement.Views.InitialSetup
 
         private async void btnProceed_Click(object sender, RoutedEventArgs e)
         {
-            if (!loading)
+            try
             {
-                ShowProgressBar();
-                btnProceed.Content = "Setting Up, Please Wait.... ";
-
-                if (isServer && !string.IsNullOrWhiteSpace(connection))
+                if (!loading)
                 {
-                    DatabaseInitializer dbInitializer = new DatabaseInitializer(connection);
+                    ShowProgressBar();
+                    btnProceed.Content = "Setting Up, Please Wait.... ";
 
-                    if (await dbInitializer.CreateDatabaseIfNotExists("db_warehouse_management"))
+                    if (isServer && !string.IsNullOrWhiteSpace(connection))
                     {
+                        DatabaseInitializer dbInitializer = new DatabaseInitializer(connection);
 
-                        connection += ";Initial Catalog=db_warehouse_management";
-                        await SaveConnection(connection);
-                        sql_control sql = new sql_control();
-                        sql.Query("INSERT INTO tbl_trial_key(Product_Key) VALUES ('N9TT-9G0A-B7FQ-RANC')");
-                        await dbInitializer.InsertSQLAuthentication("db_warehouse_management", connection);
-                        LoginWindow login = new LoginWindow();
-                        login.Show();
-                        this.Close();
+                        if (await dbInitializer.CreateDatabaseIfNotExists("db_warehouse_management"))
+                        {
 
+                            connection += ";Initial Catalog=db_warehouse_management";
+                            await SaveConnection(connection);
+                            sql_control sql = new sql_control();
+                            sql.Query("INSERT INTO tbl_trial_key(Product_Key) VALUES ('N9TT-9G0A-B7FQ-RANC')");
+                            await dbInitializer.InsertSQLAuthentication("db_warehouse_management", connection);
+                            LoginWindow login = new LoginWindow();
+                            login.Show();
+                            this.Close();
+
+                        }
+                        else
+                        {
+                            ShowMessage("Setting up failed, please try again.");
+
+                        }
                     }
                     else
                     {
-                        ShowMessage("Setting up failed, please try again.");
-
+                        await SaveConnection(connection);
+                        LoginWindow login = new LoginWindow();
+                        login.Show();
+                        this.Close();
                     }
-                }
-                else
-                {
-                    await SaveConnection(connection);
-                    LoginWindow login = new LoginWindow();
-                    login.Show();
-                    this.Close();
-                }
 
-                btnProceed.Content = "Proceed";
-                HideProgressBar();
+                    btnProceed.Content = "Proceed";
+                    HideProgressBar();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
 

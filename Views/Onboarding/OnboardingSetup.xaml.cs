@@ -99,7 +99,6 @@ namespace WarehouseManagement.Views.Onboarding
                     }
                     else
                     {
-                        MessageBox.Show("debunk");
                         return;
                     }
                 }

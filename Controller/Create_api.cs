@@ -32,7 +32,7 @@ namespace WarehouseManagement.Controller
         SuspiciousController suspiciouscontroller = new SuspiciousController();
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
         {
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
             {
@@ -199,7 +199,7 @@ namespace WarehouseManagement.Controller
                     //if there's error on API
                     else
                     {
-                        MessageBox.Show("Please double check the details provided.");
+                        MessageBox.Show(reason + " Please double check the details provided.");
                         return false;
                     }
 
@@ -218,7 +218,7 @@ namespace WarehouseManagement.Controller
             btn.IsEnabled = false;
             await Task.Run(async () =>
             {
-                string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+                string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
                 string key = Decrypt(GlobalModel.key);
                 string logistics_interface = @"
                     {

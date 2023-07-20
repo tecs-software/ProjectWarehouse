@@ -23,6 +23,7 @@ using System.Security.Cryptography;
 using System.IO;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder;
 using WarehouseManagement.Views.Main.SystemSettingModule;
+using System.Globalization;
 
 namespace WarehouseManagement.Database
 {
@@ -31,23 +32,30 @@ namespace WarehouseManagement.Database
         sql_control sql = new sql_control();
         public bool insert_sender(string id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
         {
-            sql.AddParam("@id", int.Parse(id));
-            sql.AddParam("@name", page_name.Text);
-            sql.AddParam("@phone", page_number.Text);
-            sql.AddParam("@province", cb_province.Text);
-            sql.AddParam("@city", cb_city.Text);
-            sql.AddParam("@baranggay", cb_baranggay.Text);
-            sql.AddParam("@address", address.Text);
-
-            sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address");
-            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
-            if(count > 0)
+            if(id == "0")
             {
+                sql.AddParam("@id", int.Parse(id));
+                sql.AddParam("@name", page_name.Text);
+                sql.AddParam("@phone", page_number.Text);
+                sql.AddParam("@province", cb_province.Text);
+                sql.AddParam("@city", cb_city.Text);
+                sql.AddParam("@baranggay", cb_baranggay.Text);
+                sql.AddParam("@address", address.Text);
+
+                sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address");
                 return true;
             }
             else
             {
-                return false;
+                int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
+                if (count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
         public void UpdateCourier(string courierName,string customerId, string eCompanyId) =>
@@ -279,8 +287,8 @@ namespace WarehouseManagement.Database
         }
         public async Task load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label net_profit, int days)
         {
-            string start_time = DateTime.Now.AddDays(-days).ToString();
-            string end_time = DateTime.Now.ToString();
+            DateTime start_time = DateTime.Now.AddDays(-days).Date;
+            DateTime end_time = DateTime.Now.Date;
 
             sql.AddParam("@startTime", start_time);
             sql.AddParam("@endTime", end_time);
@@ -352,13 +360,13 @@ namespace WarehouseManagement.Database
         {
             ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
             List<string> dateList = new List<string>();
+            string formattedNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
-            string start_time = DateTime.Now.AddDays(-days).ToString();
-            string end_time = DateTime.Now.AddDays(1).ToString();
-
+            DateTime start_time = DateTime.ParseExact(formattedNow, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).AddDays(-days).Date;
+            DateTime end_time = DateTime.ParseExact(formattedNow, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).AddDays(1).Date;
+            //for revenue
             sql.AddParam("@start_time", start_time);
             sql.AddParam("@end_time", end_time);
-            //for revenue
             sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN @start_time AND @end_time GROUP BY updated_at");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
@@ -366,7 +374,7 @@ namespace WarehouseManagement.Database
                 foreach (DataRow dr in sql.DBDT.Rows)
                 {
                     revenueData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
-                    dateList.Add(DateTime.Parse(dr[1].ToString()).ToString("MM/dd/yyyy"));
+                    dateList.Add(DateTime.Parse(dr[1].ToString()).ToString());
                 }
 
                 chart.AxisX.Clear();
