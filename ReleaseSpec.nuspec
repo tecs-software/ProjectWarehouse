@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>TECS Warehouse Management</id>
+    <id>WarehouseMagement</id>
     <version>0.0.0</version>
-    <title>Warehouse Management</title>
-    <authors>T.E.C.S</authors>
+    <title>Warehouse</title>
+    <authors>author</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
     <projectUrl>http://project_url_here_or_delete_this_line/</projectUrl>
-    <description>$description$</description>
+    <description>TECS</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Tag1 Tag2</tags>
