@@ -118,24 +118,32 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             }
             else
             {
-                if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                if (db_queries.checkExistingShop(txtPagename.Text) && btnSubmit_sender.Content.ToString() != "UPDATE")
                 {
-                    MessageBox.Show("Shop/Page Save");
-                    txtAddress.Clear();
-                    txtPagename.Clear();
-                    txtId.Text = "0";
-                    btnSubmit_sender.Content = "Add";
-                    txtPhone.Clear();
-                    cmbProvince.Text = "";
-                    cmbCity.Text = "";
-                    cmbBarangay.Text = "";
-
-                    queries.PopulateShop(cmbAction);
-                    cmbAction.SelectedIndex = -1;
+                    MessageBox.Show("Shop already exists");
+                    return;
                 }
                 else
                 {
-                    return;
+                    if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                    {
+                        MessageBox.Show("Shop/Page Save");
+                        txtAddress.Clear();
+                        txtPagename.Clear();
+                        txtId.Text = "0";
+                        btnSubmit_sender.Content = "ADD";
+                        txtPhone.Clear();
+                        cmbProvince.Text = "";
+                        cmbCity.Text = "";
+                        cmbBarangay.Text = "";
+
+                        queries.PopulateShop(cmbAction);
+                        cmbAction.SelectedIndex = -1;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -193,15 +201,21 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         {
             if (cmbAction.SelectedIndex != -1)
             {
-                if (cmbAction.Text == "Add")
+                if (cmbAction.Text.ToUpper() == "ADD")
                 {
+                    txtAddress.Clear();
+                    txtPagename.Clear();
                     txtId.Text = "0";
-                    btnSubmit_sender.Content = "Add";
+                    btnSubmit_sender.Content = "ADD";
+                    txtPhone.Clear();
+                    cmbProvince.Text = "";
+                    cmbCity.Text = "";
+                    cmbBarangay.Text = "";
                 }
                 else
                 {
                     queries.DisplaySender(cmbAction.Text, this);
-                    btnSubmit_sender.Content = "Update";
+                    btnSubmit_sender.Content = "UPDATE";
                 }
             }
         }

@@ -120,7 +120,7 @@
                                     Margin="24,24,24,8"
                                     VerticalAlignment="Center" 
                                     x:Name="btnSubmit_sender" 
-                                    Content="Add" 
+                                    Content="ADD"
                                     IsDefault="True" 
                                     FontSize="15"
                                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 

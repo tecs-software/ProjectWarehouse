@@ -35,29 +35,32 @@ namespace WarehouseManagement.Views.InitialSetup
             InitializeComponent();
             if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
             {
-                Loaded += Window_Loaded;
+                //Loaded += Window_Loaded;
+                LoginWindow login = new LoginWindow();
+                login.Show();
+                this.Close();
             }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse.git");
+            //manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse.git");
 
-            var updateInfo = await manager.CheckForUpdate();
-            if (updateInfo.ReleasesToApply.Count > 0)
-            {
-                await manager.UpdateApp();  //Download Update
-                MessageBox.Show("Updated Application");
-                //Reset Server 
-                //Restart application
-            }
-            else
-            {
-                LoginWindow login = new LoginWindow();
-                login.Show();
-                this.Close();
-            }
-            ReCenter();
+            //var updateInfo = await manager.CheckForUpdate();
+            //if (updateInfo.ReleasesToApply.Count > 0)
+            //{
+            //    await manager.UpdateApp();  //Download Update
+            //    MessageBox.Show("Updated Application");
+            //    //Reset Server 
+            //    //Restart application
+            //}
+            //else
+            //{
+            //    LoginWindow login = new LoginWindow();
+            //    login.Show();
+            //    this.Close();
+            //}
+            //ReCenter();
         }
 
 

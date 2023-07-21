@@ -29,7 +29,7 @@ namespace WarehouseManagement.Database
 {
     public class db_queries
     {
-        sql_control sql = new sql_control();
+        static sql_control sql = new sql_control();
         public bool insert_sender(string id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
         {
             if(id == "0")
@@ -47,15 +47,29 @@ namespace WarehouseManagement.Database
             }
             else
             {
-                int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
-                if (count > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                sql.AddParam("@id", int.Parse(id));
+                sql.AddParam("@name", page_name.Text);
+                sql.AddParam("@phone", page_number.Text);
+                sql.AddParam("@province", cb_province.Text);
+                sql.AddParam("@city", cb_city.Text);
+                sql.AddParam("@baranggay", cb_baranggay.Text);
+                sql.AddParam("@address", address.Text);
+
+                sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address");
+                return true;
+            }
+        }
+        public static bool checkExistingShop(string name)
+        {
+            sql.AddParam("@name", name);
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = @name");
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         public void UpdateCourier(string courierName,string customerId, string eCompanyId) =>
@@ -72,7 +86,7 @@ namespace WarehouseManagement.Database
                     cmb.Items.Add(dr[0].ToString());
                 }
             }
-            cmb.Items.Add("Add");
+            cmb.Items.Add("ADD");
         }
         public void DisplaySender(string name, SystemSettingPopup systemSetting)
         {
