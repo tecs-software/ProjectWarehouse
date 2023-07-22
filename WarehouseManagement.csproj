@@ -69,7 +69,7 @@
 		<NugetTools>$(PkgNuget_CommandLine)\tools</NugetTools>
 		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 		
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		
 		<NuspecFile>$(SolutionDir)ReleaseSpec.nuspec</NuspecFile>
 	</PropertyGroup>
