@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>WarehouseMagement</id>
+    <id>WarehouseManagement</id>
     <version>0.0.0</version>
     <title>Warehouse</title>
     <authors>author</authors>

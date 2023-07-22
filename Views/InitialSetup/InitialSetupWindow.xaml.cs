@@ -41,7 +41,7 @@ namespace WarehouseManagement.Views.InitialSetup
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse.git");
+            manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse");
 
             var updateInfo = await manager.CheckForUpdate();
             if (updateInfo.ReleasesToApply.Count > 0)
