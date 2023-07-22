@@ -44,23 +44,32 @@ namespace WarehouseManagement.Views.InitialSetup
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse");
-
-            var updateInfo = await manager.CheckForUpdate();
-            if (updateInfo.ReleasesToApply.Count > 0)
+            try
             {
-                await manager.UpdateApp();  //Download Update
-                MessageBox.Show("Updated Application");
-                //Reset Server 
-                //Restart application
+                using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
+                {
+                    var updateInfo = await manager.CheckForUpdate();
+                    MessageBox.Show(updateInfo.ReleasesToApply.Count.ToString());
+                    if (updateInfo.ReleasesToApply.Count > 0)
+                    {
+                        await manager.UpdateApp();  // Download Update
+                        MessageBox.Show("Updated Application");
+                        // Reset Server 
+                        // Restart application
+                    }
+                    else
+                    {
+                        LoginWindow login = new LoginWindow();
+                        login.Show();
+                        this.Close();
+                    }
+                }
+                ReCenter();
             }
-            else
+            catch(Exception ex)
             {
-                LoginWindow login = new LoginWindow();
-                login.Show();
-                this.Close();
+                
             }
-            ReCenter();
         }
 
 
