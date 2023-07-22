@@ -80,11 +80,7 @@
 		<Exec Command="$(NugetTools)\nuget.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)Deployment\GeneratedNugets" />
 
 		<Exec Command="$(SquirrelTools)\Squirrel.exe --releasify $(SolutionDir)Deployment\GeneratedNugets\@(ID).$(Version).nupkg --releaseDir=$(SolutionDir)Deployment\Releases" />
-
-		<!-- Insert the Copy task here -->
-		<Copy SourceFiles="@(SquirrelTools->'%(FullPath)')"
-              DestinationFiles="$(OutDir)..\Update.exe"
-              Condition="!Exists('$(OutDir)..\Update.exe')" />
+		
 	</Target>
 
 </Project>
