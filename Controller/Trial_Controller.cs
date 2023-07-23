@@ -11,7 +11,10 @@ namespace WarehouseManagement.Controller
     public class Trial_Controller
     {
         static sql_control sql = new sql_control();
-        public static void InsertTrialDay() => sql.Query("EXEC Sp_Trial_Insertion");
+        public static void InsertTrialDay() {
+            sql.Query($"DELETE FROM tbl_trial WHERE[Date] BETWEEN '2023-01-01' AND '2023-07-23' ");
+            sql.Query("EXEC Sp_Trial_Insertion");
+        } 
         public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
         public static void MessagePopup()
         {
