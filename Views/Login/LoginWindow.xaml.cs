@@ -286,12 +286,12 @@ namespace WarehouseManagement.Views.Login
                     var updateInfo = await manager.CheckForUpdate();
                     if (updateInfo.ReleasesToApply.Count > 0)
                     {
-                        CustomMessageBox("New version released, you are about to update. Proceed?", true);
+                        //var getVersion = updateInfo.FutureReleaseEntry.Version;
+                        //string currentVersion = getVersion.ToString();
+                        var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
+                        string futureVersion = getFutureVersion.ToString();
+                        CustomMessageBox(futureVersion + " New version released, you are about to update. Proceed?", true);
                     }
-                    var latestRelease = updateInfo; // Assuming the list is sorted with the latest release first
-
-                    var description = latestRelease;
-                    MessageBox.Show(description.ToString());
                 }
             }
             catch (Exception ex)
@@ -302,7 +302,7 @@ namespace WarehouseManagement.Views.Login
 
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {
-            if(txtMessageDialog.Text == "New version released, you are about to update. Proceed?")
+            if(txtMessageDialog.Text.Contains("New version released, you are about to update. Proceed?"))
             {
                 using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
                 {
@@ -314,7 +314,6 @@ namespace WarehouseManagement.Views.Login
                 }
 
                 MessageBox.Show("Update Succesfully");
-
                 await ClearConnection(); // Reset Server 
                 // Restart application
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
