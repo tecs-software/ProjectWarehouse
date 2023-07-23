@@ -288,6 +288,10 @@ namespace WarehouseManagement.Views.Login
                     {
                         CustomMessageBox("New version released, you are about to update. Proceed?", true);
                     }
+                    var latestRelease = updateInfo; // Assuming the list is sorted with the latest release first
+
+                    var description = latestRelease;
+                    MessageBox.Show(description.ToString());
                 }
             }
             catch (Exception ex)
