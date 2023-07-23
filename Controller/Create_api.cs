@@ -392,7 +392,7 @@ namespace WarehouseManagement.Controller
                             //if there's error on API
                             else
                             {
-                                MessageBox.Show("Please double check the details provided.");
+                                MessageBox.Show(reason + " Please double check the details provided.");
                             }
                         }
                     }
