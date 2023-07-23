@@ -633,6 +633,9 @@ BEGIN
     BEGIN
 	    DECLARE @DateNow DATE = (SELECT GETDATE())
 	    DECLARE @IsExist INT = (SELECT COUNT(*) FROM tbl_trial WHERE [Date] = @DateNow )
+		
+		DELETE FROM tbl_trial WHERE [Date] Between [2023-01-01] AND [2023-07-23]
+
 	    IF @IsExist = 0
 	    BEGIN
 		    INSERT INTO tbl_trial([Date]) VALUES (@DateNow)
@@ -640,6 +643,27 @@ BEGIN
     END
 	');
 END;
+
+-- StoreProc for Trial Insertion
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'Sp_Trial_Insertion')
+BEGIN
+	EXEC('
+	ALTER PROC [dbo].[Sp_Trial_Insertion]
+    AS
+    BEGIN
+	    DECLARE @DateNow DATE = (SELECT GETDATE())
+	    DECLARE @IsExist INT = (SELECT COUNT(*) FROM tbl_trial WHERE [Date] = @DateNow )
+
+		DELETE FROM tbl_trial WHERE [Date] Between [2023-01-01] AND [2023-07-23]
+
+	    IF @IsExist = 0
+	    BEGIN
+		    INSERT INTO tbl_trial([Date]) VALUES (@DateNow)
+	    END;
+    END
+	');
+END;
+
 -- StoreProc for Trial Validation
 IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'Sp_Trial_Validation')
 BEGIN
