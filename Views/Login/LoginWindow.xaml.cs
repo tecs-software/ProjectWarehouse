@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Squirrel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -83,6 +84,23 @@ namespace WarehouseManagement.Views.Login
 
         #endregion
         bool loading;
+        void CustomMessageBox(String message, Boolean questionType)
+        {
+            btnYes.Visibility = Visibility.Visible;
+            btnNo.Visibility = Visibility.Visible;
+            txtMessageDialog.Text = message;
+            if (questionType)
+            {
+                btnYes.Content = "Yes";
+                btnNo.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnYes.Content = "Okay";
+                btnNo.Visibility = Visibility.Collapsed;
+            }
+            dialog.IsOpen = true;
+        }
 
         public LoginWindow()
         {
@@ -254,11 +272,46 @@ namespace WarehouseManagement.Views.Login
                 }
             }
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        UpdateManager manager;
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //OnInit();
             Trial_Controller.InsertTrialDay();
+
+            //checking for patch
+            try
+            {
+                using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
+                {
+                    var updateInfo = await manager.CheckForUpdate();
+                    MessageBox.Show(updateInfo.ReleasesToApply.Count.ToString());
+                    if (updateInfo.ReleasesToApply.Count > 0)
+                    {
+                        CustomMessageBox("New version released, you are about to update. Proceed?", true);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async void btnYes_Click(object sender, RoutedEventArgs e)
+        {
+            if(txtMessageDialog.Text == "New version released, you are about to update. Proceed?")
+            {
+                await manager.UpdateApp();  // Download Update
+                await ClearConnection(); // Reset Server 
+                // Restart application
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void btnNo_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

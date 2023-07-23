@@ -35,10 +35,10 @@ namespace WarehouseManagement.Views.InitialSetup
             InitializeComponent();
             if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
             {
-                Loaded += Window_Loaded;
-                //LoginWindow login = new LoginWindow();
-                //login.Show();
-                //this.Close();
+                //Loaded += Window_Loaded;
+                LoginWindow login = new LoginWindow();
+                login.Show();
+                this.Close();
             }
             ReCenter();
         }
@@ -67,9 +67,9 @@ namespace WarehouseManagement.Views.InitialSetup
                 }
                 ReCenter();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
             }
         }
 

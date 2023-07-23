@@ -15,30 +15,49 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="Auto" Width="500" Loaded="Window_Loaded">
 
-    <Border CornerRadius="10" Background="White"
+    <materialDesign:DialogHost x:Name="dialog" BorderBrush="{DynamicResource MaterialDesignDivider}">
+        <materialDesign:DialogHost.DialogContent>
+            <Grid HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
+                        <TextBlock Foreground="Gray"  FontSize="14" Width="270" Margin="5,5,5,5" TextWrapping="Wrap" x:Name="txtMessageDialog" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+                        <Button x:Name="btnYes" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Width="72" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center"  Background="{StaticResource secondaryColor}" BorderBrush="{StaticResource secondaryColor}" Foreground="White" Click="btnYes_Click">
+                            Yes
+                        </Button>
+                        <Button  x:Name="btnNo" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"  Width="72" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center" Background="{StaticResource buttonBorder2}" BorderBrush="{StaticResource buttonBorder2}"  Foreground="White" Click="btnNo_Click">
+                            No
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+        <Border CornerRadius="10" Background="White"
             BorderBrush="Black"
             BorderThickness="1">
 
-        <Grid Margin="20,20,20,20">
+            <Grid Margin="20,20,20,20">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Border  
+                <Border  
                 Grid.Row="0"           
                 BorderBrush="#3C3C3C"
                 BorderThickness="0,0,0,0"
                 Background="Transparent">
 
-                <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,10">
-                    
-                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Login" Margin="0,10,0,20" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
+                    <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,10">
 
-                    <Button x:Name="btnClose"
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Login" Margin="0,10,0,20" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
+
+                        <Button x:Name="btnClose"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Grid.Row="0"
@@ -48,9 +67,9 @@
                             Background="{StaticResource textboxProfitAnalysisColor1}"
                             BorderBrush="Transparent"
                             IsCancel="True">
-                    </Button>
-                    
-                    <Button x:Name="btnReset"
+                        </Button>
+
+                        <Button x:Name="btnReset"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Grid.Row="0"
@@ -61,14 +80,14 @@
                             Background="{StaticResource textboxProfitAnalysisColor1}"
                             BorderBrush="Transparent">
 
-                    </Button>
+                        </Button>
 
-                    
-                </DockPanel>
 
-            </Border>
+                    </DockPanel>
 
-            <TextBox 
+                </Border>
+
+                <TextBox 
                 Grid.Row="1"
                 Style="{StaticResource MaterialDesignOutlinedTextBox}" 
                 Width="Auto"
@@ -82,9 +101,9 @@
                 BorderBrush="Transparent"
                 Margin="0,10,0,10"/>
 
-            <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Vertical">
+                <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Vertical">
 
-                <PasswordBox 
+                    <PasswordBox 
                     x:Name="tbPassword"
                     Grid.Column="1"
                     Style="{StaticResource MaterialDesignOutlinedPasswordBox}" 
@@ -98,9 +117,9 @@
                     materialDesign:HintAssist.Foreground="#3C3C3C"
                     Margin="0,5,0,5"
                     BorderBrush="Transparent">
-                </PasswordBox>
+                    </PasswordBox>
 
-                <Label 
+                    <Label 
                     x:Name="lblMessage"
                     Visibility="Collapsed"
                     Grid.Column="1"
@@ -108,18 +127,18 @@
                     FontSize="13"
                     Margin="0,0,0,10"/>
 
-                <ProgressBar x:Name="progressBar" Grid.ColumnSpan="2" Margin="0,10,0,0" IsIndeterminate="True" Background="#E9E8E8" BorderThickness="0" Visibility="Collapsed" Foreground="#04B5AD"/>
+                    <ProgressBar x:Name="progressBar" Grid.ColumnSpan="2" Margin="0,10,0,0" IsIndeterminate="True" Background="#E9E8E8" BorderThickness="0" Visibility="Collapsed" Foreground="#04B5AD"/>
 
-            </StackPanel>
+                </StackPanel>
 
-            <Grid Grid.Row="3" Margin="0,20,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="3" Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock 
+                    <TextBlock 
                     MouseLeftButtonDown="btnReset_MouseLeftButtonDown"
                     Grid.Column="0" 
                     Grid.ColumnSpan="2"
@@ -131,7 +150,7 @@
                     x:Name="btnRegister"
                     FontWeight="Light"/>
 
-                <Button 
+                    <Button 
                     Grid.Column="2"
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Center" 
@@ -142,9 +161,12 @@
                     FontSize="15"
                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
                     Height="40"/>
+                </Grid>
             </Grid>
-        </Grid>
 
-    </Border>
+        </Border>
+    </materialDesign:DialogHost>
+        
+   
 
 </Window>
