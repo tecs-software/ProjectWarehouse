@@ -286,8 +286,6 @@ namespace WarehouseManagement.Views.Login
                     var updateInfo = await manager.CheckForUpdate();
                     if (updateInfo.ReleasesToApply.Count > 0)
                     {
-                        //var getVersion = updateInfo.FutureReleaseEntry.Version;
-                        //string currentVersion = getVersion.ToString();
                         var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
                         string futureVersion = getFutureVersion.ToString();
                         CustomMessageBox(futureVersion + " New version released, you are about to update. Proceed?", true);
