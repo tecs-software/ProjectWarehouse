@@ -284,7 +284,6 @@ namespace WarehouseManagement.Views.Login
                 using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
                 {
                     var updateInfo = await manager.CheckForUpdate();
-                    MessageBox.Show(updateInfo.ReleasesToApply.Count.ToString());
                     if (updateInfo.ReleasesToApply.Count > 0)
                     {
                         CustomMessageBox("New version released, you are about to update. Proceed?", true);
@@ -301,7 +300,23 @@ namespace WarehouseManagement.Views.Login
         {
             if(txtMessageDialog.Text == "New version released, you are about to update. Proceed?")
             {
-                await manager.UpdateApp();  // Download Update
+                try
+                {
+                    using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
+                    {
+                        var updateInfo = await manager.CheckForUpdate();
+                        if (updateInfo.ReleasesToApply.Count > 0)
+                        {
+                            await manager.UpdateApp();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                MessageBox.Show("Update Succesfully");
+
                 await ClearConnection(); // Reset Server 
                 // Restart application
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
