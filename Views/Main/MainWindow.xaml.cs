@@ -40,6 +40,7 @@ namespace WarehouseManagement.Views.Main
         public MainWindow()
         {
             InitializeComponent();
+            HideModules();
             setUpUserAccess();
 
         }
@@ -49,6 +50,18 @@ namespace WarehouseManagement.Views.Main
            
             tbAccountName.Text = CurrentUser.Instance.firstName;
             Trial_Controller.MessagePopup();
+
+        }
+
+        private void HideModules()
+        {
+            btnDashboardModule.Visibility = Visibility.Collapsed;
+            btnOrderModule.Visibility = Visibility.Collapsed;
+            btnInventoryModule.Visibility = Visibility.Collapsed;
+            btnEmployeeModule.Visibility = Visibility.Collapsed;
+            btnDeliver.Visibility = Visibility.Collapsed;
+            btn_Shops_Pages.Visibility = Visibility.Collapsed;
+            btn_Suspicious_Order.Visibility = Visibility.Collapsed;
 
         }
 

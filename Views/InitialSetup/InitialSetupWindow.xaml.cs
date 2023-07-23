@@ -40,6 +40,7 @@ namespace WarehouseManagement.Views.InitialSetup
                 //login.Show();
                 //this.Close();
             }
+            ReCenter();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
