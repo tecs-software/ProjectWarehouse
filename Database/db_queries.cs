@@ -302,7 +302,7 @@ namespace WarehouseManagement.Database
         public async Task load_dashboard_summary(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label net_profit, int days)
         {
             DateTime start_time = DateTime.Now.AddDays(-days).Date;
-            DateTime end_time = DateTime.Now.Date;
+            DateTime end_time = DateTime.Now.AddDays(1).Date;
 
             sql.AddParam("@startTime", start_time);
             sql.AddParam("@endTime", end_time);
@@ -409,21 +409,6 @@ namespace WarehouseManagement.Database
             {
                 chart.Series.Clear();
                 chart.AxisX.Clear();
-            }
-        }
-        public string HashText(string text)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    builder.Append(hashBytes[i].ToString("x2"));
-                }
-
-                return builder.ToString();
             }
         }
         public string Encrypt(string input)

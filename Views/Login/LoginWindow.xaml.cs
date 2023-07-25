@@ -106,6 +106,8 @@ namespace WarehouseManagement.Views.Login
         {
             InitializeComponent();
             tbUsername.Focus();
+            
+            
             //try
             //{
             //    Process process = Process.GetCurrentProcess();
@@ -294,10 +296,9 @@ namespace WarehouseManagement.Views.Login
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
-
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {
             if(txtMessageDialog.Text.Contains("New version released, you are about to update. Proceed?"))

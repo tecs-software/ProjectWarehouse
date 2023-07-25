@@ -22,6 +22,7 @@ using WarehouseManagement.Database;
 using WWarehouseManagement.Database;
 using System.IO;
 using System.Security.Cryptography;
+using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
 
 namespace WarehouseManagement.Controller
 {
@@ -208,7 +209,7 @@ namespace WarehouseManagement.Controller
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred: " + ex.Message);
+                MessageBox.Show("J&T error occurred: " + ex.Message);
                 return false;
             }
         }
@@ -388,22 +389,24 @@ namespace WarehouseManagement.Controller
 
                                     bulk_inserts.bulk_update_stocks(details);
                                 }
+                                BulkOrderPopup.NoError = true;
                             }
                             //if there's error on API
                             else
                             {
                                 MessageBox.Show(reason + " Please double check the details provided.");
+                                BulkOrderPopup.NoError = false;
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("An error occurred: " + ex.Message);
+                        MessageBox.Show("J&T error occurred: " + ex.Message);
+                        BulkOrderPopup.NoError = false;
                     }
                 }
 
             });
-            btn.IsEnabled = true;
         }
         public long GenerateTransactionID()
         {

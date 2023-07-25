@@ -179,6 +179,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 }
             }
         }
+        public static bool NoError = true;
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             
@@ -222,12 +223,17 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                         Csv_Controller.model.Add(model);
                     }
                     await bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false);
-                    if (btnConfirm.IsEnabled)
+                    if (NoError)
                     {
                         btnConfirm.IsEnabled = true;
                         MessageBox.Show("Orders has been Created");
                     }
-                    bulk_inserts.show_temp_table(dtBulkOrders,dtSuspiciousOrders, btnConfirm, btnReConfirm);
+                    else
+                    {
+                        btnConfirm.IsEnabled = true;
+                        
+                    }
+                    bulk_inserts.show_temp_table(dtBulkOrders, dtSuspiciousOrders, btnConfirm, btnReConfirm);
                 }
                 catch (Exception ex)
                 {
@@ -246,12 +252,16 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             //Push to Create_API
             bulk_inserts.load_bulk_model();
             await bulk_api.create_bulk_api(Csv_Controller.model, btnReConfirm, true);
-            if (btnReConfirm.IsEnabled)
+            if (NoError)
             {
                 btnReConfirm.IsEnabled = true;
                 bulk_inserts.delete_temp_table();
                 bulk_inserts.show_new_temp_table(dtBulkOrders,dtSuspiciousOrders);
                 MessageBox.Show("Orders has been Created");
+            }
+            else
+            {
+                btnReConfirm.IsEnabled = true;
             }
         }
         private void cmbSellerName_DropDownClosed(object sender, EventArgs e)
