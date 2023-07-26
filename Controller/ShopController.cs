@@ -58,7 +58,7 @@ namespace WarehouseManagement.Controller
                             waybill = dr[2].ToString(),
                             courier = dr[1].ToString(),
                             product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
-                            receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
+                            //receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
                             total_price = decimal.Parse(dr[8].ToString()),
                             status = dr[10].ToString(),
                             last_update = dr[12].ToString()
@@ -91,7 +91,7 @@ namespace WarehouseManagement.Controller
                             waybill = dr[2].ToString(),
                             courier = dr[1].ToString(),
                             product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
-                            receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
+                            //receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
                             total_price = decimal.Parse(dr[8].ToString()),
                             status = dr[10].ToString(),
                             last_update = dr[12].ToString()
@@ -110,13 +110,13 @@ namespace WarehouseManagement.Controller
         {
             public string name { get; set; }
             public string? shop_name { get; set; }
-            public string waybill { get; set; }
-            public string courier { get; set; }
-            public string product { get; set; }
-            public string receiver { get; set; }
-            public decimal total_price { get; set; }
-            public string status { get; set; }
-            public string last_update { get; set; }
+            public string? waybill { get; set; }
+            public string? courier { get; set; }
+            public string? product { get; set; }
+            public string? receiver { get; set; }
+            public decimal? total_price { get; set; }
+            public string? status { get; set; }
+            public string? last_update { get; set; }
         }
     }
 }
