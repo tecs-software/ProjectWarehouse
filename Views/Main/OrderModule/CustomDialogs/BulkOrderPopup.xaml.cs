@@ -90,9 +90,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             {
                 Console.WriteLine(ex.Message);
             }
-            
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 

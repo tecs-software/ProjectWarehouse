@@ -34,7 +34,7 @@ namespace WarehouseManagement.Controller
         SuspiciousController suspiciouscontroller = new SuspiciousController();
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
         {
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
             {
@@ -201,7 +201,24 @@ namespace WarehouseManagement.Controller
                     //if there's error on API
                     else
                     {
-                        MessageBox.Show(reason + " Please double check the details provided.");
+                        switch (reason)
+                        {
+                            case "S03":
+                                MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                break;
+                            case "S06":
+                                MessageBox.Show("Connection timeout from the server. Retry order again.");
+                                break;
+                            case "B001":
+                                MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                break;
+                            case "B002":
+                                MessageBox.Show("Please change the VIP code on system settings.");
+                                break;
+                            default:
+                                MessageBox.Show(reason + " Please contact tech team and provided this error message.");
+                                break;
+                        }
                         return false;
                     }
 
@@ -218,7 +235,7 @@ namespace WarehouseManagement.Controller
         public void create_bulk_api(List<bulk_model> model, Button btn, bool granted, ProgressBar pb_load)
         {
             string txtCount;
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
                     {
@@ -393,10 +410,27 @@ namespace WarehouseManagement.Controller
                         //if there's error on API
                         else
                         {
-                            MessageBox.Show(reason + " Please double check the details provided.");
+                            switch(reason)
+                            {
+                                case "S03":
+                                    MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                    break;
+                                case "S06":
+                                    MessageBox.Show("Connection timeout from the server. Retry order again.");
+                                    break;
+                                case "B001":
+                                    MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                    break;
+                                case "B002":
+                                    MessageBox.Show("Please change the VIP code on system settings.");
+                                    break;
+                                default:
+                                    MessageBox.Show(reason + " Please contact tech team and provided this error message.");
+                                    break;
+                            }
+                                
                             BulkOrderPopup.NoError = false;
                         }
-                        MessageBox.Show("hello");
                     }
                 }
                 catch (Exception ex)
@@ -406,8 +440,10 @@ namespace WarehouseManagement.Controller
                 }
                 totalOrders++;
                 txtCount = totalOrders.ToString();
-                pb_load.Value = totalOrders;
-                Task.Delay(1500);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    pb_load.Value = totalOrders;
+                });
             }
         }
         public long GenerateTransactionID()
