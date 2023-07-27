@@ -280,7 +280,6 @@ namespace WarehouseManagement.Controller
                 payloadObj.sender.city = GlobalModel.sender_city;
                 payloadObj.sender.area = GlobalModel.sender_area;
                 payloadObj.sender.address = GlobalModel.sender_address;
-
                 //updating receiver information
                 foreach(bulk_model details in model)
                 {

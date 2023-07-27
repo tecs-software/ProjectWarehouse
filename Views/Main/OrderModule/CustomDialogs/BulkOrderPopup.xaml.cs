@@ -191,7 +191,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             {
                 try
                 {
-                    Csv_Controller.dataTableBulkOrders = Csv_Controller.PopulateToDataTable(dtBulkOrders);
+                    Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTableAddress;
                     //Push to Create_API
                     foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
                     {
@@ -217,7 +217,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                             parcel_name = dr[10].ToString(),
                             total_parcel = int.Parse(dr[12].ToString()),
                             weight = decimal.Parse(dr[11].ToString())
-                            
 
                         };
                         Csv_Controller.model.Add(model);
