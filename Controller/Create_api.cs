@@ -23,6 +23,7 @@ using WWarehouseManagement.Database;
 using System.IO;
 using System.Security.Cryptography;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
+using System.Windows.Threading;
 
 namespace WarehouseManagement.Controller
 {
@@ -214,14 +215,12 @@ namespace WarehouseManagement.Controller
             }
         }
         //api bulk orders
-        public async Task create_bulk_api(List<bulk_model> model, Button btn, bool granted)
+        public void create_bulk_api(List<bulk_model> model, Button btn, bool granted, ProgressBar pb_load)
         {
-            btn.IsEnabled = false;
-            await Task.Run(async () =>
-            {
-                string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
-                string key = Decrypt(GlobalModel.key);
-                string logistics_interface = @"
+            string txtCount;
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string key = Decrypt(GlobalModel.key);
+            string logistics_interface = @"
                     {
                         ""actiontype"": ""add"",
                         ""environment"": ""production:yes"",
@@ -263,120 +262,106 @@ namespace WarehouseManagement.Controller
                             }
                         ]
                     }";
-                string msg_type = "ORDERCREATE";
+            string msg_type = "ORDERCREATE";
 
-                dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
+            dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
 
-                //for VIP code
-                payloadObj.eccompanyid = GlobalModel.eccompany_id;
-                payloadObj.customerid = GlobalModel.customer_id;
+            //for VIP code
+            payloadObj.eccompanyid = GlobalModel.eccompany_id;
+            payloadObj.customerid = GlobalModel.customer_id;
 
-                //updating sender information
-                payloadObj.sender.name = GlobalModel.sender_name;
-                payloadObj.sender.phone = GlobalModel.sender_phone;
-                payloadObj.sender.mobile = GlobalModel.sender_phone;
-                payloadObj.sender.prov = GlobalModel.sender_province;
-                payloadObj.sender.city = GlobalModel.sender_city;
-                payloadObj.sender.area = GlobalModel.sender_area;
-                payloadObj.sender.address = GlobalModel.sender_address;
-                //updating receiver information
-                foreach(bulk_model details in model)
+            //updating sender information
+            payloadObj.sender.name = GlobalModel.sender_name;
+            payloadObj.sender.phone = GlobalModel.sender_phone;
+            payloadObj.sender.mobile = GlobalModel.sender_phone;
+            payloadObj.sender.prov = GlobalModel.sender_province;
+            payloadObj.sender.city = GlobalModel.sender_city;
+            payloadObj.sender.area = GlobalModel.sender_area;
+            payloadObj.sender.address = GlobalModel.sender_address;
+            //updating receiver information
+            int totalOrders = 0;
+            foreach (bulk_model details in model)
+            {
+                payloadObj.receiver.name = details.receiver_name;
+                payloadObj.receiver.phone = details.receiver_phone;
+                payloadObj.receiver.mobile = details.receiver_phone;
+                payloadObj.receiver.prov = details.receiver_province;
+                payloadObj.receiver.city = details.receiver_city;
+                payloadObj.receiver.area = details.receiver_area;
+                payloadObj.receiver.address = details.receiver_address;
+                payloadObj.txlogisticid = "TECS-" + GenerateTransactionID();
+
+                //updating other fields
+                payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                payloadObj.weight = details.weight;
+                payloadObj.itemsvalue = details.total;
+                payloadObj.totalquantity = details.quantity;
+                payloadObj.remark = details.remarks;
+
+                //updating items field
+                var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
+                if (itemsArray != null && itemsArray.Count > 0)
                 {
-                    payloadObj.receiver.name = details.receiver_name;
-                    payloadObj.receiver.phone = details.receiver_phone;
-                    payloadObj.receiver.mobile = details.receiver_phone;
-                    payloadObj.receiver.prov = details.receiver_province;
-                    payloadObj.receiver.city = details.receiver_city;
-                    payloadObj.receiver.area = details.receiver_area;
-                    payloadObj.receiver.address = details.receiver_address;
-                    payloadObj.txlogisticid = "TECS-" + GenerateTransactionID();
+                    var firstItem = itemsArray[0];
+                    firstItem["itemname"] = details.product_name;
+                    firstItem["number"] = details.quantity;
+                    firstItem["itemvalue"] = details.total;
+                }
 
-                    //updating other fields
-                    payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    payloadObj.weight = details.weight;
-                    payloadObj.itemsvalue = details.total;
-                    payloadObj.totalquantity = details.quantity;
-                    payloadObj.remark = details.remarks;
+                string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
+                //MessageBox.Show(updatedPayload);
+                try
+                {
+                    // Step 3: Sign the JSON content and secret key
+                    string data_digest = MD5Util.GetMD5Hash(updatedPayload + key);
+                    string encodedDataDigest = Convert.ToBase64String(Encoding.UTF8.GetBytes(data_digest));
 
-                    //updating items field
-                    var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
-                    if (itemsArray != null && itemsArray.Count > 0)
+                    // Step 4: Send HTTP POST request
+                    using (WebClient client = new WebClient())
                     {
-                        var firstItem = itemsArray[0];
-                        firstItem["itemname"] = details.product_name;
-                        firstItem["number"] = details.quantity;
-                        firstItem["itemvalue"] = details.total;
-                    }
+                        // Prepare request parameters
+                        NameValueCollection requestData = new NameValueCollection();
+                        requestData.Add("logistics_interface", updatedPayload);
+                        requestData.Add("data_digest", encodedDataDigest);
+                        requestData.Add("msg_type", msg_type);
+                        requestData.Add("eccompanyid", GlobalModel.eccompany_id);
 
-                    string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
-                    //MessageBox.Show(updatedPayload);
-                    try
-                    {
-                        // Step 3: Sign the JSON content and secret key
-                        string data_digest = MD5Util.GetMD5Hash(updatedPayload + key);
-                        string encodedDataDigest = Convert.ToBase64String(Encoding.UTF8.GetBytes(data_digest));
+                        // Send the POST request
+                        byte[] responseBytes = client.UploadValues(url, requestData);
 
-                        // Step 4: Send HTTP POST request
-                        using (WebClient client = new WebClient())
+                        // Decode and display the response
+                        string response = Encoding.UTF8.GetString(responseBytes);
+
+                        //to decode the response
+                        dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
+                        string logisticProviderId = responseObject.logisticproviderid;
+                        dynamic responseItems = responseObject.responseitems[0];
+                        string success = responseItems.success;
+                        string reason = responseItems.reason;
+                        string txLogisticId = responseItems.txlogisticid;
+                        string mailNo = responseItems.mailno;
+                        string sortingCode = responseItems.sortingcode;
+
+                        // Store the parameters in separate strings
+                        string logisticProviderIdString = logisticProviderId.ToString();
+                        string successString = success.ToString();
+                        string reasonString = reason.ToString();
+
+                        //if there is no error
+                        if (successString == "true")
                         {
-                            // Prepare request parameters
-                            NameValueCollection requestData = new NameValueCollection();
-                            requestData.Add("logistics_interface", updatedPayload);
-                            requestData.Add("data_digest", encodedDataDigest);
-                            requestData.Add("msg_type", msg_type);
-                            requestData.Add("eccompanyid", GlobalModel.eccompany_id);
+                            string txLogisticIdString = txLogisticId.ToString();
+                            string mailNoString = mailNo.ToString();
+                            string sortingCodeString = sortingCode.ToString();
 
-                            // Send the POST request
-                            byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
-
-                            // Decode and display the response
-                            string response = Encoding.UTF8.GetString(responseBytes);
-
-                            //to decode the response
-                            dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
-                            string logisticProviderId = responseObject.logisticproviderid;
-                            dynamic responseItems = responseObject.responseitems[0];
-                            string success = responseItems.success;
-                            string reason = responseItems.reason;
-                            string txLogisticId = responseItems.txlogisticid;
-                            string mailNo = responseItems.mailno;
-                            string sortingCode = responseItems.sortingcode;
-
-                            // Store the parameters in separate strings
-                            string logisticProviderIdString = logisticProviderId.ToString();
-                            string successString = success.ToString();
-                            string reasonString = reason.ToString();
-
-                            //if there is no error
-                            if (successString == "true")
+                            //true = insert suspicious
+                            if (bulk_inserts.bulk_suspicious(details))
                             {
-                                string txLogisticIdString = txLogisticId.ToString();
-                                string mailNoString = mailNo.ToString();
-                                string sortingCodeString = sortingCode.ToString();
 
-                                //true = insert suspicious
-                                if (bulk_inserts.bulk_suspicious(details))
-                                {
-
-                                    bulk_inserts.bulk_temp_insert(details);
-                                    // if VA or USER accept the risks of pushing suspicious orders
-                                    if(granted)
-                                    {
-                                        bulk_inserts.bulk_receiver(details);
-
-                                        bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
-
-                                        bulk_inserts.bulk_incentives(details, txLogisticIdString);
-
-                                        bulk_inserts.bulk_update_quantity(details);
-
-                                        bulk_inserts.bulk_update_stocks(details);
-
-                                        bulk_inserts.insertSuspiciousTable(mailNoString);
-                                    }
-                                }
-                                else
+                                bulk_inserts.bulk_temp_insert(details);
+                                // if VA or USER accept the risks of pushing suspicious orders
+                                if (granted)
                                 {
                                     bulk_inserts.bulk_receiver(details);
 
@@ -387,26 +372,43 @@ namespace WarehouseManagement.Controller
                                     bulk_inserts.bulk_update_quantity(details);
 
                                     bulk_inserts.bulk_update_stocks(details);
+
+                                    bulk_inserts.insertSuspiciousTable(mailNoString);
                                 }
-                                MessageBox.Show(details.receiver_name + "'s order has been created.");
-                                BulkOrderPopup.NoError = true;
                             }
-                            //if there's error on API
                             else
                             {
-                                MessageBox.Show(reason + " Please double check the details provided.");
-                                BulkOrderPopup.NoError = false;
+                                bulk_inserts.bulk_receiver(details);
+
+                                bulk_inserts.bulk_orders(details, mailNoString, txLogisticIdString);
+
+                                bulk_inserts.bulk_incentives(details, txLogisticIdString);
+
+                                bulk_inserts.bulk_update_quantity(details);
+
+                                bulk_inserts.bulk_update_stocks(details);
                             }
+                            BulkOrderPopup.NoError = true;
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("J&T error occurred: " + ex.Message);
-                        BulkOrderPopup.NoError = false;
+                        //if there's error on API
+                        else
+                        {
+                            MessageBox.Show(reason + " Please double check the details provided.");
+                            BulkOrderPopup.NoError = false;
+                        }
+                        MessageBox.Show("hello");
                     }
                 }
-
-            });
+                catch (Exception ex)
+                {
+                    MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s didn't push " + ex.Message);
+                    BulkOrderPopup.NoError = false;
+                }
+                totalOrders++;
+                txtCount = totalOrders.ToString();
+                pb_load.Value = totalOrders;
+                Task.Delay(1500);
+            }
         }
         public long GenerateTransactionID()
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -18,6 +19,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
+using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder;
 using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
@@ -28,6 +30,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     public partial class BulkOrderPopup : Window
     {
         Dictionary<string, bulk_model> bulkDictionary;
+        BackgroundWorker pushOrders;
         void CustomMessageBox(String message, Boolean questionType)
         {
             btnYes.Visibility = Visibility.Visible;
@@ -64,6 +67,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             try
             {
@@ -72,8 +76,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                     //txtFileNameProduct.Text = openFileDialog.FileName;
                     Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
                     int numberofitems = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName).Rows.Count;
-                    //pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
-                    //lblTotalNumberOfItems.Text = numberofitems.ToString();
+                    pbBulkOrder.Maximum = numberofitems > 0 ? numberofitems : 100;
                     Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
                     dtBulkOrders.ItemsSource = Csv_Controller.dataTableAddress.DefaultView;
 
@@ -189,68 +192,67 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             }
             else
             {
-                try
+                Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTableAddress;
+                //Push to Create_API
+                foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
                 {
-                    Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTableAddress;
-                    //Push to Create_API
-                    foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                    bulk_model model = new bulk_model()
                     {
-                        bulk_model model = new bulk_model()
-                        {
-                            //receiver payload
-                            receiver_name = dr[3].ToString(),
-                            receiver_address = dr[5].ToString(),
-                            receiver_phone = dr[4].ToString(),
-                            receiver_province = dr[6].ToString(),
-                            receiver_city = dr[7].ToString(),
-                            receiver_area = dr[8].ToString(),
+                        //receiver payload
+                        receiver_name = dr[3].ToString(),
+                        receiver_address = dr[5].ToString(),
+                        receiver_phone = dr[4].ToString(),
+                        receiver_province = dr[6].ToString(),
+                        receiver_city = dr[7].ToString(),
+                        receiver_area = dr[8].ToString(),
 
-                            //other fields
-                            remarks = dr[2].ToString(),
-                            product_name = dr[0].ToString(),
-                            total = decimal.Parse(dr[13].ToString()),
-                            quantity = int.Parse(dr[1].ToString()),
+                        //other fields
+                        remarks = dr[2].ToString(),
+                        product_name = dr[0].ToString(),
+                        total = decimal.Parse(dr[13].ToString()),
+                        quantity = int.Parse(dr[1].ToString()),
 
-                            //etc
-                            cod = decimal.Parse(dr[14].ToString()),
-                            parcel_value = decimal.Parse(dr[13].ToString()),
-                            parcel_name = dr[10].ToString(),
-                            total_parcel = int.Parse(dr[12].ToString()),
-                            weight = decimal.Parse(dr[11].ToString())
+                        //etc
+                        cod = decimal.Parse(dr[14].ToString()),
+                        parcel_value = decimal.Parse(dr[13].ToString()),
+                        parcel_name = dr[10].ToString(),
+                        total_parcel = int.Parse(dr[12].ToString()),
+                        weight = decimal.Parse(dr[11].ToString())
 
-                        };
-                        Csv_Controller.model.Add(model);
-                    }
-                    await bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false);
-                    if (NoError)
-                    {
-                        btnConfirm.IsEnabled = true;
-                        MessageBox.Show("Orders has been Created");
-                    }
-                    else
-                    {
-                        btnConfirm.IsEnabled = true;
-                        
-                    }
-                    bulk_inserts.show_temp_table(dtBulkOrders, dtSuspiciousOrders, btnConfirm, btnReConfirm);
+                    };
+                    Csv_Controller.model.Add(model);
                 }
-                catch (Exception ex)
-                {
 
-                }
+                btnConfirm.IsEnabled = false;
+                pushOrders = new BackgroundWorker();
+                pushOrders.WorkerReportsProgress = true;
+
+                pushOrders.DoWork += WorkerPushOrders_DoWork;
+                pushOrders.RunWorkerCompleted += WorkerPushCompleted_RunWorkerCompleted;
+
+                pushOrders.RunWorkerAsync();
             }
         }
-  
+        private void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false, pbBulkOrder);
+        }
+        private void WorkerPushCompleted_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnConfirm.IsEnabled = true;
+            MessageBox.Show("Orders has been created.", "Success");
+            bulk_inserts.show_temp_table(dtBulkOrders, dtSuspiciousOrders, btnConfirm, btnReConfirm);
+        }
         private void btnNo_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private async void btnYes_Click(object sender, RoutedEventArgs e)
+        private void btnYes_Click(object sender, RoutedEventArgs e)
         {
             //Push to Create_API
             bulk_inserts.load_bulk_model();
-            await bulk_api.create_bulk_api(Csv_Controller.model, btnReConfirm, true);
+            bulk_api.create_bulk_api(Csv_Controller.model, btnReConfirm, true, pbBulkOrder);
             if (NoError)
             {
                 btnReConfirm.IsEnabled = true;
