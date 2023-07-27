@@ -47,7 +47,9 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="60"/>
+
                 </Grid.RowDefinitions>
 
                 <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
@@ -133,6 +135,8 @@
                      Grid.Column="0" Content="Re-Confirm" Margin="8,8,8,0" Visibility="Collapsed"
                 BorderBrush="{StaticResource secondaryColor}" Height="45" x:Name="btnReConfirm" FontSize="15" Background="{StaticResource secondaryColor}" Click="btnReConfirm_Click">
                 </Button>
+
+                <ProgressBar  Grid.Row="3" x:Name="pbBulkOrder" Margin="8,16,8,0" Value="0" Height="8"  materialDesign:TransitionAssist.DisableTransitions="True" />
 
             </Grid>
         </Border>
