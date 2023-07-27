@@ -33,7 +33,7 @@ namespace WarehouseManagement.Controller
         SuspiciousController suspiciouscontroller = new SuspiciousController();
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
         {
-            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
             {
@@ -219,7 +219,7 @@ namespace WarehouseManagement.Controller
             btn.IsEnabled = false;
             await Task.Run(async () =>
             {
-                string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+                string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
                 string key = Decrypt(GlobalModel.key);
                 string logistics_interface = @"
                     {
@@ -389,6 +389,7 @@ namespace WarehouseManagement.Controller
 
                                     bulk_inserts.bulk_update_stocks(details);
                                 }
+                                MessageBox.Show(details.receiver_name + "'s order has been created.");
                                 BulkOrderPopup.NoError = true;
                             }
                             //if there's error on API

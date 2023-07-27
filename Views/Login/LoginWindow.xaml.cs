@@ -105,25 +105,24 @@ namespace WarehouseManagement.Views.Login
         public LoginWindow()
         {
             InitializeComponent();
+            getversion();
             tbUsername.Focus();
-            
-            
-            //try
-            //{
-            //    Process process = Process.GetCurrentProcess();
-            //    DisplayRegistration(kLibraryKey, process.MainWindowHandle);
-            //}
-            //catch (DllNotFoundException ex)
-            //{
-            //    // Trial dll is missing close the application immediately.
-            //    MessageBox.Show(ex.ToString());
-            //}
-            //catch (Exception ex1)
-            //{
-            //    MessageBox.Show(ex1.ToString());
-            //}
-
             this.SizeToContent = SizeToContent.Height;
+        }
+        private async void getversion()
+        {
+            try
+            {
+                using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
+                {
+                    var updateInfo = await manager.CheckForUpdate();
+                    lbl_Versions.Text = "Version " + updateInfo.CurrentlyInstalledVersion.Version.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
         }
 
         db_queries queries = new db_queries();
