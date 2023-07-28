@@ -378,6 +378,16 @@ BEGIN
 		)
 END
 
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_receiver')
+BEGIN
+    IF EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.tbl_receiver') AND name = 'receiver_address')
+    BEGIN
+        -- Alter column 'receiver_address' to VARCHAR(255)
+        ALTER TABLE dbo.tbl_receiver
+        ALTER COLUMN receiver_address VARCHAR(255) NOT NULL
+    END
+END
+
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
 BEGIN
     CREATE TABLE [dbo].[tbl_sender](
