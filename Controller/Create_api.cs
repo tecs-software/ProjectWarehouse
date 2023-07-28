@@ -216,7 +216,7 @@ namespace WarehouseManagement.Controller
                                 MessageBox.Show("Please change the VIP code on system settings.");
                                 break;
                             default:
-                                MessageBox.Show(reason + " Please contact tech team and provided this error message.");
+                                MessageBox.Show(reason + " Please contact tech team and provide this error message.");
                                 break;
                         }
                         return false;
@@ -425,7 +425,7 @@ namespace WarehouseManagement.Controller
                                     MessageBox.Show("Please change the VIP code on system settings.");
                                     break;
                                 default:
-                                    MessageBox.Show(reason + " Please contact tech team and provided this error message.");
+                                    MessageBox.Show(reason + " Please contact tech team and provide this error message.");
                                     break;
                             }
                                 
@@ -435,7 +435,7 @@ namespace WarehouseManagement.Controller
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s didn't push " + ex.Message);
+                    MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s order didn't push " + ex.Message);
                     BulkOrderPopup.NoError = false;
                 }
                 totalOrders++;

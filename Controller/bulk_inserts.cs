@@ -23,7 +23,8 @@ namespace WarehouseManagement.Controller
 
         public static void bulk_receiver(bulk_model model) 
         {
-            sql.Query($"EXEC SPadd_receiver '{model.receiver_name}', '{model.receiver_phone}', '{model.receiver_address}'");
+            sql.AddParam("@address", model.receiver_address);
+            sql.Query($"EXEC SPadd_receiver '{model.receiver_name}', '{model.receiver_phone}', @address");
             if (sql.HasException(true)) return;
         }
         public static void bulk_orders(bulk_model model, string waybill, string order_id) 
@@ -31,8 +32,9 @@ namespace WarehouseManagement.Controller
             sql.AddParam("@item_name", model.product_name);
             int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item_name"));
 
+            sql.AddParam("@address", model.receiver_address);
             sql.Query($"EXEC SPadd_orders '{order_id}', 'J&T', '{waybill}', {CurrentUser.Instance.userID}, '{model.product_name}'," +
-                $"{model.quantity}, {model.total}, '{model.remarks}', 'PENDING', '{model.receiver_phone}', '{model.receiver_address}', {sender_id}");
+                $"{model.quantity}, {model.total}, '{model.remarks}', 'PENDING', '{model.receiver_phone}', @address, {sender_id}");
             if (sql.HasException(true)) return;
         }
         

@@ -486,7 +486,7 @@ BEGIN
     CREATE PROC SPadd_receiver
     @receiver_name VARCHAR(255),
     @receiver_phone VARCHAR(100),
-    @receiver_address VARCHAR(100)
+    @receiver_address VARCHAR(255)
     AS
     BEGIN
         INSERT INTO tbl_receiver(receiver_name, receiver_phone, receiver_address) VALUES
