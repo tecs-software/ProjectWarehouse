@@ -279,7 +279,6 @@ namespace WarehouseManagement.Controller
                             }
                         ]
                     }";
-            string msg_type = "ORDERCREATE";
 
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
@@ -341,7 +340,7 @@ namespace WarehouseManagement.Controller
                         NameValueCollection requestData = new NameValueCollection();
                         requestData.Add("logistics_interface", updatedPayload);
                         requestData.Add("data_digest", encodedDataDigest);
-                        requestData.Add("msg_type", msg_type);
+                        requestData.Add("msg_type", "ORDERCREATE");
                         requestData.Add("eccompanyid", GlobalModel.eccompany_id);
 
                         // Send the POST request
