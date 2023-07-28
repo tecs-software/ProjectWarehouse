@@ -435,6 +435,7 @@ namespace WarehouseManagement.Controller
                 }
                 catch (Exception ex)
                 {
+                    MessageBox.Show("Stack Trace: " + ex.StackTrace);
                     MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s order didn't push " + ex.Message);
                     BulkOrderPopup.NoError = false;
                 }
