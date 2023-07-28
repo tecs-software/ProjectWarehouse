@@ -59,8 +59,6 @@ namespace WarehouseManagement.Controller
 
         public static bool bulk_suspicious(bulk_model model)
         {
-            bool isMatchFound = false; // Initialize the variable outside the condition
-
             sql.Query($"SELECT receiver_id FROM tbl_orders WHERE status = 'CANCELLED' OR status = 'RTS'");
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -71,12 +69,11 @@ namespace WarehouseManagement.Controller
 
                     if (model.receiver_name == name && model.receiver_phone == phone)
                     {
-                        isMatchFound = true;
-                        break; // Exit the loop since a match is found
+                        return true;
                     }
                 }
             }
-            return isMatchFound; // Return the result after the condition
+            return false;
         }
         public static void bulk_temp_insert(bulk_model model)
         {
