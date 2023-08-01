@@ -215,15 +215,16 @@ namespace WarehouseManagement.Controller
                             case "B002":
                                 MessageBox.Show("Please change the VIP code on system settings.");
                                 break;
+                            case "S13":
+                                MessageBox.Show("VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
+                                break;
                             default:
                                 MessageBox.Show(reason + " Please contact tech team and provide this error message.");
                                 break;
                         }
                         return false;
                     }
-
                 }
-                
             }
             catch (Exception ex)
             {
@@ -282,13 +283,12 @@ namespace WarehouseManagement.Controller
 
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
-
             //for VIP code
             payloadObj.eccompanyid = GlobalModel.eccompany_id;
             payloadObj.customerid = GlobalModel.customer_id;
 
             //updating sender information
-            payloadObj.sender.name = GlobalModel.sender_name;
+            
             payloadObj.sender.phone = GlobalModel.sender_phone;
             payloadObj.sender.mobile = GlobalModel.sender_phone;
             payloadObj.sender.prov = GlobalModel.sender_province;
@@ -299,6 +299,11 @@ namespace WarehouseManagement.Controller
             int totalOrders = 0;
             foreach (bulk_model details in model)
             {
+                sql.AddParam("product_name", details.product_name);
+                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @product_name"));
+                string? sender_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {sender_id}");
+
+                payloadObj.sender.name = sender_name;
                 payloadObj.receiver.name = details.receiver_name;
                 payloadObj.receiver.phone = details.receiver_phone;
                 payloadObj.receiver.mobile = details.receiver_phone;
@@ -423,6 +428,9 @@ namespace WarehouseManagement.Controller
                                 case "B002":
                                     MessageBox.Show("Please change the VIP code on system settings.");
                                     break;
+                                case "S13":
+                                    MessageBox.Show("VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
+                                    break;
                                 default:
                                     MessageBox.Show(reason + " Please contact tech team and provide this error message.");
                                     break;
@@ -434,8 +442,7 @@ namespace WarehouseManagement.Controller
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Stack Trace: " + ex.StackTrace);
-                    MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s order didn't push " + ex.Message);
+                    MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s order might pushed, kindly check your VIP dashboard. " + ex.Message);
                     BulkOrderPopup.NoError = false;
                 }
                 totalOrders++;

@@ -105,7 +105,7 @@ namespace WarehouseManagement.Views.Login
         public LoginWindow()
         {
             InitializeComponent();
-            getversion();
+            
             tbUsername.Focus();
             this.SizeToContent = SizeToContent.Height;
         }
@@ -290,6 +290,10 @@ namespace WarehouseManagement.Views.Login
                         var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
                         string futureVersion = getFutureVersion.ToString();
                         CustomMessageBox(futureVersion + " New version released, you are about to update. Proceed?", true);
+                    }
+                    else
+                    {
+                        getversion();
                     }
                 }
             }

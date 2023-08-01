@@ -74,6 +74,7 @@ namespace WarehouseManagement.Controller
                 }
             }
             return false;
+
         }
         public static void bulk_temp_insert(bulk_model model)
         {
