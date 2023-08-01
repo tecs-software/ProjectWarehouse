@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
     public partial class FrameBulkOrderBackup : UserControl
     {
         BackgroundWorker pushOrders;
-        Create_api bulk_api = new Create_api();
+        
         void CustomMessageBox(String message, Boolean questionType)
         {
             btnYes.Visibility = Visibility.Visible;
@@ -49,11 +50,12 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             InitializeComponent();
             dtSuspiciousOrders.Visibility = Visibility.Collapsed;
             Csv_Controller.dataTableBulkOrders = null;
-            Csv_Controller.model = new List<bulk_model>();
+            Csv_Controller.SystemModel = new List<SystemSettingsModel>();
         }
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
+            dtBulkOrders.Items.Clear();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             try
             {
@@ -68,8 +70,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
                     dtBulkOrders.Visibility = Visibility.Visible;
                     dtSuspiciousOrders.Visibility = Visibility.Collapsed;
-
-                    //dtBulkOrders.Columns[2].IsReadOnly = true;
                 }
             }
             catch (Exception ex)
@@ -80,9 +80,61 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Csv_Controller.dataTablebulkOrder.Rows.Count.ToString());
-        }
+            //code dito
+            try
+            {
+                Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTablebulkOrder;
+                foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                {
+                    SystemSettingsModel model = new SystemSettingsModel()
+                    {
+                        //receiver credentials
+                        receiver_name = dr[4].ToString(),
+                        receiver_phone = dr[5].ToString(),
+                        receiver_address = dr[9].ToString(),
 
+                        //other fields
+                        remarks = dr[16].ToString(),
+                        product_name = dr[23].ToString(),
+                        quantity = int.Parse(dr[25].ToString()),
+
+                        //etc
+                        cod = decimal.Parse(dr[12].ToString()),
+                        parcel_value = decimal.Parse(dr[30].ToString()),
+                        parcel_name = dr[23].ToString(),
+                        weight = decimal.Parse(dr[24].ToString()),
+
+                        //id's
+                        waybill = dr[3].ToString(),
+                        order_id = dr[2].ToString(),
+                        sender_name = dr[18].ToString()
+                    };
+                    Csv_Controller.SystemModel.Add(model);
+                }
+
+                btnConfirm.IsEnabled = false;
+                pushOrders = new BackgroundWorker();
+                pushOrders.WorkerReportsProgress = true;
+
+                pushOrders.DoWork += WorkerPushOrders_DoWork;
+                pushOrders.RunWorkerCompleted += WorkerPushCompleted_RunWorkerCompleted;
+
+                pushOrders.RunWorkerAsync();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bulk_inserts.insertBulkData(Csv_Controller.SystemModel, pbBulkOrder);
+        }
+        private void WorkerPushCompleted_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnConfirm.IsEnabled = true;
+            MessageBox.Show("Data successfully inserted.");
+        }
         private void dtBulkOrders_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
 

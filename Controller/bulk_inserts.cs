@@ -20,7 +20,6 @@ namespace WarehouseManagement.Controller
     {
         static sql_control sql = new sql_control();
         
-
         public static void bulk_receiver(bulk_model model) 
         {
             sql.AddParam("@address", model.receiver_address);
@@ -216,5 +215,31 @@ namespace WarehouseManagement.Controller
                 }
             }
         }
+        #region for inserting bulk data on table orders
+        public async static void insertBulkData(List<SystemSettingsModel> model, ProgressBar pb)
+        {
+            int totalOrders = 0;
+            string txtCount;
+            foreach (SystemSettingsModel details in model)
+            {
+                sql.AddParam("@sender_name",details.sender_name);
+                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_sender WHERE item_name = @sender_name"));
+                int? user_id = int.Parse(sql.ReturnResult($"SELECT user_id FROM tbl_users WHERE sender_id = {sender_id}"));
+
+                sql.AddParam("@address",details.receiver_address);
+                sql.AddParam("@items", details.product_name);
+                sql.AddParam("@remarks", details.remarks);
+                sql.Query($"EXEC SPadd_orders '{details.order_id}', 'J&T', '{details.waybill}', {user_id}, @items, {details.quantity}, {details.cod}, @remarks, " +
+                    $"'PENDING', '{details.receiver_phone}', @address, {sender_id}");
+
+                totalOrders++;
+                txtCount = totalOrders.ToString();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    pb.Value = totalOrders;
+                });
+            }
+        }
+        #endregion
     }
 }

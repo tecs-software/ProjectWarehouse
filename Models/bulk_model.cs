@@ -8,7 +8,6 @@ namespace WarehouseManagement.Models
 {
     public class bulk_model
     {
-
         // receivers
         public string? receiver_name { get; set; }
         public string? receiver_phone { get; set; }

@@ -121,7 +121,7 @@ namespace WarehouseManagement.Views.Login
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -276,9 +276,7 @@ namespace WarehouseManagement.Views.Login
         UpdateManager manager;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //OnInit();
             Trial_Controller.InsertTrialDay();
-
             //checking for patch
             try
             {

@@ -112,9 +112,10 @@ namespace WarehouseManagement.Controller
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                MessageBox.Show(ex.ToString());
+                //return null;
             }
             return csvData;
         }
@@ -254,6 +255,7 @@ namespace WarehouseManagement.Controller
                 return false;
         }
         public static List<bulk_model> model { get; set; }
+        public static List<SystemSettingsModel> SystemModel { get; set; }
         public static DataTable DataTable_Creation()
         {
             DataTable dt_BulkOrder = new DataTable();

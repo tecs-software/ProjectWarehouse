@@ -490,6 +490,21 @@ BEGIN
     ');
 END;
 
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_receiver')
+BEGIN
+    EXEC('
+    ALTER PROC [dbo].[SPadd_receiver]
+    @receiver_name VARCHAR(255),
+    @receiver_phone VARCHAR(100),
+    @receiver_address VARCHAR(MAX)
+    AS
+    BEGIN
+        INSERT INTO tbl_receiver(receiver_name, receiver_phone, receiver_address) VALUES
+        (@receiver_name, @receiver_phone,@receiver_address)
+    END;
+    ');
+END;
+
 IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_receiver')
 BEGIN
     EXEC('
@@ -501,6 +516,34 @@ BEGIN
     BEGIN
         INSERT INTO tbl_receiver(receiver_name, receiver_phone, receiver_address) VALUES
         (@receiver_name, @receiver_phone,@receiver_address)
+    END;
+    ');
+END;
+
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_orders')
+BEGIN
+    EXEC('
+    ALTER PROC [dbo].[SPadd_orders]
+	@order_id VARCHAR(255),
+	@courier VARCHAR(50),
+	@waybill_number VARCHAR(255),
+	@user_id INT,
+	@product_name VARCHAR(255),
+	@quantity INT,
+	@total DECIMAL (18, 2),
+	@remarks VARCHAR(255),
+	@status VARCHAR(255),
+	@receiver_phone VARCHAR(255),
+	@receiver_address VARCHAR(MAX),
+	@sender_id INT
+	AS
+    BEGIN
+		DECLARE @receiver_id INT = (SELECT TOP 1(receiver_id) FROM tbl_receiver WHERE receiver_phone = @receiver_phone AND receiver_address LIKE ''%'' + @receiver_address + ''%'' ORDER BY receiver_id DESC)
+		DECLARE @product_id VARCHAR(255) = (SELECT product_id FROM tbl_products WHERE item_name = @product_name)
+
+        INSERT INTO tbl_orders(order_id, courier, waybill_number, user_id, receiver_id, product_id, quantity, total, remarks, status, sender_id) VALUES
+        (@order_id, @courier, @waybill_number, @user_id, @receiver_id, @product_id, @quantity, @total, @remarks, @status, @sender_id)
+		
     END;
     ');
 END;
