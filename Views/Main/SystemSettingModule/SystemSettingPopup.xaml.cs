@@ -82,6 +82,9 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 case "Import Address":
                     importAddressFrame.Source = new Uri("../SystemSettingModule/FrameImportAddress.xaml", UriKind.Relative);
                     break;
+                case "Bulk Order Backup":
+                    bulkOrderFrame.Source = new Uri("../SystemSettingModule/FrameBulkOrderBackup.xaml", UriKind.Relative);
+                    break;
                 default:
                     return;
             }

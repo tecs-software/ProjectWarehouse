@@ -20,7 +20,7 @@ namespace WarehouseManagement.Controller
     public class Csv_Controller
     {
         static sql_control sql = new sql_control();
-        public static DataTable dataTableAddress { get; set; }
+        public static DataTable dataTablebulkOrder { get; set; }
         public static Boolean ConfirmedToImport { get; set; }
         public static DataTable dataTableBulkOrders { get; set; }
 
@@ -122,7 +122,7 @@ namespace WarehouseManagement.Controller
         {
             sql.Query("EXEC SpAddress_Truncate");
             int totalImported = 0;
-            foreach (DataRow dr in dataTableAddress.Rows)
+            foreach (DataRow dr in dataTablebulkOrder.Rows)
             {
                 sql.AddParam("@province", dr[0].ToString());
                 sql.AddParam("@city", dr[1].ToString());

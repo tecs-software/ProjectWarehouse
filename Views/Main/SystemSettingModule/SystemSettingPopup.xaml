@@ -169,6 +169,10 @@
                                 </StackPanel>
                             </Grid>
                         </TabItem>
+                        
+                        <TabItem x:Name="BulkOrder" Header="Bulk Order Backup" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Visible">
+                            <Frame x:Name="bulkOrderFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
+                        </TabItem>
                     </TabControl.Items>
                 </TabControl>
             </StackPanel>

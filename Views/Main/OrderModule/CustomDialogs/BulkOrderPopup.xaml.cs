@@ -77,8 +77,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                     Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
                     int numberofitems = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName).Rows.Count;
                     pbBulkOrder.Maximum = numberofitems > 0 ? numberofitems : 100;
-                    Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
-                    dtBulkOrders.ItemsSource = Csv_Controller.dataTableAddress.DefaultView;
+                    Csv_Controller.dataTablebulkOrder = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+                    dtBulkOrders.ItemsSource = Csv_Controller.dataTablebulkOrder.DefaultView;
 
                     dtBulkOrders.Visibility = Visibility.Visible;
                     dtSuspiciousOrders.Visibility = Visibility.Collapsed;
@@ -190,7 +190,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             }
             else
             {
-                Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTableAddress;
+                Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTablebulkOrder;
                 //Push to Create_API
                 foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
                 {

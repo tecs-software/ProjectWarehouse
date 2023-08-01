@@ -36,7 +36,7 @@ namespace WarehouseManagement.Views.Onboarding
             int numberofitems = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text).Rows.Count;
             pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
             lblTotalNumberOfItems.Text = numberofitems.ToString();
-            Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
+            Csv_Controller.dataTablebulkOrder = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
         }
         db_queries queries = new db_queries();
         private void load_couriers()
@@ -142,7 +142,7 @@ namespace WarehouseManagement.Views.Onboarding
                 int numberofitems = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName).Rows.Count;
                 pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
                 lblTotalNumberOfItems.Text = numberofitems.ToString();
-                Csv_Controller.dataTableAddress = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
+                Csv_Controller.dataTablebulkOrder = Csv_Controller.GetDataTableFromCSVFile(openFileDialog.FileName);
             }
         }
 
