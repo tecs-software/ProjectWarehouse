@@ -390,7 +390,7 @@ namespace WarehouseManagement.Helpers
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        public static void AddFirewallRule()
+        public static bool AddFirewallRule()
         {
             // Create the firewall object
             Type firewallType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
@@ -399,14 +399,14 @@ namespace WarehouseManagement.Helpers
             // Check if the rule already exists
             foreach (INetFwRule existingRule in firewallPolicy.Rules)
             {
-                if (existingRule.Name == "Warehouse Allow 1443" &&
+                if (existingRule.Name == "Warehouse Allow 1433" &&
                     existingRule.Protocol == (int)NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP &&
                     existingRule.LocalPorts == "1433" &&
                     (existingRule.Profiles & ((int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE |
                                               (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC |
                                               (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN)) != 0)
                 {
-                    return;
+                    return true; ;
                 }
             }
 
@@ -419,15 +419,16 @@ namespace WarehouseManagement.Helpers
             firewallRule.Profiles = (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE |
                                     (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC |
                                     (int)NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN;
-            firewallRule.Name = "Warehouse Allow 1443";
+            firewallRule.Name = "Warehouse Allow 1433";
 
             if (!IsUserAdministrator())
             {
-                MessageBox.Show("Please restart the application as an administrator to ensure all features work correctly.");
-                return;
+                MessageBox.Show("To setup server, you need to run the app as administrator on first run");
+                return false;
             }
 
             firewallPolicy.Rules.Add(firewallRule);
+            return true;
         }
     }
 }
