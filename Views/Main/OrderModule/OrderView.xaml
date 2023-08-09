@@ -45,25 +45,34 @@
                     </StackPanel>
                 </Border>
 
-                <Border Height="40" Width="150" Background="#4E575C"  CornerRadius="5">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
-                        <Label Content="Start Date" Foreground="#BCBCBC"  FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Orientation="Horizontal">
+                    <!-- ... your other controls ... -->
+                    <RadioButton Content="SHOW ALL" Margin="0,5,20,0" IsChecked="True" FontSize="10"
+                 Foreground="White"
+                 Style="{DynamicResource MaterialDesignOptionRadioButton}">
+                        <RadioButton.LayoutTransform>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                            <!-- Adjust the scale values as needed -->
+                        </RadioButton.LayoutTransform>
+                    </RadioButton>
+                    <RadioButton Content="WAYBILL" Margin="0,5,20,0" FontSize="10"
+                 Foreground="White"
+                 Style="{DynamicResource MaterialDesignOptionRadioButton}">
+                        <RadioButton.LayoutTransform>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                            <!-- Adjust the scale values as needed -->
+                        </RadioButton.LayoutTransform>
+                    </RadioButton>
 
-                <Border Height="40" Width="150" Background="#4E575C" Margin="10,0,20,0" CornerRadius="5">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
-                        <Label Content="End Date" Foreground="#BCBCBC"  FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-
-                <Button Style="{StaticResource MaterialDesignIconButton}" Height="25" Width="25" Background="#618EE7" BorderBrush="#618EE7">
-                    <materialDesign:PackIcon Kind="Close" Height="15" Width="15"  Foreground="White"/>
-                </Button>
-
-                <Label Content="Clear Date" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#BCBCBC"/>
+                    <RadioButton Content="CUSTOMER" Margin="0,5,20,0" FontSize="10"
+                 Foreground="White"
+                 Style="{DynamicResource MaterialDesignOptionRadioButton}">
+                        <RadioButton.LayoutTransform>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                            <!-- Adjust the scale values as needed -->
+                        </RadioButton.LayoutTransform>
+                    </RadioButton>
+                </StackPanel>
 
             </StackPanel>
             
