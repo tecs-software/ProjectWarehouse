@@ -54,17 +54,13 @@ namespace WarehouseManagement.Views.Main.OrderModule
             InitializeComponent();
             showOrderMenu();
             SetColumnWidth();
-            //refreshTable();
             refreshTable();
-            
         }
-
         private async void refreshTable()
         {
             show_DT dt = new show_DT();
             await dt.show_orders(dgtRespondentData);
         }
-
 
         public void showOrderMenu()
         {
@@ -224,11 +220,6 @@ namespace WarehouseManagement.Views.Main.OrderModule
             }
         }
 
-        private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void btnReturntoSeller_Click(object sender, RoutedEventArgs e)
         {
             if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Order"))
@@ -264,6 +255,20 @@ namespace WarehouseManagement.Views.Main.OrderModule
             {
                 refreshTable();
             }
+        }
+
+        private void tbSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                show_DT.search_orders_data(tbSearch, rbtn_waybill, rbtn_customer, dgtRespondentData);
+            }
+        }
+
+        private async void rbtn_show_all_Checked(object sender, RoutedEventArgs e)
+        {
+            tbSearch.Text = "";
+            refreshTable();
         }
         //public async void refreshTable()
         //{

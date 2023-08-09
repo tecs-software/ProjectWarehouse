@@ -34,28 +34,27 @@
                                  BorderBrush="Transparent"
                                  Padding="5"
                                  x:Name="tbSearch"
-                                 TextChanged="tbSearch_TextChanged"
                                  CaretBrush="White"
                                  materialDesign:HintAssist.IsFloating="False"
                                  materialDesign:HintAssist.Hint="Search for orders"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" KeyDown="tbSearch_KeyDown"/>
 
                     </StackPanel>
                 </Border>
 
                 <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Orientation="Horizontal">
                     <!-- ... your other controls ... -->
-                    <RadioButton Content="SHOW ALL" Margin="0,5,20,0" IsChecked="True" FontSize="10"
+                    <RadioButton Content="SHOW ALL" Margin="0,5,20,0" FontSize="10" x:Name="rbtn_show_all"
                  Foreground="White"
-                 Style="{DynamicResource MaterialDesignOptionRadioButton}">
+                 Style="{DynamicResource MaterialDesignOptionRadioButton}" Checked="rbtn_show_all_Checked">
                         <RadioButton.LayoutTransform>
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                             <!-- Adjust the scale values as needed -->
                         </RadioButton.LayoutTransform>
                     </RadioButton>
-                    <RadioButton Content="WAYBILL" Margin="0,5,20,0" FontSize="10"
+                    <RadioButton Content="WAYBILL" Margin="0,5,20,0" FontSize="10" x:Name="rbtn_waybill"
                  Foreground="White"
                  Style="{DynamicResource MaterialDesignOptionRadioButton}">
                         <RadioButton.LayoutTransform>
@@ -64,7 +63,7 @@
                         </RadioButton.LayoutTransform>
                     </RadioButton>
 
-                    <RadioButton Content="CUSTOMER" Margin="0,5,20,0" FontSize="10"
+                    <RadioButton Content="CUSTOMER" Margin="0,5,20,0" FontSize="10" x:Name="rbtn_customer"
                  Foreground="White"
                  Style="{DynamicResource MaterialDesignOptionRadioButton}">
                         <RadioButton.LayoutTransform>
