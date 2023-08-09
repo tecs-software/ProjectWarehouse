@@ -220,24 +220,32 @@ namespace WarehouseManagement.Controller
         {
             int totalOrders = 0;
             string txtCount;
-            foreach (SystemSettingsModel details in model)
+            
+            try
             {
-                sql.AddParam("@sender_name",details.sender_name);
-                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_sender WHERE item_name = @sender_name"));
-                int? user_id = int.Parse(sql.ReturnResult($"SELECT user_id FROM tbl_users WHERE sender_id = {sender_id}"));
-
-                sql.AddParam("@address",details.receiver_address);
-                sql.AddParam("@items", details.product_name);
-                sql.AddParam("@remarks", details.remarks);
-                sql.Query($"EXEC SPadd_orders '{details.order_id}', 'J&T', '{details.waybill}', {user_id}, @items, {details.quantity}, {details.cod}, @remarks, " +
-                    $"'PENDING', '{details.receiver_phone}', @address, {sender_id}");
-
-                totalOrders++;
-                txtCount = totalOrders.ToString();
-                Application.Current.Dispatcher.Invoke(() =>
+                foreach (SystemSettingsModel details in model)
                 {
-                    pb.Value = totalOrders;
-                });
+                    sql.AddParam("@product_name", details.product_name);
+                    int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @product_name"));
+                    int? user_id = int.Parse(sql.ReturnResult($"SELECT user_id FROM tbl_users WHERE sender_id = {sender_id}"));
+
+                    sql.AddParam("@address", details.receiver_address);
+                    sql.AddParam("@items", details.product_name);
+                    sql.AddParam("@remarks", details.remarks);
+                    sql.Query($"EXEC SPadd_orders '{details.order_id}', 'J&T', '{details.waybill}', {user_id}, @items, {details.quantity}, {details.cod}, @remarks, " +
+                        $"'PENDING', '{details.receiver_phone}', @address, {sender_id}");
+
+                    totalOrders++;
+                    txtCount = totalOrders.ToString();
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        pb.Value = totalOrders;
+                    });
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
         #endregion

@@ -301,7 +301,9 @@ namespace WarehouseManagement.Controller
             {
                 sql.AddParam("product_name", details.product_name);
                 int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @product_name"));
+                if (sql.HasException(true)) return;
                 string? sender_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {sender_id}");
+                if (sql.HasException(true)) return;
 
                 payloadObj.sender.name = sender_name;
                 payloadObj.receiver.name = details.receiver_name;
@@ -319,6 +321,7 @@ namespace WarehouseManagement.Controller
                 payloadObj.itemsvalue = details.total;
                 payloadObj.totalquantity = details.quantity;
                 payloadObj.remark = details.remarks;
+                
 
                 //updating items field
                 var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
