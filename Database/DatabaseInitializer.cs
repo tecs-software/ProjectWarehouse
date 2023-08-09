@@ -124,7 +124,6 @@ namespace WarehouseManagement.Database
                         SqlCommand checkLoginCommand2 = new SqlCommand(checkLoginSql2, sqlConnection);
                         int loginCount2 = (int)checkLoginCommand2.ExecuteScalar();
 
-
                         if (loginCount2 == 0)
                         {
                             string createUserSql = $"USE {databaseName}; CREATE USER {loginName} FOR LOGIN {loginName};";
@@ -134,6 +133,11 @@ namespace WarehouseManagement.Database
                             createUserCommand.ExecuteNonQuery();
                         }
                     }
+
+                    // Modify the "sa" login account, enable it, and set the password to "123123"
+                    string modifySaLoginSql = $"ALTER LOGIN sa ENABLE; ALTER LOGIN sa WITH PASSWORD = '123123';";
+                    SqlCommand modifySaLoginCommand = new SqlCommand(modifySaLoginSql, sqlConnection);
+                    modifySaLoginCommand.ExecuteNonQuery();
                 }
 
                 return true;

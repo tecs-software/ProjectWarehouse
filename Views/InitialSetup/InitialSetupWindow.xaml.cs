@@ -142,15 +142,17 @@ namespace WarehouseManagement.Views.InitialSetup
                         if (await dbInitializer.CreateDatabaseIfNotExists("db_warehouse_management"))
                         {
 
-                            connection += ";Initial Catalog=db_warehouse_management";
-                            await SaveConnection(connection);
-                            sql_control sql = new sql_control();
-                            sql.Query("INSERT INTO tbl_trial_key(Product_Key) VALUES ('N9TT-9G0A-B7FQ-RANC')");
-                            await dbInitializer.InsertSQLAuthentication("db_warehouse_management", connection);
-                            LoginWindow login = new LoginWindow();
-                            login.Show();
-                            this.Close();
-
+                            if (Util.AddFirewallRule())
+                            {
+                                connection += ";Initial Catalog=db_warehouse_management";
+                                await SaveConnection(connection);
+                                sql_control sql = new sql_control();
+                                sql.Query("INSERT INTO tbl_trial_key(Product_Key) VALUES ('N9TT-9G0A-B7FQ-RANC')");
+                                await dbInitializer.InsertSQLAuthentication("db_warehouse_management", connection);
+                                LoginWindow login = new LoginWindow();
+                                login.Show();
+                                this.Close();
+                            }
                         }
                         else
                         {
