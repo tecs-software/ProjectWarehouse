@@ -58,6 +58,7 @@ namespace WarehouseManagement.Controller
                     }
                     dg.ItemsSource = orders;
                     dg.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                    exceedResult = false;
                 }
                 else
                 {
