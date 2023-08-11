@@ -39,7 +39,7 @@
                                  materialDesign:HintAssist.Hint="Search for orders"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" KeyDown="tbSearch_KeyDown"/>
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" KeyDown="tbSearch_KeyDown" KeyUp="tbSearch_KeyUp"/>
 
                     </StackPanel>
                 </Border>

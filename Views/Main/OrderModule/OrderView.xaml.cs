@@ -313,6 +313,11 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 lblPageCount.Text = pageCount.ToString();
             }
         }
+
+        private void tbSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            show_DT.search_orders_data(tbSearch, rbtn_waybill, rbtn_customer, dgtRespondentData);
+        }
         //public async void refreshTable()
         //{
         //    string searchFilter =  tbSearch.Text;
