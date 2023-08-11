@@ -303,7 +303,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
             offsetCount = offsetCount + 12;
 
-            await dt.show_orders(dgtRespondentData, offsetCount, pageCount, lblPageCount, false);
+            await dt.show_orders(dgtRespondentData, offsetCount, pageCount, lblPageCount, true);
 
           
         }
