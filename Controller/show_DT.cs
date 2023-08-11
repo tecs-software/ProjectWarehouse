@@ -183,7 +183,7 @@ namespace WarehouseManagement.Controller
                 }
                 else if (cs_name.IsChecked == true)
                 {
-                    sql.Query($"SELECT receiver_id FROM tbl_receiver WHERE receiver_name = '{tb_search_bar.Text}'");
+                    sql.Query($"SELECT receiver_id FROM tbl_receiver WHERE receiver_name LIKE '%{tb_search_bar.Text}%'");
                     if (sql.HasException(true)) return;
                     if (sql.DBDT.Rows.Count > 0)
                     {
@@ -267,7 +267,7 @@ namespace WarehouseManagement.Controller
                 }
                 else if (cs_name.IsChecked == true)
                 {
-                    sql.Query($"SELECT receiver_id FROM tbl_receiver WHERE receiver_name = '{tb_search_bar.Text}'");
+                    sql.Query($"SELECT receiver_id FROM tbl_receiver WHERE receiver_name LIKE '%{tb_search_bar.Text}%' AND user_id = {int.Parse(CurrentUser.Instance.userID.ToString())} ORDER BY created_at DESC");
                     if (sql.HasException(true)) return;
                     if (sql.DBDT.Rows.Count > 0)
                     {
