@@ -279,7 +279,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             show_DT dt = new show_DT();
 
-            if (offsetCount == 0)
+            if (offsetCount == 0 && pageCount == 1)
             {
                 offsetCount = 0;
                 pageCount = 1;
