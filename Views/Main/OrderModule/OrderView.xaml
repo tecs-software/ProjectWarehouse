@@ -130,8 +130,9 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
-                        <DataGrid ItemsSource="{Binding Path=myList}"  
+                <StackPanel Grid.Row="0" Orientation="Vertical">
+                
+                    <DataGrid ItemsSource="{Binding Path=myList}"  
                                 CanUserAddRows="False"
                                 AutoGenerateColumns="False"
                                 HeadersVisibility="Column"
@@ -214,6 +215,19 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button HorizontalAlignment="Right" BorderBrush="{StaticResource buttonBorder3}" Height="40" Width="50" x:Name="btnPreview" FontSize="15" Background="{StaticResource buttonBorder3}" Margin="0,10,10,0" Click="btnPreview_Click">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ArrowLeft" Height="20" Width="auto" Margin="0,0,4,0"/>
+                            </StackPanel>
+                        </Button>
+                        <TextBlock Margin="8,15,18,0" Text="1" FontSize="20" FontWeight="DemiBold" x:Name="lblPageCount"/>
+                        <Button HorizontalAlignment="Right" BorderBrush="{StaticResource buttonBorder3}" Height="40" Width="50" x:Name="btnNext" FontSize="15" Background="{StaticResource buttonBorder3}" Margin="0,10,10,0" Click="btnNext_Click">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ArrowRight" Height="20" Width="auto" Margin="0,0,4,0"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Grid>
