@@ -34,7 +34,7 @@ namespace WarehouseManagement.Controller
         SuspiciousController suspiciouscontroller = new SuspiciousController();
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
         {
-            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
             {
@@ -236,7 +236,7 @@ namespace WarehouseManagement.Controller
         public void create_bulk_api(List<bulk_model> model, Button btn, bool granted, ProgressBar pb_load)
         {
             string txtCount;
-            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
                     {

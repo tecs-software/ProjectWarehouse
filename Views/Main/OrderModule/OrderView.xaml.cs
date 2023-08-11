@@ -28,6 +28,9 @@ namespace WarehouseManagement.Views.Main.OrderModule
 {
     public partial class OrderView : Page
     {
+        public int pageCount { get; set; } = 1;
+        public int offsetCount { get; set; } = 0;
+
         private void SetColumnWidth()
         {
             double screenWidth = SystemParameters.PrimaryScreenWidth;
@@ -59,7 +62,8 @@ namespace WarehouseManagement.Views.Main.OrderModule
         private async void refreshTable()
         {
             show_DT dt = new show_DT();
-            await dt.show_orders(dgtRespondentData);
+            await dt.show_orders(dgtRespondentData,0);
+            lblPageCount.Text = pageCount.ToString();
         }
 
         public void showOrderMenu()
@@ -269,6 +273,40 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             tbSearch.Text = "";
             refreshTable();
+        }
+
+        private async void btnPreview_Click(object sender, RoutedEventArgs e)
+        {
+            show_DT dt = new show_DT();
+
+            if (offsetCount == 0)
+            {
+                offsetCount = 0;
+                pageCount = 1;
+                lblPageCount.Text = pageCount.ToString();
+                await dt.show_orders(dgtRespondentData, 0);
+            }
+            else
+            {
+                offsetCount = offsetCount - 12;
+
+                pageCount = pageCount - 1;
+                lblPageCount.Text = pageCount.ToString();
+
+                await dt.show_orders(dgtRespondentData, offsetCount);
+            }
+        }
+
+        private async void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            show_DT dt = new show_DT();
+
+            offsetCount = offsetCount + 12;
+
+            pageCount = pageCount + 1;
+            lblPageCount.Text = pageCount.ToString();
+
+            await dt.show_orders(dgtRespondentData, offsetCount);
         }
         //public async void refreshTable()
         //{

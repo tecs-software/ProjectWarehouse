@@ -25,11 +25,11 @@ namespace WarehouseManagement.Controller
     {
         static sql_control sql = new sql_control();
 
-        public async Task show_orders(DataGrid dg)
+        public async Task show_orders(DataGrid dg, int offsetCount) 
         {
             if (CurrentUser.Instance.userID == 1)
             {
-                sql.Query($"SELECT * FROM tbl_orders WHERE status != 'FAILED' ORDER BY created_at DESC");
+                sql.Query($"SELECT * FROM tbl_orders WHERE status != 'FAILED' ORDER BY created_at DESC OFFSET {offsetCount} ROWS FETCH NEXT 12 ROWS ONLY;");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
