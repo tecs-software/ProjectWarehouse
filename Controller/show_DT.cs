@@ -24,8 +24,8 @@ namespace WarehouseManagement.Controller
     public class show_DT
     {
         static sql_control sql = new sql_control();
-
-        public async Task show_orders(DataGrid dg, int offsetCount, int pageCount, TextBlock lblPageCount, bool clickedNext) 
+        public bool exceedResult { get; set; } = false;
+        public async Task show_orders(DataGrid dg, int offsetCount) 
         {
             if (CurrentUser.Instance.userID == 1)
             {
@@ -56,13 +56,12 @@ namespace WarehouseManagement.Controller
                         orders.Add(order);
 
                     }
-                    if (clickedNext)
-                    {
-                        pageCount = pageCount + 1;
-                        lblPageCount.Text = pageCount.ToString();
-                    }
                     dg.ItemsSource = orders;
                     dg.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                }
+                else
+                {
+                    exceedResult = true;
                 }
             }
             else
