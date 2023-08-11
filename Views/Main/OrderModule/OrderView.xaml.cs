@@ -62,7 +62,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         private async void refreshTable()
         {
             show_DT dt = new show_DT();
-            await dt.show_orders(dgtRespondentData,0, pageCount, lblPageCount);
+            await dt.show_orders(dgtRespondentData,0, pageCount, lblPageCount,false);
             lblPageCount.Text = pageCount.ToString();
         }
 
@@ -284,7 +284,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 offsetCount = 0;
                 pageCount = 1;
                 lblPageCount.Text = pageCount.ToString();
-                await dt.show_orders(dgtRespondentData, 0, pageCount, lblPageCount);
+                await dt.show_orders(dgtRespondentData, 0, pageCount, lblPageCount, false);
             }
             else
             {
@@ -293,7 +293,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 pageCount = pageCount - 1;
                 lblPageCount.Text = pageCount.ToString();
 
-                await dt.show_orders(dgtRespondentData, offsetCount, pageCount, lblPageCount);
+                await dt.show_orders(dgtRespondentData, offsetCount, pageCount, lblPageCount, false);
             }
         }
 
@@ -303,7 +303,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
             offsetCount = offsetCount + 12;
 
-            await dt.show_orders(dgtRespondentData, offsetCount, pageCount, lblPageCount);
+            await dt.show_orders(dgtRespondentData, offsetCount, pageCount, lblPageCount, false);
 
           
         }
