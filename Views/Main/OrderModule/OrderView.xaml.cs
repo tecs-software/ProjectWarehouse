@@ -289,12 +289,15 @@ namespace WarehouseManagement.Views.Main.OrderModule
             else
             {
                 offsetCount = offsetCount - 12;
-
-                pageCount = pageCount - 1;
-                lblPageCount.Text = pageCount.ToString();
-
                 await dt.show_orders(dgtRespondentData, offsetCount);
+
+                if (!dt.exceedResult)
+                {
+                    pageCount = pageCount - 1;
+                    lblPageCount.Text = pageCount.ToString();
+                }
             }
+
         }
 
         private async void btnNext_Click(object sender, RoutedEventArgs e)
