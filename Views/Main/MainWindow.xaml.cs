@@ -120,7 +120,7 @@ namespace WarehouseManagement.Views.Main
 
                         break;
 
-                    case "View Order Inquiry":
+                    case "View Out For Pick Up":
 
                         btnDeliver.Visibility = Visibility.Visible;
 

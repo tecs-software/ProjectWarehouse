@@ -37,7 +37,7 @@ namespace WarehouseManagement.Views.Main.DeliverModule
 
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
-            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Order Inquiry"))
+            if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Out For Pick Up"))
             {
                 return;
             }

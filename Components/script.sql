@@ -187,8 +187,8 @@ BEGIN
         (@roleId, 'View Employee'),
         (@roleId, 'Modify Employee'),
         (@roleId, 'Modify System Settings'),
-		(@roleId, 'Modify Order Inquiry'),
-        (@roleId, 'View Order Inquiry'), 
+		(@roleId, 'Modify Out For Pick Up'),
+        (@roleId, 'View Out For Pick Up'), 
 		(@roleId, 'Modify Shop/Pages'),
         (@roleId, 'View Shop/Pages'),
         (@roleId, 'View Suspicious Order')
@@ -201,8 +201,8 @@ IF NOT EXISTS (
     FROM tbl_module_access
     WHERE role_id = 1
         AND module_name IN (
-            'Modify Order Inquiry',
-            'View Order Inquiry',
+            'Modify Out For Pick Up',
+            'View Out For Pick Up',
             'Modify Shop/Pages',
             'View Shop/Pages',
             'View Suspicious Order'
@@ -211,8 +211,8 @@ IF NOT EXISTS (
     -- Insert the missing module names for role_id = 1
     INSERT INTO tbl_module_access (role_id, module_name)
     VALUES
-        (1, 'Modify Order Inquiry'),
-        (1, 'View Order Inquiry'),
+        (1, 'Modify Out For Pick Up'),
+        (1, 'View Out For Pick Up'),
         (1, 'Modify Shop/Pages'),
         (1, 'View Shop/Pages'),
         (1, 'View Suspicious Order');
@@ -438,6 +438,12 @@ BEGIN
 	[remarks] [varchar](50) NOT NULL,
     [date_created] [varchar](50) NOT NULL
     )
+END
+
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
+BEGIN
+    ALTER TABLE tbl_order_inquiry
+	ADD [session_id] [nvarchar](100) NOT NULL
 END
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_suspicious_order')

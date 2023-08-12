@@ -91,14 +91,33 @@ namespace WarehouseManagement.Controller
                         }
                            
                     }
-                    MessageBox.Show("Offset Count: "+OrderView.offsetCount.ToString());
+                  
                 }
             }
             else
             {
+                if (clickedNext)
+                {
+                    if (!exceedResult)
+                    {
+                        OrderView.offsetCount = OrderView.offsetCount + 12;
+                    }
+                }
+                else
+                {
+                    if (OrderView.offsetCount == 0)
+                        OrderView.offsetCount = 0;
+                    else
+                    {
+                        OrderView.offsetCount = OrderView.offsetCount - 12;
+                        exceedResult = false;
+                    }
+
+                }
+
                 sql.Query($"SELECT * FROM tbl_orders WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())} ORDER BY created_at DESC OFFSET {OrderView.offsetCount} ROWS FETCH NEXT 12 ROWS ONLY;");
                 if (sql.HasException(true)) return;
-
+                result_count = sql.DBDT.Rows.Count;
                 if (sql.DBDT.Rows.Count > 0)
                 {
                     List<Orders> orders = new List<Orders>();
@@ -129,13 +148,10 @@ namespace WarehouseManagement.Controller
                     exceedResult = false;
                     if (clickedNext)
                     {
-                        OrderView.offsetCount = OrderView.offsetCount + 12;
-                    }
-                    else
-                    {
-                        if (OrderView.offsetCount != 0)
+                        if (result_count < 11)
                         {
-                            OrderView.offsetCount = OrderView.offsetCount - 12;
+                            exceedResult = true;
+                            return;
                         }
                     }
                 }
