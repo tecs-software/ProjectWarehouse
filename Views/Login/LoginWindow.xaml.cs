@@ -102,12 +102,13 @@ namespace WarehouseManagement.Views.Login
             dialog.IsOpen = true;
         }
 
-        public LoginWindow()
+        public LoginWindow(string version)
         {
             InitializeComponent();
-            
+            lbl_Versions.Text = version;
             tbUsername.Focus();
             this.SizeToContent = SizeToContent.Height;
+
         }
         private async void getversion()
         {
@@ -278,27 +279,27 @@ namespace WarehouseManagement.Views.Login
         {
             Trial_Controller.InsertTrialDay();
             //checking for patch
-            try
-            {
-                using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
-                {
-                    var updateInfo = await manager.CheckForUpdate();
-                    if (updateInfo.ReleasesToApply.Count > 0)
-                    {
-                        var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
-                        string futureVersion = getFutureVersion.ToString();
-                        CustomMessageBox(futureVersion + " New version released, you are about to update. Proceed?", true);
-                    }
-                    else
-                    {
-                        getversion();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
+            //    {
+            //        var updateInfo = await manager.CheckForUpdate();
+            //        if (updateInfo.ReleasesToApply.Count > 0)
+            //        {
+            //            var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
+            //            string futureVersion = getFutureVersion.ToString();
+            //            CustomMessageBox(futureVersion + " New version released, you are about to update. Proceed?", true);
+            //        }
+            //        else
+            //        {
+            //            //getversion();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //MessageBox.Show(ex.Message);
+            //}
         }
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {

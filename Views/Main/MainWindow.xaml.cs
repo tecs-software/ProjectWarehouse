@@ -264,7 +264,7 @@ namespace WarehouseManagement.Views.Main
             DBHelper db = new DBHelper();
             db.UpdateWorkHoursAndActiveUsers(CurrentUser.Instance.userID, DateTime.Now);
             CurrentUser.Instance.Clear();
-            var login = new LoginWindow();
+            var login = new LoginWindow(GlobalModel.version);
             login.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             login.Show();
 

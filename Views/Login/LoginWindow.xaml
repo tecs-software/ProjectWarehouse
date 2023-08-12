@@ -165,10 +165,6 @@
                     Height="40"/>
                 </Grid>
             </Grid>
-
         </Border>
     </materialDesign:DialogHost>
-        
-   
-
 </Window>

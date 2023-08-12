@@ -37,5 +37,8 @@ namespace WarehouseManagement.Models
         #region order pick up
         public static string session_id { get; set; } = string.Empty;
         #endregion
+        #region get version
+        public static string version { get; set; } = string.Empty;
+        #endregion
     }
 }

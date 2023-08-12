@@ -46,8 +46,7 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         }
         public string generateSessionID()
         {
-            var rd = new Random();
-            string session_id = DateTime.Now.ToString("MM/dd/yyyy") + "-" + rd.Next(1000).ToString();
+            return Order_Inquiry_api.GenerateSession_id();
         }
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
@@ -57,7 +56,7 @@ namespace WarehouseManagement.Views.Main.DeliverModule
                 return;
             }
 
-            OrderInquiryPopup orderInquiry = new OrderInquiryPopup(session_id);
+            OrderInquiryPopup orderInquiry = new OrderInquiryPopup(generateSessionID());
             orderInquiry.RefreshTable += Dialog;
             if(orderInquiry.ShowDialog() == true)
             {
