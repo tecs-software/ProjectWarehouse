@@ -30,6 +30,7 @@ using WarehouseManagement.Views.Register;
 using WWarehouseManagement.Database;
 using System.Windows.Controls.Primitives;
 using WarehouseManagement.Views.Login;
+using NuGet;
 
 namespace WarehouseManagement.Views.InitialSetup
 {
@@ -44,8 +45,7 @@ namespace WarehouseManagement.Views.InitialSetup
             StartLoopingProgressBar();
         }
         UpdateManager manager;
-        private bool continueLoop = true;
-        private bool CustomMessageBox(String message, Boolean questionType)
+        void CustomMessageBox(String message, Boolean questionType)
         {
             btnYes.Visibility = Visibility.Visible;
             btnNo.Visibility = Visibility.Visible;
@@ -55,20 +55,17 @@ namespace WarehouseManagement.Views.InitialSetup
             {
                 btnYes.Content = "Yes";
                 btnNo.Visibility = Visibility.Visible;
-                dialog.IsOpen = true;
-                return false;
             }
             else
             {
                 btnYes.Content = "Okay";
                 btnNo.Visibility = Visibility.Collapsed;
-                dialog.IsOpen = true;
-                return false;
             }
+            dialog.IsOpen = true;
         }
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {
-            if (txtMessageDialog.Text.Contains("New version released, you are about to update. Proceed?"))
+            if (txtMessageDialog.Text.Contains("has been released, do you want to update your app?"))
             {
                 using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
                 {
@@ -89,11 +86,8 @@ namespace WarehouseManagement.Views.InitialSetup
 
         private async void btnNo_Click(object sender, RoutedEventArgs e)
         {
-            GlobalModel.version = await getversion();
-            new LoginWindow(await getversion()).Show();
-            this.Close();
+            
         }
-
         private async Task ClearConnection()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -106,35 +100,23 @@ namespace WarehouseManagement.Views.InitialSetup
         }
         private async void StartLoopingProgressBar()
         {
-            while (continueLoop) // Check the flag in the loop condition
+            int durationInSeconds = 3;
+            int steps = 1;
+            int intervalMilliseconds = durationInSeconds * 1000 / steps;
+
+            DoubleAnimation animation = new DoubleAnimation
             {
-                int durationInSeconds = 1;
-                int steps = 1;
-                int intervalMilliseconds = durationInSeconds * 1000 / steps;
+                From = 0,
+                To = 100,
+                Duration = TimeSpan.FromSeconds(durationInSeconds),
+                RepeatBehavior = new RepeatBehavior(1) // Repeat once
+            };
 
-                DoubleAnimation animation = new DoubleAnimation
-                {
-                    From = 0,
-                    To = 100,
-                    Duration = TimeSpan.FromSeconds(durationInSeconds),
-                    RepeatBehavior = new RepeatBehavior(1) // Repeat once
-                };
+            progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);
 
-                progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);
+            await Task.Delay(intervalMilliseconds);
+            progressBar.BeginAnimation(ProgressBar.ValueProperty, null); // Stop animation after 1 second
 
-                await Task.Delay(intervalMilliseconds);
-                progressBar.BeginAnimation(ProgressBar.ValueProperty, null); // Stop animation after 1 second
-
-                bool shouldContinue = await CheckForUpdatesAndHandleMessage();
-                if (!shouldContinue)
-                {
-                    continueLoop = false; // Set the flag to false to exit the loop
-                }
-            }
-        }
-
-        private async Task<bool> CheckForUpdatesAndHandleMessage()
-        {
             try
             {
                 using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
@@ -144,20 +126,21 @@ namespace WarehouseManagement.Views.InitialSetup
                     {
                         var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
                         string futureVersion = getFutureVersion.ToString();
-                        return CustomMessageBox("Version " + futureVersion + " has been released, do you want to update your app?", true);
+                        CustomMessageBox("Version " + futureVersion + " has been released, do you want to update your app?", true);
                     }
                     else
                     {
-                        GlobalModel.version = await getversion();
-                        new LoginWindow(await getversion()).Show();
+                        string version = "Version " + updateInfo.CurrentlyInstalledVersion.Version.ToString();
+                        GlobalModel.version = version;
+                        new LoginWindow(GlobalModel.version).Show();
                         this.Close();
-                        return false; // Don't continue the loop
+
                     }
                 }
             }
             catch
             {
-                return true; // Continue the loop
+                return;
             }
         }
         private async Task<string> getversion()
