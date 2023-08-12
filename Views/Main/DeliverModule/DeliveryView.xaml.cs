@@ -44,11 +44,14 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             deliveryTable.refresh_table();
         }
-
-        private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
+        public string generateSessionID()
         {
             var rd = new Random();
-            string session_id = DateTime.Now.ToString("MM/dd/yyyy") +"-"+rd.Next(1000).ToString();
+            string session_id = DateTime.Now.ToString("MM/dd/yyyy") + "-" + rd.Next(1000).ToString();
+        }
+        private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            
             if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Out For Pick Up"))
             {
                 return;

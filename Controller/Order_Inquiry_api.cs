@@ -166,5 +166,19 @@ namespace WarehouseManagement.Controller
             string count = sql.ReturnResult($"SELECT count(order_inquiry_id) FROM tbl_order_inquiry WHERE session_id = '{session_id}'");
             return count;
         }
+        public static string GenerateSession_id()
+        {
+            var rd = new Random();
+            string session_id = DateTime.Now.ToString("MM/dd/yyyy") + "-" + rd.Next(1000).ToString();
+            sql.Query($"SELECT count(order_inquiry_id) FROM tbl_order_inquiry WHERE session_id = '{session_id}'");
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                return session_id;
+            }
+            else
+            {
+                return GenerateSession_id();
+            }
+        }
     }
 }
