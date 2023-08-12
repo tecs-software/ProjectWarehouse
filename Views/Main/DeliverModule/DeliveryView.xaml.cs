@@ -67,6 +67,8 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             GlobalModel.session_id = cmbSessions.Text;
             deliveryTable.refresh_table();
+            lblSessionID.Text = cmbSessions.Text;
+            lbl_total_count.Text = Order_Inquiry_api.setParcelCount(cmbSessions.Text);
         }
     }
 }
