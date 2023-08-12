@@ -440,10 +440,13 @@ BEGIN
     )
 END
 
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
+IF OBJECT_ID('dbo.tbl_order_inquiry', 'U') IS NOT NULL
 BEGIN
-    ALTER TABLE [dbo].[tbl_order_inquiry]
-	ADD [session_id] [nvarchar](100) NOT NULL
+    IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = 'session_id' AND Object_ID = OBJECT_ID('dbo.tbl_order_inquiry'))
+    BEGIN
+        ALTER TABLE [dbo].[tbl_order_inquiry]
+        ADD [session_id] [nvarchar](100) NOT NULL
+    END
 END
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_suspicious_order')

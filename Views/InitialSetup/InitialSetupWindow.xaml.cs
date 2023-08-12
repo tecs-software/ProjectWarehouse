@@ -40,6 +40,7 @@ namespace WarehouseManagement.Views.InitialSetup
                 //this.Close();
                 new SplashScreen().Show();
                 this.Close();
+                ReCenter();
             }
         }
 
