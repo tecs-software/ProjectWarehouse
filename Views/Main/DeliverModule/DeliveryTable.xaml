@@ -31,7 +31,7 @@
             SelectionMode="Single"
             x:Name="tblProducts"
             ItemsSource="{Binding Items}"
-            ColumnHeaderStyle="{StaticResource HeaderStyle}" Loaded="tblProducts_Loaded">
+            ColumnHeaderStyle="{StaticResource HeaderStyle}" Loaded="tblProducts_Loaded" SelectionChanged="tblProducts_SelectionChanged">
 
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="waybillNo" Header="WAYBILL NUMBER"

@@ -11,15 +11,19 @@ using WWarehouseManagement.Database;
 using System.Windows.Controls;
 using System.Windows.Automation.Peers;
 using System.Diagnostics.Eventing.Reader;
+using static WarehouseManagement.Controller.Show_order_inquiry;
+using static WarehouseManagement.Views.Main.DeliverModule.DeliveryTable;
+using System.Data;
+using WarehouseManagement.Views.Main.DeliverModule;
 
 namespace WarehouseManagement.Controller
 {
     public class Order_Inquiry_api
     {
-        sql_control sql = new sql_control();
-        public async Task insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName, TextBox date)
+        static sql_control sql = new sql_control();
+        public async Task insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName, TextBox date, string session)
         {
-            int inquiry_count = int.Parse(sql.ReturnResult($"SELECT COUNT(waybill#) FROM tbl_order_inquiry WHERE waybill# = '"+waybill+"'"));
+            int inquiry_count = int.Parse(sql.ReturnResult($"SELECT COUNT(waybill#) FROM tbl_order_inquiry WHERE waybill# = '{waybill}' AND session_id = '{session}'"));
             if(inquiry_count > 0 )
             {
                 
@@ -36,9 +40,10 @@ namespace WarehouseManagement.Controller
                 sql.AddParam("@weight", txtWeight.Text);
                 sql.AddParam("@remarks", txtRemarks.Text);
                 sql.AddParam("@date", txtDateCreated.Text);
+                sql.AddParam("@session", session);
 
-                sql.Query($"INSERT INTO tbl_order_inquiry (waybill#, receiver_name, contact_number, address, product_name, qty, weight, remarks, date_created) " +
-                    $"VALUES (@waybill, @name, @contact, @address, @product, @qty, @weight, @remarks, @date)");
+                sql.Query($"INSERT INTO tbl_order_inquiry (waybill#, receiver_name, contact_number, address, product_name, qty, weight, remarks, date_created, session_id) " +
+                    $"VALUES (@waybill, @name, @contact, @address, @product, @qty, @weight, @remarks, @date, @session)");
                 if (sql.HasException(true)) return;
             }
         }
@@ -138,6 +143,28 @@ namespace WarehouseManagement.Controller
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
+        }
+        public static string setSession_id()
+        {
+            string session_id = sql.ReturnResult($"SELECT TOP 1(session_id) FROM tbl_order_inquiry ORDER BY order_inquiry_id DESC");
+            return session_id;
+        }
+        public static void InsertSessions(ComboBox cmbsessions)
+        {
+            sql.Query($"SELECT session_id FROM tbl_order_inquiry GROUP BY session_id");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    cmbsessions.Items.Add(dr[0].ToString());
+                }
+            }
+        }
+        public static string setParcelCount(string session_id)
+        {
+            string count = sql.ReturnResult($"SELECT count(order_inquiry_id) FROM tbl_order_inquiry WHERE session_id = '{session_id}'");
+            return count;
         }
     }
 }

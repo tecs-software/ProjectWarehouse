@@ -442,7 +442,7 @@ END
 
 IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
 BEGIN
-    ALTER TABLE [dbo].[tbl_suspicious_order]
+    ALTER TABLE [dbo].[tbl_order_inquiry]
 	ADD [session_id] [nvarchar](100) NOT NULL
 END
 

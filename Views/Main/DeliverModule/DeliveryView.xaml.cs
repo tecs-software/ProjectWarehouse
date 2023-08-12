@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarehouseManagement.Controller;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.OrderModule;
 
@@ -25,6 +26,15 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         public DeliveryView()
         {
             InitializeComponent();
+            InitializeSession_id();
+        }
+        private void InitializeSession_id()
+        {
+            cmbSessions.Text = Order_Inquiry_api.setSession_id();
+            GlobalModel.session_id = cmbSessions.Text;
+            lblSessionID.Text = cmbSessions.Text;
+            lbl_total_count.Text = Order_Inquiry_api.setParcelCount(cmbSessions.Text);
+            Order_Inquiry_api.InsertSessions(cmbSessions);
         }
         private void tbSearchProduct_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -37,15 +47,25 @@ namespace WarehouseManagement.Views.Main.DeliverModule
 
         private void btnNewDelivery_Click(object sender, RoutedEventArgs e)
         {
+            var rd = new Random();
+            string session_id = DateTime.Now.ToString("MM/dd/yyyy") +"-"+rd.Next(1000).ToString();
             if (!CurrentUser.Instance.ModuleAccessList.Contains("Modify Out For Pick Up"))
             {
                 return;
             }
 
-            OrderInquiryPopup orderInquiry = new OrderInquiryPopup();
+            OrderInquiryPopup orderInquiry = new OrderInquiryPopup(session_id);
             orderInquiry.RefreshTable += Dialog;
-            orderInquiry.Show();
+            if(orderInquiry.ShowDialog() == true)
+            {
+                InitializeSession_id();
+            }
+            deliveryTable.refresh_table();
+        }
 
+        private void cmbSellerName_DropDownClosed(object sender, EventArgs e)
+        {
+            GlobalModel.session_id = cmbSessions.Text;
             deliveryTable.refresh_table();
         }
     }

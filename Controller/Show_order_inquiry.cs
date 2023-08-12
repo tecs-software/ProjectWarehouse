@@ -5,7 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using WarehouseManagement.Models;
+using WarehouseManagement.Views.Main.DeliverModule;
 using WWarehouseManagement.Database;
+using static WarehouseManagement.Views.Main.DeliverModule.DeliveryView;
 
 namespace WarehouseManagement.Controller
 {
@@ -15,7 +18,7 @@ namespace WarehouseManagement.Controller
         static sql_control sql = new sql_control();
         public static void show_inquiry_data(DataGrid dt)
         {
-            sql.Query($"SELECT * FROM tbl_order_inquiry");
+            sql.Query($"SELECT * FROM tbl_order_inquiry WHERE session_id = '{GlobalModel.session_id}' ORDER BY order_inquiry_id DESC");
             if(sql.DBDT.Rows.Count > 0)
             {
                 List<parcel_data> parcel_details = new List<parcel_data>();

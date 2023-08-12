@@ -30,10 +30,12 @@ namespace WarehouseManagement.Views.Main.OrderModule
         db_queries queries = new db_queries();
         Order_Inquiry_api order_Inquiry = new Order_Inquiry_api();
         public event EventHandler RefreshTable;
-        public OrderInquiryPopup()
+        string _session_id;
+        public OrderInquiryPopup(string session_id)
         {
             InitializeComponent();
             txtBarcode.Focus();
+            this._session_id = session_id;
         }
         public void showTable()
         {
@@ -41,6 +43,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = true;
             Close();
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -65,7 +68,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         }
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            await order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated);
+            await order_Inquiry.insert_inquirt(txtBarcode.Text, txtReceiverName, txtContactNumber, txtAddress, txtProvince, txtCity, txtBarangay, txtDateCreated, txtRemarks, txtWeight, txtQuantity, txtProductName, txtDateCreated,_session_id);
             showTable();
             clear_input_boxes();
         }

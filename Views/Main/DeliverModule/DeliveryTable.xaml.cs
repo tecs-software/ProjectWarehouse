@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
+using WarehouseManagement.Views.Main.DeliverModule;
 
 namespace WarehouseManagement.Views.Main.DeliverModule
 {
@@ -27,9 +28,9 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             InitializeComponent();
         }
-
         private void SetColumnWidth()
         {
+            
             double screenWidth = SystemParameters.PrimaryScreenWidth;
             double screenHeight = SystemParameters.PrimaryScreenHeight;
 
@@ -74,9 +75,6 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         {
             SetColumnWidth();
         }
-
-
-
         private void tblProducts_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -87,6 +85,11 @@ namespace WarehouseManagement.Views.Main.DeliverModule
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void tblProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -12,13 +12,17 @@
 
 
     <Grid x:Name="mainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="197*"/>
+            <ColumnDefinition Width="283*"/>
+        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{StaticResource primaryColor2}">
+        <Grid Grid.Row="0" Background="{StaticResource primaryColor2}" Grid.ColumnSpan="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -46,17 +50,17 @@
                                 x:Name="tbSearchProduct"
 
                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" TextChanged="tbSearchProduct_TextChanged"/>
-                        </StackPanel>
+                    </StackPanel>
                 </Border>
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                            Margin="16,0,10,0" Width="200"
                           materialDesign:HintAssist.Hint="Session ID" FontSize="13"
                           materialDesign:HintAssist.Foreground="White"
                           BorderThickness="0"
-                          x:Name="cmbSellerName"
+                          x:Name="cmbSessions"
                           Foreground="White"
                           Height="51"
-                          Background="{StaticResource searchBarColor1}"/>
+                          Background="{StaticResource searchBarColor1}" DropDownClosed="cmbSellerName_DropDownClosed"/>
 
             </StackPanel>
 
@@ -72,7 +76,7 @@
 
         </Grid>
 
-        <Grid Grid.Row="1" Name="gridTable">
+        <Grid Grid.Row="1" Name="gridTable" Grid.ColumnSpan="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -84,11 +88,28 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="0" Grid.Row="0"  Background="{StaticResource primaryColor3}">
-                <TextBlock x:Name="lblParcelCount" Foreground="White" Grid.Column="0" Text="Parcel Count:" Margin="24,24,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Column for labels -->
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Column for values -->
+                    </Grid.ColumnDefinitions>
 
-                <!--<ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="Menu" Height="auto"/>
-                </ScrollViewer>-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!-- Row for the text blocks -->
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Foreground="White" Grid.Row="0" Grid.Column="0" Text="Session ID:" Margin="24,24,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
+                    <TextBlock x:Name="lblSessionID" Foreground="White" Grid.Row="0" Grid.Column="1" Text="08/12/2023-1000" Margin="24,24,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
+
+                    <!--<ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel x:Name="Menu" Height="auto"/>
+    </ScrollViewer>-->
+                </Grid>
+                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="0" Text="Parcel Count" Margin="100,60,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
+                <TextBlock x:Name="lbl_total_count" Foreground="White" Grid.Row="4" Grid.Column="1" Text="1000" Margin="115,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="32" />
             </StackPanel>
             <DockPanel x:Name="dockPanelTable" Grid.Column="1" Height="Auto" VerticalAlignment="Top" Grid.ColumnSpan="3">
                 <local:DeliveryTable  x:Name="deliveryTable" />
