@@ -31,6 +31,7 @@ using WWarehouseManagement.Database;
 using System.Windows.Controls.Primitives;
 using WarehouseManagement.Views.Login;
 using NuGet;
+using System.IO;
 
 namespace WarehouseManagement.Views.InitialSetup
 {
@@ -42,7 +43,8 @@ namespace WarehouseManagement.Views.InitialSetup
         public SplashScreen()
         {
             InitializeComponent();
-            StartLoopingProgressBar();
+            getSplashScreenImage();
+            checkForUpdates();
         }
         UpdateManager manager;
         void CustomMessageBox(String message, Boolean questionType)
@@ -53,8 +55,8 @@ namespace WarehouseManagement.Views.InitialSetup
 
             if (questionType)
             {
-                btnYes.Content = "Yes";
-                btnNo.Visibility = Visibility.Visible;
+                btnYes.Content = "Update";
+                btnNo.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -65,7 +67,8 @@ namespace WarehouseManagement.Views.InitialSetup
         }
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {
-            if (txtMessageDialog.Text.Contains("has been released, do you want to update your app?"))
+            startProgressBar();
+            if (txtMessageDialog.Text.Contains("has been released, update your app now!"))
             {
                 using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
                 {
@@ -75,7 +78,6 @@ namespace WarehouseManagement.Views.InitialSetup
                         await manager.UpdateApp();
                     }
                 }
-
                 MessageBox.Show("Update Successfully");
                 await ClearConnection(); // Reset Server 
                 // Restart application
@@ -98,9 +100,9 @@ namespace WarehouseManagement.Views.InitialSetup
                 await Task.Run(() => config.Save(ConfigurationSaveMode.Modified));
             }
         }
-        private async void StartLoopingProgressBar()
+        private async void startProgressBar()
         {
-            int durationInSeconds = 3;
+            int durationInSeconds = 7;
             int steps = 1;
             int intervalMilliseconds = durationInSeconds * 1000 / steps;
 
@@ -113,51 +115,88 @@ namespace WarehouseManagement.Views.InitialSetup
             };
 
             progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);
-
             await Task.Delay(intervalMilliseconds);
-            progressBar.BeginAnimation(ProgressBar.ValueProperty, null); // Stop animation after 1 second
+        }
+        private async void checkForUpdates()
+        {
+            int durationInSeconds = 2;
+            int steps = 1;
+            int intervalMilliseconds = durationInSeconds * 1000 / steps;
 
-            try
+            DoubleAnimation animation = new DoubleAnimation
             {
-                using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
-                {
-                    var updateInfo = await manager.CheckForUpdate();
-                    if (updateInfo.ReleasesToApply.Count > 0)
-                    {
-                        var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
-                        string futureVersion = getFutureVersion.ToString();
-                        CustomMessageBox("Version " + futureVersion + " has been released, do you want to update your app?", true);
-                    }
-                    else
-                    {
-                        string version = "Version " + updateInfo.CurrentlyInstalledVersion.Version.ToString();
-                        GlobalModel.version = version;
-                        new LoginWindow(GlobalModel.version).Show();
-                        this.Close();
+                From = 0,
+                To = 100,
+                Duration = TimeSpan.FromSeconds(durationInSeconds),
+                RepeatBehavior = new RepeatBehavior(1) // Repeat once
+            };
 
+            bool connected = false;
+            while (!connected)
+            {
+                try
+                {
+                    // Start the progress bar animation
+                    progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);
+
+                    using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
+                    {
+                        var updateInfo = await manager.CheckForUpdate();
+                        if (updateInfo.ReleasesToApply.Count > 0)
+                        {
+                            var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
+                            string futureVersion = getFutureVersion.ToString();
+                            CustomMessageBox("Version " + futureVersion + " has been released, update your app now!", true);
+                        }
+                        else
+                        {
+                            string version = "Version " + updateInfo.CurrentlyInstalledVersion.Version.ToString();
+                            GlobalModel.version = version;
+                            new LoginWindow(GlobalModel.version).Show();
+                            this.Close();
+                        }
+
+                        // If the code reached here, the connection was successful
+                        connected = true;
                     }
                 }
-            }
-            catch
-            {
-                return;
+                catch (Exception ex)
+                {
+                    // Handle exceptions and display an error message
+                    MessageBox.Show(ex.Message + ". Please click (OK) and it will try again to check for updates or get your application's current version.");
+
+                    // Stop the progress bar animation
+                    progressBar.BeginAnimation(ProgressBar.ValueProperty, null);
+
+                    // Delay before retrying
+                    await Task.Delay(2500); // 2.5 seconds delay between retries
+                }
             }
         }
-        private async Task<string> getversion()
+       private void getSplashScreenImage()
         {
-            try
+            string defaultImageFileName = "TecsLogo.png"; // Replace with the actual default image file name
+
+            // Construct the path to the default image file
+            string componentsDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components");
+            string defaultImagePath = System.IO.Path.Combine(componentsDirectory, defaultImageFileName);
+
+            // Check if the default image file exists
+            if (File.Exists(defaultImagePath))
             {
-                using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
-                {
-                    var updateInfo = await manager.CheckForUpdate();
-                    string version = "Version " + updateInfo.CurrentlyInstalledVersion.Version.ToString();
-                    return version;
-                }
+                // Create a BitmapImage and set it as the source of imgSplashScreen
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(defaultImagePath, UriKind.Absolute);
+                bitmapImage.EndInit();
+                imgSplashScreen.Source = bitmapImage;
             }
-            catch
+            else
             {
-                return await getversion();
+                // Default image file does not exist
+                MessageBox.Show("TECS logo not detected.");
             }
+
         }
     }
 }
