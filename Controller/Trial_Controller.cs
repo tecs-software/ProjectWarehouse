@@ -23,10 +23,37 @@ namespace WarehouseManagement.Controller
         public static bool IsTrialEnded()
         {
             int days = int.Parse(sql.ReturnResult("EXEC Sp_Trial_Validation"));
-            if (days >= 7)
-                return true;
+            if (IsSubscribed())
+            {
+                if (days >= 30)
+                    return true;
+                else
+                    return false;
+            }
             else
+            {
+                if (days >= 7)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        public static bool IsSubscribed()
+        {
+            sql.Query(@"
+                DECLARE @DataCount INT = (SELECT COUNT(*) FROM tbl_trial_key)
+                IF @DataCount = 0
+                BEGIN
+	                INSERT INTO tbl_trial_key(Product_Key) VALUES ('No')
+                END;
+            ");
+
+            string status = sql.ReturnResult("SELECT TOP 1 Product_Key FROM tbl_trial_key ");
+            if (status == "No")
                 return false;
+            else
+                return true;
         }
         public static void updateModules()
         {
