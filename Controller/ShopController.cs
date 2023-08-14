@@ -22,12 +22,16 @@ using WarehouseManagement.Database;
 using WWarehouseManagement.Database;
 using System.IO;
 using System.Security.Cryptography;
+using WarehouseManagement.Views.Main.ShopModule;
+using WarehouseManagement.Views.Main.DeliverModule;
 
 namespace WarehouseManagement.Controller
 {
     public class ShopController
     {
         sql_control sql = new sql_control();
+        public static bool exceedResult { get; set; } = false;
+
         public void populate_shops(ComboBox shop_list)
         {
             sql.Query($"SELECT sender_name FROM tbl_sender");
@@ -40,11 +44,33 @@ namespace WarehouseManagement.Controller
                 }
             }
         }
-        public void display_shop_data(DataGrid dgt_shops, ComboBox shop_list)
+        public void display_shop_data(DataGrid dgt_shops, ComboBox shop_list, bool clickedNext)
         {
-            if(shop_list.SelectedIndex == 0)
+            int result_count;
+            if (clickedNext)
             {
-                sql.Query($"SELECT * FROM tbl_orders ORDER BY created_at DESC");
+                if (!exceedResult)
+                {
+                    ShopView.offsetCount = ShopView.offsetCount + 12;
+                }
+            }
+            else
+            {
+                if (ShopView.offsetCount == 0)
+                    ShopView.offsetCount = 0;
+                else
+                {
+                    ShopView.offsetCount = ShopView.offsetCount - 12;
+                    exceedResult = false;
+                }
+
+            }
+
+            if (shop_list.SelectedIndex == 0)
+            {
+                sql.Query($"SELECT * FROM tbl_orders ORDER BY created_at DESC OFFSET {ShopView.offsetCount} ROWS FETCH NEXT 12 ROWS ONLY;");
+                result_count = sql.DBDT.Rows.Count;
+
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
@@ -66,6 +92,18 @@ namespace WarehouseManagement.Controller
                         shops.Add(shop_data);
                     }
                     dgt_shops.ItemsSource = shops;
+
+                    exceedResult = false;
+
+                    if (clickedNext)
+                    {
+                        if (result_count < 11)
+                        {
+                            exceedResult = true;
+                            return;
+                        }
+
+                    }
                 }
                 else
                 {
@@ -77,7 +115,9 @@ namespace WarehouseManagement.Controller
                 sql.AddParam("@shop_list", shop_list.Text);
                 int? shop_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_sender WHERE sender_name = @shop_list"));
 
-                sql.Query($"SELECT * FROM tbl_orders WHERE sender_id = {shop_id}");
+                sql.Query($"SELECT * FROM tbl_orders WHERE sender_id = {shop_id}  ORDER BY created_at DESC OFFSET {ShopView.offsetCount} ROWS FETCH NEXT 12 ROWS ONLY;");
+                result_count = sql.DBDT.Rows.Count;
+
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
@@ -99,6 +139,17 @@ namespace WarehouseManagement.Controller
                         shops.Add(shop_data);
                     }
                     dgt_shops.ItemsSource = shops;
+
+                    exceedResult = false;
+
+                    if (clickedNext)
+                    {
+                        if (result_count < 11)
+                        {
+                            exceedResult = true;
+                            return;
+                        }
+                    }
                 }
                 else
                 {
