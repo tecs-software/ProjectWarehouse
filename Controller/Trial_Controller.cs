@@ -12,7 +12,6 @@ namespace WarehouseManagement.Controller
     {
         static sql_control sql = new sql_control();
         public static void InsertTrialDay() {
-            sql.Query($"DELETE FROM tbl_trial WHERE[Date] BETWEEN '2023-01-01' AND '2023-07-23' ");
             sql.Query("EXEC Sp_Trial_Insertion");
         } 
         public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
@@ -24,10 +23,24 @@ namespace WarehouseManagement.Controller
         public static bool IsTrialEnded()
         {
             int days = int.Parse(sql.ReturnResult("EXEC Sp_Trial_Validation"));
-            if (days >= 14)
+            if (days >= 7)
                 return true;
             else
                 return false;
+        }
+        public static void updateModules()
+        {
+            int? count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) from tbl_module_access WHERE module_name = 'modify order inquiry'"));
+            if(count > 0)
+            {
+                sql.Query($"UPDATE tbl_module_access SET module_name = 'Modify Out For Pick Up' WHERE module_name = 'modify order inquiry'");
+                sql.Query($"UPDATE tbl_module_access SET module_name = 'View Out For Pick Up' WHERE module_name = 'view order inquiry'");
+            }
+            else
+            {
+                //do nothing
+            }
+
         }
     }
 }

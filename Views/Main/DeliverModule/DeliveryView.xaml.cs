@@ -58,10 +58,8 @@ namespace WarehouseManagement.Views.Main.DeliverModule
 
             OrderInquiryPopup orderInquiry = new OrderInquiryPopup(generateSessionID());
             orderInquiry.RefreshTable += Dialog;
-            if(orderInquiry.ShowDialog() == true)
-            {
-                InitializeSession_id();
-            }
+            orderInquiry.Show();
+            InitializeSession_id();
             deliveryTable.refresh_table();
         }
 

@@ -23,7 +23,7 @@ namespace WarehouseManagement.Controller
         static sql_control sql = new sql_control();
         public async Task insert_inquirt(string waybill, TextBox txtReceiverName, TextBox txtContactNumber, TextBox txtAddress, TextBox txtProvince, TextBox txtCity, TextBox txtBarangay, TextBox txtDateCreated, TextBox txtRemarks, TextBox txtWeight, TextBox txtQuantity, TextBox txtProductName, TextBox date, string session)
         {
-            int inquiry_count = int.Parse(sql.ReturnResult($"SELECT COUNT(waybill#) FROM tbl_order_inquiry WHERE waybill# = '{waybill}' AND session_id = '{session}'"));
+            int inquiry_count = int.Parse(sql.ReturnResult($"SELECT COUNT(waybill#) FROM tbl_order_inquiry WHERE waybill# = '{waybill}'"));
             if(inquiry_count > 0 )
             {
                 
@@ -169,7 +169,7 @@ namespace WarehouseManagement.Controller
         public static string GenerateSession_id()
         {
             var rd = new Random();
-            string session_id = DateTime.Now.ToString("MM/dd/yyyy") + "-" + rd.Next(1000).ToString();
+            string session_id = DateTime.Now.ToString("MM/dd/yyyy");
             sql.Query($"SELECT count(order_inquiry_id) FROM tbl_order_inquiry WHERE session_id = '{session_id}'");
             if(sql.DBDT.Rows.Count > 0)
             {

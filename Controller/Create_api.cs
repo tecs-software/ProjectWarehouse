@@ -34,7 +34,7 @@ namespace WarehouseManagement.Controller
         SuspiciousController suspiciouscontroller = new SuspiciousController();
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
         {
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
             {
@@ -236,7 +236,7 @@ namespace WarehouseManagement.Controller
         public void create_bulk_api(List<bulk_model> model, Button btn, bool granted, ProgressBar pb_load)
         {
             string txtCount;
-            string url = "https://test-api.jtexpress.ph/jts-phl-order-api/api/order/create";
+            string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
                     {
@@ -438,8 +438,11 @@ namespace WarehouseManagement.Controller
                                 case "S13":
                                     MessageBox.Show("VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
                                     break;
+                                case "B063":
+                                    MessageBox.Show("Province-> City-> Baranggay didnt match, kindly check these details as J&T has own addressing guide.");
+                                    break;
                                 default:
-                                    MessageBox.Show(reason + " Please contact tech team and provide this error message.");
+                                    MessageBox.Show("Please contact tech team and provide this error message. (" + reason + ").");
                                     break;
                             }
                                 

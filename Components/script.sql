@@ -445,7 +445,7 @@ BEGIN
     IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = 'session_id' AND Object_ID = OBJECT_ID('dbo.tbl_order_inquiry'))
     BEGIN
         ALTER TABLE [dbo].[tbl_order_inquiry]
-        ADD [session_id] [nvarchar](100) NOT NULL
+        ADD [session_id] [nvarchar](100) NULL
     END
 END
 
@@ -712,7 +712,7 @@ BEGIN
 	CREATE PROC Sp_Trial_Validation
     AS
     BEGIN
-	    SELECT COUNT(*) FROM tbl_trial 
+	    SELECT COUNT(*) FROM tbl_trial
     END;
 	');
 END;

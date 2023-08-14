@@ -55,12 +55,13 @@
                 <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                            Margin="16,0,10,0" Width="200"
                           materialDesign:HintAssist.Hint="Session ID" FontSize="13"
-                          materialDesign:HintAssist.Foreground="White"
+                          materialDesign:HintAssist.Foreground="black"
                           BorderThickness="0"
                           x:Name="cmbSessions"
-                          Foreground="White"
+                          Foreground="black"
                           Height="51"
-                          Background="{StaticResource searchBarColor1}" DropDownClosed="cmbSellerName_DropDownClosed"/>
+                          BorderBrush="Black"
+                          Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cmbSellerName_DropDownClosed"/>
 
             </StackPanel>
 

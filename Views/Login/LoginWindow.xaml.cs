@@ -129,11 +129,6 @@ namespace WarehouseManagement.Views.Login
         db_queries queries = new db_queries();
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (Trial_Controller.IsTrialEnded())
-            {
-                MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
-                return;
-            }
             if (!loading)
             {
                 ShowLoading();
@@ -277,7 +272,7 @@ namespace WarehouseManagement.Views.Login
         UpdateManager manager;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Trial_Controller.InsertTrialDay();
+            
             //checking for patch
             //try
             //{

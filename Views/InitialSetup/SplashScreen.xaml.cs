@@ -45,6 +45,7 @@ namespace WarehouseManagement.Views.InitialSetup
             InitializeComponent();
             getSplashScreenImage();
             checkForUpdates();
+            Trial_Controller.updateModules();
         }
         UpdateManager manager;
         void CustomMessageBox(String message, Boolean questionType)
@@ -116,9 +117,17 @@ namespace WarehouseManagement.Views.InitialSetup
 
             progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);
             await Task.Delay(intervalMilliseconds);
+
+            Trial_Controller.InsertTrialDay();
+            if (Trial_Controller.IsTrialEnded())
+            {
+                MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
+                return;
+            }
         }
         private async void checkForUpdates()
         {
+
             int durationInSeconds = 2;
             int steps = 1;
             int intervalMilliseconds = durationInSeconds * 1000 / steps;
