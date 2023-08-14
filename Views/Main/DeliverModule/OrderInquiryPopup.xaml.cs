@@ -43,7 +43,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            //this.DialogResult = true;
             Close();
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

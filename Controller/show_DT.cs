@@ -26,7 +26,7 @@ namespace WarehouseManagement.Controller
     {
         static sql_control sql = new sql_control();
         public static bool exceedResult { get; set; } = false;
-
+         
         public async Task show_orders(DataGrid dg, bool clickedNext) 
         {
             int result_count;
