@@ -705,6 +705,30 @@ BEGIN
     END
 	');
 END;
+-- StoreProc for Trial Insertion
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'Sp_Trial_Insertion')
+BEGIN
+	EXEC('
+	ALTER PROC [dbo].[Sp_Trial_Insertion]
+    AS
+    BEGIN
+		DECLARE @LastDate DATE = (SELECT TOP 1 [Date] FROM tbl_trial ORDER BY ID DESC)
+	    DECLARE @DateNow DATE = (SELECT GETDATE())
+		DECLARE @DateCount INT = (SELECT DATEDIFF(DAY, @LastDate, @DateNow) DateCount)
+	    IF @DateCount <> 0
+		BEGIN
+			DECLARE @Counter INT  = 1;
+			DECLARE @DateAppend DATE = (SELECT DATEADD(DAY, 1, @LastDate));
+			WHILE ( @Counter <= @DateCount)
+			BEGIN
+				INSERT INTO tbl_trial([Date]) VALUES (@DateAppend);
+				SET @DateAppend = (SELECT DATEADD(DAY, 1, @DateAppend));
+				SET @Counter  = @Counter  + 1
+			END
+		END
+    END
+	');
+END;
 -- StoreProc for Trial Validation
 IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'Sp_Trial_Validation')
 BEGIN

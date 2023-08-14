@@ -13,6 +13,7 @@ namespace WarehouseManagement.Controller
         static sql_control sql = new sql_control();
         public static void InsertTrialDay() {
             sql.Query("EXEC Sp_Trial_Insertion");
+            MessageBox.Show("Test");
         } 
         public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
         public static void MessagePopup()
