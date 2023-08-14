@@ -35,9 +35,6 @@ namespace WarehouseManagement.Views.InitialSetup
             InitializeComponent();
             if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
             {
-                //LoginWindow login = new LoginWindow();
-                //login.Show();
-                //this.Close();
                 new SplashScreen().Show();
                 this.Close();
                 ReCenter();

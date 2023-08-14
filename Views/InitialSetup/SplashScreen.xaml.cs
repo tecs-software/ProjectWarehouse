@@ -46,6 +46,7 @@ namespace WarehouseManagement.Views.InitialSetup
             getSplashScreenImage();
             checkForUpdates();
             Trial_Controller.updateModules();
+            Trial_Controller.InsertTrialDay();
         }
         UpdateManager manager;
         void CustomMessageBox(String message, Boolean questionType)
@@ -117,17 +118,9 @@ namespace WarehouseManagement.Views.InitialSetup
 
             progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);
             await Task.Delay(intervalMilliseconds);
-
-            Trial_Controller.InsertTrialDay();
-            if (Trial_Controller.IsTrialEnded())
-            {
-                MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
-                return;
-            }
         }
         private async void checkForUpdates()
         {
-
             int durationInSeconds = 2;
             int steps = 1;
             int intervalMilliseconds = durationInSeconds * 1000 / steps;
@@ -147,7 +140,6 @@ namespace WarehouseManagement.Views.InitialSetup
                 {
                     // Start the progress bar animation
                     progressBar.BeginAnimation(ProgressBar.ValueProperty, animation);
-
                     using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
                     {
                         var updateInfo = await manager.CheckForUpdate();
@@ -161,10 +153,11 @@ namespace WarehouseManagement.Views.InitialSetup
                         {
                             string version = "Version " + updateInfo.CurrentlyInstalledVersion.Version.ToString();
                             GlobalModel.version = version;
+                            trials();
                             new LoginWindow(GlobalModel.version).Show();
                             this.Close();
-                        }
 
+                        }
                         // If the code reached here, the connection was successful
                         connected = true;
                     }
@@ -183,7 +176,7 @@ namespace WarehouseManagement.Views.InitialSetup
             }
         }
        private void getSplashScreenImage()
-        {
+       {
             string defaultImageFileName = "TecsLogo.png"; // Replace with the actual default image file name
 
             // Construct the path to the default image file
@@ -206,6 +199,25 @@ namespace WarehouseManagement.Views.InitialSetup
                 MessageBox.Show("TECS logo not detected.");
             }
 
+       }
+        private void trials()
+        {
+            while(true)
+            {
+                if (Trial_Controller.IsTrialEnded())
+                {
+                    MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

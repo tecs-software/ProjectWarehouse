@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Height="400" Width="800">
+        Height="400" Width="800" Loaded="Window_Loaded">
 
     <Window.Resources>
         <Style x:Key="CustomProgressBarStyle" TargetType="ProgressBar">

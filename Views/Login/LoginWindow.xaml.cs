@@ -101,7 +101,6 @@ namespace WarehouseManagement.Views.Login
             }
             dialog.IsOpen = true;
         }
-
         public LoginWindow(string version)
         {
             InitializeComponent();
