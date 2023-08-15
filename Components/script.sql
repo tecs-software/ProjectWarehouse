@@ -400,6 +400,18 @@ BEGIN
         [sender_address] [varchar](50) NOT NULL,
 		)
 END
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
+BEGIN
+    IF EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.tbl_sender') AND name = 'sender_address')
+    BEGIN
+        -- Alter column 'receiver_address' to VARCHAR(255)
+        ALTER TABLE dbo.tbl_sender
+        ALTER COLUMN sender_address VARCHAR(255) NOT NULL
+		ALTER TABLE dbo.tbl_sender
+        ALTER COLUMN sender_name VARCHAR(255) NOT NULL
+
+    END
+END
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_status')
 BEGIN
