@@ -436,8 +436,18 @@ BEGIN
 	[qty] [varchar](50) NOT NULL,
 	[weight] [varchar](50) NOT NULL,
 	[remarks] [varchar](50) NOT NULL,
-    [date_created] [varchar](50) NOT NULL
+    [date_created] [varchar](50) NOT NULL,
+	[session_id] [nvarchar](100) NOT NULL
     )
+END
+
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
+BEGIN
+    IF EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.tbl_order_inquiry') AND name = 'remarks')
+    BEGIN
+        ALTER TABLE dbo.tbl_order_inquiry
+        ALTER COLUMN remarks VARCHAR(255) NOT NULL
+    END
 END
 
 IF OBJECT_ID('dbo.tbl_order_inquiry', 'U') IS NOT NULL
