@@ -156,6 +156,7 @@ namespace WarehouseManagement.Views.Login
 
                     if (queries.check_sender_info())
                     {
+                        db_queries.get_sender();
                         MainWindow main = new MainWindow();
                         main.Show();
                     }

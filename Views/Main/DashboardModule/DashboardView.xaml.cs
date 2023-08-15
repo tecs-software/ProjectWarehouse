@@ -73,7 +73,6 @@ namespace WarehouseManagement.Views.Main.DashboardModule
 
         private async void PageContent_Loaded(object sender, RoutedEventArgs e)
         {
-            queries.get_sender();
             bulk_inserts.delete_temp_table();
             if (CurrentUser.Instance.RoleName == "admin")
             {

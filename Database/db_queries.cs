@@ -124,7 +124,7 @@ namespace WarehouseManagement.Database
                 }
             }
         }
-        public void get_sender()
+        public static void get_sender()
         {
             int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {CurrentUser.Instance.userID}"));
             sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
