@@ -42,21 +42,22 @@
                     <Grid HorizontalAlignment="Center">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
-                                <TextBlock Foreground="Gray"  FontSize="14" Width="270" Margin="5,5,5,5" TextWrapping="Wrap" x:Name="txtMessageDialog" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"/>
+                                <TextBlock Foreground="Gray" FontSize="14" Width="270" Margin="5,5,5,5" TextWrapping="Wrap" x:Name="txtMessageDialog" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"/>
                             </StackPanel>
-
+                            <PasswordBox x:Name="Key" Foreground="black" FontSize="14" materialDesign:HintAssist.HelperText="Product key here...." Width="270" Margin="5,5,5,5" FontFamily="/DJ_Corp;component/Fonts/static/#Inter"></PasswordBox>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
-                                <Button x:Name="btnYes" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Width="85" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center"  Background="{StaticResource secondaryColor}" BorderBrush="{StaticResource secondaryColor}" Foreground="White" Click="btnYes_Click">
+                                <Button x:Name="btnYes" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Width="85" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center" Background="{StaticResource secondaryColor}" BorderBrush="{StaticResource secondaryColor}" Foreground="White" Click="btnYes_Click">
                                     Yes
                                 </Button>
-                                <Button  x:Name="btnNo" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"  Width="72" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center" Background="{StaticResource buttonBorder2}" BorderBrush="{StaticResource buttonBorder2}"  Foreground="White" Click="btnNo_Click">
+                                <Button x:Name="btnNo" Height="35" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Width="85" Style="{DynamicResource MaterialDesignRaisedLightButton}" Margin="4" VerticalAlignment="Center" Background="{StaticResource secondaryColor}" BorderBrush="{StaticResource secondaryColor}" Foreground="White" Click="btnNo_Click">
                                     No
                                 </Button>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
                 </materialDesign:DialogHost.DialogContent>
-          </materialDesign:DialogHost>
+            </materialDesign:DialogHost>
+
         </Grid>
     </Border>
 

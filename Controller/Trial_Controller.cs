@@ -38,7 +38,12 @@ namespace WarehouseManagement.Controller
                     return false;
             }
         }
-
+        public static void refreshSubs()
+        {
+            sql.Query($"DELETE FROM tbl_trial");
+            sql.Query($"UPDATE tbl_trial_key SET Product_Key = 'Yes' WHERE Product_Key = 'No'");
+            sql.Query($"INSERT INTO tbl_trial (date) VALUES (GETDATE())");
+        }
         public static bool IsSubscribed()
         {
             sql.Query(@"
@@ -63,11 +68,12 @@ namespace WarehouseManagement.Controller
                 sql.Query($"UPDATE tbl_module_access SET module_name = 'Modify Out For Pick Up' WHERE module_name = 'modify order inquiry'");
                 sql.Query($"UPDATE tbl_module_access SET module_name = 'View Out For Pick Up' WHERE module_name = 'view order inquiry'");
             }
-            else
+            int? count1 = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial_key"));
+            if(count1 > 1)
             {
-                //do nothing
+                sql.Query($"DELETE FROM tbl_trial_key");
+                sql.Query($"INSERT INTO tbl_trial_key(Product_Key) VALUES ('No')");
             }
-
         }
     }
 }

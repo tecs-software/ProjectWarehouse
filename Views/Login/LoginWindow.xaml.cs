@@ -96,8 +96,8 @@ namespace WarehouseManagement.Views.Login
             }
             else
             {
-                btnYes.Content = "Okay";
-                btnNo.Visibility = Visibility.Collapsed;
+                btnNo.Content = "Proceed";
+                btnYes.Visibility = Visibility.Collapsed;
             }
             dialog.IsOpen = true;
         }

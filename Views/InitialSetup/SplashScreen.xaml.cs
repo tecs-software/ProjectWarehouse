@@ -32,6 +32,7 @@ using System.Windows.Controls.Primitives;
 using WarehouseManagement.Views.Login;
 using NuGet;
 using System.IO;
+using MaterialDesignThemes.Wpf;
 
 namespace WarehouseManagement.Views.InitialSetup
 {
@@ -49,8 +50,8 @@ namespace WarehouseManagement.Views.InitialSetup
             Trial_Controller.InsertTrialDay();
         }
         UpdateManager manager;
-        void CustomMessageBox(String message, Boolean questionType)
-        {
+         void CustomMessageBox(String message, Boolean questionType)
+         {
             btnYes.Visibility = Visibility.Visible;
             btnNo.Visibility = Visibility.Visible;
             txtMessageDialog.Text = message;
@@ -62,11 +63,11 @@ namespace WarehouseManagement.Views.InitialSetup
             }
             else
             {
-                btnYes.Content = "Okay";
-                btnNo.Visibility = Visibility.Collapsed;
+                btnNo.Content = "Proceed";
+                btnYes.Visibility= Visibility.Collapsed;
             }
             dialog.IsOpen = true;
-        }
+         }
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {
             startProgressBar();
@@ -87,10 +88,26 @@ namespace WarehouseManagement.Views.InitialSetup
                 Application.Current.Shutdown();
             }
         }
-
         private async void btnNo_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (txtMessageDialog.Text.Contains("Subscription is expired. Please contact your distributor of the application."))
+            {
+                if (Key.Password == "142977")
+                {
+                    Trial_Controller.refreshSubs();
+                    new LoginWindow(GlobalModel.version).Show();
+                    this.Close();
+                }
+                else
+                {
+                    Key.Password = "";
+                    await Task.Delay(1000);
+                    if (Trial_Controller.IsTrialEnded())
+                    {
+                        CustomMessageBox("Subscription is expired. Please contact your distributor of the application.", false);
+                    }
+                }
+            }
         }
         private async Task ClearConnection()
         {
@@ -153,10 +170,15 @@ namespace WarehouseManagement.Views.InitialSetup
                         {
                             string version = "Version " + updateInfo.CurrentlyInstalledVersion.Version.ToString();
                             GlobalModel.version = version;
-                            trials();
-                            new LoginWindow(GlobalModel.version).Show();
-                            this.Close();
-
+                            if (Trial_Controller.IsTrialEnded())
+                            {
+                                CustomMessageBox("Subscription is expired. Please contact your distributor of the application.", false);
+                            }
+                            else
+                            {
+                                new LoginWindow(GlobalModel.version).Show();
+                                this.Close();
+                            }
                         }
                         // If the code reached here, the connection was successful
                         connected = true;
@@ -202,17 +224,19 @@ namespace WarehouseManagement.Views.InitialSetup
        }
         private void trials()
         {
-            while(true)
-            {
-                if (Trial_Controller.IsTrialEnded())
-                {
-                    MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
-                }
-                else
-                {
-                    break;
-                }
-            }
+            CustomMessageBox("Subscription is expired. Please contact your distributor of the application.", false);
+            //while (true)
+            //{
+            //    if (Trial_Controller.IsTrialEnded())
+            //    {
+            //        //MessageBox.Show("Subscription is expired. Please contact your distributor of the application.");
+
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
+            //}
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

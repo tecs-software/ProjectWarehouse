@@ -696,8 +696,6 @@ BEGIN
 	    DECLARE @DateNow DATE = (SELECT GETDATE())
 	    DECLARE @IsExist INT = (SELECT COUNT(*) FROM tbl_trial WHERE [Date] = @DateNow )
 		
-	
-
 	    IF @IsExist = 0
 	    BEGIN
 		    INSERT INTO tbl_trial([Date]) VALUES (@DateNow)
