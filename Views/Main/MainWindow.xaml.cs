@@ -120,7 +120,7 @@ namespace WarehouseManagement.Views.Main
 
                         break;
 
-                    case "View Order Inquiry":
+                    case "View Out For Pick Up":
 
                         btnDeliver.Visibility = Visibility.Visible;
 
@@ -264,7 +264,7 @@ namespace WarehouseManagement.Views.Main
             DBHelper db = new DBHelper();
             db.UpdateWorkHoursAndActiveUsers(CurrentUser.Instance.userID, DateTime.Now);
             CurrentUser.Instance.Clear();
-            var login = new LoginWindow();
+            var login = new LoginWindow(GlobalModel.version);
             login.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             login.Show();
 

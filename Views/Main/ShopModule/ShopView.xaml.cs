@@ -22,11 +22,14 @@ namespace WarehouseManagement.Views.Main.ShopModule
     public partial class ShopView : Page
     {
         ShopController shops = new ShopController();
+        public static int offsetCount { get; set; } = 0;
+
         public ShopView()
         {
             InitializeComponent();
             insert_shops();
             SetColumnWidth();
+            offsetCount = 0;
         }
         private void SetColumnWidth()
         {
@@ -52,7 +55,7 @@ namespace WarehouseManagement.Views.Main.ShopModule
         {
             cb_shops.SelectedIndex = 0;
             shops.populate_shops(cb_shops);
-            shops.display_shop_data(dgt_shops, cb_shops);
+            shops.display_shop_data(dgt_shops, cb_shops,false);
         }
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
@@ -61,7 +64,19 @@ namespace WarehouseManagement.Views.Main.ShopModule
 
         private void cb_shops_DropDownClosed(object sender, EventArgs e)
         {
-            shops.display_shop_data(dgt_shops, cb_shops);
+            shops.display_shop_data(dgt_shops, cb_shops, false);
+        }
+
+        private void btnPreview_Click(object sender, RoutedEventArgs e)
+        {
+            shops.display_shop_data(dgt_shops, cb_shops, false);
+
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            shops.display_shop_data(dgt_shops, cb_shops, true);
+
         }
     }
 }

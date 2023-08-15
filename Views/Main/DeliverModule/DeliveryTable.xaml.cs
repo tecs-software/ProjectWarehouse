@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
+using WarehouseManagement.Views.Main.DeliverModule;
 
 namespace WarehouseManagement.Views.Main.DeliverModule
 {
@@ -23,13 +24,14 @@ namespace WarehouseManagement.Views.Main.DeliverModule
     /// </summary>
     public partial class DeliveryTable : UserControl
     {
+        public static int offsetCount { get; set; } = 0;
         public DeliveryTable()
         {
             InitializeComponent();
         }
-
         private void SetColumnWidth()
         {
+            
             double screenWidth = SystemParameters.PrimaryScreenWidth;
             double screenHeight = SystemParameters.PrimaryScreenHeight;
 
@@ -68,25 +70,39 @@ namespace WarehouseManagement.Views.Main.DeliverModule
         }
         public void refresh_table()
         {
-            Show_order_inquiry.show_inquiry_data(tblProducts);
+
+            Show_order_inquiry.show_inquiry_data(tblProducts,false);
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             SetColumnWidth();
         }
-
-
-
         private void tblProducts_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                Show_order_inquiry.show_inquiry_data(tblProducts);
+                DeliveryTable.offsetCount = 0;
+                Show_order_inquiry.show_inquiry_data(tblProducts, false);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void tblProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private async void btnPreview_Click(object sender, RoutedEventArgs e)
+        {
+            Show_order_inquiry.show_inquiry_data(tblProducts, false);
+        }
+
+        private async void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            Show_order_inquiry.show_inquiry_data(tblProducts, true);
         }
     }
 }

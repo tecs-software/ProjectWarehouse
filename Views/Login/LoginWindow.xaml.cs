@@ -96,18 +96,18 @@ namespace WarehouseManagement.Views.Login
             }
             else
             {
-                btnYes.Content = "Okay";
-                btnNo.Visibility = Visibility.Collapsed;
+                btnNo.Content = "Proceed";
+                btnYes.Visibility = Visibility.Collapsed;
             }
             dialog.IsOpen = true;
         }
-
-        public LoginWindow()
+        public LoginWindow(string version)
         {
             InitializeComponent();
-            
+            lbl_Versions.Text = version;
             tbUsername.Focus();
             this.SizeToContent = SizeToContent.Height;
+
         }
         private async void getversion()
         {
@@ -128,11 +128,6 @@ namespace WarehouseManagement.Views.Login
         db_queries queries = new db_queries();
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (Trial_Controller.IsTrialEnded())
-            {
-                MessageBox.Show("Trial is expired. Please contact your distributor of the application.");
-                return;
-            }
             if (!loading)
             {
                 ShowLoading();
@@ -276,29 +271,29 @@ namespace WarehouseManagement.Views.Login
         UpdateManager manager;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Trial_Controller.InsertTrialDay();
+            
             //checking for patch
-            try
-            {
-                using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
-                {
-                    var updateInfo = await manager.CheckForUpdate();
-                    if (updateInfo.ReleasesToApply.Count > 0)
-                    {
-                        var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
-                        string futureVersion = getFutureVersion.ToString();
-                        CustomMessageBox(futureVersion + " New version released, you are about to update. Proceed?", true);
-                    }
-                    else
-                    {
-                        getversion();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    using (var manager = await UpdateManager.GitHubUpdateManager(@"https://github.com/bengbeng09/ProjectWarehouse"))
+            //    {
+            //        var updateInfo = await manager.CheckForUpdate();
+            //        if (updateInfo.ReleasesToApply.Count > 0)
+            //        {
+            //            var getFutureVersion = updateInfo.FutureReleaseEntry.Version;
+            //            string futureVersion = getFutureVersion.ToString();
+            //            CustomMessageBox(futureVersion + " New version released, you are about to update. Proceed?", true);
+            //        }
+            //        else
+            //        {
+            //            //getversion();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //MessageBox.Show(ex.Message);
+            //}
         }
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {

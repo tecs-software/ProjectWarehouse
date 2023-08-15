@@ -20,6 +20,7 @@ namespace WarehouseManagement.Models
 {
     public class GlobalModel
     {
+        #region sender credentials
         public static int sender_id { get; set; }
         public static string sender_name { get; set; } = string.Empty;
         public static string sender_province { get; set; } = string.Empty;
@@ -31,6 +32,13 @@ namespace WarehouseManagement.Models
         public static string key { get; set; }= string.Empty;
         public static string eccompany_id { get; set; } = string.Empty;
         public static string customer_id { get; set; } = string.Empty;
+        #endregion
 
+        #region order pick up
+        public static string session_id { get; set; } = string.Empty;
+        #endregion
+        #region get version
+        public static string version { get; set; } = string.Empty;
+        #endregion
     }
 }

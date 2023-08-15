@@ -287,25 +287,29 @@ namespace WarehouseManagement.Controller
             payloadObj.eccompanyid = GlobalModel.eccompany_id;
             payloadObj.customerid = GlobalModel.customer_id;
 
-            //updating sender information
-            
-            payloadObj.sender.phone = GlobalModel.sender_phone;
-            payloadObj.sender.mobile = GlobalModel.sender_phone;
-            payloadObj.sender.prov = GlobalModel.sender_province;
-            payloadObj.sender.city = GlobalModel.sender_city;
-            payloadObj.sender.area = GlobalModel.sender_area;
-            payloadObj.sender.address = GlobalModel.sender_address;
-            //updating receiver information
             int totalOrders = 0;
             foreach (bulk_model details in model)
             {
                 sql.AddParam("product_name", details.product_name);
                 int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @product_name"));
                 if (sql.HasException(true)) return;
-                string? sender_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {sender_id}");
+                sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
                 if (sql.HasException(true)) return;
-
-                payloadObj.sender.name = sender_name;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach(DataRow dr in sql.DBDT.Rows)
+                    {
+                        //updating sender information
+                        payloadObj.sender.phone = dr[5].ToString();
+                        payloadObj.sender.mobile = dr[5].ToString();
+                        payloadObj.sender.prov = dr[2].ToString();
+                        payloadObj.sender.city = dr[3].ToString();
+                        payloadObj.sender.area = dr[4].ToString();
+                        payloadObj.sender.address = dr[6].ToString();
+                        payloadObj.sender.name = dr[1].ToString();
+                    }
+                }
+                //updating receiver information
                 payloadObj.receiver.name = details.receiver_name;
                 payloadObj.receiver.phone = details.receiver_phone;
                 payloadObj.receiver.mobile = details.receiver_phone;
@@ -318,10 +322,10 @@ namespace WarehouseManagement.Controller
                 //updating other fields
                 payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 payloadObj.weight = details.weight;
-                payloadObj.itemsvalue = details.total;
+                payloadObj.itemsvalue = details.cod;
                 payloadObj.totalquantity = details.quantity;
                 payloadObj.remark = details.remarks;
-                
+
 
                 //updating items field
                 var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
@@ -330,7 +334,7 @@ namespace WarehouseManagement.Controller
                     var firstItem = itemsArray[0];
                     firstItem["itemname"] = details.product_name;
                     firstItem["number"] = details.quantity;
-                    firstItem["itemvalue"] = details.total;
+                    firstItem["itemvalue"] = details.parcel_value;
                 }
 
                 string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
@@ -434,8 +438,11 @@ namespace WarehouseManagement.Controller
                                 case "S13":
                                     MessageBox.Show("VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
                                     break;
+                                case "B063":
+                                    MessageBox.Show("Province-> City-> Baranggay didnt match, kindly check these details as J&T has own addressing guide.");
+                                    break;
                                 default:
-                                    MessageBox.Show(reason + " Please contact tech team and provide this error message.");
+                                    MessageBox.Show("Please contact tech team and provide this error message. (" + reason + ").");
                                     break;
                             }
                                 

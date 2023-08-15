@@ -123,7 +123,7 @@ namespace WarehouseManagement.Views.Register
                 {
                     MessageBox.Show("You have successfully registered! You may now proceed to login");
 
-                    LoginWindow login = new LoginWindow();
+                    LoginWindow login = new LoginWindow(GlobalModel.version);
                     login.Show();
                     this.Close();
                 }
@@ -150,7 +150,7 @@ namespace WarehouseManagement.Views.Register
             }
             else
             {
-                LoginWindow login = new LoginWindow();
+                LoginWindow login = new LoginWindow(GlobalModel.version);
                 login.Show();
                 this.Close();
             }

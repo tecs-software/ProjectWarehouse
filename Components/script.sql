@@ -187,8 +187,8 @@ BEGIN
         (@roleId, 'View Employee'),
         (@roleId, 'Modify Employee'),
         (@roleId, 'Modify System Settings'),
-		(@roleId, 'Modify Order Inquiry'),
-        (@roleId, 'View Order Inquiry'), 
+		(@roleId, 'Modify Out For Pick Up'),
+        (@roleId, 'View Out For Pick Up'), 
 		(@roleId, 'Modify Shop/Pages'),
         (@roleId, 'View Shop/Pages'),
         (@roleId, 'View Suspicious Order')
@@ -201,8 +201,8 @@ IF NOT EXISTS (
     FROM tbl_module_access
     WHERE role_id = 1
         AND module_name IN (
-            'Modify Order Inquiry',
-            'View Order Inquiry',
+            'Modify Out For Pick Up',
+            'View Out For Pick Up',
             'Modify Shop/Pages',
             'View Shop/Pages',
             'View Suspicious Order'
@@ -211,8 +211,8 @@ IF NOT EXISTS (
     -- Insert the missing module names for role_id = 1
     INSERT INTO tbl_module_access (role_id, module_name)
     VALUES
-        (1, 'Modify Order Inquiry'),
-        (1, 'View Order Inquiry'),
+        (1, 'Modify Out For Pick Up'),
+        (1, 'View Out For Pick Up'),
         (1, 'Modify Shop/Pages'),
         (1, 'View Shop/Pages'),
         (1, 'View Suspicious Order');
@@ -448,8 +448,27 @@ BEGIN
 	[qty] [varchar](50) NOT NULL,
 	[weight] [varchar](50) NOT NULL,
 	[remarks] [varchar](50) NOT NULL,
-    [date_created] [varchar](50) NOT NULL
+    [date_created] [varchar](50) NOT NULL,
+	[session_id] [nvarchar](100) NOT NULL
     )
+END
+
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_order_inquiry')
+BEGIN
+    IF EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.tbl_order_inquiry') AND name = 'remarks')
+    BEGIN
+        ALTER TABLE dbo.tbl_order_inquiry
+        ALTER COLUMN remarks VARCHAR(255) NOT NULL
+    END
+END
+
+IF OBJECT_ID('dbo.tbl_order_inquiry', 'U') IS NOT NULL
+BEGIN
+    IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = 'session_id' AND Object_ID = OBJECT_ID('dbo.tbl_order_inquiry'))
+    BEGIN
+        ALTER TABLE [dbo].[tbl_order_inquiry]
+        ADD [session_id] [nvarchar](100) NULL
+    END
 END
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_suspicious_order')
@@ -699,12 +718,34 @@ BEGIN
 	    DECLARE @DateNow DATE = (SELECT GETDATE())
 	    DECLARE @IsExist INT = (SELECT COUNT(*) FROM tbl_trial WHERE [Date] = @DateNow )
 		
-	
-
 	    IF @IsExist = 0
 	    BEGIN
 		    INSERT INTO tbl_trial([Date]) VALUES (@DateNow)
 	    END;
+    END
+	');
+END;
+-- StoreProc for Trial Insertion
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'Sp_Trial_Insertion')
+BEGIN
+	EXEC('
+	ALTER PROC [dbo].[Sp_Trial_Insertion]
+    AS
+    BEGIN
+		DECLARE @LastDate DATE = (SELECT TOP 1 [Date] FROM tbl_trial ORDER BY ID DESC)
+	    DECLARE @DateNow DATE = (SELECT GETDATE())
+		DECLARE @DateCount INT = (SELECT DATEDIFF(DAY, @LastDate, @DateNow) DateCount)
+	    IF @DateCount <> 0
+		BEGIN
+			DECLARE @Counter INT  = 1;
+			DECLARE @DateAppend DATE = (SELECT DATEADD(DAY, 1, @LastDate));
+			WHILE ( @Counter <= @DateCount)
+			BEGIN
+				INSERT INTO tbl_trial([Date]) VALUES (@DateAppend);
+				SET @DateAppend = (SELECT DATEADD(DAY, 1, @DateAppend));
+				SET @Counter  = @Counter  + 1
+			END
+		END
     END
 	');
 END;
@@ -715,7 +756,7 @@ BEGIN
 	CREATE PROC Sp_Trial_Validation
     AS
     BEGIN
-	    SELECT COUNT(*) FROM tbl_trial 
+	    SELECT COUNT(*) FROM tbl_trial
     END;
 	');
 END;

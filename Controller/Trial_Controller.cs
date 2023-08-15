@@ -12,7 +12,6 @@ namespace WarehouseManagement.Controller
     {
         static sql_control sql = new sql_control();
         public static void InsertTrialDay() {
-            sql.Query($"DELETE FROM tbl_trial WHERE[Date] BETWEEN '2023-01-01' AND '2023-07-23' ");
             sql.Query("EXEC Sp_Trial_Insertion");
         } 
         public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
@@ -24,10 +23,57 @@ namespace WarehouseManagement.Controller
         public static bool IsTrialEnded()
         {
             int days = int.Parse(sql.ReturnResult("EXEC Sp_Trial_Validation"));
-            if (days >= 14)
-                return true;
+            if (IsSubscribed())
+            {
+                if (days >= 30)
+                    return true;
+                else
+                    return false;
+            }
             else
+            {
+                if (days >= 7)
+                    return true;
+                else
+                    return false;
+            }
+        }
+        public static void refreshSubs()
+        {
+            sql.Query($"DELETE FROM tbl_trial");
+            sql.Query($"UPDATE tbl_trial_key SET Product_Key = 'Yes' WHERE Product_Key = 'No'");
+            sql.Query($"INSERT INTO tbl_trial (date) VALUES (GETDATE())");
+        }
+        public static bool IsSubscribed()
+        {
+            sql.Query(@"
+                DECLARE @DataCount INT = (SELECT COUNT(*) FROM tbl_trial_key)
+                IF @DataCount = 0
+                BEGIN
+	                INSERT INTO tbl_trial_key(Product_Key) VALUES ('No')
+                END;
+            ");
+
+            string status = sql.ReturnResult("SELECT TOP 1 Product_Key FROM tbl_trial_key ");
+            if (status == "No")
                 return false;
+            else
+                return true;
+        }
+        public static void updateModules()
+        {
+            int? count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) from tbl_module_access WHERE module_name = 'modify order inquiry'"));
+            if(count > 0)
+            {
+                sql.Query($"UPDATE tbl_module_access SET module_name = 'Modify Out For Pick Up' WHERE module_name = 'modify order inquiry'");
+                sql.Query($"UPDATE tbl_module_access SET module_name = 'View Out For Pick Up' WHERE module_name = 'view order inquiry'");
+            }
+            int? count1 = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial_key"));
+            if(count1 > 1)
+            {
+                sql.Query($"DELETE FROM tbl_trial_key");
+                sql.Query($"INSERT INTO tbl_trial_key(Product_Key) VALUES ('No')");
+            }
         }
     }
 }

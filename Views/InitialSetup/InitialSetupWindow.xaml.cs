@@ -33,14 +33,12 @@ namespace WarehouseManagement.Views.InitialSetup
         public InitialSetupWindow()
         {
             InitializeComponent();
+            ReCenter();
             if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
             {
-                //Loaded += Window_Loaded;
-                LoginWindow login = new LoginWindow();
-                login.Show();
+                new SplashScreen().Show();
                 this.Close();
             }
-            ReCenter();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -146,11 +144,8 @@ namespace WarehouseManagement.Views.InitialSetup
                             {
                                 connection += ";Initial Catalog=db_warehouse_management";
                                 await SaveConnection(connection);
-                                sql_control sql = new sql_control();
-                                sql.Query("INSERT INTO tbl_trial_key(Product_Key) VALUES ('N9TT-9G0A-B7FQ-RANC')");
                                 await dbInitializer.InsertSQLAuthentication("db_warehouse_management", connection);
-                                LoginWindow login = new LoginWindow();
-                                login.Show();
+                                new SplashScreen().Show();
                                 this.Close();
                             }
                         }
@@ -163,8 +158,7 @@ namespace WarehouseManagement.Views.InitialSetup
                     else
                     {
                         await SaveConnection(connection);
-                        LoginWindow login = new LoginWindow();
-                        login.Show();
+                        new SplashScreen().Show();
                         this.Close();
                     }
 
