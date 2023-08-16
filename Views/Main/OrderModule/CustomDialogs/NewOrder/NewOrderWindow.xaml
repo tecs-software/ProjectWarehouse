@@ -60,10 +60,9 @@
 
 
             </DockPanel>
-
             <Frame Grid.Row="1" x:Name="mainFrame" NavigationUIVisibility="Hidden" VerticalAlignment="Center"/>
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Margin="0,16,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>

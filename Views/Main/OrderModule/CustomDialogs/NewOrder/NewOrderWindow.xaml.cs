@@ -102,9 +102,9 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 _receiver.MiddleName = receiverInformationPage.tbMiddleName.Text;
                 _receiver.LastName = receiverInformationPage.tbLastName.Text;
                 _receiver.Phone = receiverInformationPage.tbPhone.Text;
-                _receiver.Province = receiverInformationPage.cbProvince.Text;
-                _receiver.City = receiverInformationPage.cbCity.Text;
-                _receiver.Barangay = receiverInformationPage.cbBarangay.Text;
+                _receiver.Province = receiverInformationPage.cbProvinceJnt.Text;
+                _receiver.City = receiverInformationPage.cbCityJnt.Text;
+                _receiver.Barangay = receiverInformationPage.cbBarangayJnt.Text;
                 _receiver.Address = receiverInformationPage.tbAddress.Text;
 
                 //booking frame

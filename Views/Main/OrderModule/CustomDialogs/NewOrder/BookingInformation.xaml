@@ -43,7 +43,6 @@
                       x:Name="cbItem"
                       BorderBrush="Black"
                       Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbItem_DropDownClosed"/>
-
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="2"
                      Grid.Column="1"

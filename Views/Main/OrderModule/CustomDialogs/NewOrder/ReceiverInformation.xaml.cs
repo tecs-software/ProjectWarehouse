@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
+using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 {
@@ -26,11 +27,31 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         private List<Address.Municipality>? municipalities;
         private List<Address.Barangay>? barangays;
         db_queries queries = new db_queries();
+        sql_control sql = new sql_control();
+        void CheckedRadio(string text)
+        {
+            if (text == "JNT")
+            {
+                JNTContainer.Visibility = Visibility.Visible;
+                FlashContainer.Visibility = Visibility.Collapsed;
 
+            }
+            if (text == "FLASH")
+            {
+                JNTContainer.Visibility = Visibility.Collapsed;
+                FlashContainer.Visibility = Visibility.Visible;
+            }
+        }
         public ReceiverInformation()
         {
             InitializeComponent();
             LoadAddress();
+            JNTContainer.Visibility = Visibility.Collapsed;
+            FlashContainer.Visibility = Visibility.Collapsed;
+            lblBookingInfo.Visibility = Visibility.Collapsed;
+            lblReceiverInfo.Visibility = Visibility.Visible;
+            lblBookingInfo.Visibility = Visibility.Visible;
+
         }
 
         private async void LoadAddress()
@@ -39,14 +60,14 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
             //cbProvince.ItemsSource = provinces;
             //cbProvince.DisplayMemberPath = "province_name";
-            queries.province(cbProvince);
+            queries.province(cbProvinceJnt);
 
         }
 
         private void cbProvince_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cbCity.SelectedIndex = -1;
-            cbBarangay.ItemsSource = null;
+            cbCityJnt.SelectedIndex = -1;
+            cbBarangayJnt.ItemsSource = null;
 
             //if (cbProvince.SelectedItem is Address.Province selectedProvince && municipalities != null)
             //{
@@ -58,7 +79,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void cbCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cbBarangay.SelectedIndex = -1;
+            cbBarangayJnt.SelectedIndex = -1;
 
             //if (cbCity.SelectedItem is Address.Municipality selectedMunicipality)
             //{
@@ -70,13 +91,13 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void cbProvince_DropDownClosed(object sender, EventArgs e)
         {
-            cbCity.SelectedIndex = -1;
-            queries.city(cbCity, cbProvince.Text);
+            cbCityJnt.SelectedIndex = -1;
+            queries.city(cbCityJnt, cbProvinceJnt.Text);
         }
 
         private void cbCity_DropDownClosed(object sender, EventArgs e)
         {
-            queries.baranggay(cbBarangay,cbCity.Text);
+            queries.baranggay(cbBarangayJnt, cbCityJnt.Text);
         }
 
         private void capitalize_LostFocus(object sender, RoutedEventArgs e)
@@ -111,5 +132,25 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             }
             return false;
         }
+        private void cbItem_DropDownClosed(object sender, EventArgs e)
+        {
+            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '{cbItem.Text}'");
+        }
+
+        private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
+        {
+            decimal total = Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text);
+            tbTotal.Text = Converter.StringToMoney(total.ToString());
+        }
+        private void rdbJandT_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckedRadio(rdbJandT.Content.ToString());
+        }
+
+        private void rdbFlash_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckedRadio(rdbFlash.Content.ToString());
+        }
+        
     }
 }
