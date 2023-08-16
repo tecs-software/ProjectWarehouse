@@ -54,6 +54,7 @@ namespace WarehouseManagement.Views.InitialSetup
          {
             btnYes.Visibility = Visibility.Visible;
             btnNo.Visibility = Visibility.Visible;
+            Key.Visibility = Visibility.Collapsed;
             txtMessageDialog.Text = message;
 
             if (questionType)
@@ -65,6 +66,7 @@ namespace WarehouseManagement.Views.InitialSetup
             {
                 btnNo.Content = "Proceed";
                 btnYes.Visibility= Visibility.Collapsed;
+                Key.Visibility = Visibility.Visible;
             }
             dialog.IsOpen = true;
          }
