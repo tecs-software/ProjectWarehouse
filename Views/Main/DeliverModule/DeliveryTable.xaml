@@ -15,7 +15,6 @@
             AutoGenerateColumns="False"
             HeadersVisibility="Column"
             GridLinesVisibility="All"
-            BorderBrush="#949494"
             Background="White"
             Grid.Row="0"
                ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -28,7 +27,7 @@
             CanUserReorderColumns="False"
             CanUserResizeColumns="False"
             TextBlock.TextAlignment="Left"
-            AlternatingRowBackground="#FFF3F3"
+           
             SelectionMode="Single"
             x:Name="tblProducts"
             ItemsSource="{Binding Items}"

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,27 +29,59 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         private List<Address.Barangay>? barangays;
         db_queries queries = new db_queries();
         sql_control sql = new sql_control();
+        public void insert_item()
+        {
+            if (CurrentUser.Instance.userID == 1)
+            {
+                sql.Query($"SELECT * FROM tbl_products");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        cbItem.Items.Add(dr[2]);
+                    }
+                }
+            }
+            else
+            {
+                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}"));
+                sql.Query($"SELECT * FROM tbl_products WHERE sender_id = {sender_id}");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        cbItem.Items.Add(dr[2]);
+                    }
+                }
+            }
+        }
+
         void CheckedRadio(string text)
         {
             if (text == "JNT")
             {
                 JNTContainer.Visibility = Visibility.Visible;
                 FlashContainer.Visibility = Visibility.Collapsed;
-
+                cbSizeFlash.Visibility = Visibility.Collapsed;
             }
             if (text == "FLASH")
             {
                 JNTContainer.Visibility = Visibility.Collapsed;
                 FlashContainer.Visibility = Visibility.Visible;
+                cbSizeFlash.Visibility = Visibility.Visible;
             }
         }
         public ReceiverInformation()
         {
             InitializeComponent();
             LoadAddress();
+
             JNTContainer.Visibility = Visibility.Collapsed;
             FlashContainer.Visibility = Visibility.Collapsed;
             lblBookingInfo.Visibility = Visibility.Collapsed;
+            cbSizeFlash.Visibility = Visibility.Collapsed;
             lblReceiverInfo.Visibility = Visibility.Visible;
             lblBookingInfo.Visibility = Visibility.Visible;
         }

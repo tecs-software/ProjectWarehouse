@@ -278,11 +278,23 @@
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
                      BorderBrush="Black"
-                  x:Name="tbWeight"
+                     x:Name="tbWeight"
                      IsReadOnly="False"
                      VerticalAlignment="Top"
                      Margin="20,8,10,0"
                      Focusable="True"/>
+
+                    <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="1"
+                      Grid.Row="3"
+                      VerticalAlignment="Top"
+                      Margin="8,8,20,0"
+                      materialDesign:HintAssist.Hint="Parcel/Size" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      x:Name="cbSizeFlash"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                    
                     <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="4"
                      Grid.Column="0"
