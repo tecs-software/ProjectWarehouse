@@ -65,11 +65,11 @@ namespace WarehouseManagement.Views.InitialSetup
             else
             {
                 btnNo.Content = "Proceed";
-                btnYes.Visibility= Visibility.Collapsed;
+                btnYes.Visibility = Visibility.Collapsed;
                 Key.Visibility = Visibility.Visible;
             }
             dialog.IsOpen = true;
-         }
+        }
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {
             startProgressBar();
