@@ -107,7 +107,6 @@ namespace WarehouseManagement.Views.Login
             lbl_Versions.Text = version;
             tbUsername.Focus();
             this.SizeToContent = SizeToContent.Height;
-
         }
         private async void getversion()
         {
