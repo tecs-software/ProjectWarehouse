@@ -92,7 +92,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             }
             else
             {
-                if (Util.IsAnyStringEmpty(bookingInformationPage.tbQuantity.Text, bookingInformationPage.tbGoodsValue.Text, bookingInformationPage.cbItem.Text, bookingInformationPage.tbWeight.Text))
+                if (Util.IsAnyStringEmpty(receiverInformationPage.tbQuantity.Text, receiverInformationPage.tbGoodsValue.Text, receiverInformationPage.cbItem.Text, receiverInformationPage.tbWeight.Text))
                 {
                     MessageBox.Show("Fill up required fields");
                     return;
@@ -108,12 +108,12 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 _receiver.Address = receiverInformationPage.tbAddress.Text;
 
                 //booking frame
-                booking_info.item_name = bookingInformationPage.cbItem.Text;
-                booking_info.weight = bookingInformationPage.tbWeight.Text;
-                booking_info.goods_value = bookingInformationPage.tbGoodsValue.Text;
-                booking_info.bag_specification = bookingInformationPage.tbBagSpecification.Text;
-                booking_info.remarks = bookingInformationPage.tbRemarks.Text;
-                booking_info.quantity = bookingInformationPage.tbQuantity.Text;
+                booking_info.item_name = receiverInformationPage.cbItem.Text;
+                booking_info.weight = receiverInformationPage.tbWeight.Text;
+                booking_info.goods_value = receiverInformationPage.tbGoodsValue.Text;
+                booking_info.bag_specification = receiverInformationPage.tbBagSpecification.Text;
+                booking_info.remarks = receiverInformationPage.tbRemarks.Text;
+                booking_info.quantity = receiverInformationPage.tbQuantity.Text;
 
                 btnNext.IsEnabled = false;
                 //calling the method for api ordering

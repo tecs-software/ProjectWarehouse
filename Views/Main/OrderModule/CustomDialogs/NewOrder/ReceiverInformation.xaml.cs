@@ -51,7 +51,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             lblBookingInfo.Visibility = Visibility.Collapsed;
             lblReceiverInfo.Visibility = Visibility.Visible;
             lblBookingInfo.Visibility = Visibility.Visible;
-
         }
 
         private async void LoadAddress()
