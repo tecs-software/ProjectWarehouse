@@ -69,7 +69,7 @@ namespace WarehouseManagement.Views.InitialSetup
                 Key.Visibility = Visibility.Visible;
             }
             dialog.IsOpen = true;
-         }
+        }
         private async void btnYes_Click(object sender, RoutedEventArgs e)
         {
             startProgressBar();
