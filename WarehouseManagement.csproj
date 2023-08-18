@@ -61,6 +61,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Addressing_guide_with_can_do_delivery.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Components\script.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -79,7 +82,7 @@
 		<NugetTools>$(PkgNuget_CommandLine)\tools</NugetTools>
 		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 		
-		<Version>1.2.1</Version>
+		<Version>1.2.2</Version>
 		
 		<NuspecFile>$(SolutionDir)ReleaseSpec.nuspec</NuspecFile>
 	</PropertyGroup>
