@@ -238,6 +238,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -308,6 +309,18 @@
                      VerticalAlignment="Top"
                      Margin="20,8,10,0"
                      Focusable="True"/>
+                    
+                    <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Grid.Column="1"
+                      Grid.Row="4"
+                      VerticalAlignment="Top"
+                      Margin="8,8,20,0"
+                      materialDesign:HintAssist.Hint="Order Type" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      x:Name="cbOrderType"
+                      BorderBrush="Black" Visibility="Collapsed"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                    
                     <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="1"
                       Grid.Row="3"
@@ -319,8 +332,20 @@
                       materialDesign:HintAssist.Foreground="Black"
                       BorderBrush="Black"
                       Background="{StaticResource textboxProfitAnalysisColor1}"/>
+
+                    <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" Visibility="Collapsed"
+                      Grid.Column="0"
+                      Grid.Row="6"
+                      VerticalAlignment="Top"
+                      Margin="20,8,8,0"
+                      materialDesign:HintAssist.Hint="Item Type" FontSize="15"
+                      materialDesign:HintAssist.Foreground="Black"
+                      x:Name="cbItemType"
+                      BorderBrush="Black"
+                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                    
                     <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     Grid.Row="6"
+                     Grid.Row="7"
                      Grid.ColumnSpan="2"
                      Grid.Column="0"
                     x:Name="tbRemarks"

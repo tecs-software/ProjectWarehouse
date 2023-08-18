@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Mono.Cecil.Cil;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -65,19 +67,44 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 JNTContainer.Visibility = Visibility.Visible;
                 FlashContainer.Visibility = Visibility.Collapsed;
                 cbSizeFlash.Visibility = Visibility.Collapsed;
+                cbItemType.Visibility = Visibility.Collapsed;
+                cbOrderType.Visibility = Visibility.Collapsed;
             }
             if (text == "FLASH")
             {
                 JNTContainer.Visibility = Visibility.Collapsed;
                 FlashContainer.Visibility = Visibility.Visible;
                 cbSizeFlash.Visibility = Visibility.Visible;
+                cbItemType.Visibility = Visibility.Visible;
+                cbOrderType.Visibility = Visibility.Visible;
             }
+        }
+        void LoadTypes()
+        {
+            cbOrderType.Items.Clear();
+            cbOrderType.Items.Add("Cash on Delivery (COD)");
+            cbOrderType.Items.Add("Non-Cash on Delivery (Non-COD)");
+
+            cbItemType.Items.Clear();
+            cbItemType.Items.Add("File");
+            cbItemType.Items.Add("Dry food");
+            cbItemType.Items.Add("Commodity");
+            cbItemType.Items.Add("Digital Products");
+            cbItemType.Items.Add("Clothes");
+            cbItemType.Items.Add("Books");
+            cbItemType.Items.Add("Auto parts");
+            cbItemType.Items.Add("Shoes and bags");
+            cbItemType.Items.Add("Sports equipment");
+            cbItemType.Items.Add("Cosmetics");
+            cbItemType.Items.Add("Household");
+            cbItemType.Items.Add("Fruit");
+            cbItemType.Items.Add("Others");
         }
         public ReceiverInformation()
         {
             InitializeComponent();
             LoadAddress();
-
+            LoadTypes();
             JNTContainer.Visibility = Visibility.Collapsed;
             FlashContainer.Visibility = Visibility.Collapsed;
             lblBookingInfo.Visibility = Visibility.Collapsed;
