@@ -77,19 +77,38 @@ namespace WarehouseManagement.Controller
                     List<shopData> shops = new List<shopData>();
                     foreach (DataRow dr in sql.DBDT.Rows)
                     {
-                        shopData shop_data = new shopData
+                        if (dr[5].ToString() == "")
                         {
-                            name = sql.ReturnResult($"SELECT first_name FROM tbl_users WHERE user_id = {int.Parse(dr[3].ToString())}"),
-                            shop_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {int.Parse(dr[4].ToString())}"),
-                            waybill = dr[2].ToString(),
-                            courier = dr[1].ToString(),
-                            product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
-                            //receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
-                            total_price = decimal.Parse(dr[8].ToString()),
-                            status = dr[10].ToString(),
-                            last_update = dr[12].ToString()
-                        };
-                        shops.Add(shop_data);
+                            shopData shop_data = new shopData
+                            {
+                                name = sql.ReturnResult($"SELECT first_name FROM tbl_users WHERE user_id = {int.Parse(dr[3].ToString())}"),
+                                shop_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {int.Parse(dr[4].ToString())}"),
+                                waybill = dr[2].ToString(),
+                                courier = dr[1].ToString(),
+                                product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
+                                //receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
+                                total_price = decimal.Parse(dr[8].ToString()),
+                                status = dr[10].ToString(),
+                                last_update = dr[12].ToString()
+                            };
+                            shops.Add(shop_data);
+                        }
+                        else
+                        {
+                            shopData shop_data = new shopData
+                            {
+                                name = sql.ReturnResult($"SELECT first_name FROM tbl_users WHERE user_id = {int.Parse(dr[3].ToString())}"),
+                                shop_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {int.Parse(dr[4].ToString())}"),
+                                waybill = dr[2].ToString(),
+                                courier = dr[1].ToString(),
+                                product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
+                                receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
+                                total_price = decimal.Parse(dr[8].ToString()),
+                                status = dr[10].ToString(),
+                                last_update = dr[12].ToString()
+                            };
+                            shops.Add(shop_data);
+                        }
                     }
                     dgt_shops.ItemsSource = shops;
 
@@ -124,19 +143,38 @@ namespace WarehouseManagement.Controller
                     List<shopData> shops = new List<shopData>();
                     foreach (DataRow dr in sql.DBDT.Rows)
                     {
-                        shopData shop_data = new shopData
+                        if (dr[5].ToString() == "")
                         {
-                            name = sql.ReturnResult($"SELECT first_name FROM tbl_users WHERE user_id = {int.Parse(dr[3].ToString())}"),
-                            shop_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {int.Parse(dr[4].ToString())}"),
-                            waybill = dr[2].ToString(),
-                            courier = dr[1].ToString(),
-                            product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
-                            //receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
-                            total_price = decimal.Parse(dr[8].ToString()),
-                            status = dr[10].ToString(),
-                            last_update = dr[12].ToString()
-                        };
-                        shops.Add(shop_data);
+                            shopData shop_data = new shopData
+                            {
+                                name = sql.ReturnResult($"SELECT first_name FROM tbl_users WHERE user_id = {int.Parse(dr[3].ToString())}"),
+                                shop_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {int.Parse(dr[4].ToString())}"),
+                                waybill = dr[2].ToString(),
+                                courier = dr[1].ToString(),
+                                product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
+                                //receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
+                                total_price = decimal.Parse(dr[8].ToString()),
+                                status = dr[10].ToString(),
+                                last_update = dr[12].ToString()
+                            };
+                            shops.Add(shop_data);
+                        }
+                        else
+                        {
+                            shopData shop_data = new shopData
+                            {
+                                name = sql.ReturnResult($"SELECT first_name FROM tbl_users WHERE user_id = {int.Parse(dr[3].ToString())}"),
+                                shop_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {int.Parse(dr[4].ToString())}"),
+                                waybill = dr[2].ToString(),
+                                courier = dr[1].ToString(),
+                                product = sql.ReturnResult($"SELECT item_name FROM tbl_products WHERE product_id = '{dr[6].ToString()}'"),
+                                receiver = sql.ReturnResult($"SELECT receiver_name FROM tbl_receiver WHERE receiver_id = {int.Parse(dr[5].ToString())}"),
+                                total_price = decimal.Parse(dr[8].ToString()),
+                                status = dr[10].ToString(),
+                                last_update = dr[12].ToString()
+                            };
+                            shops.Add(shop_data);
+                        }
                     }
                     dgt_shops.ItemsSource = shops;
 

@@ -60,7 +60,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         void CheckedRadio(string text)
         {
-            if (text == "JNT")
+            if (text == "J&T")
             {
                 JNTContainer.Visibility = Visibility.Visible;
                 FlashContainer.Visibility = Visibility.Collapsed;
@@ -84,6 +84,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             cbSizeFlash.Visibility = Visibility.Collapsed;
             lblReceiverInfo.Visibility = Visibility.Visible;
             lblBookingInfo.Visibility = Visibility.Visible;
+            rdbJandT.Content = "J&T";
         }
 
         private async void LoadAddress()
