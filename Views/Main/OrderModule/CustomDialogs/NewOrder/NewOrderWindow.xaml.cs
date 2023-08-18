@@ -67,72 +67,95 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             this.SizeToContent = SizeToContent.Height;
         }
         SuspiciousController controller = new SuspiciousController();
-        private async void btnNext_Click(object sender, RoutedEventArgs e)
+        public bool emptyFieldsChecker()
         {
-            if (mainFrame.Content is ReceiverInformation)
+            if (Util.IsAnyTextBoxEmpty(receiverInformationPage.tbFirstName, receiverInformationPage.tbLastName, receiverInformationPage.tbPhone, receiverInformationPage.tbAddress) || Util.IsAnyStringEmpty(receiverInformationPage.tbQuantity.Text, receiverInformationPage.tbGoodsValue.Text, receiverInformationPage.cbItem.Text, receiverInformationPage.tbWeight.Text))
             {
-                if (Util.IsAnyTextBoxEmpty(receiverInformationPage.tbFirstName, receiverInformationPage.tbLastName, receiverInformationPage.tbPhone, receiverInformationPage.tbAddress))
-                {
-                    MessageBox.Show("Fill up required fields");
-                    return;
-                }
-                else
-                {
-                    //validation for suspicious order
-                    if (controller.SuspiciousValidation(receiverInformationPage.tbFirstName,receiverInformationPage.tbLastName, receiverInformationPage.tbPhone))
-                    {
-                        CustomMessageBox("The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?", true);
-                    }
-                    else
-                    {
-                        mainFrame.Navigate(GetOrCreateBookingInformationPage());
-                    }
-                }
-               
+                return true;
             }
             else
             {
-                if (Util.IsAnyStringEmpty(receiverInformationPage.tbQuantity.Text, receiverInformationPage.tbGoodsValue.Text, receiverInformationPage.cbItem.Text, receiverInformationPage.tbWeight.Text))
+                return false;
+                //validation for suspicious order
+                //if (controller.SuspiciousValidation(receiverInformationPage.tbFirstName, receiverInformationPage.tbLastName, receiverInformationPage.tbPhone))
+                //{
+                //    CustomMessageBox("The data you will send has a matching record in TECS, and has value of RTS. Proceed with the booking?", true);
+                //}
+                //else
+                //{
+                //    mainFrame.Navigate(GetOrCreateBookingInformationPage());
+                //}
+            }
+        }
+        private async void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (receiverInformationPage.rdbJandT.IsChecked == true)
+            {
+                if(emptyFieldsChecker())
                 {
                     MessageBox.Show("Fill up required fields");
                     return;
                 }
-                //receiver frame
-                _receiver.FirstName = receiverInformationPage.tbFirstName.Text;
-                _receiver.MiddleName = receiverInformationPage.tbMiddleName.Text;
-                _receiver.LastName = receiverInformationPage.tbLastName.Text;
-                _receiver.Phone = receiverInformationPage.tbPhone.Text;
-                _receiver.Province = receiverInformationPage.cbProvinceJnt.Text;
-                _receiver.City = receiverInformationPage.cbCityJnt.Text;
-                _receiver.Barangay = receiverInformationPage.cbBarangayJnt.Text;
-                _receiver.Address = receiverInformationPage.tbAddress.Text;
-
-                //booking frame
-                booking_info.item_name = receiverInformationPage.cbItem.Text;
-                booking_info.weight = receiverInformationPage.tbWeight.Text;
-                booking_info.goods_value = receiverInformationPage.tbGoodsValue.Text;
-                booking_info.bag_specification = receiverInformationPage.tbBagSpecification.Text;
-                booking_info.remarks = receiverInformationPage.tbRemarks.Text;
-                booking_info.quantity = receiverInformationPage.tbQuantity.Text;
-
-                btnNext.IsEnabled = false;
-                //calling the method for api ordering
-                if (queries.check_quantity(booking_info, _receiver))
+                else
                 {
-                    if (await order_api.api_create(_receiver, booking_info, isSuspicious))
+                    _receiver.FirstName = receiverInformationPage.tbFirstName.Text;
+                    _receiver.MiddleName = receiverInformationPage.tbMiddleName.Text;
+                    _receiver.LastName = receiverInformationPage.tbLastName.Text;
+                    _receiver.Phone = receiverInformationPage.tbPhone.Text;
+                    _receiver.Province = receiverInformationPage.cbProvinceJnt.Text;
+                    _receiver.City = receiverInformationPage.cbCityJnt.Text;
+                    _receiver.Barangay = receiverInformationPage.cbBarangayJnt.Text;
+                    _receiver.Address = receiverInformationPage.tbAddress.Text;
+
+                    //booking frame
+                    booking_info.item_name = receiverInformationPage.cbItem.Text;
+                    booking_info.weight = receiverInformationPage.tbWeight.Text;
+                    booking_info.goods_value = receiverInformationPage.tbGoodsValue.Text;
+                    booking_info.bag_specification = receiverInformationPage.tbBagSpecification.Text;
+                    booking_info.remarks = receiverInformationPage.tbRemarks.Text;
+                    booking_info.quantity = receiverInformationPage.tbQuantity.Text;
+
+                    btnNext.IsEnabled = false;
+                    //calling the method for api ordering
+                    if (queries.check_quantity(booking_info, _receiver))
                     {
-                        btnNext.IsEnabled = true;
-                        this.DialogResult = true;
-                        this.Close();
+                        if (await order_api.api_create(_receiver, booking_info, isSuspicious))
+                        {
+                            btnNext.IsEnabled = true;
+                            this.DialogResult = true;
+                            this.Close();
+                        }
+                        else
+                        {
+                            btnNext.IsEnabled = true;
+                        }
                     }
                     else
                     {
-                        btnNext.IsEnabled = true;
+                        MessageBox.Show("Not enought stocks for the desired quantity.");
                     }
+                }
+            }
+            else
+            {
+                if (emptyFieldsChecker())
+                {
+                    MessageBox.Show("Fill up required fields");
+                    return;
                 }
                 else
                 {
-                    MessageBox.Show("Not enought stocks for the desired quantity.");
+                    //receiver details
+                    FLASHModel.receiver_name = receiverInformationPage.tbFirstName.Text;
+                    FLASHModel.receiver_phone = receiverInformationPage.tbPhone.Text;
+                    FLASHModel.receiver_province = receiverInformationPage.cbProvinceFlash.Text;
+                    FLASHModel.receiver_city = receiverInformationPage.cbCityFlash.Text;
+                    FLASHModel.receiver_barangay = receiverInformationPage.cbBarangayFlash.Text;
+                    FLASHModel.postal_code = receiverInformationPage.cbPostalCodeFlash.Text;
+                    FLASHModel.receiver_address = receiverInformationPage.tbAddress.Text;
+
+                    //parcel details
+                    
                 }
             }
         }

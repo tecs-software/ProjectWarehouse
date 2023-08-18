@@ -28,6 +28,7 @@ namespace WarehouseManagement.Models
         public static string sender_area { get; set; } = string.Empty;
         public static string sender_phone { get; set; } = string.Empty;
         public static string sender_address { get; set; } = string.Empty;
+        public static string sender_postal { get; set; } = string.Empty;
 
         public static string key { get; set; }= string.Empty;
         public static string eccompany_id { get; set; } = string.Empty;

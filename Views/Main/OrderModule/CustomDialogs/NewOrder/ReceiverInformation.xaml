@@ -31,7 +31,7 @@
             <materialDesign:Card Grid.Row="1" Grid.Column="0" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="50" materialDesign:ShadowAssist.ShadowEdges="All"
                          Margin="8,0,0,8">
                 <StackPanel Margin="5" Orientation="Horizontal">
-                    <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked" />
+                    <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked" />
                     <RadioButton Margin="8,0,0,0" x:Name="rdbFlash" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlash_Checked" />
                 </StackPanel>
             </materialDesign:Card>
