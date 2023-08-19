@@ -30,6 +30,19 @@ namespace WarehouseManagement.Views.Onboarding
         BackgroundWorker workerImportAddress;
         public DataTable JNTAddress { get; set; }
         public DataTable FlashAddress { get; set; }
+        void CheckedRadio(string text)
+        {
+            if (text == "J&T")
+            {
+                ContainerFlash.Visibility = Visibility.Collapsed;
+                ContainerJnt.Visibility = Visibility.Visible;
+            }
+            if (text == "FLASH")
+            {
+                ContainerFlash.Visibility = Visibility.Visible;
+                ContainerJnt.Visibility = Visibility.Collapsed;
+            }
+        }
         public OnboardingSetup()
         {
             InitializeComponent();
@@ -54,7 +67,7 @@ namespace WarehouseManagement.Views.Onboarding
             List<String> couriers = new List<String>();
             couriers.Add("JNT");
             couriers.Add("Flash");
-            cmbCourier.ItemsSource = couriers;
+            //cmbCourier.ItemsSource = couriers;
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -86,23 +99,23 @@ namespace WarehouseManagement.Views.Onboarding
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             
-            if(Util.IsAnyTextBoxEmpty(txtAddress,txtPagename,txtPhone) || Util.IsAnyComboBoxItemEmpty(cmbProvince) || Util.IsAnyComboBoxItemEmpty(cmbCity) || Util.IsAnyComboBoxItemEmpty(cmbBarangay))
+            if(Util.IsAnyTextBoxEmpty(txtAddress,txtPagename,txtPhone) || Util.IsAnyComboBoxItemEmpty(cmbProvinceJnt) || Util.IsAnyComboBoxItemEmpty(cmbCityJnt) || Util.IsAnyComboBoxItemEmpty(cmbBarangayJnt))
             {
                 MessageBox.Show("Please complete all required fields on sender information.");
                 return;
             }
             else
             {
-                if (Util.IsAnyTextBoxEmpty(txtCustomerID, txtEccompanyId) || Util.IsAnyComboBoxItemEmpty(cmbCourier))
+                if (Util.IsAnyTextBoxEmpty(txtCustomerID, txtEccompanyId) /*|| Util.IsAnyComboBoxItemEmpty(cmbCourier)*/)
                 {
                     MessageBox.Show("Please complete all required fields on customer information.");
                     return;
                 }
                 else
                 {
-                    if (queries.insert_sender("0", txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                    if (queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceJnt, cmbCityJnt, cmbBarangayJnt, txtAddress))
                     {
-                        queries.api_credentials(cmbCourier, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId, txtCustomerID);
+                        queries.api_credentials(rdbFlashCustomer, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId, txtCustomerID);
                         MessageBox.Show("Information Setup completed");
                         MainWindow main = new MainWindow();
                         main.Show();
@@ -117,18 +130,18 @@ namespace WarehouseManagement.Views.Onboarding
         }
         private void cmbProvince_DropDownClosed(object sender, EventArgs e)
         {
-            cmbCity.SelectedIndex = -1;
-            cmbBarangay.ItemsSource = null;
+            cmbCityJnt.SelectedIndex = -1;
+            cmbBarangayJnt.ItemsSource = null;
 
-            queries.city(cmbCity, cmbProvince.Text);
+            queries.city(cmbCityJnt, cmbProvinceJnt.Text);
         }
 
         private void cmbCity_DropDownClosed(object sender, EventArgs e)
         {
-            cmbBarangay.SelectedIndex = -1;
-            cmbBarangay.ItemsSource = null;
+            cmbBarangayJnt.SelectedIndex = -1;
+            cmbBarangayJnt.ItemsSource = null;
 
-            queries.baranggay(cmbBarangay, cmbCity.Text);
+            queries.baranggay(cmbBarangayJnt, cmbCityJnt.Text);
         }
 
         private void WorkerImportRegion_DoWork(object sender, DoWorkEventArgs e)
@@ -140,7 +153,7 @@ namespace WarehouseManagement.Views.Onboarding
             MessageBox.Show("Import address successfully", "Success");
             btnImportAddress.IsEnabled = true;
             Csv_Controller.ConfirmedToImport = true;
-            queries.province(cmbProvince);
+            queries.province(cmbProvinceJnt);
         }
         private void btnBrowseAddress_Click(object sender, RoutedEventArgs e)
         {
@@ -196,6 +209,15 @@ namespace WarehouseManagement.Views.Onboarding
         private void txtPhone_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputValidation.Integer(sender, e);
+        }
+        private void rdbJandT_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckedRadio(rdbJandT.Content.ToString());
+        }
+
+        private void rdbFlash_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckedRadio(rdbFlash.Content.ToString());
         }
     }
 }
