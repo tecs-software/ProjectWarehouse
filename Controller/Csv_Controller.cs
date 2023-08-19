@@ -21,6 +21,9 @@ namespace WarehouseManagement.Controller
     {
         static sql_control sql = new sql_control();
         public static DataTable dataTablebulkOrder { get; set; }
+        public static DataTable dataTableJntAddress { get; set; }
+        public static DataTable dataTableFlashAddress { get; set; }
+
         public static Boolean ConfirmedToImport { get; set; }
         public static DataTable dataTableBulkOrders { get; set; }
 
@@ -122,8 +125,10 @@ namespace WarehouseManagement.Controller
         public static void ImportAddress(TextBlock txtCount, ProgressBar pbLoad)
         {
             sql.Query("EXEC SpAddress_Truncate");
+            sql.Query("TRUNCATE TABLE tbl_flashAddressing;");
+
             int totalImported = 0;
-            foreach (DataRow dr in dataTablebulkOrder.Rows)
+            foreach (DataRow dr in dataTableJntAddress.Rows)
             {
                 sql.AddParam("@province", dr[0].ToString());
                 sql.AddParam("@city", dr[1].ToString());
@@ -131,6 +136,21 @@ namespace WarehouseManagement.Controller
                 sql.AddParam("@canDeliver", dr[3].ToString());
 
                 sql.Query($"EXEC SpAddress_Import @province, @city, @areaName, @canDeliver ");
+                if (sql.HasException(true)) return;
+
+                totalImported++;
+                //txtCount.Text = totalImported.ToString();
+                txtCount.Dispatcher.Invoke(DispatcherPriority.Normal,
+                new System.Action(() => { txtCount.Text = totalImported.ToString(); pbLoad.Value = totalImported; }));
+            }
+            foreach (DataRow dr in dataTableFlashAddress.Rows)
+            {
+                sql.AddParam("@barangay", dr[0].ToString());
+                sql.AddParam("@city", dr[1].ToString());
+                sql.AddParam("@province", dr[2].ToString());
+                sql.AddParam("@postalCode", dr[3].ToString());
+
+                sql.Query($"INSERT INTO tbl_flashAddressing(Province,City,Barangay,PostalCode) VALUES (@province, @city, @barangay, @postalCode)");
                 if (sql.HasException(true)) return;
 
                 totalImported++;

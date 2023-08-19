@@ -61,6 +61,9 @@
                                         <TextBox HorizontalAlignment="Left" Margin="24,8,24,0" x:Name="txtFileNameProduct" materialDesign:HintAssist.Hint="File Name" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center" Width="600"
                                                              SelectionBrush="#FF1D2118"/>
+                                        <TextBox Visibility="Collapsed" HorizontalAlignment="Left" Margin="24,8,24,0" x:Name="txtAddressFlash" materialDesign:HintAssist.Hint="File Name" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center" Width="600"
+                                                             SelectionBrush="#FF1D2118"/>
                                         <Button Visibility="Hidden" FontSize="16" x:Name="btnBrowseAddress" Content="Browse" Style="{StaticResource MaterialDesignRaisedLightButton}" MinWidth="50"
                                                             Foreground="#000000" Height="45" HorizontalAlignment="Right"
                                                             Margin="24,8,24,0" Background="White" FontWeight="Light"  Width="250"

@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder"
       mc:Ignorable="d" 
       Background="White"
+      
       Height="500"
       Title="ReceiverInformation">
     <ScrollViewer  VerticalScrollBarVisibility="Auto">
@@ -56,66 +57,40 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     Grid.Row="1"
-                     Grid.Column="0"
-                     materialDesign:HintAssist.Hint="Fist Name" 
-                     FontSize="15"
-                     Background="{StaticResource textboxProfitAnalysisColor1}"
-                     materialDesign:HintAssist.Foreground="Black"
-                     BorderBrush="Black"
-                     IsReadOnly="False"
-                     LostFocus="capitalize_LostFocus"
-                     x:Name="tbFirstName"
-                     VerticalAlignment="Top"
-                     Margin="20,0,10,0"
-                     
-                     Focusable="True"/>
-                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     Grid.Row="1"
-                     LostFocus="capitalize_LostFocus"
-                     Grid.Column="1"
-                     materialDesign:HintAssist.Hint="Middle Name (Optional)" 
-                     FontSize="15"
-                     Background="{StaticResource textboxProfitAnalysisColor1}"
-                     materialDesign:HintAssist.Foreground="Black"
-                     BorderBrush="Black"
-                     IsReadOnly="False"
-                     x:Name="tbMiddleName"
-                     VerticalAlignment="Top"
-                     Margin="10,0,10,0"
-                     Focusable="True"/>
-                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     Grid.Row="1"
-                     Grid.Column="2"
-                     materialDesign:HintAssist.Hint="Last Name" 
-                     FontSize="15"
-                     LostFocus="capitalize_LostFocus"
-                  x:Name="tbLastName"
-                     Background="{StaticResource textboxProfitAnalysisColor1}"
-                     materialDesign:HintAssist.Foreground="Black"
-                     BorderBrush="Black"
-                     IsReadOnly="False"
-                     VerticalAlignment="Top"
-                     Margin="10,0,20,0"
-                     Focusable="True"/>
-                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     Grid.Row="0"
-                     Grid.Column="0"
-                     MaxLength="11"
-                     materialDesign:HintAssist.Hint="Phone (e.g., 09xxxxxxxxx)" 
-                     FontSize="15"
-                     x:Name="tbPhone"
-                     PreviewTextInput="TextBox_PreviewTextInput"
-                     VerticalAlignment="Top"
-                     Margin="20,16,10,18"
-                     Background="{StaticResource textboxProfitAnalysisColor1}"
-                     materialDesign:HintAssist.Foreground="Black"
-                     BorderBrush="Black"
-                     IsReadOnly="False"
-                     Focusable="True"/>
-
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         materialDesign:HintAssist.Hint="Full Name" 
+                         FontSize="15"
+                         Background="{StaticResource textboxProfitAnalysisColor1}"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="False"
+                         LostFocus="capitalize_LostFocus"
+                         x:Name="tbFullName"
+                         VerticalAlignment="Top"
+                         Margin="20,16,10,16"
+                         Focusable="True"/>
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Column="1"
+                         MaxLength="11"
+                         materialDesign:HintAssist.Hint="Phone (e.g., 09xxxxxxxxx)" 
+                         FontSize="15"
+                         x:Name="tbPhone"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         VerticalAlignment="Top"
+                          Margin="0,16,20,16"
+                         Background="{StaticResource textboxProfitAnalysisColor1}"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="False"
+                         Focusable="True"/>
+                    </Grid>
                     <Grid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" x:Name="JNTContainer">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -125,6 +100,7 @@
 
                         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="0"
+                      IsEditable="True"
                       VerticalAlignment="Top"
                       Margin="20,8,10,0"
                       x:Name="cbProvinceJnt"
@@ -136,6 +112,7 @@
 
                         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="1"
+                      IsEditable="True"
                       x:Name="cbCityJnt"
                       SelectionChanged="cbCity_SelectionChanged"
                        VerticalAlignment="Top"
@@ -149,6 +126,7 @@
                     Grid.Column="2"
                     x:Name="cbBarangayJnt"
                     VerticalAlignment="Top"
+                    IsEditable="True"
                     Margin="10,8,20,0"
                     materialDesign:HintAssist.Hint="Barangay" FontSize="15" Width="Auto"
                     materialDesign:HintAssist.Foreground="Black"
@@ -168,6 +146,7 @@
                       Grid.Column="0"
                       VerticalAlignment="Top"
                       Margin="20,8,10,0"
+                      IsEditable="True"
                       x:Name="cbProvinceFlash"
                       SelectionChanged="cbProvince_SelectionChanged"
                       materialDesign:HintAssist.Hint="Province" FontSize="15"
@@ -177,6 +156,7 @@
 
                         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="1"
+                      IsEditable="True"
                       x:Name="cbCityFlash"
                       SelectionChanged="cbCity_SelectionChanged"
                        VerticalAlignment="Top"
@@ -191,12 +171,14 @@
                     x:Name="cbBarangayFlash"
                     VerticalAlignment="Top"
                     Margin="0,8,10,0"
+                    IsEditable="True"
                     materialDesign:HintAssist.Hint="Barangay" FontSize="15" Width="Auto"
                     materialDesign:HintAssist.Foreground="Black"
                     BorderBrush="Black"
                     Background="{StaticResource textboxProfitAnalysisColor1}"/>
                         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                     Grid.Column="3"
+                    IsEditable="True"
                     x:Name="cbPostalCodeFlash"
                     VerticalAlignment="Top"
                     Margin="0,8,20,0"
@@ -208,6 +190,7 @@
                     <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     Grid.Row="6"
                     x:Name="tbAddress"
+                    
                     Grid.ColumnSpan="3"
                     Margin="20,10,20,20"
                     LostFocus="capitalize_LostFocus"
@@ -250,6 +233,7 @@
                       Grid.Row="2"
                       VerticalAlignment="Top"
                       Margin="20,16,10,0"
+                      IsEditable="True"
                       materialDesign:HintAssist.Hint="Item Name" FontSize="15"
                       materialDesign:HintAssist.Foreground="Black"
                       x:Name="cbItem"
@@ -305,7 +289,7 @@
                      materialDesign:HintAssist.Foreground="Black"
                      x:Name="tbGoodsValue"
                      BorderBrush="Black"
-                     IsReadOnly="True"
+                     IsReadOnly="False"
                      VerticalAlignment="Top"
                      Margin="20,8,10,0"
                      Focusable="True"/>

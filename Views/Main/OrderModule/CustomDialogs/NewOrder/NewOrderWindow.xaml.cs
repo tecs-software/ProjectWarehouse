@@ -69,7 +69,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         SuspiciousController controller = new SuspiciousController();
         public bool emptyFieldsChecker()
         {
-            if (Util.IsAnyTextBoxEmpty(receiverInformationPage.tbFirstName, receiverInformationPage.tbLastName, receiverInformationPage.tbPhone, receiverInformationPage.tbAddress) || Util.IsAnyStringEmpty(receiverInformationPage.tbQuantity.Text, receiverInformationPage.tbGoodsValue.Text, receiverInformationPage.cbItem.Text, receiverInformationPage.tbWeight.Text))
+            if (Util.IsAnyTextBoxEmpty(receiverInformationPage.tbFullName, receiverInformationPage.tbPhone, receiverInformationPage.tbAddress) || Util.IsAnyStringEmpty(receiverInformationPage.tbQuantity.Text, receiverInformationPage.tbGoodsValue.Text, receiverInformationPage.cbItem.Text, receiverInformationPage.tbWeight.Text))
             {
                 return true;
             }
@@ -98,9 +98,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 }
                 else
                 {
-                    _receiver.FirstName = receiverInformationPage.tbFirstName.Text;
-                    _receiver.MiddleName = receiverInformationPage.tbMiddleName.Text;
-                    _receiver.LastName = receiverInformationPage.tbLastName.Text;
+                    _receiver.FirstName = receiverInformationPage.tbFullName.Text;
                     _receiver.Phone = receiverInformationPage.tbPhone.Text;
                     _receiver.Province = receiverInformationPage.cbProvinceJnt.Text;
                     _receiver.City = receiverInformationPage.cbCityJnt.Text;
@@ -146,7 +144,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 else
                 {
                     //receiver details
-                    FLASHModel.receiver_name = receiverInformationPage.tbFirstName.Text;
+                    FLASHModel.receiver_name = receiverInformationPage.tbFullName.Text;
                     FLASHModel.receiver_phone = receiverInformationPage.tbPhone.Text;
                     FLASHModel.receiver_province = receiverInformationPage.cbProvinceFlash.Text;
                     FLASHModel.receiver_city = receiverInformationPage.cbCityFlash.Text;

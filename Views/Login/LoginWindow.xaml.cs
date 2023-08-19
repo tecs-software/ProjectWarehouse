@@ -153,7 +153,7 @@ namespace WarehouseManagement.Views.Login
                 if (await db.AuthenticateUser(username, password))
                 {
 
-                    if (queries.check_sender_info())
+                    if (queries.checkAddress())
                     {
                         db_queries.get_sender();
                         MainWindow main = new MainWindow();

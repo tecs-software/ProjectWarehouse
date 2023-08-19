@@ -33,6 +33,18 @@ BEGIN
    )
 END
 GO
+-- Create tbl_flashAddressing table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_flashAddressing')
+BEGIN
+   CREATE TABLE tbl_flashAddressing (
+		ID INT PRIMARY KEY IDENTITY(1,1),
+		Province NVARCHAR(255),
+		City NVARCHAR(255),
+		Barangay NVARCHAR(255),
+		PostalCode NVARCHAR(255),
+	)
+END
+GO
 -- Create tbl_bulk_order_temp table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_bulk_order_temp')
 BEGIN

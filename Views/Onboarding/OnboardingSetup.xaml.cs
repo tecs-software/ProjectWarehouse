@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,23 +28,32 @@ namespace WarehouseManagement.Views.Onboarding
     public partial class OnboardingSetup : Window
     {
         BackgroundWorker workerImportAddress;
+        public DataTable JNTAddress { get; set; }
+        public DataTable FlashAddress { get; set; }
         public OnboardingSetup()
         {
             InitializeComponent();
             load_couriers();
-            txtFileNameProduct.Text = "Addressing_guide_with_can_do_delivery.csv";
-            Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
-            int numberofitems = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text).Rows.Count;
+            txtFileNameProduct.Text = "Addressing_guide_with_can_do_delivery.csv";  //JNT ADDRESS
+            txtAddressFlash.Text = "Flash_Addressing_Guide.csv";  //Flash ADDRESS
+
+            JNTAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
+            FlashAddress = Csv_Controller.GetDataTableFromCSVFile(txtAddressFlash.Text);
+
+            int numberofitems = JNTAddress.Rows.Count + FlashAddress.Rows.Count;
             pbBarProduct.Maximum = numberofitems > 0 ? numberofitems : 100;
             lblTotalNumberOfItems.Text = numberofitems.ToString();
-            Csv_Controller.dataTablebulkOrder = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
+
+            Csv_Controller.dataTableJntAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
+            Csv_Controller.dataTableFlashAddress = Csv_Controller.GetDataTableFromCSVFile(txtAddressFlash.Text);
+
         }
         db_queries queries = new db_queries();
         private void load_couriers()
         {
             List<String> couriers = new List<String>();
-            couriers.Add("J&T");
-
+            couriers.Add("JNT");
+            couriers.Add("Flash");
             cmbCourier.ItemsSource = couriers;
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)

@@ -357,9 +357,9 @@ namespace WarehouseManagement.Database
             net_profit.Content = total_sales - total_expenses;
 
         }
-        public bool check_sender_info()
+        public bool checkAddress()
         {
-            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_flashAddressing"));
             if(count > 0)
             {
                 return true;
