@@ -69,6 +69,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbSizeFlash.Visibility = Visibility.Collapsed;
                 cbItemType.Visibility = Visibility.Collapsed;
                 cbOrderType.Visibility = Visibility.Collapsed;
+                queries.province(cbProvinceJnt);
             }
             if (text == "FLASH")
             {
@@ -77,6 +78,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbSizeFlash.Visibility = Visibility.Visible;
                 cbItemType.Visibility = Visibility.Visible;
                 cbOrderType.Visibility = Visibility.Visible;
+                queries.FlashProvince(cbProvinceFlash);
             }
         }
         void LoadTypes()
@@ -103,7 +105,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         public ReceiverInformation()
         {
             InitializeComponent();
-            LoadAddress();
             LoadTypes();
             JNTContainer.Visibility = Visibility.Collapsed;
             FlashContainer.Visibility = Visibility.Collapsed;
@@ -111,19 +112,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             cbSizeFlash.Visibility = Visibility.Collapsed;
             lblReceiverInfo.Visibility = Visibility.Visible;
             lblBookingInfo.Visibility = Visibility.Visible;
-            rdbJandT.Content = "J&T";
         }
-
-        private async void LoadAddress()
-        {
-            //(provinces, municipalities, barangays) = await Util.LoadAddressData();
-
-            //cbProvince.ItemsSource = provinces;
-            //cbProvince.DisplayMemberPath = "province_name";
-            queries.province(cbProvinceJnt);
-
-        }
-
         private void cbProvince_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cbCityJnt.SelectedIndex = -1;
@@ -194,7 +183,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         private void cbItem_DropDownClosed(object sender, EventArgs e)
         {
-            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '{cbItem.Text}'");
+            sql.AddParam("@item", cbItem.Text);
+            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = @item");
         }
 
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
@@ -211,6 +201,37 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         {
             CheckedRadio(rdbFlash.Content.ToString());
         }
-        
+
+        private void cbProvinceFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            cbCityFlash.SelectedIndex = -1;
+            queries.FlashCity(cbCityFlash, cbProvinceFlash.Text);
+        }
+
+        private void cbProvinceFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cbCityFlash.SelectedIndex = -1;
+            cbBarangayFlash.ItemsSource = null;
+        }
+
+        private void cbCityFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            queries.FlashBaranggay(cbBarangayFlash, cbCityFlash.Text);
+        }
+
+        private void cbCityFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cbBarangayFlash.SelectedIndex = -1;
+        }
+
+        private void cbBarangayFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            queries.FlashPostalCode(cbPostalCodeFlash, cbBarangayFlash.Text);
+        }
+
+        private void cbBarangayFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cbPostalCodeFlash.SelectedIndex = -1;
+        }
     }
 }

@@ -221,6 +221,7 @@ namespace WarehouseManagement.Database
                 }
             }
         }
+        #region J&T addressing
         public void province(ComboBox cb)
         {
             sql.Query($"SELECT distinct province FROM tbl_address_delivery WHERE province != '' ORDER BY province ASC");
@@ -236,10 +237,10 @@ namespace WarehouseManagement.Database
                 cb.ItemsSource = provinces;
             }
         }
-        public void city(ComboBox cb, string province)
+        public async void city(ComboBox cb, string province)
         {
             cb.Items.Clear();
-            sql.Query($"SELECT distinct city FROM tbl_address_delivery WHERE province = '"+province+ "' AND CanDeliver = '1' ORDER BY city ASC");
+            sql.Query($"SELECT distinct city FROM tbl_address_delivery WHERE province = '{province}' AND CanDeliver = '1' ORDER BY city ASC");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -252,7 +253,7 @@ namespace WarehouseManagement.Database
         public void baranggay(ComboBox cb, string city)
         {
             cb.Items.Clear();
-            sql.Query($"SELECT distinct AreaName FROM tbl_address_delivery WHERE city = '" + city + "' ORDER BY AreaName ASC");
+            sql.Query($"SELECT distinct AreaName FROM tbl_address_delivery WHERE city = '{city}' ORDER BY AreaName ASC");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -263,6 +264,66 @@ namespace WarehouseManagement.Database
 
             }
         }
+        #endregion
+
+        #region FlashAddress
+        public void FlashProvince(ComboBox cb)
+        {
+            sql.Query($"SELECT distinct province FROM tbl_flashAddressing ORDER BY Province ASC");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                List<string> provinces = new List<string>();
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    provinces.Add(dr[0].ToString());
+                }
+
+                cb.ItemsSource = provinces;
+            }
+        }
+        public void FlashCity(ComboBox cb, string province)
+        {
+            cb.Items.Clear();
+            sql.Query($"SELECT distinct City FROM tbl_flashAddressing WHERE Province = '{province}' ORDER BY City ASC");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    cb.Items.Add(dr[0].ToString());
+                }
+            }
+        }
+        public void FlashBaranggay(ComboBox cb, string city)
+        {
+            cb.Items.Clear();
+            sql.Query($"SELECT distinct Barangay FROM tbl_flashAddressing WHERE city = '{city}' ORDER BY Barangay ASC");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    cb.Items.Add(dr[0].ToString());
+                }
+
+            }
+        }
+        public void FlashPostalCode(ComboBox cb, string barangay)
+        {
+            cb.Items.Clear();
+            sql.Query($"SELECT distinct PostalCode FROM tbl_flashAddressing WHERE Barangay = '{barangay}' ORDER BY PostalCode ASC");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                foreach (DataRow dr in sql.DBDT.Rows)
+                {
+                    cb.Items.Add(dr[0].ToString());
+                }
+
+            }
+        }
+        #endregion
         public bool ValidateSenderName(string name, int id)
         {
             sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = '{name}' ");

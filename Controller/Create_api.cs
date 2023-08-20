@@ -452,7 +452,11 @@ namespace WarehouseManagement.Controller
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s order might pushed, kindly check your VIP dashboard. " + ex.Message);
+                    string errorMessage = "J&T error occurred: " + details.receiver_name + "'s order might pushed, kindly check your VIP dashboard. " + ex.Message;
+                    string stackTrace = ex.StackTrace;
+                    string[] stackTraceLines = stackTrace.Split('\n');
+                    string firstStackTraceLine = stackTraceLines.Length > 0 ? stackTraceLines[0] : "Unknown";
+                    errorMessage += "\n\nException occurred at: " + firstStackTraceLine;
                     BulkOrderPopup.NoError = false;
                 }
                 totalOrders++;

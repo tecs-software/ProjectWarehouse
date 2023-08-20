@@ -148,23 +148,23 @@
                       Margin="20,8,10,0"
                       IsEditable="True"
                       x:Name="cbProvinceFlash"
-                      SelectionChanged="cbProvince_SelectionChanged"
+                      SelectionChanged="cbProvinceFlash_SelectionChanged"
                       materialDesign:HintAssist.Hint="Province" FontSize="15"
                       materialDesign:HintAssist.Foreground="Black"
                       BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbProvince_DropDownClosed"/>
+                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbProvinceFlash_DropDownClosed"/>
 
                         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="1"
                       IsEditable="True"
                       x:Name="cbCityFlash"
-                      SelectionChanged="cbCity_SelectionChanged"
+                      SelectionChanged="cbCityFlash_SelectionChanged"
                        VerticalAlignment="Top"
                       Margin="0,8,10,0"
                       materialDesign:HintAssist.Hint="City" FontSize="15" Width="Auto"
                       materialDesign:HintAssist.Foreground="Black"
                       BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbCity_DropDownClosed"/>
+                      Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbCityFlash_DropDownClosed"/>
 
                         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                     Grid.Column="2"
@@ -175,7 +175,7 @@
                     materialDesign:HintAssist.Hint="Barangay" FontSize="15" Width="Auto"
                     materialDesign:HintAssist.Foreground="Black"
                     BorderBrush="Black"
-                    Background="{StaticResource textboxProfitAnalysisColor1}"/>
+                    Background="{StaticResource textboxProfitAnalysisColor1}" DropDownClosed="cbBarangayFlash_DropDownClosed" SelectionChanged="cbBarangayFlash_SelectionChanged"/>
                         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                     Grid.Column="3"
                     IsEditable="True"
