@@ -94,34 +94,71 @@
                         <TabItem Header="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
+                                <materialDesign:Card Grid.Row="1" Grid.Column="0" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="50" materialDesign:ShadowAssist.ShadowEdges="All"
+                                    Margin="24,24,24,0">
+                                    <StackPanel Margin="5" Orientation="Horizontal">
+                                        <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked" />
+                                        <RadioButton Margin="8,0,0,0" x:Name="rdbFlash" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlash_Checked" />
+                                    </StackPanel>
+                                </materialDesign:Card>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtId" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              Text="0" Visibility="Collapsed" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
-                                <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <TextBox  MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Contact Number (Page/Shop Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118" PreviewTextInput="txtPhone_PreviewTextInput"/>
-                                <Grid>
+                                <Grid x:Name="ContainerJnt">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="24,8,0,0" x:Name="cmbProvince" materialDesign:HintAssist.Hint="Province" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                    <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="24,8,0,0" x:Name="cmbProvinceJnt" materialDesign:HintAssist.Hint="Province" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" DropDownClosed="cmbProvince_DropDownClosed" 
                                                              />
-                                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,8,8,0" x:Name="cmbCity" materialDesign:HintAssist.Hint="City" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,8,8,0" x:Name="cmbCityJnt" materialDesign:HintAssist.Hint="City" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" DropDownClosed="cmbCity_DropDownClosed" 
                                                              />
-                                    <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,8,24,0" x:Name="cmbBarangay" materialDesign:HintAssist.Hint="Barangay" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                    <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,8,24,0" x:Name="cmbBarangayJnt" materialDesign:HintAssist.Hint="Barangay" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             />
+                                </Grid>
+                                <Grid x:Name="ContainerFlash" Visibility="Collapsed">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="24,8,0,0" x:Name="cmbProvinceFlash" materialDesign:HintAssist.Hint="Province" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" DropDownClosed="cmbProvince_DropDownClosed" 
+                                                             />
+                                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,8,8,0" x:Name="cmbCityFlash" materialDesign:HintAssist.Hint="City" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" DropDownClosed="cmbCity_DropDownClosed" 
+                                                             />
+                                    <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,8,8,0" x:Name="cmbBarangayFlash" materialDesign:HintAssist.Hint="Barangay" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             />
+                                    <ComboBox Grid.Column="3" HorizontalAlignment="Stretch" Margin="0,8,24,0" x:Name="cmbPostalCodeFlash" materialDesign:HintAssist.Hint="Postal Code" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
                                                              />
                                 </Grid>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtAddress" materialDesign:HintAssist.Hint="Complete Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118" PreviewTextInput="txtAddress_PreviewTextInput_1"/>
+                                <Button 
+                                    HorizontalAlignment="Stretch"
+                                    Margin="24,8,24,0"
+                                    VerticalAlignment="Center" 
+                                    x:Name="btnSaveShop" 
+                                    Content="Submit" 
+                                    IsDefault="True" 
+                                    FontSize="15"
+                                    Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
+                                    Height="40"/>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
@@ -129,16 +166,14 @@
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
                                 <TextBlock FontStyle="Italic" HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Note: (These information will be your connection api to couriers. As of now JnT is the only courier available.)" TextWrapping="Wrap" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Regular" Margin="24,24,0,0"/>
 
-                                <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                      Grid.Column="0"
-                      Grid.Row="3"
-                      Margin="24,24,24,0"
-                      x:Name="cmbCourier"
-                      materialDesign:HintAssist.Hint="Couriers" FontSize="14"
-                      materialDesign:HintAssist.Foreground="Black"
-                      BorderBrush="Black"
-                      Background="{StaticResource textboxProfitAnalysisColor1}"/>
-
+                                <materialDesign:Card Grid.Row="1" Grid.Column="0" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="50" materialDesign:ShadowAssist.ShadowEdges="All"
+                                    Margin="24,24,24,0">
+                                    <StackPanel Margin="5" Orientation="Horizontal">
+                                        <RadioButton Margin="16,0,0,0" x:Name="rdbJandTCustomer" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" />
+                                        <RadioButton Margin="8,0,0,0" x:Name="rdbFlashCustomer" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}"/>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                                
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtCustomerID" materialDesign:HintAssist.Hint="Customer ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
@@ -152,7 +187,7 @@
                                     HorizontalAlignment="Stretch"
                                     Margin="24,24,24,0"
                                     VerticalAlignment="Center" 
-                                    x:Name="btnSubmit" 
+                                    x:Name="btnSave" 
                                     Content="Submit" 
                                     IsDefault="True" 
                                     FontSize="15"
