@@ -17,6 +17,7 @@ using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Views.Main;
+using WWarehouseManagement.Database;
 using static WarehouseManagement.Models.Address;
 
 namespace WarehouseManagement.Views.Onboarding
@@ -27,6 +28,7 @@ namespace WarehouseManagement.Views.Onboarding
     public partial class OnboardingSetup : Window
     {
         BackgroundWorker workerImportAddress;
+        sql_control sql = new sql_control();
         public OnboardingSetup()
         {
             InitializeComponent();
@@ -94,6 +96,7 @@ namespace WarehouseManagement.Views.Onboarding
                     {
                         queries.api_credentials(cmbCourier, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId, txtCustomerID);
                         MessageBox.Show("Information Setup completed");
+                        Trial_Controller.checkTrialCount();
                         MainWindow main = new MainWindow();
                         main.Show();
                     }

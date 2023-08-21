@@ -38,6 +38,18 @@ namespace WarehouseManagement.Controller
                     return false;
             }
         }
+        public static void checkTrialCount()
+        {
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial"));
+            if(count == 0)
+            {
+                sql.Query($"INSERT INTO tbl_trial (date) VALUES (GETDATE())");
+            }
+            else
+            {
+                //do nothing
+            }
+        }
         public static void refreshSubs()
         {
             sql.Query($"DELETE FROM tbl_trial");

@@ -48,6 +48,7 @@ namespace WarehouseManagement.Views.InitialSetup
             checkForUpdates();
             Trial_Controller.updateModules();
             Trial_Controller.InsertTrialDay();
+            Trial_Controller.checkTrialCount();
         }
         UpdateManager manager;
          void CustomMessageBox(String message, Boolean questionType)
@@ -94,7 +95,7 @@ namespace WarehouseManagement.Views.InitialSetup
         {
             if (txtMessageDialog.Text.Contains("Subscription is expired. Please contact your distributor of the application."))
             {
-                if (Key.Password == "142977")
+                if (Key.Password == "Nozarashi")
                 {
                     Trial_Controller.refreshSubs();
                     new LoginWindow(GlobalModel.version).Show();
