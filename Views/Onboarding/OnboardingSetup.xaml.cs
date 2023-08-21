@@ -98,35 +98,7 @@ namespace WarehouseManagement.Views.Onboarding
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            
-            if(Util.IsAnyTextBoxEmpty(txtAddress,txtPagename,txtPhone) || Util.IsAnyComboBoxItemEmpty(cmbProvinceJnt) || Util.IsAnyComboBoxItemEmpty(cmbCityJnt) || Util.IsAnyComboBoxItemEmpty(cmbBarangayJnt))
-            {
-                MessageBox.Show("Please complete all required fields on sender information.");
-                return;
-            }
-            else
-            {
-                if (Util.IsAnyTextBoxEmpty(txtCustomerID, txtEccompanyId) /*|| Util.IsAnyComboBoxItemEmpty(cmbCourier)*/)
-                {
-                    MessageBox.Show("Please complete all required fields on customer information.");
-                    return;
-                }
-                else
-                {
-                    if (queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceJnt, cmbCityJnt, cmbBarangayJnt, txtAddress))
-                    {
-                        queries.api_credentials(rdbFlashCustomer, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId, txtCustomerID);
-                        MessageBox.Show("Information Setup completed");
-                        MainWindow main = new MainWindow();
-                        main.Show();
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-            }
-            this.Close();
+
         }
         private void cmbProvince_DropDownClosed(object sender, EventArgs e)
         {
@@ -218,6 +190,47 @@ namespace WarehouseManagement.Views.Onboarding
         private void rdbFlash_Checked(object sender, RoutedEventArgs e)
         {
             CheckedRadio(rdbFlash.Content.ToString());
+        }
+
+        private void btnSaveShop_Click(object sender, RoutedEventArgs e)
+        {
+            if(rdbJandT.IsChecked == true)
+            {
+                queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceJnt, cmbCityJnt, cmbBarangayJnt, txtAddress, "", 1);
+            }
+            else
+            {
+                //FLASH
+                queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceFlash, cmbCityFlash, cmbBarangayFlash, txtAddress, cmbPostalCodeFlash.Text, 2);
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (Util.IsAnyTextBoxEmpty(txtCustomerID, txtEccompanyId))
+            {
+                MessageBox.Show("Please complete all required fields on customer information.");
+                return;
+            }
+            else
+            {
+                if(rdbFlash.IsChecked == true)
+                {
+                    queries.api_credentials(rdbFlashCustomer, "41de95733630f05b050d00c308f13d459a92d64595bac9a29d711bce191dfb2e", "", txtCustomerID);
+                    MessageBox.Show("Information Setup completed");
+                    MainWindow main = new MainWindow();
+                    main.Show();
+                }
+                else
+                {
+                    //J&T
+                    queries.api_credentials(rdbJandT, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId.Text, txtCustomerID);
+                    MessageBox.Show("Information Setup completed");
+                    MainWindow main = new MainWindow();
+                    main.Show();
+                }
+            }
+            this.Close();
         }
     }
 }

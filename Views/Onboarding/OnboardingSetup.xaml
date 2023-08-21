@@ -158,7 +158,7 @@
                                     IsDefault="True" 
                                     FontSize="15"
                                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
-                                    Height="40"/>
+                                    Height="40" Click="btnSaveShop_Click"/>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Customer Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
@@ -188,11 +188,11 @@
                                     Margin="24,24,24,0"
                                     VerticalAlignment="Center" 
                                     x:Name="btnSave" 
-                                    Content="Submit" 
+                                    Content="Complete Onboarding" 
                                     IsDefault="True" 
                                     FontSize="15"
                                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
-                                    Height="40" Click="btnSubmit_Click"/>
+                                    Height="40" Click="btnSave_Click"/>
                             </StackPanel>
                         </TabItem>
                     </TabControl.Items>

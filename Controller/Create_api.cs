@@ -424,28 +424,27 @@ namespace WarehouseManagement.Controller
                             switch(reason)
                             {
                                 case "S03":
-                                    MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please change the EcCompany ID on system settings.");
                                     break;
                                 case "S06":
-                                    MessageBox.Show("Connection timeout from the server. Retry order again.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Connection timeout from the server. Retry order again.");
                                     break;
                                 case "B001":
-                                    MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please change the EcCompany ID on system settings.");
                                     break;
                                 case "B002":
-                                    MessageBox.Show("Please change the VIP code on system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please change the VIP code on system settings.");
                                     break;
                                 case "S13":
-                                    MessageBox.Show("VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
                                     break;
                                 case "B063":
-                                    MessageBox.Show("Province-> City-> Baranggay didnt match, kindly check these details as J&T has own addressing guide.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Province-> City-> Baranggay didnt match, kindly check these details as J&T has own addressing guide.");
                                     break;
                                 default:
-                                    MessageBox.Show("Please contact tech team and provide this error message. (" + reason + ").");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please contact tech team and provide this error message. (" + reason + ").");
                                     break;
-                            }
-                                
+                            } 
                             BulkOrderPopup.NoError = false;
                         }
                     }

@@ -404,12 +404,14 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
 BEGIN
     CREATE TABLE [dbo].[tbl_sender](
 		sender_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-		[sender_name] [varchar](50) NOT NULL,
-        [sender_province] [varchar](50) NOT NULL,
-        [sender_city] [varchar](50) NOT NULL,
-        [sender_baranggay] [varchar](50) NOT NULL,
+		courier_id INT NOT NULL,
+		[sender_name] [varchar](255) NOT NULL,
+        [sender_province] [varchar](255) NOT NULL,
+        [sender_city] [varchar](255) NOT NULL,
+        [sender_baranggay] [varchar](255) NOT NULL,
+		[sender_postalCode] [varchar](50) NOT NULL,
 		[sender_phone] [varchar](50) NOT NULL,
-        [sender_address] [varchar](50) NOT NULL,
+        [sender_address] [varchar](255) NOT NULL,
 		)
 END
 IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
@@ -421,7 +423,17 @@ BEGIN
         ALTER COLUMN sender_address VARCHAR(255) NOT NULL
 		ALTER TABLE dbo.tbl_sender
         ALTER COLUMN sender_name VARCHAR(255) NOT NULL
+    END
+END
 
+IF OBJECT_ID('dbo.tbl_sender', 'U') IS NOT NULL
+BEGIN
+    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.tbl_sender') AND name = 'sender_postalCode')
+    BEGIN
+        ALTER TABLE [dbo].[tbl_sender]
+        ADD [sender_postalCode] Varchar(50) NULL
+		ALTER TABLE [dbo].[tbl_sender]
+        ADD [courier_id] INT NULL
     END
 END
 
@@ -511,12 +523,14 @@ BEGIN
     @sender_baranggay VARCHAR(100),
     @sender_phone VARCHAR(50),
     @sender_address VARCHAR(255)
+	@courier_id INT,
+	@sender_postalCode VARCHAR(100)
     AS
     BEGIN
       IF @sender_id = 0
 		BEGIN
-			INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address) VALUES
-			(@sender_name, @sender_province, @sender_city, @sender_baranggay, @sender_phone, @sender_address)
+			INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address, courier_id, sender_postalCode) VALUES
+			(@sender_name, @sender_province, @sender_city, @sender_baranggay, @sender_phone, @sender_address, @courier_id, @sender_postalCode)
 	  END
 	  ELSE
 	  BEGIN
@@ -526,13 +540,51 @@ BEGIN
 				sender_city = @sender_city,
 				sender_baranggay = @sender_baranggay,
 				sender_phone = @sender_phone,
-				sender_address = @sender_address
+				sender_address = @sender_address,
+				courier_id = @courier_id,
+				sender_postalCode = @sender_postalCode
 			WHERE sender_id = @sender_id
 	  END
     END;
     ');
 END;
-
+--ALTER
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_sender_info')
+BEGIN
+    EXEC('
+    ALTER PROC SPadd_sender_info
+	@sender_id INT,
+    @sender_name VARCHAR(255),
+    @sender_province VARCHAR(100),
+    @sender_city VARCHAR(100),
+    @sender_baranggay VARCHAR(100),
+    @sender_phone VARCHAR(50),
+    @sender_address VARCHAR(255),
+	@courier_id INT,
+	@sender_postalCode VARCHAR(100)
+    AS
+    BEGIN
+      IF @sender_id = 0
+		BEGIN
+			INSERT INTO tbl_sender(sender_name, sender_province, sender_city, sender_baranggay, sender_phone, sender_address, courier_id, sender_postalCode) VALUES
+			(@sender_name, @sender_province, @sender_city, @sender_baranggay, @sender_phone, @sender_address, @courier_id, @sender_postalCode)
+	  END
+	  ELSE
+	  BEGIN
+			UPDATE tbl_sender SET
+				sender_name = @sender_name,
+				sender_province = @sender_province,
+				sender_city = @sender_city,
+				sender_baranggay = @sender_baranggay,
+				sender_phone = @sender_phone,
+				sender_address = @sender_address,
+				courier_id = @courier_id,
+				sender_postalCode = @sender_postalCode
+			WHERE sender_id = @sender_id
+	  END
+    END;
+    ');
+END;
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'SPadd_receiver')
 BEGIN
     EXEC('

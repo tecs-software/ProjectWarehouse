@@ -30,7 +30,7 @@ namespace WarehouseManagement.Database
     public class db_queries
     {
         static sql_control sql = new sql_control();
-        public bool insert_sender(string id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address)
+        public bool insert_sender(string id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address, string postal, int courier)
         {
             if(id == "0")
             {
@@ -41,8 +41,10 @@ namespace WarehouseManagement.Database
                 sql.AddParam("@city", cb_city.Text);
                 sql.AddParam("@baranggay", cb_baranggay.Text);
                 sql.AddParam("@address", address.Text);
+                sql.AddParam("@postal", postal);
+                sql.AddParam("@courier", courier);
 
-                sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address");
+                sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address, @courier, @postal");
                 return true;
             }
             else
@@ -54,8 +56,10 @@ namespace WarehouseManagement.Database
                 sql.AddParam("@city", cb_city.Text);
                 sql.AddParam("@baranggay", cb_baranggay.Text);
                 sql.AddParam("@address", address.Text);
+                sql.AddParam("@postal", postal);
+                sql.AddParam("@courier", courier);
 
-                sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address");
+                sql.Query("EXEC SPadd_sender_info @id, @name, @province, @city, @baranggay, @phone, @address, @courier, @postal");
                 return true;
             }
         }
@@ -154,10 +158,10 @@ namespace WarehouseManagement.Database
                 }
             }
         }
-        public void api_credentials(RadioButton courier, string api_key, TextBox ec, TextBox customer_id)
+        public void api_credentials(RadioButton courier, string api_key, string ec, TextBox customer_id)
         {
             sql.Query($"INSERT INTO tbl_couriers (courier_name, api_key, eccompany_id, customer_id) " +
-                $"VALUES ('{courier.Content}','{Encrypt(api_key)}' ,'{ec.Text}', '{customer_id.Text}')");
+                $"VALUES ('{courier.Content}','{Encrypt(api_key)}' ,'{ec}', '{customer_id.Text}')");
             if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)
