@@ -49,6 +49,7 @@ namespace WarehouseManagement.Views.InitialSetup
             Trial_Controller.updateModules();
             Trial_Controller.InsertTrialDay();
             Trial_Controller.checkTrialCount();
+            Trial_Controller.checkTrialKey();
         }
         UpdateManager manager;
          void CustomMessageBox(String message, Boolean questionType)
