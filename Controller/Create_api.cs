@@ -86,14 +86,24 @@ namespace WarehouseManagement.Controller
             payloadObj.eccompanyid = GlobalModel.eccompany_id;
             payloadObj.customerid = GlobalModel.customer_id;
 
+
+            sql.AddParam("@item", booking_Info.item_name);
+            int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item"));
             //updating sender information
-            payloadObj.sender.name = GlobalModel.sender_name;
-            payloadObj.sender.phone = GlobalModel.sender_phone;
-            payloadObj.sender.mobile = GlobalModel.sender_phone;
-            payloadObj.sender.prov = GlobalModel.sender_province;
-            payloadObj.sender.city = GlobalModel.sender_city;
-            payloadObj.sender.area = GlobalModel.sender_area;
-            payloadObj.sender.address = GlobalModel.sender_address;
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach( DataRow dr in sql.DBDT.Rows)
+                {
+                    payloadObj.sender.name = dr[1].ToString();
+                    payloadObj.sender.phone = dr[5].ToString();
+                    payloadObj.sender.mobile = dr[5].ToString();
+                    payloadObj.sender.prov = dr[2].ToString();
+                    payloadObj.sender.city = dr[3].ToString();
+                    payloadObj.sender.area = dr[4].ToString();
+                    payloadObj.sender.address = dr[6].ToString();
+                }
+            }
 
             //updating receiver information
             payloadObj.receiver.name = receiver.FirstName + " " + receiver.MiddleName + " " + receiver.LastName;
