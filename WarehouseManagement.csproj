@@ -73,6 +73,22 @@
     <None Update="Components\table_province.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Waybill\JNTWaybill.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>JNTWaybill.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{c0c07587-41a7-46c8-8fbd-3f9c8ebe2ddc}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Waybill\JNTWaybill.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>JNTWaybill.rpt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 	<PropertyGroup>
@@ -82,6 +98,8 @@
 		<Version>1.2.0</Version>
 		
 		<NuspecFile>$(SolutionDir)ReleaseSpec.nuspec</NuspecFile>
+		
+		<ReferencePath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\</ReferencePath>
 	</PropertyGroup>
 
 	<Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
