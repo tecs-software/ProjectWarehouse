@@ -23,7 +23,6 @@
                                       <TextRun>
                                         <Value>980056423753</Value>
                                         <Style>
-                                          <FontFamily>Libre Barcode 128</FontFamily>
                                           <FontSize>52pt</FontSize>
                                           <TextDecoration>None</TextDecoration>
                                           <Color>#000000</Color>
@@ -71,24 +70,9 @@
                         </Style>
                       </Rectangle>
                       <Rectangle Name="Rectangle30">
-                        <ReportItems>
-                          <Image Name="Image7">
-                            <Source>Embedded</Source>
-                            <Value>image22</Value>
-                            <Sizing>Fit</Sizing>
-                            <Top>0.13144in</Top>
-                            <Height>0.4in</Height>
-                            <Width>1.08268in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                            </Style>
-                          </Image>
-                        </ReportItems>
                         <KeepTogether>true</KeepTogether>
                         <Height>1.5cm</Height>
-                        <Width>2.75cm</Width>
+                        <Width>2.75001cm</Width>
                         <ZIndex>1</ZIndex>
                         <Style>
                           <Border>
@@ -96,21 +80,6 @@
                           </Border>
                         </Style>
                       </Rectangle>
-                      <Image Name="Image8">
-                        <Source>Embedded</Source>
-                        <Value>JT</Value>
-                        <Sizing>Fit</Sizing>
-                        <Top>0.13144in</Top>
-                        <Left>1.09657in</Left>
-                        <Height>0.3in</Height>
-                        <Width>1.0549in</Width>
-                        <ZIndex>2</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>None</Style>
-                          </Border>
-                        </Style>
-                      </Image>
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>0.0003in</Top>
@@ -272,7 +241,6 @@
                               <TextRun>
                                 <Value>980056423753</Value>
                                 <Style>
-                                  <FontFamily>Libre Barcode 128</FontFamily>
                                   <FontSize>43pt</FontSize>
                                 </Style>
                               </TextRun>
