@@ -15,17 +15,20 @@ using System.Windows.Shapes;
 
 namespace WarehouseManagement.Waybill
 {
-    public partial class WaybillView : Page
+    /// <summary>
+    /// Interaction logic for WaybillJournal.xaml
+    /// </summary>
+    public partial class WaybillJournal : UserControl
     {
-        public WaybillView()
+        public WaybillJournal()
         {
             InitializeComponent();
         }
 
-        private void WindowsFormsHost_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            WaybillTemplates.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
-            WaybillTemplates.RefreshReport();
+            ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
+            ReportViewer1.RefreshReport();
         }
     }
 }

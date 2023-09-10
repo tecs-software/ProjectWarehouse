@@ -80,22 +80,10 @@
     <None Update="Components\table_province.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Waybill\JNTWaybill.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>JNTWaybill.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{c0c07587-41a7-46c8-8fbd-3f9c8ebe2ddc}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Waybill\JNTWaybill.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>JNTWaybill.rpt</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 	<PropertyGroup>
