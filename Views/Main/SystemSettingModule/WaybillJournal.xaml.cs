@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WarehouseManagement.Waybill
+namespace WarehouseManagement.Views.Main.SystemSettingModule
 {
     /// <summary>
     /// Interaction logic for WaybillJournal.xaml
@@ -27,8 +27,7 @@ namespace WarehouseManagement.Waybill
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
-            ReportViewer1.RefreshReport();
+
         }
     }
 }

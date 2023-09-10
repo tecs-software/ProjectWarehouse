@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="WarehouseManagement.Views.Main.SystemSettingModule.WaybillJournal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WarehouseManagement.Views.Main.SystemSettingModule"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             Height="auto" Width="auto"
+             xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,24,0,0">
+            <TextBlock Foreground="#636363" FontSize="15" Text="Waybill Journal" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="8,0,24,8"/>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="275" />
+                    <ColumnDefinition Width="275" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txtSearch" materialDesign:HintAssist.Hint="Search" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Stretch" 
+                                                             SelectionBrush="#FF1D2118"/>
+                <DatePicker Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txt" materialDesign:HintAssist.Hint="Date" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedDatePicker}" VerticalAlignment="Stretch" 
+                                                             />
+                <DataGrid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                          Margin="8,8,24,0"
+                            DockPanel.Dock="Top"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="Column"
+                            GridLinesVisibility="All"
+                            Background="White"
+                               ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                                VerticalScrollBarVisibility="Auto"
+                                                MaxHeight="390"
+                            RowHeight="40"
+                            IsReadOnly="True"
+                            CanUserDeleteRows="False"
+                            CanUserSortColumns="True"
+                            CanUserReorderColumns="False"
+                            CanUserResizeColumns="False"
+                            TextBlock.TextAlignment="Left"
+                            SelectionMode="Single"
+                            x:Name="tblProducts"
+                            ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                </DataGrid>
+                <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Background="Red" Margin="0,8,0,0">
+                
+                
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
