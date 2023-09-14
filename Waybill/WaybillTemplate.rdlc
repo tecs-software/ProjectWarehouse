@@ -15,14 +15,14 @@
                         <ReportItems>
                           <Rectangle Name="Rectangle18">
                             <ReportItems>
-                              <Textbox Name="Textbox9">
+                              <Textbox Name="tb_sorting_code">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>622-720001</Value>
+                                        <Value>=Parameters!SortingCode_params.Value</Value>
                                         <Style>
                                           <FontFamily>harmonyos sans Black</FontFamily>
                                           <FontSize>23pt</FontSize>
@@ -32,7 +32,6 @@
                                     <Style />
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>Textbox5</rd:DefaultName>
                                 <Top>0.03659in</Top>
                                 <Left>0.125in</Left>
                                 <Height>0.48451in</Height>
@@ -43,14 +42,14 @@
                                   </Border>
                                 </Style>
                               </Textbox>
-                              <Textbox Name="Textbox10">
+                              <Textbox Name="tb_sorting_no">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>A130</Value>
+                                        <Value>=Parameters!SortingNo_params.Value</Value>
                                         <Style>
                                           <FontFamily>harmonyos Sans Black</FontFamily>
                                           <FontSize>23pt</FontSize>
@@ -60,7 +59,6 @@
                                     <Style />
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>Textbox5</rd:DefaultName>
                                 <Top>0.03659in</Top>
                                 <Left>2.43564in</Left>
                                 <Height>0.48451in</Height>
@@ -141,14 +139,14 @@
                               </Border>
                             </Style>
                           </Textbox>
-                          <Textbox Name="Textbox6">
+                          <Textbox Name="tb_orderid">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>TECS-12345677889</Value>
+                                    <Value>=Parameters!Order_id_params.Value</Value>
                                     <Style>
                                       <FontFamily>HarmonyOS Sans SC</FontFamily>
                                       <FontSize>6pt</FontSize>
@@ -158,7 +156,6 @@
                                 <Style />
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
                             <Top>0.04167in</Top>
                             <Left>0.56441in</Left>
                             <Height>0.12233in</Height>
@@ -225,7 +222,6 @@
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>0.0003in</Top>
-                    <Left>0in</Left>
                     <Height>3.5cm</Height>
                     <Width>9cm</Width>
                     <Style>
@@ -238,14 +234,14 @@
                     <ReportItems>
                       <Rectangle Name="Rectangle17">
                         <ReportItems>
-                          <Textbox Name="Textbox7">
+                          <Textbox Name="tbl_print_date">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>2023/09/10</Value>
+                                    <Value>=Parameters!Date_params.Value</Value>
                                     <Style>
                                       <FontFamily>HarmonyOS Sans SC</FontFamily>
                                       <FontSize>6pt</FontSize>
@@ -255,7 +251,6 @@
                                 <Style />
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
                             <Top>0.04167in</Top>
                             <Left>0.13518in</Left>
                             <Height>0.12233in</Height>
@@ -266,14 +261,14 @@
                               </Border>
                             </Style>
                           </Textbox>
-                          <Textbox Name="Textbox8">
+                          <Textbox Name="tb_print_time">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>12:23:00</Value>
+                                    <Value>=Parameters!Time_params.Value</Value>
                                     <Style>
                                       <FontFamily>HarmonyOS Sans SC</FontFamily>
                                       <FontSize>6pt</FontSize>
@@ -283,7 +278,6 @@
                                 <Style />
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
                             <Top>0.04167in</Top>
                             <Left>0.74574in</Left>
                             <Height>0.12233in</Height>
@@ -321,43 +315,24 @@
                   </Rectangle>
                   <Rectangle Name="Rectangle19">
                     <ReportItems>
-                      <Textbox Name="Textbox1">
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>980056423753</Value>
-                                <Style>
-                                  <FontFamily>Libre Barcode 128</FontFamily>
-                                  <FontSize>47pt</FontSize>
-                                  <TextDecoration>None</TextDecoration>
-                                  <Color>#000000</Color>
-                                </Style>
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Textbox1</rd:DefaultName>
-                        <Top>0.08334in</Top>
-                        <Left>0.09483in</Left>
-                        <Height>0.46555in</Height>
-                        <Width>2.78848in</Width>
+                      <Image Name="H_barcode">
+                        <Source>Database</Source>
+                        <Value>=Parameters!HBarcode_params.Value</Value>
+                        <MIMEType>image/png</MIMEType>
+                        <Sizing>Clip</Sizing>
+                        <Top>0.04796in</Top>
+                        <Left>0.03928in</Left>
+                        <Height>0.50092in</Height>
+                        <Width>2.8996in</Width>
                         <Style>
                           <Border>
                             <Style>None</Style>
                           </Border>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
                         </Style>
-                      </Textbox>
+                      </Image>
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>1.37825in</Top>
-                    <Left>0in</Left>
                     <Height>1.5cm</Height>
                     <Width>7.5cm</Width>
                     <ZIndex>2</ZIndex>
@@ -369,14 +344,14 @@
                   </Rectangle>
                   <Rectangle Name="Rectangle20">
                     <ReportItems>
-                      <Textbox Name="Textbox12">
+                      <Textbox Name="tb_receiver_baranggay">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Baranggay(10)</Value>
+                                <Value>=Parameters!Receiver_barangay_params.Value</Value>
                                 <Style>
                                   <FontFamily>HarmonyOS Sans SC</FontFamily>
                                   <FontSize>14pt</FontSize>
@@ -388,10 +363,10 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox5</rd:DefaultName>
                         <Top>0.01389in</Top>
+                        <Left>0.03928in</Left>
                         <Height>0.28718in</Height>
-                        <Width>2.88332in</Width>
+                        <Width>2.80212in</Width>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -402,7 +377,6 @@
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>1.9688in</Top>
-                    <Left>0in</Left>
                     <Height>0.8cm</Height>
                     <Width>7.5cm</Width>
                     <ZIndex>3</ZIndex>
@@ -435,6 +409,7 @@
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
                         <Top>0.01389in</Top>
+                        <Left>0.03928in</Left>
                         <Height>0.10288in</Height>
                         <Width>0.66539in</Width>
                         <Style>
@@ -444,14 +419,14 @@
                           <VerticalAlign>Top</VerticalAlign>
                         </Style>
                       </Textbox>
-                      <Textbox Name="Textbox22">
+                      <Textbox Name="tb_Receiver_name">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Carl Emerson Argente</Value>
+                                <Value>=Parameters!Receiver_name_params.Value</Value>
                                 <Style>
                                   <FontFamily>HarmonyOS Sans SC</FontFamily>
                                   <FontSize>8pt</FontSize>
@@ -464,10 +439,10 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox5</rd:DefaultName>
                         <Top>0.11677in</Top>
+                        <Left>0.03928in</Left>
                         <Height>0.18669in</Height>
-                        <Width>2.92498in</Width>
+                        <Width>2.81361in</Width>
                         <ZIndex>1</ZIndex>
                         <Style>
                           <Border>
@@ -476,14 +451,14 @@
                           <VerticalAlign>Top</VerticalAlign>
                         </Style>
                       </Textbox>
-                      <Textbox Name="Textbox23">
+                      <Textbox Name="tb_receiver_Address">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Carl Emerson Argente Floodway madaming gangster panget si carl xd test test test</Value>
+                                <Value>=Parameters!Receiver_address_params.Value</Value>
                                 <Style>
                                   <FontFamily>HarmonyOS Sans SC</FontFamily>
                                   <FontSize>7pt</FontSize>
@@ -496,11 +471,10 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox5</rd:DefaultName>
                         <Top>0.30346in</Top>
-                        <Left>0in</Left>
+                        <Left>0.03928in</Left>
                         <Height>0.43069in</Height>
-                        <Width>2.92498in</Width>
+                        <Width>2.81361in</Width>
                         <ZIndex>2</ZIndex>
                         <Style>
                           <Border>
@@ -512,7 +486,6 @@
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>2.28376in</Top>
-                    <Left>0in</Left>
                     <Height>1.90002cm</Height>
                     <Width>7.5cm</Width>
                     <ZIndex>4</ZIndex>
@@ -545,7 +518,7 @@
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
                         <Top>0.01389in</Top>
-                        <Left>0in</Left>
+                        <Left>0.02539in</Left>
                         <Height>0.10288in</Height>
                         <Width>0.66539in</Width>
                         <Style>
@@ -555,14 +528,14 @@
                           <VerticalAlign>Top</VerticalAlign>
                         </Style>
                       </Textbox>
-                      <Textbox Name="Textbox25">
+                      <Textbox Name="tb_sender_name">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Jovanie Lepalam</Value>
+                                <Value>=Parameters!Sender_name_params.Value</Value>
                                 <Style>
                                   <FontFamily>HarmonyOS Sans SC</FontFamily>
                                   <FontSize>6pt</FontSize>
@@ -575,11 +548,10 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox5</rd:DefaultName>
                         <Top>0.125in</Top>
-                        <Left>0in</Left>
+                        <Left>0.02539in</Left>
                         <Height>0.13114in</Height>
-                        <Width>2.92498in</Width>
+                        <Width>2.77673in</Width>
                         <ZIndex>1</ZIndex>
                         <Style>
                           <Border>
@@ -588,14 +560,14 @@
                           <VerticalAlign>Top</VerticalAlign>
                         </Style>
                       </Textbox>
-                      <Textbox Name="Textbox26">
+                      <Textbox Name="tb_sender_address">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Pasig city mandarambongs</Value>
+                                <Value>=Parameters!Sender_address_params.Value</Value>
                                 <Style>
                                   <FontFamily>HarmonyOS Sans SC</FontFamily>
                                   <FontSize>6pt</FontSize>
@@ -607,10 +579,10 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox5</rd:DefaultName>
-                        <Top>0.26256in</Top>
+                        <Top>0.25614in</Top>
+                        <Left>0.02539in</Left>
                         <Height>0.13114in</Height>
-                        <Width>2.92498in</Width>
+                        <Width>2.77673in</Width>
                         <ZIndex>2</ZIndex>
                         <Style>
                           <Border>
@@ -622,7 +594,6 @@
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>3.0318in</Top>
-                    <Left>0in</Left>
                     <Height>1cm</Height>
                     <Width>7.5cm</Width>
                     <ZIndex>5</ZIndex>
@@ -655,10 +626,9 @@
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
-                        <Top>0in</Top>
-                        <Left>0in</Left>
+                        <Left>0.03928in</Left>
                         <Height>0.10288in</Height>
-                        <Width>0.24146in</Width>
+                        <Width>0.3424in</Width>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -688,7 +658,7 @@
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
                         <Top>0.19684in</Top>
-                        <Left>0in</Left>
+                        <Left>0.03928in</Left>
                         <Height>0.10288in</Height>
                         <Width>0.3424in</Width>
                         <ZIndex>1</ZIndex>
@@ -720,9 +690,10 @@
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
-                        <Top>0.43211in</Top>
+                        <Top>0.41822in</Top>
+                        <Left>0.03928in</Left>
                         <Height>0.10288in</Height>
-                        <Width>0.24146in</Width>
+                        <Width>0.3424in</Width>
                         <ZIndex>2</ZIndex>
                         <Style>
                           <Border>
@@ -752,11 +723,138 @@
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
-                        <Top>0.42212in</Top>
+                        <Top>0.41822in</Top>
                         <Left>0.92799in</Left>
                         <Height>0.11287in</Height>
                         <Width>0.36259in</Width>
                         <ZIndex>3</ZIndex>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <VerticalAlign>Top</VerticalAlign>
+                        </Style>
+                      </Textbox>
+                      <Textbox Name="tb_COD">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Parameters!COD_params.Value</Value>
+                                <Style>
+                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                  <FontSize>6pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Left</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <Left>0.45112in</Left>
+                        <Height>0.10288in</Height>
+                        <Width>1.25107in</Width>
+                        <ZIndex>4</ZIndex>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <VerticalAlign>Top</VerticalAlign>
+                        </Style>
+                      </Textbox>
+                      <Textbox Name="tbl_Goods_name">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Parameters!Goods_params.Value</Value>
+                                <Style>
+                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                  <FontSize>6pt</FontSize>
+                                  <FontWeight>Normal</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Left</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <Top>0.16906in</Top>
+                        <Left>0.45112in</Left>
+                        <Height>0.20749in</Height>
+                        <Width>1.25107in</Width>
+                        <ZIndex>5</ZIndex>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <VerticalAlign>Top</VerticalAlign>
+                        </Style>
+                      </Textbox>
+                      <Textbox Name="tb_goods_value">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Parameters!Price_params.Value</Value>
+                                <Style>
+                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                  <FontSize>6pt</FontSize>
+                                  <FontWeight>Normal</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Left</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <Top>0.41822in</Top>
+                        <Left>0.45112in</Left>
+                        <Height>0.13735in</Height>
+                        <Width>0.46298in</Width>
+                        <ZIndex>6</ZIndex>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <VerticalAlign>Top</VerticalAlign>
+                        </Style>
+                      </Textbox>
+                      <Textbox Name="tb_weight">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Parameters!Weight_params.Value</Value>
+                                <Style>
+                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                  <FontSize>6pt</FontSize>
+                                  <FontWeight>Normal</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Left</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <Top>0.41822in</Top>
+                        <Left>1.30447in</Left>
+                        <Height>0.13735in</Height>
+                        <Width>0.39773in</Width>
+                        <ZIndex>7</ZIndex>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -774,10 +872,48 @@
                       <Border>
                         <Style>Solid</Style>
                       </Border>
+                      <BottomBorder>
+                        <Style>None</Style>
+                      </BottomBorder>
+                      <RightBorder>
+                        <Style>None</Style>
+                      </RightBorder>
                     </Style>
                   </Rectangle>
                   <Rectangle Name="Rectangle24">
                     <ReportItems>
+                      <Textbox Name="Textbox31">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>DELIVERY ATTEMPTS</Value>
+                                <Style>
+                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                  <FontSize>7pt</FontSize>
+                                  <FontWeight>Normal</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox5</rd:DefaultName>
+                        <Top>0.01389in</Top>
+                        <Left>0.03112in</Left>
+                        <Height>0.15517in</Height>
+                        <Width>1.08055in</Width>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <VerticalAlign>Top</VerticalAlign>
+                        </Style>
+                      </Textbox>
                       <Rectangle Name="Rectangle27">
                         <ReportItems>
                           <Textbox Name="Textbox34">
@@ -814,76 +950,183 @@
                           </Textbox>
                         </ReportItems>
                         <KeepTogether>true</KeepTogether>
-                        <Top>0.19684in</Top>
+                        <Top>0.16907in</Top>
                         <Left>0.78741in</Left>
-                        <Height>1cm</Height>
+                        <Height>1.08755cm</Height>
                         <Width>1cm</Width>
+                        <ZIndex>1</ZIndex>
                         <Style>
                           <Border>
                             <Style>Solid</Style>
                           </Border>
+                          <BottomBorder>
+                            <Style>None</Style>
+                          </BottomBorder>
                         </Style>
                       </Rectangle>
-                      <Textbox Name="Textbox31">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>DELIVERY ATTEMPTS</Value>
+                      <Rectangle Name="Rectangle31">
+                        <ReportItems>
+                          <Textbox Name="Textbox35">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value>2</Value>
+                                    <Style>
+                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                      <FontSize>15pt</FontSize>
+                                      <FontWeight>Normal</FontWeight>
+                                    </Style>
+                                  </TextRun>
+                                </TextRuns>
                                 <Style>
-                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                  <FontSize>7pt</FontSize>
-                                  <FontWeight>Normal</FontWeight>
+                                  <TextAlign>Left</TextAlign>
                                 </Style>
-                              </TextRun>
-                            </TextRuns>
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>Textbox5</rd:DefaultName>
+                            <Top>0.04167in</Top>
+                            <Left>0.11509in</Left>
+                            <Height>0.28227in</Height>
+                            <Width>0.20917in</Width>
                             <Style>
-                              <TextAlign>Center</TextAlign>
+                              <Border>
+                                <Style>None</Style>
+                              </Border>
+                              <VerticalAlign>Top</VerticalAlign>
                             </Style>
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Textbox5</rd:DefaultName>
-                        <Top>0.01389in</Top>
-                        <Left>0.03111in</Left>
-                        <Height>0.15517in</Height>
-                        <Width>1.08055in</Width>
-                        <ZIndex>1</ZIndex>
+                          </Textbox>
+                        </ReportItems>
+                        <KeepTogether>true</KeepTogether>
+                        <Top>0.16907in</Top>
+                        <Left>0.3937in</Left>
+                        <Height>1.08755cm</Height>
+                        <Width>1cm</Width>
+                        <ZIndex>2</ZIndex>
                         <Style>
                           <Border>
-                            <Style>None</Style>
+                            <Style>Solid</Style>
                           </Border>
-                          <VerticalAlign>Top</VerticalAlign>
+                          <BottomBorder>
+                            <Style>None</Style>
+                          </BottomBorder>
                         </Style>
-                      </Textbox>
+                      </Rectangle>
+                      <Rectangle Name="Rectangle32">
+                        <ReportItems>
+                          <Textbox Name="Textbox36">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value>1</Value>
+                                    <Style>
+                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                      <FontSize>15pt</FontSize>
+                                      <FontWeight>Normal</FontWeight>
+                                    </Style>
+                                  </TextRun>
+                                </TextRuns>
+                                <Style>
+                                  <TextAlign>Left</TextAlign>
+                                </Style>
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>Textbox5</rd:DefaultName>
+                            <Top>0.04167in</Top>
+                            <Left>0.11509in</Left>
+                            <Height>0.28227in</Height>
+                            <Width>0.20917in</Width>
+                            <Style>
+                              <Border>
+                                <Style>None</Style>
+                              </Border>
+                              <VerticalAlign>Top</VerticalAlign>
+                            </Style>
+                          </Textbox>
+                        </ReportItems>
+                        <KeepTogether>true</KeepTogether>
+                        <Top>0.16907in</Top>
+                        <Height>1.08755cm</Height>
+                        <Width>1cm</Width>
+                        <ZIndex>3</ZIndex>
+                        <Style>
+                          <Border>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BottomBorder>
+                            <Style>None</Style>
+                          </BottomBorder>
+                        </Style>
+                      </Rectangle>
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>3.4255in</Top>
-                    <Left>1.77165in</Left>
-                    <Height>1.49998cm</Height>
+                    <Left>1.77164in</Left>
+                    <Height>1.51699cm</Height>
                     <Width>3.00002cm</Width>
                     <ZIndex>7</ZIndex>
                     <Style>
                       <Border>
                         <Style>Solid</Style>
                       </Border>
+                      <BottomBorder>
+                        <Style>None</Style>
+                      </BottomBorder>
                     </Style>
                   </Rectangle>
-                  <Rectangle Name="Rectangle25">
+                  <Rectangle Name="Rectangle28">
                     <ReportItems>
-                      <Textbox Name="Textbox32">
+                      <Image Name="V_barcode">
+                        <Source>Database</Source>
+                        <Value>=Parameters!VBarcode_params.Value</Value>
+                        <MIMEType>image/png</MIMEType>
+                        <Sizing>Fit</Sizing>
+                        <Top>0.06555in</Top>
+                        <Left>0.05523in</Left>
+                        <Height>2.53727in</Height>
+                        <Width>0.5in</Width>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                        </Style>
+                      </Image>
+                    </ReportItems>
+                    <KeepTogether>true</KeepTogether>
+                    <Top>1.37825in</Top>
+                    <Left>2.95276in</Left>
+                    <Height>6.717cm</Height>
+                    <Width>1.5cm</Width>
+                    <ZIndex>8</ZIndex>
+                    <Style>
+                      <Border>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BottomBorder>
+                        <Style>None</Style>
+                      </BottomBorder>
+                    </Style>
+                  </Rectangle>
+                  <Rectangle Name="Rectangle29">
+                    <ReportItems>
+                      <Textbox Name="Textbox33">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>1</Value>
+                                <Value>COD</Value>
                                 <Style>
-                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                  <FontSize>15pt</FontSize>
-                                  <FontWeight>Normal</FontWeight>
+                                  <FontFamily>harmonyos sans sc</FontFamily>
+                                  <FontSize>48pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                  <Color>LightGrey</Color>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -893,10 +1136,10 @@
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
-                        <Top>0.04166in</Top>
-                        <Left>0.13124in</Left>
-                        <Height>0.29649in</Height>
-                        <Width>0.19302in</Width>
+                        <Top>0.17952in</Top>
+                        <Left>0.3067in</Left>
+                        <Height>0.79921in</Height>
+                        <Width>1.46496in</Width>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -904,46 +1147,64 @@
                           <VerticalAlign>Top</VerticalAlign>
                         </Style>
                       </Textbox>
-                    </ReportItems>
-                    <KeepTogether>true</KeepTogether>
-                    <Top>3.62235in</Top>
-                    <Left>1.77165in</Left>
-                    <Height>1cm</Height>
-                    <Width>1cm</Width>
-                    <ZIndex>8</ZIndex>
-                    <Style>
-                      <Border>
-                        <Style>Solid</Style>
-                      </Border>
-                    </Style>
-                  </Rectangle>
-                  <Rectangle Name="Rectangle26">
-                    <ReportItems>
-                      <Textbox Name="Textbox33">
+                      <Textbox Name="Textbox32">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>2</Value>
+                                <Value>Remarks/Signature:</Value>
                                 <Style>
-                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                  <FontSize>15pt</FontSize>
-                                  <FontWeight>Normal</FontWeight>
+                                  <FontFamily>harmonyos sans sc</FontFamily>
+                                  <FontSize>6pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                             </TextRuns>
                             <Style>
-                              <TextAlign>Center</TextAlign>
+                              <TextAlign>Left</TextAlign>
                             </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
-                        <Top>0.04166in</Top>
-                        <Left>0.13518in</Left>
-                        <Height>0.28227in</Height>
-                        <Width>0.19302in</Width>
+                        <Top>0.03498in</Top>
+                        <Left>0.03928in</Left>
+                        <Height>0.10288in</Height>
+                        <Width>1.07903in</Width>
+                        <ZIndex>1</ZIndex>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <VerticalAlign>Top</VerticalAlign>
+                        </Style>
+                      </Textbox>
+                      <Textbox Name="Remarks">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Parameters!Remarks_params.Value</Value>
+                                <Style>
+                                  <FontFamily>harmonyos sans sc</FontFamily>
+                                  <FontSize>7pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Left</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <Top>0.15175in</Top>
+                        <Left>0.03928in</Left>
+                        <Height>1.01577in</Height>
+                        <Width>2.05662in</Width>
+                        <ZIndex>2</ZIndex>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -953,85 +1214,55 @@
                       </Textbox>
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
-                    <Top>3.62235in</Top>
-                    <Left>2.16535in</Left>
-                    <Height>1cm</Height>
-                    <Width>1cm</Width>
+                    <Top>4.02274in</Top>
+                    <Height>3.14189cm</Height>
+                    <Width>5.5cm</Width>
                     <ZIndex>9</ZIndex>
                     <Style>
                       <Border>
                         <Style>Solid</Style>
                       </Border>
+                      <TopBorder>
+                        <Style>None</Style>
+                      </TopBorder>
+                      <LeftBorder>
+                        <Style>None</Style>
+                      </LeftBorder>
                     </Style>
                   </Rectangle>
-                  <Rectangle Name="Rectangle28">
-                    <ReportItems>
-                      <Textbox Name="Textbox3">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>980056423753</Value>
-                                <Style>
-                                  <FontFamily>Libre Barcode 128</FontFamily>
-                                  <FontSize>43pt</FontSize>
-                                </Style>
-                              </TextRun>
-                            </TextRuns>
-                            <Style>
-                              <TextAlign>Right</TextAlign>
-                            </Style>
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Textbox3</rd:DefaultName>
-                        <Top>0.06945in</Top>
-                        <Left>0.06944in</Left>
-                        <Height>2.47039in</Height>
-                        <Width>0.44323in</Width>
-                        <Style>
-                          <Border>
-                            <Style>None</Style>
-                          </Border>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <WritingMode>Rotate270</WritingMode>
-                        </Style>
-                      </Textbox>
-                    </ReportItems>
-                    <KeepTogether>true</KeepTogether>
-                    <Top>1.37825in</Top>
-                    <Left>2.95276in</Left>
-                    <Height>6.7cm</Height>
-                    <Width>1.5cm</Width>
+                  <Line Name="Line2">
+                    <Top>4.02274in</Top>
+                    <Left>0.00487in</Left>
+                    <Height>0in</Height>
+                    <Width>3.53843in</Width>
                     <ZIndex>10</ZIndex>
                     <Style>
                       <Border>
                         <Style>Solid</Style>
                       </Border>
                     </Style>
-                  </Rectangle>
-                  <Rectangle Name="Rectangle29">
-                    <KeepTogether>true</KeepTogether>
-                    <Top>4.01605in</Top>
-                    <Left>0in</Left>
-                    <Height>3.3cm</Height>
-                    <Width>5.5cm</Width>
+                  </Line>
+                  <Image Name="QR">
+                    <Source>Database</Source>
+                    <Value>=Parameters!QRcode_params.Value</Value>
+                    <MIMEType>image/png</MIMEType>
+                    <Sizing>Fit</Sizing>
+                    <Top>4.03663in</Top>
+                    <Left>2.17925in</Left>
+                    <Height>1.20919in</Height>
+                    <Width>1.35017in</Width>
                     <ZIndex>11</ZIndex>
                     <Style>
                       <Border>
-                        <Style>Solid</Style>
+                        <Style>None</Style>
                       </Border>
                     </Style>
-                  </Rectangle>
+                  </Image>
                 </ReportItems>
                 <KeepTogether>true</KeepTogether>
-                <Top>0.29498in</Top>
-                <Left>0.20842in</Left>
-                <Height>5.31526in</Height>
+                <Top>0.12824in</Top>
+                <Left>0.11427in</Left>
+                <Height>5.2597in</Height>
                 <Width>3.54331in</Width>
                 <Style>
                   <Border>
@@ -1057,9 +1288,9 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox4</rd:DefaultName>
-                <Top>0.34438in</Top>
-                <Left>2.76748in</Left>
-                <Height>0.43649in</Height>
+                <Top>0.1838in</Top>
+                <Left>2.67333in</Left>
+                <Height>0.46585in</Height>
                 <Width>0.56625in</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
@@ -1068,17 +1299,17 @@
                   </Border>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox13">
+              <Textbox Name="tb_waybill2">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
-                          <FontSize>7pt</FontSize>
+                          <FontSize>6pt</FontSize>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -1087,35 +1318,31 @@
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox3</rd:DefaultName>
-                <Top>0.88583in</Top>
-                <Left>3.76561in</Left>
+                <Top>0.71909in</Top>
+                <Left>3.64914in</Left>
                 <Height>1.01058in</Height>
-                <Width>0.19453in</Width>
+                <Width>0.12509in</Width>
                 <ZIndex>2</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
+                    <Width>0.25pt</Width>
                   </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
                   <Direction>LTR</Direction>
                   <WritingMode>Vertical</WritingMode>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox14">
+              <Textbox Name="tb_waybill3">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
-                          <FontSize>7pt</FontSize>
+                          <FontSize>6pt</FontSize>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -1124,35 +1351,30 @@
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox3</rd:DefaultName>
-                <Top>3.45178in</Top>
-                <Left>3.76562in</Left>
+                <Top>3.28504in</Top>
+                <Left>3.65004in</Left>
                 <Height>1.01058in</Height>
-                <Width>0.19453in</Width>
+                <Width>0.12509in</Width>
                 <ZIndex>3</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
                   <Direction>LTR</Direction>
                   <WritingMode>Vertical</WritingMode>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox15">
+              <Textbox Name="tb_waybill6">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
-                          <FontSize>7pt</FontSize>
+                          <FontSize>6pt</FontSize>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -1161,35 +1383,29 @@
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox3</rd:DefaultName>
-                <Top>3.45178in</Top>
-                <Left>0.03928in</Left>
+                <Top>3.28504in</Top>
                 <Height>1.01058in</Height>
-                <Width>0.19453in</Width>
+                <Width>0.12578in</Width>
                 <ZIndex>4</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
                   <Direction>LTR</Direction>
                   <WritingMode>Vertical</WritingMode>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox16">
+              <Textbox Name="tb_waybill7">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
-                          <FontSize>7pt</FontSize>
+                          <FontSize>6pt</FontSize>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -1198,32 +1414,27 @@
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox3</rd:DefaultName>
-                <Top>0.88583in</Top>
-                <Left>0.03928in</Left>
+                <Top>0.71909in</Top>
+                <Left>0.00689in</Left>
                 <Height>1.01058in</Height>
-                <Width>0.19453in</Width>
+                <Width>0.13277in</Width>
                 <ZIndex>5</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
                   <Direction>LTR</Direction>
                   <WritingMode>Vertical</WritingMode>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox17">
+              <Textbox Name="tb_waybill">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
                           <FontSize>7pt</FontSize>
@@ -1233,9 +1444,8 @@
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>0.15315in</Top>
-                <Left>0.33342in</Left>
+                <Top>0.0006in</Top>
+                <Left>0.23927in</Left>
                 <Height>0.12794in</Height>
                 <Width>1.16558in</Width>
                 <ZIndex>6</ZIndex>
@@ -1245,14 +1455,14 @@
                   </Border>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox18">
+              <Textbox Name="tb_waybill1">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
                           <FontSize>7pt</FontSize>
@@ -1262,9 +1472,7 @@
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>0.13896in</Top>
-                <Left>2.64248in</Left>
+                <Left>2.54991in</Left>
                 <Height>0.14213in</Height>
                 <Width>1.16558in</Width>
                 <ZIndex>7</ZIndex>
@@ -1274,14 +1482,14 @@
                   </Border>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox19">
+              <Textbox Name="tb_waybill5">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
                           <FontSize>7pt</FontSize>
@@ -1291,9 +1499,8 @@
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>5.62413in</Top>
-                <Left>0.335in</Left>
+                <Top>5.38794in</Top>
+                <Left>0.24085in</Left>
                 <Height>0.13567in</Height>
                 <Width>1.16558in</Width>
                 <ZIndex>8</ZIndex>
@@ -1303,14 +1510,14 @@
                   </Border>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox20">
+              <Textbox Name="tb_waybill4">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>980056423753</Value>
+                        <Value>=Parameters!Waybill_params.Value</Value>
                         <Style>
                           <FontFamily>harmonyos sans sc medium</FontFamily>
                           <FontSize>7pt</FontSize>
@@ -1320,9 +1527,8 @@
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>5.62413in</Top>
-                <Left>2.64406in</Left>
+                <Top>5.38794in</Top>
+                <Left>2.54833in</Left>
                 <Height>0.13567in</Height>
                 <Width>1.16558in</Width>
                 <ZIndex>9</ZIndex>
@@ -1334,38 +1540,259 @@
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>0.0502in</Top>
-            <Left>0.06207in</Left>
-            <Height>15cm</Height>
-            <Width>10.12934cm</Width>
+            <Top>0.02778in</Top>
+            <Left>0.02009in</Left>
+            <Height>14.02998cm</Height>
+            <Width>9.60798cm</Width>
             <Style>
               <Border>
-                <Style>Solid</Style>
+                <Style>None</Style>
+                <Width>3pt</Width>
               </Border>
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>6.01037in</Height>
+        <Height>141.23582mm</Height>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+            <Width>2pt</Width>
+          </Border>
+        </Style>
+      </Body>
+      <Width>96.59021mm</Width>
+      <Page>
+        <PageHeight>150mm</PageHeight>
+        <PageWidth>100mm</PageWidth>
+        <InteractiveHeight>150mm</InteractiveHeight>
+        <InteractiveWidth>100mm</InteractiveWidth>
+        <LeftMargin>0pt</LeftMargin>
+        <RightMargin>3.25pt</RightMargin>
+        <TopMargin>0pt</TopMargin>
+        <BottomMargin>0pt</BottomMargin>
         <Style>
           <Border>
             <Style>Solid</Style>
           </Border>
         </Style>
-      </Body>
-      <Width>4.09896in</Width>
-      <Page>
-        <LeftMargin>1in</LeftMargin>
-        <RightMargin>1in</RightMargin>
-        <TopMargin>1in</TopMargin>
-        <BottomMargin>1in</BottomMargin>
-        <Style />
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="SortingCode_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="SortingNo_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="HBarcode_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="VBarcode_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="QRcode_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Waybill_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Receiver_barangay_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Receiver_name_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Receiver_address_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Sender_name_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Sender_address_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="COD_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Goods_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Price_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Weight_params">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Remarks_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Order_id_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Date_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Time_params">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
+      <NumberOfRows>5</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>SortingCode_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>SortingNo_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>HBarcode_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>VBarcode_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>QRcode_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>Waybill_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>Receiver_barangay_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>Receiver_name_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>Receiver_address_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>Sender_name_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>Sender_address_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>COD_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>Goods_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>Price_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>Weight_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>Remarks_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>4</RowIndex>
+          <ParameterName>Order_id_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>4</RowIndex>
+          <ParameterName>Date_params</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>4</RowIndex>
+          <ParameterName>Time_params</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <EmbeddedImages>
@@ -3775,6 +4202,52 @@ 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</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="hehe">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="testhehe">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="vertical">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAASwAAACWCAIAAADrOSKFAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG2SURBVHhe7dexEcBADMOw7L/0p9EOLAzswJP9PSAlQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoTYBwC3bRGByFIEMosRiIgQYttDAABI7CwFIiKE2PYQAACAi/YbApGlCGQWIxARIcRECLEdpUBmMQKRpQgAV20RgchSBICrtohARIQQ2x4CwFVbRCAiQohtDwEAILGzFIiIEGIihNiOUiCzGIHIUgSAq7aIQGQpApnFCESWIgBctUUEIksRAAASO0uBiAghJkKI7SgFMosRiIgQYttDALhqiwhERAgxEUJsRymQWYxARIQQ2x4CAEBiZykQESHEtodAZjECERFCbHsIAFdtEYHIUgSAq7aIQESEENseApnFCERECLHtIZBZjEBEhBATIcR2lALAVVtEICJCiIkQYjtKAQAgsbMUiCxFILMYgchSBICrtohARIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFC6r0f5xxDkrvQ/IQAAAAASUVORK5CYII=</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="horizontal">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="testxd">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANzSURBVHhe7ZBBjhVBDEO5/6WHBU+tiIpKsTufAeG3S9tOqv3jK4xJWQIpSyBlCaQsgZQlkLIEUpZAyhJIWQIpSyBlCaQsgZQlkLIEUpZAyhJIWQJmWT/ewRZxD5m96yopSyBlCbwti3kGmS6F0DXCXEDYuz7ETHJ277kIRWKemSeQEVMVM8nZveciFIl5Zp5ARkxVzCRnu387wXF9LkIBoQPH3vUhZpKze89FKCB04Ni7PsRMcnbvuQgFhA4ce9eHmEnO7j0XoQNHAWHv+hAzydm95yJ04Cgg7F0fYiY5u/dchA4cBYS960PMJGc/8Fwc1xTzB67fMZOc/cBzcVxTzB+4fsdMcvYDz8VxTTF/4PodM8lZ8TCZWQprAeGPXG8xk5xNWRM4m7ImcNaFLd0PMM++eLBFx0xy1oUtYjXMe9dVzCRnXdgiVsO8d13FT67A82eQ+T5SlkDKEjBfwPMLCDOJuYBQQOhSzN2eC2TEVMVMcraAMJOYCwgFhC7F3O25QEZMVcwkZwsIM4m5gFBA6FLM3Z4LZMRUxUxytgNH50EQIXwti/kD1ytvf+AEx95zCc+qYd67Xnn7Ayc49p5LeFYN8971ysKKX/CiAkInnWC9grWAcD2BY4OUJZCyBMxdPMRthLn7E4QCwgwyV7DqmEnOpqwJnE1ZHjykA8fsTx7IdOAQu2ZOWQ8IBYRraoif/A0e0oHj6jkh04Hj3y3Lg+fPIFNAuDbCXEDQSVkCKUvATHLWhS0dOK5/e4FMB46U9UCmA0fKeiDTgeMby2KeQWaWwtqBY+Z5QEhZJzgKCCnrBEcB4W8oi7kDxzXFLO55QJhJzDpmkrPuTzK/3vOAMJOYdcwkZ92fZH695wFhJjHrmEnOuj/J
+7O45wdGBYwNzFw8Rf5J59uUERweODhwbmLt4iPiTzLMvJzg6cHTg2MDcxUPEn2TufgChgNCBY+Y5waFjJjnbFXGC4/qTCAWEDhwzzwkOHTPJ2a6IExzXn0QoIHTgmHlOcOiYSc6Kh8mUFPP1ywNCAeH15iFmkrPiYTLuLyEUEF5vHmImOSseJuP+EkIB4fXmIWaSsy5s6fYguP9GpgPHC1KWQMoSWFjx/5CyBFKWQMoSSFkCKUsgZQmkLIGUJZCyBFKWQMoSSFkCKUsgZQmkLIGUJZCyBFLWmK+vnwxb9QoOUQcnAAAAAElFTkSuQmCC</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>

@@ -156,7 +156,7 @@ namespace WarehouseManagement.Views.Login
                     if (queries.checkAddress())
                     {
                         db_queries.get_sender();
-                        MainWindow main = new MainWindow();
+                        WaybillView main = new WaybillView();
                         main.Show();
                     }
                     else

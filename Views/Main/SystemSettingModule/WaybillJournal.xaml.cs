@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Reporting.WinForms;
+using Microsoft.ReportingServices.Interfaces;
+using WarehouseManagement.Models;
 
 namespace WarehouseManagement.Views.Main.SystemSettingModule
 {
@@ -27,7 +31,16 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
+                ReportViewer1.RefreshReport();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Report rendering error: " + ex.Message);
+            }
+            
         }
     }
 }
