@@ -126,25 +126,25 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 }
                 else
                 {
-                    //if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
-                    //{
-                    //    MessageBox.Show("Shop/Page Save");
-                    //    txtAddress.Clear();
-                    //    txtPagename.Clear();
-                    //    txtId.Text = "0";
-                    //    btnSubmit_sender.Content = "ADD";
-                    //    txtPhone.Clear();
-                    //    cmbProvince.Text = "";
-                    //    cmbCity.Text = "";
-                    //    cmbBarangay.Text = "";
+                    if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress, "", 1))
+                    {
+                        MessageBox.Show("Shop/Page Save");
+                        txtAddress.Clear();
+                        txtPagename.Clear();
+                        txtId.Text = "0";
+                        btnSubmit_sender.Content = "ADD";
+                        txtPhone.Clear();
+                        cmbProvince.Text = "";
+                        cmbCity.Text = "";
+                        cmbBarangay.Text = "";
 
-                    //    queries.PopulateShop(cmbAction);
-                    //    cmbAction.SelectedIndex = -1;
-                    //}
-                    //else
-                    //{
-                    //    return;
-                    //}
+                        queries.PopulateShop(cmbAction);
+                        cmbAction.SelectedIndex = -1;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
 

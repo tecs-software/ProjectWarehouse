@@ -99,7 +99,7 @@ namespace WarehouseManagement.Controller
             payloadObj.sender.address = GlobalModel.sender_address;
 
             //updating receiver information
-            payloadObj.receiver.name = receiver.FirstName + " " + receiver.MiddleName + " " + receiver.LastName;
+            payloadObj.receiver.name = receiver.FirstName;
             payloadObj.receiver.phone = receiver.Phone;
             payloadObj.receiver.mobile = receiver.Phone;
             payloadObj.receiver.prov = receiver.Province;
@@ -159,6 +159,7 @@ namespace WarehouseManagement.Controller
                     string txLogisticId = responseItems.txlogisticid;
                     string mailNo = responseItems.mailno;
                     string sortingCode = responseItems.sortingcode;
+                    string sortingNo = responseItems.sortingNo;
 
                     // Store the parameters in separate strings
                     string logisticProviderIdString = logisticProviderId.ToString();
@@ -171,6 +172,7 @@ namespace WarehouseManagement.Controller
                         string txLogisticIdString = txLogisticId.ToString();
                         string mailNoString = mailNo.ToString();
                         string sortingCodeString = sortingCode.ToString();
+                        string sortingNostring = sortingNo.ToString();
 
                         //true = insert suspicious
                         if (suspicious)
@@ -190,8 +192,7 @@ namespace WarehouseManagement.Controller
                             queries.update_inventory_status(booking_Info);
                         }
 
-                        string fullName = receiver.FirstName + " " + receiver.MiddleName + " " + receiver.LastName;
-                        await WaybillController.Insert(fullName, receiver.Province, receiver.City, receiver.Barangay, receiver.Address, GlobalModel.sender_name,
+                        await WaybillController.Insert(txLogisticIdString,mailNoString, sortingCodeString, sortingNostring ,receiver.FirstName, receiver.Province, receiver.City, receiver.Barangay, receiver.Address, GlobalModel.sender_name,
                             GlobalModel.sender_address, booking_Info.cod, booking_Info.item_name, decimal.Parse(booking_Info.goods_value), decimal.Parse(booking_Info.weight), booking_Info.remarks);
 
                         MessageBox.Show("Order has been Created");

@@ -240,5 +240,10 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         {
             cbPostalCodeFlash.SelectedIndex = -1;
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

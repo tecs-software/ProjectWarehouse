@@ -25,6 +25,10 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_waybill')
 BEGIN
     CREATE TABLE [dbo].[tbl_waybill](
         ID INT PRIMARY KEY IDENTITY(1,1),
+		Order_ID NVARCHAR(250),
+		Waybill NVARCHAR(250),
+		Sorting_Code NVARCHAR(250),
+		Sorting_No NVARCHAR(250),
 		ReceiverName NVARCHAR(250),
 		ReceiverProvince NVARCHAR(250),
 		ReceiverCity NVARCHAR(250),

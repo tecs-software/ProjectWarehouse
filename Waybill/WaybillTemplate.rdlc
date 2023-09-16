@@ -25,7 +25,7 @@
                                         <Value>=Parameters!SortingCode_params.Value</Value>
                                         <Style>
                                           <FontFamily>harmonyos sans Black</FontFamily>
-                                          <FontSize>23pt</FontSize>
+                                          <FontSize>20pt</FontSize>
                                         </Style>
                                       </TextRun>
                                     </TextRuns>
@@ -35,7 +35,7 @@
                                 <Top>0.03659in</Top>
                                 <Left>0.125in</Left>
                                 <Height>0.48451in</Height>
-                                <Width>2.01258in</Width>
+                                <Width>2.40826in</Width>
                                 <Style>
                                   <Border>
                                     <Style>None</Style>
@@ -52,7 +52,7 @@
                                         <Value>=Parameters!SortingNo_params.Value</Value>
                                         <Style>
                                           <FontFamily>harmonyos Sans Black</FontFamily>
-                                          <FontSize>23pt</FontSize>
+                                          <FontSize>20pt</FontSize>
                                         </Style>
                                       </TextRun>
                                     </TextRuns>
@@ -60,9 +60,9 @@
                                   </Paragraph>
                                 </Paragraphs>
                                 <Top>0.03659in</Top>
-                                <Left>2.43564in</Left>
+                                <Left>2.80353in</Left>
                                 <Height>0.48451in</Height>
-                                <Width>1.02979in</Width>
+                                <Width>0.68967in</Width>
                                 <ZIndex>1</ZIndex>
                                 <Style>
                                   <Border>
@@ -89,7 +89,7 @@
                                 </Paragraphs>
                                 <rd:DefaultName>Textbox5</rd:DefaultName>
                                 <Top>0.03659in</Top>
-                                <Left>2.17925in</Left>
+                                <Left>2.56103in</Left>
                                 <Height>0.34933in</Height>
                                 <Width>0.22861in</Width>
                                 <ZIndex>2</ZIndex>
@@ -1665,6 +1665,8 @@
     </ReportParameter>
     <ReportParameter Name="Weight_params">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="Remarks_params">

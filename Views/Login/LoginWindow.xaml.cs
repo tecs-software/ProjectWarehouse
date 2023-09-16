@@ -158,6 +158,8 @@ namespace WarehouseManagement.Views.Login
                         db_queries.get_sender();
                         MainWindow main = new MainWindow();
                         main.Show();
+                        //WaybillView show = new WaybillView();
+                        //show.Show();
                     }
                     else
                     {
