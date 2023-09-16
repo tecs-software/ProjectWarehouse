@@ -6,18 +6,49 @@
              xmlns:local="clr-namespace:WarehouseManagement.Views.Main.SystemSettingModule"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
-             Height="147" Width="552"
-             xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:winforms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-             xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-             Visibility="Visible">
-
+             Height="auto" Width="auto"
+             xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <WindowsFormsHost Grid.Row="1" >
-            <winforms:ReportViewer x:Name="ReportViewer1" Width="800" Height="600"/>
-        </WindowsFormsHost>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,24,0,0">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="275" />
+                    <ColumnDefinition Width="275" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="59"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txtSearch" materialDesign:HintAssist.Hint="Search" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Top" 
+                                                             SelectionBrush="#FF1D2118"/>
+                <DatePicker Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txt" materialDesign:HintAssist.Hint="Date" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedDatePicker}" VerticalAlignment="Top" 
+                                                             />
+                <DataGrid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" 
+                          Margin="8,8,8,0"
+                            DockPanel.Dock="Top"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="Column"
+                            GridLinesVisibility="All"
+                           
+                               ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                                VerticalScrollBarVisibility="Auto"
+                                                MaxHeight="390"
+                            RowHeight="40"
+                            IsReadOnly="True"
+                            CanUserDeleteRows="False"
+                            CanUserSortColumns="True"
+                            CanUserReorderColumns="False"
+                            CanUserResizeColumns="False"
+                            TextBlock.TextAlignment="Left"
+                            SelectionMode="Single"
+                            x:Name="tblProducts"
+                            ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

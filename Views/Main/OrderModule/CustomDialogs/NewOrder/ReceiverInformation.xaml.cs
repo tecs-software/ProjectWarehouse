@@ -112,6 +112,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             cbSizeFlash.Visibility = Visibility.Collapsed;
             lblReceiverInfo.Visibility = Visibility.Visible;
             lblBookingInfo.Visibility = Visibility.Visible;
+            insert_item();
         }
         private void cbProvince_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -185,11 +186,17 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         {
             sql.AddParam("@item", cbItem.Text);
             tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = @item");
+
+            if(tbQuantity.Text != "")
+            {
+                decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text)) + Converter.StringToDecimal(tbCod.Text);
+                tbTotal.Text = Converter.StringToMoney(total.ToString());
+            }
         }
 
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
         {
-            decimal total = Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text);
+            decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text)) + Converter.StringToDecimal(tbCod.Text);
             tbTotal.Text = Converter.StringToMoney(total.ToString());
         }
         private void rdbJandT_Checked(object sender, RoutedEventArgs e)

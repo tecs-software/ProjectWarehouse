@@ -71,13 +71,18 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
         {
-            //decimal total = Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text);
-            //tbTotal.Text = Converter.StringToMoney(total.ToString());
+            decimal total = (Converter.StringToDecimal(tbGoodsValue1.Text) * Converter.StringToDecimal(tbQuantity1.Text)) + Converter.StringToDecimal(tbCod.Text);
+            tbTotal.Text = Converter.StringToMoney(total.ToString());
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputValidation.Integer(sender, e);
+        }
+
+        private void tbCod_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputValidation.Decimal(sender, e);
         }
     }
 }

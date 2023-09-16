@@ -73,7 +73,20 @@
                      Margin="20,20,10,0"
                      Focusable="True"/>
 
-
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="3"
+                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="COD Amount" 
+                     FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     x:Name="tbCod"
+                     IsReadOnly="False"
+                     Margin="8,20,20,0"
+                     Text="0"
+                     KeyUp="tbQuantity_KeyUp"
+                     Focusable="True" PreviewTextInput="tbCod_PreviewTextInput"/>
 
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="4"

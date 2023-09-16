@@ -31,16 +31,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
-                ReportViewer1.RefreshReport();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Report rendering error: " + ex.Message);
-            }
-            
+         
         }
     }
 }

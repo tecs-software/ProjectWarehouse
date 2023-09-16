@@ -34,6 +34,9 @@ namespace WarehouseManagement.Controller
         SuspiciousController suspiciouscontroller = new SuspiciousController();
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
         {
+            //for insertion in tbl_waybill
+          
+
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
@@ -161,7 +164,7 @@ namespace WarehouseManagement.Controller
                     string logisticProviderIdString = logisticProviderId.ToString();
                     string successString = success.ToString();
                     string reasonString = reason.ToString();
-                    
+                     
                     //if there is no error
                     if (successString == "true")
                     {
@@ -173,27 +176,23 @@ namespace WarehouseManagement.Controller
                         if (suspicious)
                         {
                             queries.insert_receiver(receiver);
-
                             queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
-
                             queries.insert_Incentives(booking_Info, txLogisticIdString);
-
                             queries.update_inventory_status(booking_Info);
-
                             suspiciouscontroller.InsertSuspiciousData();
 
                         }
                         else
                         {
-
                             queries.insert_receiver(receiver);
-
                             queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
-
                             queries.insert_Incentives(booking_Info, txLogisticIdString);
-
                             queries.update_inventory_status(booking_Info);
                         }
+
+                        string fullName = receiver.FirstName + " " + receiver.MiddleName + " " + receiver.LastName;
+                        await WaybillController.Insert(fullName, receiver.Province, receiver.City, receiver.Barangay, receiver.Address, GlobalModel.sender_name,
+                            GlobalModel.sender_address, booking_Info.cod, booking_Info.item_name, decimal.Parse(booking_Info.goods_value), decimal.Parse(booking_Info.weight), booking_Info.remarks);
 
                         MessageBox.Show("Order has been Created");
                         return true;

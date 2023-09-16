@@ -269,6 +269,22 @@
                      Margin="20,8,10,0"
                      Focusable="True"/>
 
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Grid.Row="3"
+                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="COD Amount" 
+                     FontSize="15"
+                     Background="{StaticResource textboxProfitAnalysisColor1}"
+                     materialDesign:HintAssist.Foreground="Black"
+                     BorderBrush="Black"
+                     x:Name="tbCod"
+                     IsReadOnly="False"
+                     VerticalAlignment="Top"
+                     Margin="10,8,20,0"
+                     KeyUp="tbQuantity_KeyUp"
+                     Text="0"
+                     Focusable="True"/>
+                    
                     <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
                       Grid.Column="1"
                       Grid.Row="3"

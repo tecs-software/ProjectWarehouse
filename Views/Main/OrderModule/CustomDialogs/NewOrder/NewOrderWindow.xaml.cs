@@ -112,7 +112,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                     booking_info.bag_specification = receiverInformationPage.tbBagSpecification.Text;
                     booking_info.remarks = receiverInformationPage.tbRemarks.Text;
                     booking_info.quantity = receiverInformationPage.tbQuantity.Text;
-
+                    booking_info.cod = decimal.Parse(receiverInformationPage.tbCod.Text);
                     btnNext.IsEnabled = false;
                     //calling the method for api ordering
                     if (queries.check_quantity(booking_info, _receiver))

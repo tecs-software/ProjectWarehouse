@@ -20,6 +20,26 @@ BEGIN
     )
 END
 GO
+-- Create tbl_waybill table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_waybill')
+BEGIN
+    CREATE TABLE [dbo].[tbl_waybill](
+        ID INT PRIMARY KEY IDENTITY(1,1),
+		ReceiverName NVARCHAR(250),
+		ReceiverProvince NVARCHAR(250),
+		ReceiverCity NVARCHAR(250),
+		ReceiverBarangay NVARCHAR(250),
+		ReceiverAddress NVARCHAR(250),
+		SenderName NVARCHAR(250),
+		SenderAddress NVARCHAR(250),
+		COD DECIMAL(18,2),
+		Goods NVARCHAR(250),
+		Price DECIMAL(18,2),
+		[Weight] DECIMAL(18,2),
+		Remarks NVARCHAR(Max),
+    )
+END
+GO
 -- Create tbl_users table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_expenses')
 BEGIN
