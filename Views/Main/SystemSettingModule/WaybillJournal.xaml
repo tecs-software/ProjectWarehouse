@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
              Height="auto" Width="auto"
-             xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes">
+             xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:winforms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms">
     <Grid>
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,24,0,0">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -20,17 +20,23 @@
                     <RowDefinition Height="59"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txtSearch" materialDesign:HintAssist.Hint="Search" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                <TextBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txtSearch" materialDesign:HintAssist.Hint="Search Waybill" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Top" 
-                                                             SelectionBrush="#FF1D2118"/>
+                                                             SelectionBrush="#FF1D2118" KeyUp="txtSearch_KeyUp"/>
                 <DatePicker Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="8,8,24,0" x:Name="txt" materialDesign:HintAssist.Hint="Date" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedDatePicker}" VerticalAlignment="Top" 
                                                              />
+                <Button Grid.Column="2" Grid.Row="0" Content="Print" x:Name="btnPrint" Click="Print_Click">
+                    
+                </Button>
+                <WindowsFormsHost x:Name="ReportView" Grid.ColumnSpan="2" Margin="138,-21,137,51">
+                    <winforms:ReportViewer x:Name="ReportViewer1" Width="800" Height="600"/>
+                </WindowsFormsHost>
                 <DataGrid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" 
                           Margin="8,8,8,0"
                             DockPanel.Dock="Top"
                             CanUserAddRows="False"
-                            AutoGenerateColumns="False"
+                            AutoGenerateColumns="True"
                             HeadersVisibility="Column"
                             GridLinesVisibility="All"
                            
@@ -45,10 +51,12 @@
                             CanUserResizeColumns="False"
                             TextBlock.TextAlignment="Left"
                             SelectionMode="Single"
-                            x:Name="tblProducts"
-                            ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                            x:Name="tblWaybilldata"
+                            ColumnHeaderStyle="{StaticResource HeaderStyle}" SelectionChanged="tblWaybilldata_SelectionChanged">
                 </DataGrid>
+
             </Grid>
         </Grid>
+        
     </Grid>
 </UserControl>

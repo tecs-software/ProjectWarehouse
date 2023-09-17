@@ -25,61 +25,6 @@
                                         <Value>=Parameters!SortingCode_params.Value</Value>
                                         <Style>
                                           <FontFamily>harmonyos sans Black</FontFamily>
-                                          <FontSize>20pt</FontSize>
-                                        </Style>
-                                      </TextRun>
-                                    </TextRuns>
-                                    <Style />
-                                  </Paragraph>
-                                </Paragraphs>
-                                <Top>0.03659in</Top>
-                                <Left>0.125in</Left>
-                                <Height>0.48451in</Height>
-                                <Width>2.40826in</Width>
-                                <Style>
-                                  <Border>
-                                    <Style>None</Style>
-                                  </Border>
-                                </Style>
-                              </Textbox>
-                              <Textbox Name="tb_sorting_no">
-                                <CanGrow>true</CanGrow>
-                                <KeepTogether>true</KeepTogether>
-                                <Paragraphs>
-                                  <Paragraph>
-                                    <TextRuns>
-                                      <TextRun>
-                                        <Value>=Parameters!SortingNo_params.Value</Value>
-                                        <Style>
-                                          <FontFamily>harmonyos Sans Black</FontFamily>
-                                          <FontSize>20pt</FontSize>
-                                        </Style>
-                                      </TextRun>
-                                    </TextRuns>
-                                    <Style />
-                                  </Paragraph>
-                                </Paragraphs>
-                                <Top>0.03659in</Top>
-                                <Left>2.80353in</Left>
-                                <Height>0.48451in</Height>
-                                <Width>0.68967in</Width>
-                                <ZIndex>1</ZIndex>
-                                <Style>
-                                  <Border>
-                                    <Style>None</Style>
-                                  </Border>
-                                </Style>
-                              </Textbox>
-                              <Textbox Name="Textbox11">
-                                <CanGrow>true</CanGrow>
-                                <KeepTogether>true</KeepTogether>
-                                <Paragraphs>
-                                  <Paragraph>
-                                    <TextRuns>
-                                      <TextRun>
-                                        <Value>-</Value>
-                                        <Style>
-                                          <FontFamily>harmonyOS Sans Black</FontFamily>
                                           <FontSize>23pt</FontSize>
                                         </Style>
                                       </TextRun>
@@ -87,12 +32,10 @@
                                     <Style />
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>Textbox5</rd:DefaultName>
                                 <Top>0.03659in</Top>
-                                <Left>2.56103in</Left>
-                                <Height>0.34933in</Height>
-                                <Width>0.22861in</Width>
-                                <ZIndex>2</ZIndex>
+                                <Left>0.09483in</Left>
+                                <Height>0.51229in</Height>
+                                <Width>3.37864in</Width>
                                 <Style>
                                   <Border>
                                     <Style>None</Style>
@@ -1191,7 +1134,6 @@
                                 <Style>
                                   <FontFamily>harmonyos sans sc</FontFamily>
                                   <FontSize>7pt</FontSize>
-                                  <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1567,7 +1509,7 @@
         <InteractiveHeight>150mm</InteractiveHeight>
         <InteractiveWidth>100mm</InteractiveWidth>
         <LeftMargin>0pt</LeftMargin>
-        <RightMargin>3.25pt</RightMargin>
+        <RightMargin>0pt</RightMargin>
         <TopMargin>0pt</TopMargin>
         <BottomMargin>0pt</BottomMargin>
         <Style>

@@ -131,26 +131,46 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
                     ReportViewer1.RefreshReport();
 
-                    // Create a PrintDocument for printing
-                    PrintDocument printDoc = new PrintDocument();
-                    printDoc.PrintPage += (sender, e) =>
+                    try
                     {
-                        // Render the report as an image and draw it directly on the PrintPageEventArgs
-                        var imageBytes = ReportViewer1.LocalReport.Render("Image");
-                        using (var stream = new System.IO.MemoryStream(imageBytes))
+                        // Create a PrintDocument for printing
+                        PrintDocument printDoc = new PrintDocument();
+                        printDoc.PrintPage += (sender, e) =>
                         {
-                            using (var image = System.Drawing.Image.FromStream(stream))
+                            // Render the report as an image and draw it directly on the PrintPageEventArgs
+                            var imageBytes = ReportViewer1.LocalReport.Render("Image");
+                            using (var stream = new System.IO.MemoryStream(imageBytes))
                             {
-                                e.Graphics.DrawImage(image, e.PageBounds);
+                                using (var image = System.Drawing.Image.FromStream(stream))
+                                {
+                                    e.Graphics.DrawImage(image, e.PageBounds);
+                                }
                             }
+                        };
+
+                        // Set the printer name (you can retrieve available printer names using PrinterSettings)
+                        printDoc.PrinterSettings.PrinterName = "ZIJIANG LABEL";
+
+                        // Print the document
+                        printDoc.Print();
+                        MessageBox.Show("Test");
+                    }
+                    catch (System.Drawing.Printing.InvalidPrinterException)
+                    {
+                        // Handle the case where the specified printer cannot be located
+                        // Save the report as a PDF on the desktop as a fallback
+
+                        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                        string pdfFilePath = System.IO.Path.Combine(desktopPath, waybill + ".pdf");
+
+                        // Proceed to save the report as a PDF
+                        var imageBytes = ReportViewer1.LocalReport.Render("Image");
+                        using (var stream = new System.IO.FileStream(pdfFilePath, FileMode.Create))
+                        {
+                            stream.Write(imageBytes, 0, imageBytes.Length);
                         }
-                    };
-
-                    // Set the printer name (you can retrieve available printer names using PrinterSettings)
-                    printDoc.PrinterSettings.PrinterName = "ZIJIANG LABEL";
-
-                    // Print the document
-                    printDoc.Print();
+                        MessageBox.Show("Printer not detected, printed waybill will be saved on your desktop.");
+                    }
                 }
             }
         }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Controller
@@ -111,6 +112,26 @@ namespace WarehouseManagement.Controller
                 }
             });
             return condition;
+        }
+        public static async Task DisplayDataOnWaybillJournal(DataGrid dg)
+        {
+            await Task.Run(() =>
+            {
+                sql.Query($"SELECT * FROM tbl_waybill");
+                if(sql.DBDT.Rows.Count > 0)
+                {
+                    Application.Current.Dispatcher.Invoke(() => dg.ItemsSource = sql.DBDT.DefaultView);
+                }
+
+            });
+        }
+        public static void searchWaybill(TextBox tb, DataGrid dg)
+        {
+            sql.Query($"SELECT * FROM tbl_waybill WHERE Waybill LIKE '%{tb.Text}%'");
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                Application.Current.Dispatcher.Invoke(() => dg.ItemsSource = sql.DBDT.DefaultView);
+            }
         }
     }
 }
