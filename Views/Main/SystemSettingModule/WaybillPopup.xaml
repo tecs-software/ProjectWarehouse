@@ -38,7 +38,7 @@
                 </Button>
 
             </DockPanel>
-            <Frame x:Name="PrinterSettingFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
+            <Frame  Grid.Row="1" x:Name="PrinterSettingFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="0,40,0,0"/>
 
         </Grid>
     </Border>
