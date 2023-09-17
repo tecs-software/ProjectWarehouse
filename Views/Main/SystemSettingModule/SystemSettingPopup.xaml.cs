@@ -83,6 +83,9 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 case "Bulk Order Backup":
                     bulkOrderFrame.Source = new Uri("../SystemSettingModule/FrameBulkOrderBackup.xaml", UriKind.Relative);
                     break;
+                case "Printer Setting":
+                    PrinterSettingFrame.Source = new Uri("../SystemSettingModule/FramePrinterSetting.xaml", UriKind.Relative);
+                    break;
                 default:
                     return;
             }

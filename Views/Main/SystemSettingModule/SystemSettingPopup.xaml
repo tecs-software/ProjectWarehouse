@@ -176,6 +176,9 @@
                         <TabItem Header="Waybill Journal" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Visible">
                             <Frame x:Name="WaybillJournalFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
                         </TabItem>
+                        <TabItem Header="Printer Setting" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Visible">
+                            <Frame x:Name="PrinterSettingFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
+                        </TabItem>
                     </TabControl.Items>
                 </TabControl>
             </StackPanel>

@@ -155,6 +155,10 @@ namespace WarehouseManagement.Views.Login
 
                     if (queries.checkAddress())
                     {
+                        if(await WaybillController.IsEmpty())
+                        {
+                            new WaybillPopup().ShowDialog();
+                        }
                         db_queries.get_sender();
                         MainWindow main = new MainWindow();
                         main.Show();

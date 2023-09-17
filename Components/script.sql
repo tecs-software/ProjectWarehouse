@@ -20,6 +20,16 @@ BEGIN
     )
 END
 GO
+-- Create tbl_printer_setting table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_printer_setting')
+BEGIN
+    CREATE TABLE [dbo].[tbl_printer_setting](
+        ID INT PRIMARY KEY IDENTITY(1,1),
+		[Name] NVARCHAR(255),
+		CourierName NVARCHAR(255),
+    )
+END
+GO
 -- Create tbl_waybill table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_waybill')
 BEGIN
