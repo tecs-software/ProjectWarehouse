@@ -32,27 +32,33 @@ namespace WarehouseManagement.Controller
             int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item_name"));
 
             sql.AddParam("@address", model.receiver_address);
-            sql.Query($"EXEC SPadd_orders '{order_id}', 'J&T', '{waybill}', {CurrentUser.Instance.userID}, '{model.product_name}'," +
-                $"{model.quantity}, {model.total}, '{model.remarks}', 'PENDING', '{model.receiver_phone}', @address, {sender_id}");
+            sql.AddParam("@remarks", model.remarks);
+            sql.AddParam("@item", model.product_name);
+            sql.Query($"EXEC SPadd_orders '{order_id}', 'J&T', '{waybill}', {CurrentUser.Instance.userID}, @item," +
+                $"{model.quantity}, {model.total}, @remarks, 'PENDING', '{model.receiver_phone}', @address, {sender_id}");
             if (sql.HasException(true)) return;
         }
         
         public static void bulk_incentives(bulk_model model, string order_id)
         {
+            sql.AddParam("@item", model.product_name);
             sql.Query($"EXEC SPadd_incentives {CurrentUser.Instance.userID}, '{order_id}', {model.quantity}," +
-            $"{1}, '{model.product_name}'");
+            $"{1}, @item");
             if (sql.HasException(true)) return;
         }
         public static void bulk_update_quantity(bulk_model model)
         {
-            sql.Query($"EXEC SPupdate_stocks {model.quantity}, '{model.product_name}'");
+            sql.AddParam("@item",model.product_name);
+            sql.Query($"EXEC SPupdate_stocks {model.quantity}, @item");
             if (sql.HasException(true)) return;
         }
         public static void bulk_update_stocks(bulk_model model)
         {
-            int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '{model.product_name}'"));
+            sql.AddParam("@item", model.product_name);
+            int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = @item"));
             string Status = newStock < 0 ? Util.status_out_of_stock : newStock == 0 ? Util.status_out_of_stock : newStock <= 100 ? Util.status_low_stock : Util.status_in_stock;
-            sql.Query($"UPDATE tbl_products set status = '{Status}' WHERE item_name = '{model.product_name}'");
+            sql.AddParam("@product", model.product_name);
+            sql.Query($"UPDATE tbl_products set status = '{Status}' WHERE item_name = @product");
             if (sql.HasException(true)) return;
         }
 

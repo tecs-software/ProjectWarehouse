@@ -38,6 +38,33 @@ namespace WarehouseManagement.Controller
                     return false;
             }
         }
+        public static void checkTrialKey()
+        {
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) from tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO'"));
+            if (count > 0)
+            {
+                sql.Query($"DELETE FROM tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO'");
+                sql.Query($"INSERT INTO tbl_trial_key (Product_Key) VALUES ('No')");
+            }
+            int checkKey = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial_key"));
+            if(checkKey == 0)
+            {
+                sql.Query($"INSERT INTO tbl_trial_key (Product_Key) VALUES ('No')");
+            }
+        }
+        public static void checkTrialCount()
+        {
+
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial"));
+            if(count == 0)
+            {
+                sql.Query($"INSERT INTO tbl_trial (date) VALUES (GETDATE())");
+            }
+            else
+            {
+                //do nothing
+            }
+        }
         public static void refreshSubs()
         {
             sql.Query($"DELETE FROM tbl_trial");

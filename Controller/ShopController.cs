@@ -77,7 +77,7 @@ namespace WarehouseManagement.Controller
                     List<shopData> shops = new List<shopData>();
                     foreach (DataRow dr in sql.DBDT.Rows)
                     {
-                        if (dr[5].ToString() == "")
+                        if (dr[5].ToString() == "" || dr[5].ToString() == null)
                         {
                             shopData shop_data = new shopData
                             {
@@ -143,7 +143,7 @@ namespace WarehouseManagement.Controller
                     List<shopData> shops = new List<shopData>();
                     foreach (DataRow dr in sql.DBDT.Rows)
                     {
-                        if (dr[5].ToString() == "")
+                        if (dr[5].ToString() == "" || dr[5].ToString() == null)
                         {
                             shopData shop_data = new shopData
                             {

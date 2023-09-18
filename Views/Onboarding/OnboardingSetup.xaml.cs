@@ -18,6 +18,7 @@ using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Views.Main;
+using WWarehouseManagement.Database;
 using static WarehouseManagement.Models.Address;
 
 namespace WarehouseManagement.Views.Onboarding
@@ -28,6 +29,9 @@ namespace WarehouseManagement.Views.Onboarding
     public partial class OnboardingSetup : Window
     {
         BackgroundWorker workerImportAddress;
+
+        sql_control sql = new sql_control();
+
         public DataTable JNTAddress { get; set; }
         public DataTable FlashAddress { get; set; }
         void CheckedRadio(string text)
@@ -43,6 +47,7 @@ namespace WarehouseManagement.Views.Onboarding
                 ContainerJnt.Visibility = Visibility.Collapsed;
             }
         }
+
         public OnboardingSetup()
         {
             InitializeComponent();
@@ -101,7 +106,7 @@ namespace WarehouseManagement.Views.Onboarding
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-
+        
         }
         private void cmbProvince_DropDownClosed(object sender, EventArgs e)
         {
