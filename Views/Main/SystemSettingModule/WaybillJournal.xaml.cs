@@ -157,7 +157,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                         };
 
                         // Set the printer name (you can retrieve available printer names using PrinterSettings)
-                        string? printer = sql.ReturnResult($"SELECT Name FROM tbl_printer_setting WHERE ID = 1");
+                        string? printer = sql.ReturnResult($"SELECT Name FROM tbl_printer_setting WHERE CourierName = 'JNT'");
                         printDoc.PrinterSettings.PrinterName = printer;
 
                         // Print the document
