@@ -102,15 +102,18 @@
                         <!-- Row for the text blocks -->
                     </Grid.RowDefinitions>
 
-                    <TextBlock Foreground="White" Grid.Row="0" Grid.Column="0" Text="Session ID:" Margin="24,24,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
-                    <TextBlock x:Name="lblSessionID" Foreground="White" Grid.Row="0" Grid.Column="1" Text="08/12/2023-1000" Margin="24,24,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
-
+                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                        <TextBlock Foreground="White" Grid.Row="0" Grid.Column="0" Text="Session ID:" FontWeight="Light" Margin="24,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15" />
+                        <TextBlock x:Name="lblSessionID" Foreground="White" Grid.Row="0" Grid.Column="1" Text=" " Margin="8,0,0,0" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
+                    </StackPanel>
                     <!--<ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="Menu" Height="auto"/>
     </ScrollViewer>-->
                 </Grid>
-                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="0" Text="Parcel Count" Margin="100,60,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" />
-                <TextBlock x:Name="lbl_total_count" Foreground="White" Grid.Row="4" Grid.Column="1" Text="1000" Margin="115,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="32" />
+                <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                    <TextBlock Foreground="White" Grid.Row="0" Grid.Column="0" Text="Parcel Count:" Margin="24,12,0,0" FontSize="15" FontWeight="Light" />
+                    <TextBlock x:Name="lbl_total_count" Foreground="White" Grid.Row="4" Grid.Column="1" Text="" Margin="8,0,0,0" FontSize="30" FontWeight="DemiBold" />
+                </StackPanel>
             </StackPanel>
             <DockPanel x:Name="dockPanelTable" Grid.Column="1" Height="Auto" VerticalAlignment="Top" Grid.ColumnSpan="3">
                 <local:DeliveryTable  x:Name="deliveryTable" />

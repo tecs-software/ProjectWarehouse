@@ -8,7 +8,7 @@
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder"
+        xmlns:local="clr-namespace:WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder" xmlns:winforms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Title="NewOrderWindow" Height="Auto" Width="800">
@@ -36,19 +36,20 @@
         BorderBrush="Black"
         BorderThickness="1">
 
-        <Grid Height="Auto" Margin="20">
-
-            <Grid.RowDefinitions>
+            <Grid Height="Auto" Margin="20">
+                <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-
-            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,10">
+                <WindowsFormsHost x:Name="ReportView" Grid.Row="0" Visibility="Collapsed">
+                    <winforms:ReportViewer x:Name="ReportViewer1" Width="800" Height="600"/>
+                </WindowsFormsHost>
+                <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,10">
 
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="New Order" Margin="0,10,0,20" Foreground="{StaticResource textMenuColor2}" FontSize="20" FontWeight="Medium"/>
 
-                <Button x:Name="btnClose"
+                    <Button x:Name="btnClose"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Grid.Row="0"
@@ -56,14 +57,11 @@
                             Background="{StaticResource textboxProfitAnalysisColor1}"
                             BorderBrush="Transparent"
                             IsCancel="True">
-                </Button>
-
-
-            </DockPanel>
-
+                    </Button>
+                </DockPanel>
             <Frame Grid.Row="1" x:Name="mainFrame" NavigationUIVisibility="Hidden" VerticalAlignment="Center"/>
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Margin="0,16,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
@@ -95,7 +93,9 @@
                     Height="50" 
                     Click="btnNext_Click"/>
             </Grid>
-        </Grid>
+                
+            </Grid>
+            
 
     </Border>
     </materialDesign:DialogHost>

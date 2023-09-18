@@ -73,17 +73,18 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
             switch (tabItem)
             {
-                case "Sender Information":
-                    //senderInfoFrame.Source = new Uri("../ProductView/ProductInformation.xaml", UriKind.Relative);
-                    break;
-                case "Courier Accounts":
-                   // courierAccountFrame.Source = new Uri("../ProductView/ProductList.xaml", UriKind.Relative);
-                    break;
+               
                 case "Import Address":
                     importAddressFrame.Source = new Uri("../SystemSettingModule/FrameImportAddress.xaml", UriKind.Relative);
                     break;
+                case "Waybill Journal":
+                    WaybillJournalFrame.Source = new Uri("../SystemSettingModule/WaybillJournal.xaml", UriKind.Relative);
+                    break;
                 case "Bulk Order Backup":
                     bulkOrderFrame.Source = new Uri("../SystemSettingModule/FrameBulkOrderBackup.xaml", UriKind.Relative);
+                    break;
+                case "Printer Setting":
+                    PrinterSettingFrame.Source = new Uri("../SystemSettingModule/FramePrinterSetting.xaml", UriKind.Relative);
                     break;
                 default:
                     return;
@@ -128,7 +129,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 }
                 else
                 {
-                    if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress))
+                    if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress, "", 1))
                     {
                         MessageBox.Show("Shop/Page Save");
                         txtAddress.Clear();

@@ -32,31 +32,31 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         public void insert_item()
         {
-            if(CurrentUser.Instance.userID == 1)
-            {
-                sql.Query($"SELECT * FROM tbl_products");
-                if (sql.HasException(true)) return;
-                if (sql.DBDT.Rows.Count > 0)
-                {
-                    foreach (DataRow dr in sql.DBDT.Rows)
-                    {
-                        cbItem.Items.Add(dr[2]);
-                    }
-                }
-            }
-            else
-            {
-                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}"));
-                sql.Query($"SELECT * FROM tbl_products WHERE sender_id = {sender_id}");
-                if (sql.HasException(true)) return;
-                if (sql.DBDT.Rows.Count > 0)
-                {
-                    foreach (DataRow dr in sql.DBDT.Rows)
-                    {
-                        cbItem.Items.Add(dr[2]);
-                    }
-                }
-            }
+            //if(CurrentUser.Instance.userID == 1)
+            //{
+            //    sql.Query($"SELECT * FROM tbl_products");
+            //    if (sql.HasException(true)) return;
+            //    if (sql.DBDT.Rows.Count > 0)
+            //    {
+            //        foreach (DataRow dr in sql.DBDT.Rows)
+            //        {
+            //            cbItem.Items.Add(dr[2]);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}"));
+            //    sql.Query($"SELECT * FROM tbl_products WHERE sender_id = {sender_id}");
+            //    if (sql.HasException(true)) return;
+            //    if (sql.DBDT.Rows.Count > 0)
+            //    {
+            //        foreach (DataRow dr in sql.DBDT.Rows)
+            //        {
+            //            cbItem.Items.Add(dr[2]);
+            //        }
+            //    }
+            //}
         }
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -66,18 +66,23 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void cbItem_DropDownClosed(object sender, EventArgs e)
         {
-            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '{cbItem.Text}'");
+            //tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = '{cbItem.Text}'");
         }
 
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
         {
-            decimal total = Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text);
+            decimal total = (Converter.StringToDecimal(tbGoodsValue1.Text) * Converter.StringToDecimal(tbQuantity1.Text)) + Converter.StringToDecimal(tbCod.Text);
             tbTotal.Text = Converter.StringToMoney(total.ToString());
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputValidation.Integer(sender, e);
+        }
+
+        private void tbCod_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputValidation.Decimal(sender, e);
         }
     }
 }

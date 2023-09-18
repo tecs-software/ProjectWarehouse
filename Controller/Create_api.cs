@@ -32,8 +32,11 @@ namespace WarehouseManagement.Controller
         sql_control sql = new sql_control();
         db_queries queries = new db_queries();
         SuspiciousController suspiciouscontroller = new SuspiciousController();
-        public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
+        public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious, string cod)
         {
+            //for insertion in tbl_waybill
+          
+
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
@@ -106,7 +109,7 @@ namespace WarehouseManagement.Controller
             }
 
             //updating receiver information
-            payloadObj.receiver.name = receiver.FirstName + " " + receiver.MiddleName + " " + receiver.LastName;
+            payloadObj.receiver.name = receiver.FirstName;
             payloadObj.receiver.phone = receiver.Phone;
             payloadObj.receiver.mobile = receiver.Phone;
             payloadObj.receiver.prov = receiver.Province;
@@ -118,7 +121,7 @@ namespace WarehouseManagement.Controller
             //updating other fields
             payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             payloadObj.weight = booking_Info.weight;
-            payloadObj.itemsvalue = booking_Info.goods_value;
+            payloadObj.itemsvalue = cod;
             payloadObj.totalquantity = booking_Info.quantity;
             payloadObj.remark = booking_Info.remarks;
 
@@ -126,10 +129,11 @@ namespace WarehouseManagement.Controller
             var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
             if (itemsArray != null && itemsArray.Count > 0)
             {
+                decimal goodsTotalValue = decimal.Parse(booking_Info.goods_value) * int.Parse(booking_Info.quantity);
                 var firstItem = itemsArray[0];
                 firstItem["itemname"] = booking_Info.item_name;
                 firstItem["number"] = booking_Info.quantity;
-                firstItem["itemvalue"] = booking_Info.goods_value;
+                firstItem["itemvalue"] = goodsTotalValue.ToString();
             }
 
 
@@ -166,44 +170,41 @@ namespace WarehouseManagement.Controller
                     string txLogisticId = responseItems.txlogisticid;
                     string mailNo = responseItems.mailno;
                     string sortingCode = responseItems.sortingcode;
+                    string sortingNo = responseItems.sortingNo;
 
                     // Store the parameters in separate strings
                     string logisticProviderIdString = logisticProviderId.ToString();
                     string successString = success.ToString();
                     string reasonString = reason.ToString();
-                    
+                     
                     //if there is no error
                     if (successString == "true")
                     {
                         string txLogisticIdString = txLogisticId.ToString();
                         string mailNoString = mailNo.ToString();
                         string sortingCodeString = sortingCode.ToString();
+                        string sortingNostring = sortingNo.ToString();
 
                         //true = insert suspicious
                         if (suspicious)
                         {
                             queries.insert_receiver(receiver);
-
                             queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
-
                             queries.insert_Incentives(booking_Info, txLogisticIdString);
-
                             queries.update_inventory_status(booking_Info);
-
                             suspiciouscontroller.InsertSuspiciousData();
 
                         }
                         else
                         {
-
                             queries.insert_receiver(receiver);
-
                             queries.Insert_Orders(txLogisticIdString, mailNoString, booking_Info, "PENDING");
-
                             queries.insert_Incentives(booking_Info, txLogisticIdString);
-
                             queries.update_inventory_status(booking_Info);
                         }
+
+                        await WaybillController.Insert(txLogisticIdString,mailNoString, sortingCodeString, sortingNostring ,receiver.FirstName, receiver.Province, receiver.City, receiver.Barangay, receiver.Address, GlobalModel.sender_name,
+                            GlobalModel.sender_address, booking_Info.cod, booking_Info.item_name, decimal.Parse(booking_Info.goods_value), decimal.Parse(booking_Info.weight), booking_Info.remarks);
 
                         MessageBox.Show("Order has been Created");
                         return true;
@@ -434,35 +435,38 @@ namespace WarehouseManagement.Controller
                             switch(reason)
                             {
                                 case "S03":
-                                    MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please change the EcCompany ID on system settings.");
                                     break;
                                 case "S06":
-                                    MessageBox.Show("Connection timeout from the server. Retry order again.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Connection timeout from the server. Retry order again.");
                                     break;
                                 case "B001":
-                                    MessageBox.Show("Please change the EcCompany ID on system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please change the EcCompany ID on system settings.");
                                     break;
                                 case "B002":
-                                    MessageBox.Show("Please change the VIP code on system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please change the VIP code on system settings.");
                                     break;
                                 case "S13":
-                                    MessageBox.Show("VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. VIP code doesn't exists. Please check your VIP code or change it on the system settings.");
                                     break;
                                 case "B063":
-                                    MessageBox.Show("Province-> City-> Baranggay didnt match, kindly check these details as J&T has own addressing guide.");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Province-> City-> Baranggay didnt match, kindly check these details as J&T has own addressing guide.");
                                     break;
                                 default:
-                                    MessageBox.Show("Please contact tech team and provide this error message. (" + reason + ").");
+                                    MessageBox.Show(details.receiver_name + "'s order didn't succeed. Please contact tech team and provide this error message. (" + reason + ").");
                                     break;
-                            }
-                                
+                            } 
                             BulkOrderPopup.NoError = false;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("J&T error occurred: " + details.receiver_name + "'s order might pushed, kindly check your VIP dashboard. " + ex.Message);
+                    string errorMessage = "J&T error occurred: " + details.receiver_name + "'s order might pushed, kindly check your VIP dashboard. " + ex.Message;
+                    string stackTrace = ex.StackTrace;
+                    string[] stackTraceLines = stackTrace.Split('\n');
+                    string firstStackTraceLine = stackTraceLines.Length > 0 ? stackTraceLines[0] : "Unknown";
+                    errorMessage += "\n\nException occurred at: " + firstStackTraceLine;
                     BulkOrderPopup.NoError = false;
                 }
                 totalOrders++;

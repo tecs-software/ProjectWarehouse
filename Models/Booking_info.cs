@@ -15,5 +15,6 @@ namespace WarehouseManagement.Models
         public string bag_specification { get; set; } = string.Empty;
         public string remarks { get; set; }
         public string courier { get; set; } = "J&T";
+        public decimal cod { get; set; } = 0;
     }
 }
