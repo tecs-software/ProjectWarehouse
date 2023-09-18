@@ -118,7 +118,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                     ReportParameter weight = new ReportParameter("Weight_params", dr[15].ToString());
                     ReportParameter remarks = new ReportParameter("Remarks_params", dr[16].ToString());
                     ReportParameter order_id = new ReportParameter("Order_id_params", dr[1].ToString());
-                    ReportParameter date = new ReportParameter("Date_params", DateTime.Now.ToString("YYYY/MM/DD"));
+                    ReportParameter date = new ReportParameter("Date_params", DateTime.Now.ToString("yyyy/MM/dd"));
                     ReportParameter time = new ReportParameter("Time_params", DateTime.Now.ToString("hh:mm:ss"));
 
                     // images(Barcodes/QR code)

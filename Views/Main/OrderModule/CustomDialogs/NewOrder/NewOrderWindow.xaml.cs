@@ -270,7 +270,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                     ReportViewer1.RefreshReport();
                     if (queries.check_quantity(booking_info, _receiver))
                     {
-                        if (await order_api.api_create(_receiver, booking_info, isSuspicious))
+                        if (await order_api.api_create(_receiver, booking_info, isSuspicious, receiverInformationPage.tbCod.Text))
                         {
                             btnNext.IsEnabled = true;
                             this.DialogResult = true;

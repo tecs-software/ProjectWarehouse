@@ -32,7 +32,7 @@ namespace WarehouseManagement.Controller
         sql_control sql = new sql_control();
         db_queries queries = new db_queries();
         SuspiciousController suspiciouscontroller = new SuspiciousController();
-        public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious)
+        public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious, string cod)
         {
             //for insertion in tbl_waybill
           
@@ -111,7 +111,7 @@ namespace WarehouseManagement.Controller
             //updating other fields
             payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             payloadObj.weight = booking_Info.weight;
-            payloadObj.itemsvalue = booking_Info.goods_value;
+            payloadObj.itemsvalue = cod;
             payloadObj.totalquantity = booking_Info.quantity;
             payloadObj.remark = booking_Info.remarks;
 
@@ -119,10 +119,11 @@ namespace WarehouseManagement.Controller
             var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
             if (itemsArray != null && itemsArray.Count > 0)
             {
+                decimal goodsTotalValue = decimal.Parse(booking_Info.goods_value) * int.Parse(booking_Info.quantity);
                 var firstItem = itemsArray[0];
                 firstItem["itemname"] = booking_Info.item_name;
                 firstItem["number"] = booking_Info.quantity;
-                firstItem["itemvalue"] = booking_Info.goods_value;
+                firstItem["itemvalue"] = goodsTotalValue.ToString();
             }
 
 
