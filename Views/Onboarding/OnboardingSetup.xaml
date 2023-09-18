@@ -96,7 +96,7 @@
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Page/Shop Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
                                 <materialDesign:Card Grid.Row="1" Grid.Column="0" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="50" materialDesign:ShadowAssist.ShadowEdges="All"
                                     Margin="24,24,24,0">
-                                    <StackPanel Margin="5" Orientation="Horizontal">
+                                    <StackPanel Margin="5" Orientation="Horizontal" Visibility="Collapsed">
                                         <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked" />
                                         <RadioButton Margin="8,0,0,0" x:Name="rdbFlash" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlash_Checked" />
                                     </StackPanel>
@@ -168,7 +168,7 @@
 
                                 <materialDesign:Card Grid.Row="1" Grid.Column="0" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="50" materialDesign:ShadowAssist.ShadowEdges="All"
                                     Margin="24,24,24,0">
-                                    <StackPanel Margin="5" Orientation="Horizontal">
+                                    <StackPanel Margin="5" Orientation="Horizontal" Visibility="Collapsed">
                                         <RadioButton Margin="16,0,0,0" x:Name="rdbJandTCustomer" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" />
                                         <RadioButton Margin="8,0,0,0" x:Name="rdbFlashCustomer" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}"/>
                                     </StackPanel>

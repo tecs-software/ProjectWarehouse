@@ -60,6 +60,9 @@ namespace WarehouseManagement.Views.Onboarding
             Csv_Controller.dataTableJntAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
             Csv_Controller.dataTableFlashAddress = Csv_Controller.GetDataTableFromCSVFile(txtAddressFlash.Text);
 
+            rdbJandT.IsChecked = true;
+            rdbJandTCustomer.IsChecked = true;
+
         }
         db_queries queries = new db_queries();
         private void load_couriers()

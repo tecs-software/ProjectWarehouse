@@ -69,6 +69,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Addressing_guide_with_can_do_delivery.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Components\script.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -80,6 +83,9 @@
     </None>
     <None Update="Components\table_province.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="FlashServiceAreaManagement.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

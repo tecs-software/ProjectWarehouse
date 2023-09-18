@@ -434,6 +434,18 @@ namespace WarehouseManagement.Database
                 return false;
             }
         }
+        public bool checkJTAddress()
+        {
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_address_delivery"));
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public async Task sales_graph(int days, CartesianChart chart)
         {

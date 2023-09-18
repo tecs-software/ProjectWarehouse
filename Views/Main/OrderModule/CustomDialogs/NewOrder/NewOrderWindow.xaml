@@ -42,7 +42,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-                <WindowsFormsHost x:Name="ReportView" Grid.Row="0">
+                <WindowsFormsHost x:Name="ReportView" Grid.Row="0" Visibility="Collapsed">
                     <winforms:ReportViewer x:Name="ReportViewer1" Width="800" Height="600"/>
                 </WindowsFormsHost>
                 <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,10">

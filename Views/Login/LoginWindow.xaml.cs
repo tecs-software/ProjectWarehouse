@@ -152,8 +152,7 @@ namespace WarehouseManagement.Views.Login
 
                 if (await db.AuthenticateUser(username, password))
                 {
-
-                    if (queries.checkAddress())
+                    if (queries.checkJTAddress())
                     {
                         if(await WaybillController.IsEmpty())
                         {
@@ -170,7 +169,6 @@ namespace WarehouseManagement.Views.Login
                         OnboardingSetup onboarding = new OnboardingSetup();
                         onboarding.Show();
                     }
-
                     this.Close();
                 }
                 else

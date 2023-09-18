@@ -113,6 +113,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             lblReceiverInfo.Visibility = Visibility.Visible;
             lblBookingInfo.Visibility = Visibility.Visible;
             insert_item();
+            rdbJandT.IsChecked = true;
         }
         private void cbProvince_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -196,8 +197,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
 
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
         {
-            decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text)) + Converter.StringToDecimal(tbCod.Text);
-            tbTotal.Text = Converter.StringToMoney(total.ToString());
+            decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text));
+            tbTotalGoods.Text = Converter.StringToMoney(total.ToString());
         }
         private void rdbJandT_Checked(object sender, RoutedEventArgs e)
         {
@@ -244,6 +245,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void tbCod_KeyUp(object sender, KeyEventArgs e)
+        {
+            tbTotal.Text = "₱" + Converter.StringToMoney(tbCod.Text);
         }
     }
 }

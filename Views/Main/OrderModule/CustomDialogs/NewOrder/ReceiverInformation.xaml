@@ -31,7 +31,7 @@
             <TextBlock Text="Select Courier" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="8,8,0,8" FontSize="20" FontWeight="SemiBold"/>
             <materialDesign:Card Grid.Row="1" Grid.Column="0" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="50" materialDesign:ShadowAssist.ShadowEdges="All"
                          Margin="8,0,0,8">
-                <StackPanel Margin="5" Orientation="Horizontal">
+                <StackPanel Margin="5" Orientation="Horizontal" Visibility="Collapsed">
                     <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked" />
                     <RadioButton Margin="8,0,0,0" x:Name="rdbFlash" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlash_Checked" />
                 </StackPanel>
@@ -281,7 +281,7 @@
                      IsReadOnly="False"
                      VerticalAlignment="Top"
                      Margin="10,8,20,0"
-                     KeyUp="tbQuantity_KeyUp"
+                     KeyUp="tbCod_KeyUp"
                      Text="0"
                      Focusable="True"/>
                     
@@ -299,7 +299,7 @@
                     <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="4"
                      Grid.Column="0"
-                     materialDesign:HintAssist.Hint="Goods Value (PHP)" 
+                     materialDesign:HintAssist.Hint="Total Goods Value (PHP)" 
                      FontSize="15"
                      Background="{StaticResource textboxProfitAnalysisColor1}"
                      materialDesign:HintAssist.Foreground="Black"
@@ -360,8 +360,12 @@
                      Focusable="True"/>
 
                     <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="20,20,20,20">
-                        <TextBlock Text="Total Amount:" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" FontSize="15" VerticalAlignment="Center" FontWeight="Regular"/>
-                        <TextBlock Text="₱0" x:Name="tbTotal" Grid.Row="8" Grid.Column="0" FontSize="30" Margin="20,0,0,0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        <TextBlock Text="Total COD Amount:" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" FontSize="15" VerticalAlignment="Center" FontWeight="Regular"/>
+                        <TextBlock Text="₱0" x:Name="tbTotal" Grid.Row="8" Grid.Column="0" FontSize="30" Margin="5,0,0,0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,0">
+                        <TextBlock Text="Total Goods Amount:" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" FontSize="15" VerticalAlignment="Center" FontWeight="Regular"/>
+                        <TextBlock Text="₱0" x:Name="tbTotalGoods" Grid.Row="8" Grid.Column="0" FontSize="30" Margin="5,0,0,0" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>
