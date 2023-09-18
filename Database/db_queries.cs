@@ -194,7 +194,7 @@ namespace WarehouseManagement.Database
 
             string sender_id = sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE product_id = '{product_id}'");
 
-            decimal total = decimal.Parse(book_info.quantity) * decimal.Parse(book_info.goods_value);
+            decimal total = book_info.cod;
 
             sql.AddParam("@remarks", book_info.remarks);
 

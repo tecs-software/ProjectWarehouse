@@ -257,7 +257,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                     //booking frame
                     booking_info.item_name = receiverInformationPage.cbItem.Text;
                     booking_info.weight = receiverInformationPage.tbWeight.Text;
-                    booking_info.goods_value = receiverInformationPage.tbGoodsValue.Text;
+                    booking_info.goods_value = receiverInformationPage.tbTotalGoods.Text;
                     booking_info.bag_specification = receiverInformationPage.tbBagSpecification.Text;
                     booking_info.remarks = receiverInformationPage.tbRemarks.Text;
                     booking_info.quantity = receiverInformationPage.tbQuantity.Text;

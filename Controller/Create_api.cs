@@ -129,11 +129,10 @@ namespace WarehouseManagement.Controller
             var itemsArray = payloadObj["items"] as JArray; // Assuming payloadObj is your JSON object
             if (itemsArray != null && itemsArray.Count > 0)
             {
-                decimal goodsTotalValue = decimal.Parse(booking_Info.goods_value) * int.Parse(booking_Info.quantity);
                 var firstItem = itemsArray[0];
                 firstItem["itemname"] = booking_Info.item_name;
                 firstItem["number"] = booking_Info.quantity;
-                firstItem["itemvalue"] = goodsTotalValue.ToString();
+                firstItem["itemvalue"] = booking_Info.goods_value;
             }
 
 
