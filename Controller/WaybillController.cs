@@ -33,9 +33,19 @@ namespace WarehouseManagement.Controller
             string remarks
             )
         {
+            sql.AddParam("@item", goods);
+            int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item"));
+            string sender_name = sql.ReturnResult($"SELECT sender_name FROM tbl_sender WHERE sender_id = {sender_id}");
+            string sender_add = sql.ReturnResult($"SELECT sender_address FROM tbl_sender WHERE sender_id = {sender_id}");
+
+
+            sql.AddParam("@sender_name", sender_name);
+            sql.AddParam("@sender_add", sender_add);
+            sql.AddParam("@remarks",remarks);
+            sql.AddParam("@rAddress", receiverAddress);
             await Task.Run(() => sql.Query($"INSERT INTO tbl_waybill (Order_ID, Waybill, Sorting_Code, Sorting_No, ReceiverName,ReceiverProvince, ReceiverCity, ReceiverBarangay,ReceiverAddress,SenderName,SenderAddress,COD, Goods, Price, Weight, Remarks) " +
-                $"VALUES ('{Order_id}', '{Waybill}', '{SortingCode}', '{SortingNo}', '{receiverName}', '{receiverProvince}', '{receiverCity}', '{receiverBarangay}', '{receiverAddress}',  " +
-                $" '{senderName}','{senderAddress}', {cod}, '{goods}', {price},{weight}, '{remarks}') "));
+                $"VALUES ('{Order_id}', '{Waybill}', '{SortingCode}', '{SortingNo}', '{receiverName}', '{receiverProvince}', '{receiverCity}', '{receiverBarangay}', @rAddress,  " +
+                $" @sender_name, @sender_add, {cod}, '{goods}', {price},{weight}, @remarks) "));
             if (sql.HasException(true)) return;
         }
         public static async Task LoadDevice(ComboBox cmbJnt, ComboBox cmbFlash)
