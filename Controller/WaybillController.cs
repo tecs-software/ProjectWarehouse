@@ -26,10 +26,10 @@ namespace WarehouseManagement.Controller
             string receiverAddress,
             string senderName,
             string senderAddress,               
-            decimal cod,
+            decimal? cod,
             string goods,
-            decimal price,
-            decimal weight,
+            decimal? price,
+            decimal? weight,
             string remarks
             )
         {

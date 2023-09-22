@@ -35,8 +35,6 @@ namespace WarehouseManagement.Controller
         public async Task<bool> api_create(Receiver receiver, Booking_info booking_Info, bool suspicious, string cod)
         {
             //for insertion in tbl_waybill
-          
-
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
@@ -135,7 +133,6 @@ namespace WarehouseManagement.Controller
                 firstItem["itemvalue"] = booking_Info.goods_value;
             }
 
-
             string updatedPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payloadObj);
             //MessageBox.Show(updatedPayload);
             try
@@ -159,17 +156,17 @@ namespace WarehouseManagement.Controller
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
-
+                    MessageBox.Show(response);
                     //to decode the response
                     dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
                     string logisticProviderId = responseObject.logisticproviderid;
-                    dynamic responseItems = responseObject.responseitems[0];
+                    dynamic? responseItems = responseObject.responseitems[0];
                     string success = responseItems.success;
                     string reason = responseItems.reason;
                     string txLogisticId = responseItems.txlogisticid;
                     string mailNo = responseItems.mailno;
                     string sortingCode = responseItems.sortingcode;
-                    string sortingNo = responseItems.sortingNo;
+                    string? sortingNo = responseItems.sortingNo;
 
                     // Store the parameters in separate strings
                     string logisticProviderIdString = logisticProviderId.ToString();
@@ -243,7 +240,7 @@ namespace WarehouseManagement.Controller
             }
         }
         //api bulk orders
-        public void create_bulk_api(List<bulk_model> model, Button btn, bool granted, ProgressBar pb_load)
+        public async void create_bulk_api(List<bulk_model> model, Button btn, bool granted, ProgressBar pb_load)
         {
             string txtCount;
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
@@ -380,11 +377,13 @@ namespace WarehouseManagement.Controller
                         string txLogisticId = responseItems.txlogisticid;
                         string mailNo = responseItems.mailno;
                         string sortingCode = responseItems.sortingcode;
+                        string? sortingNo = responseItems.sortingNo;
 
                         // Store the parameters in separate strings
                         string logisticProviderIdString = logisticProviderId.ToString();
                         string successString = success.ToString();
                         string reasonString = reason.ToString();
+                        string sortingNostring = sortingNo.ToString();
 
                         //if there is no error
                         if (successString == "true")
@@ -426,6 +425,13 @@ namespace WarehouseManagement.Controller
 
                                 bulk_inserts.bulk_update_stocks(details);
                             }
+
+                            await WaybillController.Insert(txLogisticIdString, mailNoString, sortingCodeString, sortingNostring, details.receiver_name, details.receiver_province, details.receiver_city, details.receiver_area, details.receiver_address, GlobalModel.sender_name,
+                            GlobalModel.sender_address, details.cod, details.product_name, details.parcel_value, details.weight, details.remarks);
+
+                            BulkOrderPopup bulk_popup = new BulkOrderPopup();
+                            await bulk_popup.printwaybill(mailNoString);
+
                             BulkOrderPopup.NoError = true;
                         }
                         //if there's error on API
@@ -466,6 +472,7 @@ namespace WarehouseManagement.Controller
                     string[] stackTraceLines = stackTrace.Split('\n');
                     string firstStackTraceLine = stackTraceLines.Length > 0 ? stackTraceLines[0] : "Unknown";
                     errorMessage += "\n\nException occurred at: " + firstStackTraceLine;
+                    MessageBox.Show(errorMessage);
                     BulkOrderPopup.NoError = false;
                 }
                 totalOrders++;

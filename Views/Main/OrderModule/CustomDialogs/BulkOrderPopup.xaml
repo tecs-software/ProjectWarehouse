@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:winforms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         mc:Ignorable="d"
         Closing="Window_Closing"
         Background="Transparent"
@@ -51,6 +51,9 @@
                     <RowDefinition Height="60"/>
 
                 </Grid.RowDefinitions>
+                <WindowsFormsHost x:Name="ReportView" Grid.Row="0" Visibility="Collapsed">
+                    <winforms:ReportViewer x:Name="ReportViewer1" Width="800" Height="600"/>
+                </WindowsFormsHost>
 
                 <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
 

@@ -114,6 +114,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             lblBookingInfo.Visibility = Visibility.Visible;
             insert_item();
             rdbJandT.IsChecked = true;
+            rdbFlash.IsChecked = false;
+            rdbFlash.IsEnabled = false;
         }
         private void cbProvince_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -198,7 +200,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
         {
             decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text));
-            tbTotalGoods.Text = Converter.StringToMoney(total.ToString());
+            tbTotalGoods.Text = total.ToString();
         }
         private void rdbJandT_Checked(object sender, RoutedEventArgs e)
         {

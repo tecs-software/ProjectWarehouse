@@ -238,6 +238,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         private async void btnNext_Click(object sender, RoutedEventArgs e)
         {
+            
             if (receiverInformationPage.rdbJandT.IsChecked == true)
             {
                 if(emptyFieldsChecker())
