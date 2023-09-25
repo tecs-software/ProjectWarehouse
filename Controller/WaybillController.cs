@@ -127,7 +127,7 @@ namespace WarehouseManagement.Controller
         {
             await Task.Run(() =>
             {
-                sql.Query($"SELECT * FROM tbl_waybill");
+                sql.Query($"SELECT * FROM tbl_waybill ORDER BY ID DESC");
                 if(sql.DBDT.Rows.Count > 0)
                 {
                     Application.Current.Dispatcher.Invoke(() => dg.ItemsSource = sql.DBDT.DefaultView);

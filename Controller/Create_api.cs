@@ -156,7 +156,6 @@ namespace WarehouseManagement.Controller
 
                     // Decode and display the response
                     string response = Encoding.UTF8.GetString(responseBytes);
-                    MessageBox.Show(response);
                     //to decode the response
                     dynamic responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
                     string logisticProviderId = responseObject.logisticproviderid;
@@ -428,9 +427,6 @@ namespace WarehouseManagement.Controller
 
                             await WaybillController.Insert(txLogisticIdString, mailNoString, sortingCodeString, sortingNostring, details.receiver_name, details.receiver_province, details.receiver_city, details.receiver_area, details.receiver_address, GlobalModel.sender_name,
                             GlobalModel.sender_address, details.cod, details.product_name, details.parcel_value, details.weight, details.remarks);
-
-                            BulkOrderPopup bulk_popup = new BulkOrderPopup();
-                            await bulk_popup.printwaybill(mailNoString);
 
                             BulkOrderPopup.NoError = true;
                         }

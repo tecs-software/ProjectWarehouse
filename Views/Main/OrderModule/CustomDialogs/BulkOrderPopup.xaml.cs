@@ -191,9 +191,9 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
         public static bool NoError = true;
         private async void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
-            ReportViewer1.LocalReport.EnableExternalImages = true;
-            ReportViewer1.RefreshReport();
+            //ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
+            //ReportViewer1.LocalReport.EnableExternalImages = true;
+            //ReportViewer1.RefreshReport();
 
             if (Csv_Controller.checkItemname(dtBulkOrders) || Csv_Controller.checkNullCells(dtBulkOrders) || Csv_Controller.checkquantity(dtBulkOrders))
             {
