@@ -709,7 +709,6 @@
                                     <Style>
                                       <FontFamily>HarmonyOS Sans SC</FontFamily>
                                       <FontSize>6pt</FontSize>
-                                      <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>

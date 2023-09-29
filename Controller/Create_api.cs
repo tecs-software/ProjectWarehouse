@@ -423,10 +423,10 @@ namespace WarehouseManagement.Controller
                                 bulk_inserts.bulk_update_quantity(details);
 
                                 bulk_inserts.bulk_update_stocks(details);
-                            }
 
-                            await WaybillController.Insert(txLogisticIdString, mailNoString, sortingCodeString, sortingNostring, details.receiver_name, details.receiver_province, details.receiver_city, details.receiver_area, details.receiver_address, GlobalModel.sender_name,
-                            GlobalModel.sender_address, details.cod, details.product_name, details.parcel_value, details.weight, details.remarks);
+                                WaybillController.Insert(txLogisticIdString, mailNoString, sortingCodeString, sortingNostring, details.receiver_name, details.receiver_province, details.receiver_city, details.receiver_area, details.receiver_address, GlobalModel.sender_name,
+                                GlobalModel.sender_address, details.cod, details.product_name, details.parcel_value, details.weight, details.remarks);
+                            }
 
                             BulkOrderPopup.NoError = true;
                         }
