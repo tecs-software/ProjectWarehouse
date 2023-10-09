@@ -434,20 +434,20 @@ BEGIN
     END
 END
 
---IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
---BEGIN
---    CREATE TABLE [dbo].[tbl_sender](
---		sender_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
---		courier_id INT NOT NULL,
---		[sender_name] [varchar](255) NOT NULL,
---        [sender_province] [varchar](255) NOT NULL,
---        [sender_city] [varchar](255) NOT NULL,
---        [sender_baranggay] [varchar](255) NOT NULL,
---		[sender_postalCode] [varchar](50) NOT NULL,
---		[sender_phone] [varchar](50) NOT NULL,
---        [sender_address] [varchar](255) NOT NULL,
---		)
---END
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
+BEGIN
+    CREATE TABLE [dbo].[tbl_sender](
+		sender_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		courier_id INT NOT NULL,
+		[sender_name] [varchar](255) NOT NULL,
+        [sender_province] [varchar](255) NOT NULL,
+        [sender_city] [varchar](255) NOT NULL,
+        [sender_baranggay] [varchar](255) NOT NULL,
+		[sender_postalCode] [varchar](50) NOT NULL,
+		[sender_phone] [varchar](50) NOT NULL,
+        [sender_address] [varchar](255) NOT NULL,
+		)
+END
 IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_sender')
 BEGIN
     IF EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.tbl_sender') AND name = 'sender_address')
@@ -556,7 +556,7 @@ BEGIN
     @sender_city VARCHAR(100),
     @sender_baranggay VARCHAR(100),
     @sender_phone VARCHAR(50),
-    @sender_address VARCHAR(255)
+    @sender_address VARCHAR(255),
 	@courier_id INT,
 	@sender_postalCode VARCHAR(100)
     AS

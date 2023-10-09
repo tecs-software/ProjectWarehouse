@@ -103,13 +103,13 @@ namespace WarehouseManagement.Database
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
                     systemSetting.txtId.Text = dr[0].ToString();
-                    systemSetting.txtPagename.Text = dr[1].ToString();
-                    systemSetting.txtPhone.Text = dr[5].ToString();
-                    systemSetting.txtAddress.Text = dr[6].ToString();
+                    systemSetting.txtPagename.Text = dr[2].ToString();
+                    systemSetting.txtPhone.Text = dr[7].ToString();
+                    systemSetting.txtAddress.Text = dr[8].ToString();
 
-                    systemSetting.cmbProvince.Text = dr[2].ToString();
-                    barangay = dr[4].ToString();
-                    city = dr[3].ToString();
+                    systemSetting.cmbProvince.Text = dr[3].ToString();
+                    barangay = dr[5].ToString();
+                    city = dr[4].ToString();
                 }
                 systemSetting.cmbCity.Items.Clear();
                 systemSetting.cmbBarangay.Items.Clear();

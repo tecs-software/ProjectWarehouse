@@ -47,7 +47,7 @@ namespace WarehouseManagement.Controller
                 sql.Query($"INSERT INTO tbl_trial_key (Product_Key) VALUES ('No')");
             }
             int checkKey = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial_key"));
-            if(checkKey == 0)
+            if (checkKey == 0)
             {
                 sql.Query($"INSERT INTO tbl_trial_key (Product_Key) VALUES ('No')");
             }
@@ -56,7 +56,7 @@ namespace WarehouseManagement.Controller
         {
 
             int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial"));
-            if(count == 0)
+            if (count == 0)
             {
                 sql.Query($"INSERT INTO tbl_trial (date) VALUES (GETDATE())");
             }
@@ -90,13 +90,13 @@ namespace WarehouseManagement.Controller
         public static void updateModules()
         {
             int? count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) from tbl_module_access WHERE module_name = 'modify order inquiry'"));
-            if(count > 0)
+            if (count > 0)
             {
                 sql.Query($"UPDATE tbl_module_access SET module_name = 'Modify Out For Pick Up' WHERE module_name = 'modify order inquiry'");
                 sql.Query($"UPDATE tbl_module_access SET module_name = 'View Out For Pick Up' WHERE module_name = 'view order inquiry'");
             }
             int? count1 = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial_key"));
-            if(count1 > 1)
+            if (count1 > 1)
             {
                 sql.Query($"DELETE FROM tbl_trial_key");
                 sql.Query($"INSERT INTO tbl_trial_key(Product_Key) VALUES ('No')");
