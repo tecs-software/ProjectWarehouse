@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,22 @@ namespace WarehouseManagement.Controller
         static sql_control sql = new sql_control();
         public static void InsertTrialDay() {
             sql.Query("EXEC Sp_Trial_Insertion");
-        } 
+        }
+        public static void checkOffice()
+        {
+            sql.Query($"SELECT * FROM tbl_trial_key");
+            if (sql.HasException(true)) return;
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    if (dr[1].ToString() == "Office")
+                    {
+                        sql.Query($"DELETE FROM tbl_trial");
+                    }
+                }
+            }
+        }
         public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
         public static void MessagePopup()
         {
@@ -40,7 +56,7 @@ namespace WarehouseManagement.Controller
         }
         public static void checkTrialKey()
         {
-            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) from tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO'"));
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) from tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO' AND Product_Key != 'Office'"));
             if (count > 0)
             {
                 sql.Query($"DELETE FROM tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO'");

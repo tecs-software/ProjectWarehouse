@@ -53,7 +53,7 @@ namespace WarehouseManagement.Views.Onboarding
             InitializeComponent();
             load_couriers();
             txtFileNameProduct.Text = "Addressing_guide_with_can_do_delivery.csv";  //JNT ADDRESS
-            txtAddressFlash.Text = "Flash_Addressing_Guide.csv";  //Flash ADDRESS
+            txtAddressFlash.Text = "FlashServiceAreaManagement.csv";  //Flash ADDRESS
 
             JNTAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
             FlashAddress = Csv_Controller.GetDataTableFromCSVFile(txtAddressFlash.Text);
