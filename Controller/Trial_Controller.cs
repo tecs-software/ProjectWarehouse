@@ -23,11 +23,23 @@ namespace WarehouseManagement.Controller
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
-                    if (dr[1].ToString() == "Office")
+                    if (dr[1].ToString() == "OFFICE")
                     {
                         sql.Query($"DELETE FROM tbl_trial");
                     }
                 }
+            }
+        }
+        public static void setLifetime()
+        {
+            sql.Query($"SELECT customer_id FROM tbl_couriers WHERE customer_id = 'MNL-V0619'");
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                sql.Query($"UPDATE tbl_trial_key set Product_Key = 'OFFICE'");
+            }
+            else
+            {
+                //do nothing
             }
         }
         public static int HaveTrialKey() => int.Parse(sql.ReturnResult("EXEC SpTrial_HaveKey"));
@@ -59,7 +71,7 @@ namespace WarehouseManagement.Controller
             int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) from tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO' AND Product_Key != 'Office'"));
             if (count > 0)
             {
-                sql.Query($"DELETE FROM tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO'");
+                sql.Query($"DELETE FROM tbl_trial_key WHERE Product_Key != 'YES' AND Product_Key != 'NO' AND Product_Key != 'Office'");
                 sql.Query($"INSERT INTO tbl_trial_key (Product_Key) VALUES ('No')");
             }
             int checkKey = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_trial_key"));
