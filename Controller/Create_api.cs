@@ -96,13 +96,13 @@ namespace WarehouseManagement.Controller
             {
                 foreach( DataRow dr in sql.DBDT.Rows)
                 {
-                    payloadObj.sender.name = dr[2].ToString();
-                    payloadObj.sender.phone = dr[7].ToString();
-                    payloadObj.sender.mobile = dr[7].ToString();
-                    payloadObj.sender.prov = dr[3].ToString();
-                    payloadObj.sender.city = dr[4].ToString();
-                    payloadObj.sender.area = dr[5].ToString();
-                    payloadObj.sender.address = dr[8].ToString();
+                    payloadObj.sender.name = dr[1].ToString();
+                    payloadObj.sender.phone = dr[5].ToString();
+                    payloadObj.sender.mobile = dr[5].ToString();
+                    payloadObj.sender.prov = dr[2].ToString();
+                    payloadObj.sender.city = dr[3].ToString();
+                    payloadObj.sender.area = dr[4].ToString();
+                    payloadObj.sender.address = dr[6].ToString();
                 }
             }
 
@@ -306,13 +306,13 @@ namespace WarehouseManagement.Controller
                     foreach(DataRow dr in sql.DBDT.Rows)
                     {
                         //updating sender information
-                        payloadObj.sender.name = dr[2].ToString();
-                        payloadObj.sender.phone = dr[7].ToString();
-                        payloadObj.sender.mobile = dr[7].ToString();
-                        payloadObj.sender.prov = dr[3].ToString();
-                        payloadObj.sender.city = dr[4].ToString();
-                        payloadObj.sender.area = dr[5].ToString();
-                        payloadObj.sender.address = dr[8].ToString();
+                        payloadObj.sender.name = dr[1].ToString();
+                        payloadObj.sender.phone = dr[5].ToString();
+                        payloadObj.sender.mobile = dr[5].ToString();
+                        payloadObj.sender.prov = dr[2].ToString();
+                        payloadObj.sender.city = dr[3].ToString();
+                        payloadObj.sender.area = dr[4].ToString();
+                        payloadObj.sender.address = dr[6].ToString();
                     }
                 }
                 //updating receiver information
