@@ -84,7 +84,7 @@ namespace WarehouseManagement.Controller
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
             //for VIP code
-            payloadObj.eccompanyid = GlobalModel.eccompany_id;
+            payloadObj.eccompanyid = "THIRDYNAL";
             payloadObj.customerid = GlobalModel.customer_id;
 
 
@@ -290,7 +290,7 @@ namespace WarehouseManagement.Controller
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
             //for VIP code
-            payloadObj.eccompanyid = GlobalModel.eccompany_id;
+            payloadObj.eccompanyid = "THIRDYNAL";
             payloadObj.customerid = GlobalModel.customer_id;
 
             int totalOrders = 0;
@@ -306,13 +306,13 @@ namespace WarehouseManagement.Controller
                     foreach(DataRow dr in sql.DBDT.Rows)
                     {
                         //updating sender information
-                        payloadObj.sender.phone = dr[5].ToString();
-                        payloadObj.sender.mobile = dr[5].ToString();
-                        payloadObj.sender.prov = dr[2].ToString();
-                        payloadObj.sender.city = dr[3].ToString();
-                        payloadObj.sender.area = dr[4].ToString();
-                        payloadObj.sender.address = dr[6].ToString();
-                        payloadObj.sender.name = dr[1].ToString();
+                        payloadObj.sender.name = dr[2].ToString();
+                        payloadObj.sender.phone = dr[7].ToString();
+                        payloadObj.sender.mobile = dr[7].ToString();
+                        payloadObj.sender.prov = dr[3].ToString();
+                        payloadObj.sender.city = dr[4].ToString();
+                        payloadObj.sender.area = dr[5].ToString();
+                        payloadObj.sender.address = dr[8].ToString();
                     }
                 }
                 //updating receiver information
