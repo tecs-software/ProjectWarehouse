@@ -159,8 +159,10 @@ namespace WarehouseManagement.Views.Login
                             new WaybillPopup().ShowDialog();
                         }
                         db_queries.get_sender();
-                        MainWindow main = new MainWindow();
-                        main.Show();
+                        OnboardingSetup onboarding = new OnboardingSetup();
+                        onboarding.Show();
+                        //MainWindow main = new MainWindow();
+                        //main.Show();
                         //WaybillView show = new WaybillView();
                         //show.Show();
                     }

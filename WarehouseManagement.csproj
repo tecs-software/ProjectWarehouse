@@ -84,7 +84,7 @@
     <None Update="Components\table_province.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="FlashServiceAreaManagement.csv">
+    <None Update="Flash_Addressing_Guide.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -63,6 +63,33 @@ namespace WarehouseManagement.Database
                 return true;
             }
         }
+        public bool checkExistingVIPCode(string VIP)
+        {
+            sql.AddParam("@vip", VIP);
+            sql.Query($"SELECT * FROM tbl_couriers WHERE customer_id = @vip ");
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool VIPLimit()
+        {
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers"));
+            if (count >= 2)
+            {
+                MessageBox.Show("true daw");
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("false daw");
+                return false;
+            }
+        }
         public static bool checkExistingShop(string name)
         {
             sql.AddParam("@name", name);

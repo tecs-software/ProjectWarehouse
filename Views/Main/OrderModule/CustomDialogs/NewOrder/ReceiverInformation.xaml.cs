@@ -115,7 +115,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             insert_item();
             rdbJandT.IsChecked = true;
             rdbFlash.IsChecked = false;
-            rdbFlash.IsEnabled = false;
         }
         private void cbProvince_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

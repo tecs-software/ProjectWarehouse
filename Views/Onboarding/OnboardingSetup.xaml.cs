@@ -40,11 +40,14 @@ namespace WarehouseManagement.Views.Onboarding
             {
                 ContainerFlash.Visibility = Visibility.Collapsed;
                 ContainerJnt.Visibility = Visibility.Visible;
+                cmbProvinceFlash.Text = "";
+
             }
             if (text == "FLASH")
             {
                 ContainerFlash.Visibility = Visibility.Visible;
                 ContainerJnt.Visibility = Visibility.Collapsed;
+                cmbProvinceJnt.Text = "";
             }
         }
 
@@ -53,7 +56,7 @@ namespace WarehouseManagement.Views.Onboarding
             InitializeComponent();
             load_couriers();
             txtFileNameProduct.Text = "Addressing_guide_with_can_do_delivery.csv";  //JNT ADDRESS
-            txtAddressFlash.Text = "FlashServiceAreaManagement.csv";  //Flash ADDRESS
+            txtAddressFlash.Text = "Flash_Addressing_Guide.csv";  //Flash ADDRESS
 
             JNTAddress = Csv_Controller.GetDataTableFromCSVFile(txtFileNameProduct.Text);
             FlashAddress = Csv_Controller.GetDataTableFromCSVFile(txtAddressFlash.Text);
@@ -84,14 +87,14 @@ namespace WarehouseManagement.Views.Onboarding
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            btnImportAddress.IsEnabled = false;
-            workerImportAddress = new BackgroundWorker();
-            workerImportAddress.WorkerReportsProgress = true;
+            //btnImportAddress.IsEnabled = false;
+            //workerImportAddress = new BackgroundWorker();
+            //workerImportAddress.WorkerReportsProgress = true;
 
-            workerImportAddress.DoWork += WorkerImportRegion_DoWork;
-            workerImportAddress.RunWorkerCompleted += WorkerImportRegion_RunWorkerCompleted;
+            //workerImportAddress.DoWork += WorkerImportRegion_DoWork;
+            //workerImportAddress.RunWorkerCompleted += WorkerImportRegion_RunWorkerCompleted;
 
-            workerImportAddress.RunWorkerAsync();
+            //workerImportAddress.RunWorkerAsync();
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)
@@ -123,17 +126,46 @@ namespace WarehouseManagement.Views.Onboarding
 
             queries.baranggay(cmbBarangayJnt, cmbCityJnt.Text);
         }
+        #region FLASH ADDRESSES
+        private void cmbProvinceFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            cmbCityFlash.SelectedIndex = -1;
+            queries.FlashCity(cmbCityFlash, cmbProvinceFlash.Text);
+        }
+        private void cmbProvinceFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbCityFlash.SelectedIndex = -1;
+            cmbBarangayFlash.ItemsSource = null;
+        }
+        private void cmbCityFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            queries.FlashBaranggay(cmbBarangayFlash, cmbCityFlash.Text);
+        }
+        private void cmbCityFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbBarangayFlash.SelectedIndex = -1;
+        }
 
+        private void cmbBarangayFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            queries.FlashPostalCode(cmbPostalCodeFlash, cmbBarangayFlash.Text);
+        }
+
+        private void cmbBarangayFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbPostalCodeFlash.SelectedIndex = -1;
+        }
+        #endregion
         private void WorkerImportRegion_DoWork(object sender, DoWorkEventArgs e)
         {
             Csv_Controller.ImportAddress(lblImportedProducts, pbBarProduct);
         }
         private void WorkerImportRegion_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Import address successfully", "Success");
             btnImportAddress.IsEnabled = true;
             Csv_Controller.ConfirmedToImport = true;
             queries.province(cmbProvinceJnt);
+            queries.FlashProvince(cmbProvinceFlash);
         }
         private void btnBrowseAddress_Click(object sender, RoutedEventArgs e)
         {
@@ -215,9 +247,19 @@ namespace WarehouseManagement.Views.Onboarding
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (Util.IsAnyTextBoxEmpty(txtCustomerID, txtEccompanyId))
+            if (Util.IsAnyTextBoxEmpty(txtCustomerID))
             {
                 MessageBox.Show("Please complete all required fields on customer information.");
+                return;
+            }
+            else if(queries.checkExistingVIPCode(txtCustomerID.Text))
+            {
+                MessageBox.Show("VIP code Exist.");
+                return;
+            }
+            else if(queries.VIPLimit())
+            {
+                MessageBox.Show("VIPs limit reached.");
                 return;
             }
             else
@@ -232,7 +274,7 @@ namespace WarehouseManagement.Views.Onboarding
                 else
                 {
                     //J&T
-                    queries.api_credentials(rdbJandT, "03bf07bf1b172b13efb6259f44190ff3", txtEccompanyId.Text, txtCustomerID);
+                    queries.api_credentials(rdbJandT, "03bf07bf1b172b13efb6259f44190ff3", "THIRDYNAL", txtCustomerID);
                     MessageBox.Show("Information Setup completed");
                     MainWindow main = new MainWindow();
                     main.Show();
