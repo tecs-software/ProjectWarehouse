@@ -9,6 +9,7 @@
       Background="White"
       
       Height="500"
+      Width ="500"
       Title="ReceiverInformation">
     <ScrollViewer  VerticalScrollBarVisibility="Auto">
         <Grid>
@@ -40,7 +41,7 @@
             <!--Receiver Info-->
             <TextBlock x:Name="lblReceiverInfo" Text="Receiver Information" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Margin="8,8,0,8" FontSize="20" FontWeight="SemiBold"/>
             <materialDesign:Card Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="auto" materialDesign:ShadowAssist.ShadowEdges="All"
-                         Margin="8,0,8,0" x:Name="CardReceiver">
+                         Margin="8,0,8,0" x:Name="CardReceiver" IsEnabled="False">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

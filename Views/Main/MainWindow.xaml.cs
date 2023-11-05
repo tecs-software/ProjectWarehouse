@@ -243,17 +243,17 @@ namespace WarehouseManagement.Views.Main
         private void showMenu(object? sender)
         {
             MenuItem item1 = new MenuItem() { Header = "Logout" };
-            MenuItem item2 = new MenuItem() { Header = "Account Settings" };
+            //MenuItem item2 = new MenuItem() { Header = "Account Settings" };
             if (CurrentUser.Instance.ModuleAccessList.Contains("Modify System Settings") || CurrentUser.Instance.userID == 1)
             {
                 MenuItem item3 = new MenuItem() { Header = "System Settings" };
-                Util.ShowContextMenuForControl(sender as Control, item1, item2, item3);
+                Util.ShowContextMenuForControl(sender as Control, item1, item3);
                 item3.Click += SystemSetting_Click;
 
             }
             else
             {
-                Util.ShowContextMenuForControl(sender as Control, item1, item2);
+                Util.ShowContextMenuForControl(sender as Control, item1);
             }
 
             item1.Click += Logout_Click;

@@ -23,14 +23,20 @@ using WarehouseManagement.Database;
 using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.LocalOrder;
+using WarehouseManagement.Views.Main.InventoryModule;
 
 namespace WarehouseManagement.Views.Main.OrderModule
 {
     public partial class OrderView : Page
     {
+        static sql_control sql = new sql_control();
         public int pageCount { get; set; } = 1;
         public static int offsetCount { get; set; } = 0;
 
+        public int TotalOrders = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_orders"));
+        public int Completed = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_orders WHERE status = 'DELIVERED'"));
+        public int Void = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_orders WHERE status = 'CANCELLED'"));
+        public int inProgress = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'DELIVERED' AND status != 'CANCELLED'"));
         private void SetColumnWidth()
         {
             double screenWidth = SystemParameters.PrimaryScreenWidth;
@@ -66,19 +72,41 @@ namespace WarehouseManagement.Views.Main.OrderModule
             lblPageCount.Text = pageCount.ToString();
         }
 
-        public void showOrderMenu()
+        public async void showOrderMenu()
         {
+            await updateMenu();
+
             var menuOrder = new List<SubMenuItem>();
-            menuOrder.Add(new SubMenuItem("All", 20));
-            menuOrder.Add(new SubMenuItem("Completed", 10));
-            menuOrder.Add(new SubMenuItem("Voided", 5));
-            menuOrder.Add(new SubMenuItem("Past Due", 3));
-            menuOrder.Add(new SubMenuItem("In Progress", 2));
+            menuOrder.Add(new SubMenuItem("All", TotalOrders));
+            menuOrder.Add(new SubMenuItem("Completed", Completed));
+            menuOrder.Add(new SubMenuItem("Voided", Void));
+            //menuOrder.Add(new SubMenuItem("Past Due", 3));
+            menuOrder.Add(new SubMenuItem("In Progress", inProgress));
             var order = new MenuItem("Orders", menuOrder);
 
+            Menu.Children.Clear();
             Menu.Children.Add(new OrderMenu(order));
-        }
 
+        }
+        public async Task updateMenu()
+        {
+            var menuOrder = new List<SubMenuItem>();
+            menuOrder.Add(new SubMenuItem("All", TotalOrders));
+            menuOrder.Add(new SubMenuItem("Completed", Completed));
+            menuOrder.Add(new SubMenuItem("Voided", Void));
+            //menuOrder.Add(new SubMenuItem("Past Due", 3));
+            menuOrder.Add(new SubMenuItem("In Progress", inProgress));
+            var order = new MenuItem("Orders", menuOrder);
+
+            var inventoryMenu = Menu.Children.OfType<OrderMenu>().FirstOrDefault();
+            if (inventoryMenu != null)
+            {
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    inventoryMenu.DataContext = order;
+                });
+            }
+        }
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
 

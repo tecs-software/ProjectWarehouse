@@ -84,9 +84,7 @@ namespace WarehouseManagement.Controller
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
             //for VIP code
-            payloadObj.eccompanyid = "THIRDYNAL";
             payloadObj.customerid = GlobalModel.customer_id;
-
 
             sql.AddParam("@item", booking_Info.item_name);
             int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item"));
