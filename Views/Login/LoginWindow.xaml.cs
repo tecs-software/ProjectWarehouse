@@ -152,17 +152,15 @@ namespace WarehouseManagement.Views.Login
 
                 if (await db.AuthenticateUser(username, password))
                 {
-                    if (queries.checkJTAddress())
+                    if (queries.checkAddresses())
                     {
                         if(await WaybillController.IsEmpty())
                         {
                             new WaybillPopup().ShowDialog();
                         }
                         db_queries.get_sender();
-                        OnboardingSetup onboarding = new OnboardingSetup();
-                        onboarding.Show();
-                        //MainWindow main = new MainWindow();
-                        //main.Show();
+                        MainWindow main = new MainWindow();
+                        main.Show();
                         //WaybillView show = new WaybillView();
                         //show.Show();
                     }

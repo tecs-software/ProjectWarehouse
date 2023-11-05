@@ -198,12 +198,12 @@
             </StackPanel>
             <Button 
 
-                                    x:Name="btnSaveShop1" 
+                                    x:Name="btnComplete" 
                                     Content="Complete Onboarding" 
                                     IsDefault="True" 
                                     FontSize="15"
                                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
-                                    Height="40" Click="btnSaveShop_Click" Margin="166,468,166,-58" Grid.Row="1"/>
+                                    Height="40" Click="btnComplete_Click" Margin="166,468,166,-58" Grid.Row="1"/>
         </Grid>
     </Border>
 </Window>

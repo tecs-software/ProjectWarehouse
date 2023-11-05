@@ -76,6 +76,20 @@ namespace WarehouseManagement.Database
                 return false;
             }
         }
+        public bool checkCredentials()
+        {
+            int shopCount = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender"));
+            int vipCount = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers"));
+
+            if(shopCount > 0 && vipCount > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public bool VIPLimit()
         {
             int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers"));
@@ -461,10 +475,11 @@ namespace WarehouseManagement.Database
                 return false;
             }
         }
-        public bool checkJTAddress()
+        public bool checkAddresses()
         {
-            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_address_delivery"));
-            if (count > 0)
+            int Jntcount = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_address_delivery"));
+            int Flashcount = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_flashAddressing"));
+            if (Jntcount > 0 && Flashcount > 0)
             {
                 return true;
             }
@@ -473,7 +488,6 @@ namespace WarehouseManagement.Database
                 return false;
             }
         }
-
         public async Task sales_graph(int days, CartesianChart chart)
         {
             ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();

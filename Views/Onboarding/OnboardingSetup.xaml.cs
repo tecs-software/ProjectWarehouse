@@ -87,14 +87,14 @@ namespace WarehouseManagement.Views.Onboarding
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //btnImportAddress.IsEnabled = false;
-            //workerImportAddress = new BackgroundWorker();
-            //workerImportAddress.WorkerReportsProgress = true;
+            btnImportAddress.IsEnabled = false;
+            workerImportAddress = new BackgroundWorker();
+            workerImportAddress.WorkerReportsProgress = true;
 
-            //workerImportAddress.DoWork += WorkerImportRegion_DoWork;
-            //workerImportAddress.RunWorkerCompleted += WorkerImportRegion_RunWorkerCompleted;
+            workerImportAddress.DoWork += WorkerImportRegion_DoWork;
+            workerImportAddress.RunWorkerCompleted += WorkerImportRegion_RunWorkerCompleted;
 
-            //workerImportAddress.RunWorkerAsync();
+            workerImportAddress.RunWorkerAsync();
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)
@@ -237,11 +237,24 @@ namespace WarehouseManagement.Views.Onboarding
             if(rdbJandT.IsChecked == true)
             {
                 queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceJnt, cmbCityJnt, cmbBarangayJnt, txtAddress, "", 1);
+                MessageBox.Show("Shop Added");
+                txtPagename.Text = "";
+                txtPhone.Text = "";
+                txtAddress.Text = "";
+                cmbProvinceJnt.Text = "";
+                cmbCityJnt.Text = "";
+                cmbBarangayJnt.Text = "";
+
             }
             else
             {
                 //FLASH
                 queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceFlash, cmbCityFlash, cmbBarangayFlash, txtAddress, cmbPostalCodeFlash.Text, 2);
+                MessageBox.Show("Shop Added");
+                txtPagename.Text = "";
+                txtPhone.Text = "";
+                txtAddress.Text = "";
+                cmbProvinceFlash.Text = "";
             }
         }
 
@@ -264,23 +277,37 @@ namespace WarehouseManagement.Views.Onboarding
             }
             else
             {
-                if(rdbFlash.IsChecked == true)
+                if (rdbFlash.IsChecked == true)
                 {
                     queries.api_credentials(rdbFlashCustomer, "41de95733630f05b050d00c308f13d459a92d64595bac9a29d711bce191dfb2e", "", txtCustomerID);
-                    MessageBox.Show("Information Setup completed");
-                    MainWindow main = new MainWindow();
-                    main.Show();
+                    MessageBox.Show("J&T vip added");
+                    txtCustomerID.Text = "";
                 }
                 else
                 {
                     //J&T
                     queries.api_credentials(rdbJandT, "03bf07bf1b172b13efb6259f44190ff3", "THIRDYNAL", txtCustomerID);
-                    MessageBox.Show("Information Setup completed");
-                    MainWindow main = new MainWindow();
-                    main.Show();
+                    MessageBox.Show("FLASH vip added");
+                    txtCustomerID.Text = "";
                 }
             }
             this.Close();
+        }
+
+        private void btnComplete_Click(object sender, RoutedEventArgs e)
+        {
+            if(queries.checkCredentials())
+            {
+                MessageBox.Show("Information Setup completed");
+                MainWindow main = new MainWindow();
+                main.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("SHOP or VIPs are detected empty. Kindly set-up your SHOP or VIP");
+                return;
+            }
         }
     }
 }
