@@ -241,7 +241,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             
             if (receiverInformationPage.rdbJandT.IsChecked == true)
             {
-                if(emptyFieldsChecker())
+                db_queries.getCourierDetails("J&T");
+                if (emptyFieldsChecker())
                 {
                     MessageBox.Show("Fill up required fields");
                     return;
@@ -291,6 +292,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             }
             else
             {
+                db_queries.getCourierDetails("FLASH");
                 if (emptyFieldsChecker())
                 {
                     MessageBox.Show("Fill up required fields");

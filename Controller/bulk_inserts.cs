@@ -22,18 +22,18 @@ namespace WarehouseManagement.Controller
         
         public static void bulk_receiver(bulk_model model) 
         {
-            sql.AddParam("@address", model.receiver_address);
+            sql.AddParam("@address", model.receiver_address.Replace("'", ""));
             sql.Query($"EXEC SPadd_receiver '{model.receiver_name}', '{model.receiver_phone}', @address");
             if (sql.HasException(true)) return;
         }
         public static void bulk_orders(bulk_model model, string waybill, string order_id) 
         {
-            sql.AddParam("@item_name", model.product_name);
+            sql.AddParam("@item_name", model.product_name.Replace("'", ""));
             int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item_name"));
 
-            sql.AddParam("@address", model.receiver_address);
-            sql.AddParam("@remarks", model.remarks);
-            sql.AddParam("@item", model.product_name);
+            sql.AddParam("@address", model.receiver_address.Replace("'", ""));
+            sql.AddParam("@remarks", model.remarks.Replace("'",""));
+            sql.AddParam("@item", model.product_name.Replace("'", ""));
             sql.Query($"EXEC SPadd_orders '{order_id}', 'J&T', '{waybill}', {CurrentUser.Instance.userID}, @item," +
                 $"{model.quantity}, {model.total}, @remarks, 'PENDING', '{model.receiver_phone}', @address, {sender_id}");
             if (sql.HasException(true)) return;
@@ -41,20 +41,20 @@ namespace WarehouseManagement.Controller
         
         public static void bulk_incentives(bulk_model model, string order_id)
         {
-            sql.AddParam("@item", model.product_name);
+            sql.AddParam("@item", model.product_name.Replace("'", ""));
             sql.Query($"EXEC SPadd_incentives {CurrentUser.Instance.userID}, '{order_id}', {model.quantity}," +
             $"{1}, @item");
             if (sql.HasException(true)) return;
         }
         public static void bulk_update_quantity(bulk_model model)
         {
-            sql.AddParam("@item",model.product_name);
+            sql.AddParam("@item",model.product_name.Replace("'", ""));
             sql.Query($"EXEC SPupdate_stocks {model.quantity}, @item");
             if (sql.HasException(true)) return;
         }
         public static void bulk_update_stocks(bulk_model model)
         {
-            sql.AddParam("@item", model.product_name);
+            sql.AddParam("@item", model.product_name.Replace("'", ""));
             int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = @item"));
             string Status = newStock < 0 ? Util.status_out_of_stock : newStock == 0 ? Util.status_out_of_stock : newStock <= 100 ? Util.status_low_stock : Util.status_in_stock;
             sql.AddParam("@product", model.product_name);
@@ -92,10 +92,10 @@ namespace WarehouseManagement.Controller
             else
             {
                 sql.AddParam("@quantity", model.quantity);
-                sql.AddParam("@productName", model.product_name);
-                sql.AddParam("@receiverName", model.receiver_name);
+                sql.AddParam("@productName", model.product_name.Replace("'", ""));
+                sql.AddParam("@receiverName", model.receiver_name.Replace("'", ""));
                 sql.AddParam("@receiver_phone", model.receiver_phone);
-                sql.AddParam("@receiver_address", model.receiver_address);
+                sql.AddParam("@receiver_address", model.receiver_address.Replace("'", ""));
                 sql.AddParam("@receiver_province", model.receiver_province);
                 sql.AddParam("@receiver_city", model.receiver_city);
                 sql.AddParam("@receiver_area", model.receiver_area);
@@ -105,7 +105,7 @@ namespace WarehouseManagement.Controller
                 sql.AddParam("@total_parcel", model.total_parcel);
                 sql.AddParam("@parcel_value", model.parcel_value);
                 sql.AddParam("@cod", model.cod);
-                sql.AddParam("@remarks", model.remarks);
+                sql.AddParam("@remarks", model.remarks.Replace("'", ""));
 
                 sql.Query($"EXEC SPadd_temptable @quantity, @productName, @receiverName, @receiver_phone, @receiver_address, @receiver_province, @receiver_city, @receiver_area, @parcel_name, " +
                 $" @weight, @total_parcel, @parcel_value, @cod, @remarks ");
@@ -162,8 +162,8 @@ namespace WarehouseManagement.Controller
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
                     int? role_id = int.Parse(sql.ReturnResult($"SELECT role_id FROM tbl_access_level WHERE user_id = {CurrentUser.Instance.userID}"));
-                    string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = '{dr[2].ToString()}'");
-                    int? receiver_id = int.Parse(sql.ReturnResult($"SELECT TOP 1(receiver_id) FROM tbl_receiver WHERE receiver_name = '{dr[3].ToString()}' AND receiver_phone = '{dr[4].ToString()}'"));
+                    string product_id = sql.ReturnResult($"SELECT product_id FROM tbl_products WHERE item_name = '{dr[2].ToString().Replace("'", "")}'");
+                    int? receiver_id = int.Parse(sql.ReturnResult($"SELECT TOP 1(receiver_id) FROM tbl_receiver WHERE receiver_name = '{dr[3].ToString().Replace("'", "")}' AND receiver_phone = '{dr[4].ToString()}'"));
                     decimal price = decimal.Parse(dr[12].ToString());
                     //sql.AddParam("@sender_id", GlobalModel.sender_id);
                     //sql.AddParam("@product_id", sql.ReturnResult($"SELECT product_id FROM tbl_orders WHERE item_name = '{dr[2].ToString()}'"));
@@ -231,13 +231,13 @@ namespace WarehouseManagement.Controller
             {
                 foreach (SystemSettingsModel details in model)
                 {
-                    sql.AddParam("@product_name", details.product_name);
+                    sql.AddParam("@product_name", details.product_name.Replace("'", ""));
                     int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @product_name"));
                     int? user_id = int.Parse(sql.ReturnResult($"SELECT user_id FROM tbl_users WHERE sender_id = {sender_id}"));
 
-                    sql.AddParam("@address", details.receiver_address);
-                    sql.AddParam("@items", details.product_name);
-                    sql.AddParam("@remarks", details.remarks);
+                    sql.AddParam("@address", details.receiver_address.Replace("'", ""));
+                    sql.AddParam("@items", details.product_name.Replace("'", ""));
+                    sql.AddParam("@remarks", details.remarks.Replace("'", ""));
                     sql.Query($"EXEC SPadd_orders '{details.order_id}', 'J&T', '{details.waybill}', {user_id}, @items, {details.quantity}, {details.cod}, @remarks, " +
                         $"'PENDING', '{details.receiver_phone}', @address, {sender_id}");
 

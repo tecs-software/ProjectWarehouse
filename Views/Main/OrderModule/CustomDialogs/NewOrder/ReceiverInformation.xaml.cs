@@ -69,6 +69,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbSizeFlash.Visibility = Visibility.Collapsed;
                 cbItemType.Visibility = Visibility.Collapsed;
                 cbOrderType.Visibility = Visibility.Collapsed;
+                tbCod.Visibility = Visibility.Visible;
                 queries.province(cbProvinceJnt);
             }
             if (text == "FLASH")
@@ -78,6 +79,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbSizeFlash.Visibility = Visibility.Visible;
                 cbItemType.Visibility = Visibility.Visible;
                 cbOrderType.Visibility = Visibility.Visible;
+                tbCod.Visibility = Visibility.Collapsed;
                 queries.FlashProvince(cbProvinceFlash);
             }
         }

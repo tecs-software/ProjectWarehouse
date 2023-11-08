@@ -69,6 +69,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
         {
             show_DT dt = new show_DT();
             await dt.show_orders(dgtRespondentData, false);
+            showOrderMenu();
             lblPageCount.Text = pageCount.ToString();
         }
 
