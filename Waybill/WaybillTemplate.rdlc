@@ -36,7 +36,7 @@
                                     </Paragraphs>
                                     <Top>0.03659in</Top>
                                     <Left>0.09483in</Left>
-                                    <Height>0.51229in</Height>
+                                    <Height>0.39143in</Height>
                                     <Width>3.37864in</Width>
                                     <Style>
                                       <Border>
@@ -44,11 +44,828 @@
                                       </Border>
                                     </Style>
                                   </Textbox>
+                                  <Rectangle Name="Rectangle19">
+                                    <ReportItems>
+                                      <Image Name="H_barcode">
+                                        <Source>Database</Source>
+                                        <Value>=Parameters!HBarcode_params.Value</Value>
+                                        <MIMEType>image/png</MIMEType>
+                                        <Sizing>Clip</Sizing>
+                                        <Top>0.04796in</Top>
+                                        <Left>0.03928in</Left>
+                                        <Height>0.50092in</Height>
+                                        <Width>2.8996in</Width>
+                                        <Style>
+                                          <Border>
+                                            <Style>None</Style>
+                                          </Border>
+                                        </Style>
+                                      </Image>
+                                    </ReportItems>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Top>0.49747in</Top>
+                                    <Left>0.00487in</Left>
+                                    <Height>1.5cm</Height>
+                                    <Width>7.46476cm</Width>
+                                    <ZIndex>1</ZIndex>
+                                    <Style>
+                                      <Border>
+                                        <Style>Solid</Style>
+                                      </Border>
+                                    </Style>
+                                  </Rectangle>
+                                  <Rectangle Name="Rectangle28">
+                                    <ReportItems>
+                                      <Image Name="V_barcode">
+                                        <Source>Database</Source>
+                                        <Value>=Parameters!VBarcode_params.Value</Value>
+                                        <MIMEType>image/png</MIMEType>
+                                        <Sizing>Fit</Sizing>
+                                        <Top>0.06555in</Top>
+                                        <Left>0.05523in</Left>
+                                        <Height>2.53727in</Height>
+                                        <Width>0.5in</Width>
+                                        <Style>
+                                          <Border>
+                                            <Style>None</Style>
+                                          </Border>
+                                        </Style>
+                                      </Image>
+                                    </ReportItems>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Top>0.49747in</Top>
+                                    <Left>2.95276in</Left>
+                                    <Height>6.717cm</Height>
+                                    <Width>1.5cm</Width>
+                                    <ZIndex>2</ZIndex>
+                                    <Style>
+                                      <Border>
+                                        <Style>Solid</Style>
+                                      </Border>
+                                      <BottomBorder>
+                                        <Style>None</Style>
+                                      </BottomBorder>
+                                    </Style>
+                                  </Rectangle>
+                                  <Rectangle Name="Rectangle20">
+                                    <ReportItems>
+                                      <Textbox Name="tb_receiver_baranggay">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=Parameters!Receiver_barangay_params.Value</Value>
+                                                <Style>
+                                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                  <FontSize>12pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Left</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <Top>0.01389in</Top>
+                                        <Left>0.04415in</Left>
+                                        <Height>0.28718in</Height>
+                                        <Width>2.80212in</Width>
+                                        <Style>
+                                          <Border>
+                                            <Style>None</Style>
+                                          </Border>
+                                          <VerticalAlign>Top</VerticalAlign>
+                                        </Style>
+                                      </Textbox>
+                                      <Rectangle Name="Rectangle21">
+                                        <ReportItems>
+                                          <Textbox Name="Textbox21">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>RECEIVER:</Value>
+                                                    <Style>
+                                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                      <FontSize>6pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Left</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox5</rd:DefaultName>
+                                            <Top>0.01389in</Top>
+                                            <Left>0.03928in</Left>
+                                            <Height>0.10288in</Height>
+                                            <Width>0.66539in</Width>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                            </Style>
+                                          </Textbox>
+                                          <Textbox Name="tb_Receiver_name">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Parameters!Receiver_name_params.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Left</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <Top>0.11677in</Top>
+                                            <Left>0.03928in</Left>
+                                            <Height>0.18669in</Height>
+                                            <Width>2.81361in</Width>
+                                            <ZIndex>1</ZIndex>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                            </Style>
+                                          </Textbox>
+                                          <Textbox Name="tb_receiver_Address">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Parameters!Receiver_address_params.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                      <FontSize>7pt</FontSize>
+                                                      <FontWeight>Normal</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Left</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <Top>0.30346in</Top>
+                                            <Left>0.03928in</Left>
+                                            <Height>0.43069in</Height>
+                                            <Width>2.81361in</Width>
+                                            <ZIndex>2</ZIndex>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                            </Style>
+                                          </Textbox>
+                                          <Rectangle Name="Rectangle22">
+                                            <ReportItems>
+                                              <Textbox Name="Textbox24">
+                                                <CanGrow>true</CanGrow>
+                                                <KeepTogether>true</KeepTogether>
+                                                <Paragraphs>
+                                                  <Paragraph>
+                                                    <TextRuns>
+                                                      <TextRun>
+                                                        <Value>SENDER:</Value>
+                                                        <Style>
+                                                          <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                          <FontSize>6pt</FontSize>
+                                                        </Style>
+                                                      </TextRun>
+                                                    </TextRuns>
+                                                    <Style>
+                                                      <TextAlign>Left</TextAlign>
+                                                    </Style>
+                                                  </Paragraph>
+                                                </Paragraphs>
+                                                <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                <Top>0.01389in</Top>
+                                                <Left>0.02539in</Left>
+                                                <Height>0.10288in</Height>
+                                                <Width>0.66539in</Width>
+                                                <Style>
+                                                  <Border>
+                                                    <Style>None</Style>
+                                                  </Border>
+                                                  <VerticalAlign>Top</VerticalAlign>
+                                                </Style>
+                                              </Textbox>
+                                              <Textbox Name="tb_sender_name">
+                                                <CanGrow>true</CanGrow>
+                                                <KeepTogether>true</KeepTogether>
+                                                <Paragraphs>
+                                                  <Paragraph>
+                                                    <TextRuns>
+                                                      <TextRun>
+                                                        <Value>=Parameters!Sender_name_params.Value</Value>
+                                                        <Style>
+                                                          <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                          <FontSize>6pt</FontSize>
+                                                          <FontWeight>Bold</FontWeight>
+                                                        </Style>
+                                                      </TextRun>
+                                                    </TextRuns>
+                                                    <Style>
+                                                      <TextAlign>Left</TextAlign>
+                                                    </Style>
+                                                  </Paragraph>
+                                                </Paragraphs>
+                                                <Top>0.125in</Top>
+                                                <Left>0.02539in</Left>
+                                                <Height>0.13114in</Height>
+                                                <Width>2.77673in</Width>
+                                                <ZIndex>1</ZIndex>
+                                                <Style>
+                                                  <Border>
+                                                    <Style>None</Style>
+                                                  </Border>
+                                                  <VerticalAlign>Top</VerticalAlign>
+                                                </Style>
+                                              </Textbox>
+                                              <Textbox Name="tb_sender_address">
+                                                <CanGrow>true</CanGrow>
+                                                <KeepTogether>true</KeepTogether>
+                                                <Paragraphs>
+                                                  <Paragraph>
+                                                    <TextRuns>
+                                                      <TextRun>
+                                                        <Value>=Parameters!Sender_address_params.Value</Value>
+                                                        <Style>
+                                                          <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                          <FontSize>6pt</FontSize>
+                                                        </Style>
+                                                      </TextRun>
+                                                    </TextRuns>
+                                                    <Style>
+                                                      <TextAlign>Left</TextAlign>
+                                                    </Style>
+                                                  </Paragraph>
+                                                </Paragraphs>
+                                                <Top>0.25614in</Top>
+                                                <Left>0.02539in</Left>
+                                                <Height>0.13114in</Height>
+                                                <Width>2.77673in</Width>
+                                                <ZIndex>2</ZIndex>
+                                                <Style>
+                                                  <Border>
+                                                    <Style>None</Style>
+                                                  </Border>
+                                                  <VerticalAlign>Top</VerticalAlign>
+                                                </Style>
+                                              </Textbox>
+                                              <Rectangle Name="Rectangle23">
+                                                <ReportItems>
+                                                  <Textbox Name="Textbox27">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>COD:</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                              <FontWeight>Bold</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                    <Left>0.03928in</Left>
+                                                    <Height>0.10288in</Height>
+                                                    <Width>0.3424in</Width>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="Textbox28">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>Goods:</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                              <FontWeight>Normal</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                    <Top>0.19684in</Top>
+                                                    <Left>0.03928in</Left>
+                                                    <Height>0.10288in</Height>
+                                                    <Width>0.3424in</Width>
+                                                    <ZIndex>1</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="Textbox29">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>Price:</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                              <FontWeight>Normal</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                    <Top>0.41822in</Top>
+                                                    <Left>0.03928in</Left>
+                                                    <Height>0.10288in</Height>
+                                                    <Width>0.3424in</Width>
+                                                    <ZIndex>2</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="Textbox30">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>Weight:</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                              <FontWeight>Normal</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                    <Top>0.41822in</Top>
+                                                    <Left>0.92799in</Left>
+                                                    <Height>0.11287in</Height>
+                                                    <Width>0.36259in</Width>
+                                                    <ZIndex>3</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="tb_COD">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>=Parameters!COD_params.Value</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <Left>0.45112in</Left>
+                                                    <Height>0.10288in</Height>
+                                                    <Width>1.29273in</Width>
+                                                    <ZIndex>4</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="tbl_Goods_name">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>=Parameters!Goods_params.Value</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                              <FontWeight>Normal</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <Top>0.16906in</Top>
+                                                    <Left>0.45112in</Left>
+                                                    <Height>0.20749in</Height>
+                                                    <Width>1.29273in</Width>
+                                                    <ZIndex>5</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="tb_goods_value">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>=Parameters!Price_params.Value</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                              <FontWeight>Normal</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <Top>0.41822in</Top>
+                                                    <Left>0.45112in</Left>
+                                                    <Height>0.13735in</Height>
+                                                    <Width>0.46298in</Width>
+                                                    <ZIndex>6</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="tb_weight">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>=Parameters!Weight_params.Value</Value>
+                                                            <Style>
+                                                              <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                              <FontSize>6pt</FontSize>
+                                                              <FontWeight>Normal</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style>
+                                                          <TextAlign>Left</TextAlign>
+                                                        </Style>
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <Top>0.41822in</Top>
+                                                    <Left>1.30447in</Left>
+                                                    <Height>0.13735in</Height>
+                                                    <Width>0.43939in</Width>
+                                                    <ZIndex>7</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <VerticalAlign>Top</VerticalAlign>
+                                                    </Style>
+                                                  </Textbox>
+                                                </ReportItems>
+                                                <KeepTogether>true</KeepTogether>
+                                                <Top>0.38728in</Top>
+                                                <Height>1.5cm</Height>
+                                                <Width>4.5cm</Width>
+                                                <ZIndex>3</ZIndex>
+                                                <Style>
+                                                  <Border>
+                                                    <Style>Solid</Style>
+                                                  </Border>
+                                                  <TopBorder>
+                                                    <Color>Black</Color>
+                                                    <Width>1pt</Width>
+                                                  </TopBorder>
+                                                  <BottomBorder>
+                                                    <Style>None</Style>
+                                                  </BottomBorder>
+                                                  <LeftBorder>
+                                                    <Color>Black</Color>
+                                                    <Width>1pt</Width>
+                                                  </LeftBorder>
+                                                  <RightBorder>
+                                                    <Style>None</Style>
+                                                  </RightBorder>
+                                                </Style>
+                                              </Rectangle>
+                                              <Textbox Name="Textbox31">
+                                                <CanGrow>true</CanGrow>
+                                                <KeepTogether>true</KeepTogether>
+                                                <Paragraphs>
+                                                  <Paragraph>
+                                                    <TextRuns>
+                                                      <TextRun>
+                                                        <Value>DELIVERY ATTEMPTS</Value>
+                                                        <Style>
+                                                          <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                          <FontSize>7pt</FontSize>
+                                                          <FontWeight>Normal</FontWeight>
+                                                        </Style>
+                                                      </TextRun>
+                                                    </TextRuns>
+                                                    <Style>
+                                                      <TextAlign>Center</TextAlign>
+                                                    </Style>
+                                                  </Paragraph>
+                                                </Paragraphs>
+                                                <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                <Top>0.38728in</Top>
+                                                <Left>1.78552in</Left>
+                                                <Height>0.15517in</Height>
+                                                <Width>1.08055in</Width>
+                                                <ZIndex>4</ZIndex>
+                                                <Style>
+                                                  <Border>
+                                                    <Style>None</Style>
+                                                  </Border>
+                                                  <VerticalAlign>Top</VerticalAlign>
+                                                </Style>
+                                              </Textbox>
+                                              <Rectangle Name="Rectangle24">
+                                                <ReportItems>
+                                                  <Rectangle Name="Rectangle27">
+                                                    <ReportItems>
+                                                      <Textbox Name="Textbox34">
+                                                        <CanGrow>true</CanGrow>
+                                                        <KeepTogether>true</KeepTogether>
+                                                        <Paragraphs>
+                                                          <Paragraph>
+                                                            <TextRuns>
+                                                              <TextRun>
+                                                                <Value>3</Value>
+                                                                <Style>
+                                                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                                  <FontSize>15pt</FontSize>
+                                                                  <FontWeight>Normal</FontWeight>
+                                                                </Style>
+                                                              </TextRun>
+                                                            </TextRuns>
+                                                            <Style>
+                                                              <TextAlign>Left</TextAlign>
+                                                            </Style>
+                                                          </Paragraph>
+                                                        </Paragraphs>
+                                                        <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                        <Top>0.04167in</Top>
+                                                        <Left>0.11509in</Left>
+                                                        <Height>0.28227in</Height>
+                                                        <Width>0.20917in</Width>
+                                                        <Style>
+                                                          <Border>
+                                                            <Style>None</Style>
+                                                          </Border>
+                                                          <VerticalAlign>Top</VerticalAlign>
+                                                        </Style>
+                                                      </Textbox>
+                                                    </ReportItems>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Top>0.16907in</Top>
+                                                    <Left>0.78741in</Left>
+                                                    <Height>1.08755cm</Height>
+                                                    <Width>1.02289cm</Width>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>Solid</Style>
+                                                      </Border>
+                                                      <BottomBorder>
+                                                        <Style>None</Style>
+                                                      </BottomBorder>
+                                                    </Style>
+                                                  </Rectangle>
+                                                  <Rectangle Name="Rectangle31">
+                                                    <ReportItems>
+                                                      <Textbox Name="Textbox35">
+                                                        <CanGrow>true</CanGrow>
+                                                        <KeepTogether>true</KeepTogether>
+                                                        <Paragraphs>
+                                                          <Paragraph>
+                                                            <TextRuns>
+                                                              <TextRun>
+                                                                <Value>2</Value>
+                                                                <Style>
+                                                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                                  <FontSize>15pt</FontSize>
+                                                                  <FontWeight>Normal</FontWeight>
+                                                                </Style>
+                                                              </TextRun>
+                                                            </TextRuns>
+                                                            <Style>
+                                                              <TextAlign>Left</TextAlign>
+                                                            </Style>
+                                                          </Paragraph>
+                                                        </Paragraphs>
+                                                        <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                        <Top>0.04167in</Top>
+                                                        <Left>0.11509in</Left>
+                                                        <Height>0.28227in</Height>
+                                                        <Width>0.20917in</Width>
+                                                        <Style>
+                                                          <Border>
+                                                            <Style>None</Style>
+                                                          </Border>
+                                                          <VerticalAlign>Top</VerticalAlign>
+                                                        </Style>
+                                                      </Textbox>
+                                                    </ReportItems>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Top>0.16907in</Top>
+                                                    <Left>0.3937in</Left>
+                                                    <Height>1.08755cm</Height>
+                                                    <Width>1cm</Width>
+                                                    <ZIndex>1</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>Solid</Style>
+                                                      </Border>
+                                                      <BottomBorder>
+                                                        <Style>None</Style>
+                                                      </BottomBorder>
+                                                    </Style>
+                                                  </Rectangle>
+                                                  <Rectangle Name="Rectangle32">
+                                                    <ReportItems>
+                                                      <Textbox Name="Textbox36">
+                                                        <CanGrow>true</CanGrow>
+                                                        <KeepTogether>true</KeepTogether>
+                                                        <Paragraphs>
+                                                          <Paragraph>
+                                                            <TextRuns>
+                                                              <TextRun>
+                                                                <Value>1</Value>
+                                                                <Style>
+                                                                  <FontFamily>HarmonyOS Sans SC</FontFamily>
+                                                                  <FontSize>15pt</FontSize>
+                                                                  <FontWeight>Normal</FontWeight>
+                                                                </Style>
+                                                              </TextRun>
+                                                            </TextRuns>
+                                                            <Style>
+                                                              <TextAlign>Left</TextAlign>
+                                                            </Style>
+                                                          </Paragraph>
+                                                        </Paragraphs>
+                                                        <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                        <Top>0.04167in</Top>
+                                                        <Left>0.11509in</Left>
+                                                        <Height>0.28227in</Height>
+                                                        <Width>0.20917in</Width>
+                                                        <Style>
+                                                          <Border>
+                                                            <Style>None</Style>
+                                                          </Border>
+                                                          <VerticalAlign>Top</VerticalAlign>
+                                                        </Style>
+                                                      </Textbox>
+                                                    </ReportItems>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Top>0.16907in</Top>
+                                                    <Height>1.08755cm</Height>
+                                                    <Width>1cm</Width>
+                                                    <ZIndex>2</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>Solid</Style>
+                                                      </Border>
+                                                      <TopBorder>
+                                                        <Color>Black</Color>
+                                                        <Width>1pt</Width>
+                                                      </TopBorder>
+                                                      <BottomBorder>
+                                                        <Style>None</Style>
+                                                      </BottomBorder>
+                                                      <LeftBorder>
+                                                        <Style>None</Style>
+                                                      </LeftBorder>
+                                                    </Style>
+                                                  </Rectangle>
+                                                </ReportItems>
+                                                <KeepTogether>true</KeepTogether>
+                                                <Top>0.38728in</Top>
+                                                <Left>1.76264in</Left>
+                                                <Height>1.51699cm</Height>
+                                                <Width>3.02291cm</Width>
+                                                <ZIndex>5</ZIndex>
+                                                <Style>
+                                                  <Border>
+                                                    <Style>Solid</Style>
+                                                  </Border>
+                                                  <BottomBorder>
+                                                    <Style>None</Style>
+                                                  </BottomBorder>
+                                                </Style>
+                                              </Rectangle>
+                                            </ReportItems>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Top>0.74804in</Top>
+                                            <Height>2.50068cm</Height>
+                                            <Width>7.50001cm</Width>
+                                            <ZIndex>3</ZIndex>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BottomBorder>
+                                                <Style>None</Style>
+                                              </BottomBorder>
+                                            </Style>
+                                          </Rectangle>
+                                        </ReportItems>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Top>0.31496in</Top>
+                                        <Height>4.4007cm</Height>
+                                        <Width>7.50001cm</Width>
+                                        <ZIndex>1</ZIndex>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                        </Style>
+                                      </Rectangle>
+                                    </ReportItems>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Top>1.08802in</Top>
+                                    <Height>5.2007cm</Height>
+                                    <Width>7.50001cm</Width>
+                                    <ZIndex>3</ZIndex>
+                                    <Style>
+                                      <Border>
+                                        <Style>Solid</Style>
+                                      </Border>
+                                    </Style>
+                                  </Rectangle>
                                 </ReportItems>
                                 <KeepTogether>true</KeepTogether>
                                 <Top>0.19685in</Top>
-                                <Height>1.5cm</Height>
-                                <Width>9cm</Width>
+                                <Height>7.98057cm</Height>
+                                <Width>9.00001cm</Width>
                                 <Style>
                                   <Border>
                                     <Style>Solid</Style>
@@ -171,8 +988,8 @@
                             </ReportItems>
                             <KeepTogether>true</KeepTogether>
                             <Top>0.59055in</Top>
-                            <Height>2cm</Height>
-                            <Width>9cm</Width>
+                            <Height>8.48057cm</Height>
+                            <Width>9.00001cm</Width>
                             <Style>
                               <Border>
                                 <Style>Solid</Style>
@@ -268,825 +1085,13 @@
                         </ReportItems>
                         <KeepTogether>true</KeepTogether>
                         <Top>0.0003in</Top>
-                        <Height>3.5cm</Height>
-                        <Width>9cm</Width>
+                        <Left>0.00901in</Left>
+                        <Height>9.98057cm</Height>
+                        <Width>9.00001cm</Width>
                         <Style>
                           <Border>
                             <Style>Solid</Style>
                           </Border>
-                        </Style>
-                      </Rectangle>
-                      <Rectangle Name="Rectangle19">
-                        <ReportItems>
-                          <Image Name="H_barcode">
-                            <Source>Database</Source>
-                            <Value>=Parameters!HBarcode_params.Value</Value>
-                            <MIMEType>image/png</MIMEType>
-                            <Sizing>Clip</Sizing>
-                            <Top>0.04796in</Top>
-                            <Left>0.03928in</Left>
-                            <Height>0.50092in</Height>
-                            <Width>2.8996in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                            </Style>
-                          </Image>
-                        </ReportItems>
-                        <KeepTogether>true</KeepTogether>
-                        <Top>1.37825in</Top>
-                        <Height>1.5cm</Height>
-                        <Width>7.5cm</Width>
-                        <ZIndex>1</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                        </Style>
-                      </Rectangle>
-                      <Rectangle Name="Rectangle20">
-                        <ReportItems>
-                          <Textbox Name="tb_receiver_baranggay">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Receiver_barangay_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>14pt</FontSize>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.01389in</Top>
-                            <Left>0.03928in</Left>
-                            <Height>0.28718in</Height>
-                            <Width>2.80212in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                        </ReportItems>
-                        <KeepTogether>true</KeepTogether>
-                        <Top>1.9688in</Top>
-                        <Height>0.8cm</Height>
-                        <Width>7.5cm</Width>
-                        <ZIndex>2</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                        </Style>
-                      </Rectangle>
-                      <Rectangle Name="Rectangle21">
-                        <ReportItems>
-                          <Textbox Name="Textbox21">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>RECEIVER:</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
-                            <Top>0.01389in</Top>
-                            <Left>0.03928in</Left>
-                            <Height>0.10288in</Height>
-                            <Width>0.66539in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tb_Receiver_name">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Receiver_name_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>8pt</FontSize>
-                                      <FontWeight>Bold</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.11677in</Top>
-                            <Left>0.03928in</Left>
-                            <Height>0.18669in</Height>
-                            <Width>2.81361in</Width>
-                            <ZIndex>1</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tb_receiver_Address">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Receiver_address_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>7pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.30346in</Top>
-                            <Left>0.03928in</Left>
-                            <Height>0.43069in</Height>
-                            <Width>2.81361in</Width>
-                            <ZIndex>2</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                        </ReportItems>
-                        <KeepTogether>true</KeepTogether>
-                        <Top>2.28376in</Top>
-                        <Height>1.90002cm</Height>
-                        <Width>7.5cm</Width>
-                        <ZIndex>3</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                        </Style>
-                      </Rectangle>
-                      <Rectangle Name="Rectangle22">
-                        <ReportItems>
-                          <Textbox Name="Textbox24">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>SENDER:</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
-                            <Top>0.01389in</Top>
-                            <Left>0.02539in</Left>
-                            <Height>0.10288in</Height>
-                            <Width>0.66539in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tb_sender_name">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Sender_name_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Bold</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.125in</Top>
-                            <Left>0.02539in</Left>
-                            <Height>0.13114in</Height>
-                            <Width>2.77673in</Width>
-                            <ZIndex>1</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tb_sender_address">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Sender_address_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.25614in</Top>
-                            <Left>0.02539in</Left>
-                            <Height>0.13114in</Height>
-                            <Width>2.77673in</Width>
-                            <ZIndex>2</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                        </ReportItems>
-                        <KeepTogether>true</KeepTogether>
-                        <Top>3.0318in</Top>
-                        <Height>1cm</Height>
-                        <Width>7.5cm</Width>
-                        <ZIndex>4</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                        </Style>
-                      </Rectangle>
-                      <Rectangle Name="Rectangle23">
-                        <ReportItems>
-                          <Textbox Name="Textbox27">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>COD:</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Bold</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
-                            <Left>0.03928in</Left>
-                            <Height>0.10288in</Height>
-                            <Width>0.3424in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="Textbox28">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>Goods:</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
-                            <Top>0.19684in</Top>
-                            <Left>0.03928in</Left>
-                            <Height>0.10288in</Height>
-                            <Width>0.3424in</Width>
-                            <ZIndex>1</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="Textbox29">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>Price:</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
-                            <Top>0.41822in</Top>
-                            <Left>0.03928in</Left>
-                            <Height>0.10288in</Height>
-                            <Width>0.3424in</Width>
-                            <ZIndex>2</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="Textbox30">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>Weight:</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
-                            <Top>0.41822in</Top>
-                            <Left>0.92799in</Left>
-                            <Height>0.11287in</Height>
-                            <Width>0.36259in</Width>
-                            <ZIndex>3</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tb_COD">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!COD_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Left>0.45112in</Left>
-                            <Height>0.10288in</Height>
-                            <Width>1.29273in</Width>
-                            <ZIndex>4</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tbl_Goods_name">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Goods_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.16906in</Top>
-                            <Left>0.45112in</Left>
-                            <Height>0.20749in</Height>
-                            <Width>1.29273in</Width>
-                            <ZIndex>5</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tb_goods_value">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Price_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.41822in</Top>
-                            <Left>0.45112in</Left>
-                            <Height>0.13735in</Height>
-                            <Width>0.46298in</Width>
-                            <ZIndex>6</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Textbox Name="tb_weight">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>=Parameters!Weight_params.Value</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>6pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Left</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <Top>0.41822in</Top>
-                            <Left>1.30447in</Left>
-                            <Height>0.13735in</Height>
-                            <Width>0.43939in</Width>
-                            <ZIndex>7</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                        </ReportItems>
-                        <KeepTogether>true</KeepTogether>
-                        <Top>3.4255in</Top>
-                        <Height>1.5cm</Height>
-                        <Width>4.5cm</Width>
-                        <ZIndex>5</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                          <TopBorder>
-                            <Color>Black</Color>
-                            <Width>1pt</Width>
-                          </TopBorder>
-                          <BottomBorder>
-                            <Style>None</Style>
-                          </BottomBorder>
-                          <LeftBorder>
-                            <Color>Black</Color>
-                            <Width>1pt</Width>
-                          </LeftBorder>
-                          <RightBorder>
-                            <Style>None</Style>
-                          </RightBorder>
-                        </Style>
-                      </Rectangle>
-                      <Rectangle Name="Rectangle24">
-                        <ReportItems>
-                          <Textbox Name="Textbox31">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>DELIVERY ATTEMPTS</Value>
-                                    <Style>
-                                      <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                      <FontSize>7pt</FontSize>
-                                      <FontWeight>Normal</FontWeight>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Center</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox5</rd:DefaultName>
-                            <Top>0.01389in</Top>
-                            <Left>0.03112in</Left>
-                            <Height>0.15517in</Height>
-                            <Width>1.08055in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                              <VerticalAlign>Top</VerticalAlign>
-                            </Style>
-                          </Textbox>
-                          <Rectangle Name="Rectangle27">
-                            <ReportItems>
-                              <Textbox Name="Textbox34">
-                                <CanGrow>true</CanGrow>
-                                <KeepTogether>true</KeepTogether>
-                                <Paragraphs>
-                                  <Paragraph>
-                                    <TextRuns>
-                                      <TextRun>
-                                        <Value>3</Value>
-                                        <Style>
-                                          <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                          <FontSize>15pt</FontSize>
-                                          <FontWeight>Normal</FontWeight>
-                                        </Style>
-                                      </TextRun>
-                                    </TextRuns>
-                                    <Style>
-                                      <TextAlign>Left</TextAlign>
-                                    </Style>
-                                  </Paragraph>
-                                </Paragraphs>
-                                <rd:DefaultName>Textbox5</rd:DefaultName>
-                                <Top>0.04167in</Top>
-                                <Left>0.11509in</Left>
-                                <Height>0.28227in</Height>
-                                <Width>0.20917in</Width>
-                                <Style>
-                                  <Border>
-                                    <Style>None</Style>
-                                  </Border>
-                                  <VerticalAlign>Top</VerticalAlign>
-                                </Style>
-                              </Textbox>
-                            </ReportItems>
-                            <KeepTogether>true</KeepTogether>
-                            <Top>0.16907in</Top>
-                            <Left>0.78741in</Left>
-                            <Height>1.08755cm</Height>
-                            <Width>1cm</Width>
-                            <ZIndex>1</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>Solid</Style>
-                              </Border>
-                              <BottomBorder>
-                                <Style>None</Style>
-                              </BottomBorder>
-                            </Style>
-                          </Rectangle>
-                          <Rectangle Name="Rectangle31">
-                            <ReportItems>
-                              <Textbox Name="Textbox35">
-                                <CanGrow>true</CanGrow>
-                                <KeepTogether>true</KeepTogether>
-                                <Paragraphs>
-                                  <Paragraph>
-                                    <TextRuns>
-                                      <TextRun>
-                                        <Value>2</Value>
-                                        <Style>
-                                          <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                          <FontSize>15pt</FontSize>
-                                          <FontWeight>Normal</FontWeight>
-                                        </Style>
-                                      </TextRun>
-                                    </TextRuns>
-                                    <Style>
-                                      <TextAlign>Left</TextAlign>
-                                    </Style>
-                                  </Paragraph>
-                                </Paragraphs>
-                                <rd:DefaultName>Textbox5</rd:DefaultName>
-                                <Top>0.04167in</Top>
-                                <Left>0.11509in</Left>
-                                <Height>0.28227in</Height>
-                                <Width>0.20917in</Width>
-                                <Style>
-                                  <Border>
-                                    <Style>None</Style>
-                                  </Border>
-                                  <VerticalAlign>Top</VerticalAlign>
-                                </Style>
-                              </Textbox>
-                            </ReportItems>
-                            <KeepTogether>true</KeepTogether>
-                            <Top>0.16907in</Top>
-                            <Left>0.3937in</Left>
-                            <Height>1.08755cm</Height>
-                            <Width>1cm</Width>
-                            <ZIndex>2</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>Solid</Style>
-                              </Border>
-                              <BottomBorder>
-                                <Style>None</Style>
-                              </BottomBorder>
-                            </Style>
-                          </Rectangle>
-                          <Rectangle Name="Rectangle32">
-                            <ReportItems>
-                              <Textbox Name="Textbox36">
-                                <CanGrow>true</CanGrow>
-                                <KeepTogether>true</KeepTogether>
-                                <Paragraphs>
-                                  <Paragraph>
-                                    <TextRuns>
-                                      <TextRun>
-                                        <Value>1</Value>
-                                        <Style>
-                                          <FontFamily>HarmonyOS Sans SC</FontFamily>
-                                          <FontSize>15pt</FontSize>
-                                          <FontWeight>Normal</FontWeight>
-                                        </Style>
-                                      </TextRun>
-                                    </TextRuns>
-                                    <Style>
-                                      <TextAlign>Left</TextAlign>
-                                    </Style>
-                                  </Paragraph>
-                                </Paragraphs>
-                                <rd:DefaultName>Textbox5</rd:DefaultName>
-                                <Top>0.04167in</Top>
-                                <Left>0.11509in</Left>
-                                <Height>0.28227in</Height>
-                                <Width>0.20917in</Width>
-                                <Style>
-                                  <Border>
-                                    <Style>None</Style>
-                                  </Border>
-                                  <VerticalAlign>Top</VerticalAlign>
-                                </Style>
-                              </Textbox>
-                            </ReportItems>
-                            <KeepTogether>true</KeepTogether>
-                            <Top>0.16907in</Top>
-                            <Height>1.08755cm</Height>
-                            <Width>1cm</Width>
-                            <ZIndex>3</ZIndex>
-                            <Style>
-                              <Border>
-                                <Style>Solid</Style>
-                              </Border>
-                              <TopBorder>
-                                <Color>Black</Color>
-                                <Width>1pt</Width>
-                              </TopBorder>
-                              <BottomBorder>
-                                <Style>None</Style>
-                              </BottomBorder>
-                              <LeftBorder>
-                                <Style>None</Style>
-                              </LeftBorder>
-                            </Style>
-                          </Rectangle>
-                        </ReportItems>
-                        <KeepTogether>true</KeepTogether>
-                        <Top>3.4255in</Top>
-                        <Left>1.77164in</Left>
-                        <Height>1.51699cm</Height>
-                        <Width>3.00002cm</Width>
-                        <ZIndex>6</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                          <BottomBorder>
-                            <Style>None</Style>
-                          </BottomBorder>
-                        </Style>
-                      </Rectangle>
-                      <Rectangle Name="Rectangle28">
-                        <ReportItems>
-                          <Image Name="V_barcode">
-                            <Source>Database</Source>
-                            <Value>=Parameters!VBarcode_params.Value</Value>
-                            <MIMEType>image/png</MIMEType>
-                            <Sizing>Fit</Sizing>
-                            <Top>0.06555in</Top>
-                            <Left>0.05523in</Left>
-                            <Height>2.53727in</Height>
-                            <Width>0.5in</Width>
-                            <Style>
-                              <Border>
-                                <Style>None</Style>
-                              </Border>
-                            </Style>
-                          </Image>
-                        </ReportItems>
-                        <KeepTogether>true</KeepTogether>
-                        <Top>1.37825in</Top>
-                        <Left>2.95276in</Left>
-                        <Height>6.717cm</Height>
-                        <Width>1.5cm</Width>
-                        <ZIndex>7</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                          <BottomBorder>
-                            <Style>None</Style>
-                          </BottomBorder>
                         </Style>
                       </Rectangle>
                       <Rectangle Name="Rectangle29">
@@ -1187,10 +1192,10 @@
                           </Textbox>
                         </ReportItems>
                         <KeepTogether>true</KeepTogether>
-                        <Top>4.02274in</Top>
+                        <Top>3.93634in</Top>
                         <Height>3.14189cm</Height>
                         <Width>5.5cm</Width>
-                        <ZIndex>8</ZIndex>
+                        <ZIndex>1</ZIndex>
                         <Style>
                           <Border>
                             <Style>Solid</Style>
@@ -1203,28 +1208,16 @@
                           </LeftBorder>
                         </Style>
                       </Rectangle>
-                      <Line Name="Line2">
-                        <Top>4.02274in</Top>
-                        <Left>0.00487in</Left>
-                        <Height>0in</Height>
-                        <Width>3.53843in</Width>
-                        <ZIndex>9</ZIndex>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                        </Style>
-                      </Line>
                       <Image Name="QR">
                         <Source>Database</Source>
                         <Value>=Parameters!QRcode_params.Value</Value>
                         <MIMEType>image/png</MIMEType>
                         <Sizing>Fit</Sizing>
-                        <Top>4.03663in</Top>
-                        <Left>2.17925in</Left>
-                        <Height>1.20919in</Height>
+                        <Top>3.94354in</Top>
+                        <Left>2.17924in</Left>
+                        <Height>1.18809in</Height>
                         <Width>1.35017in</Width>
-                        <ZIndex>10</ZIndex>
+                        <ZIndex>2</ZIndex>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -1234,9 +1227,9 @@
                     </ReportItems>
                     <KeepTogether>true</KeepTogether>
                     <Top>0.12824in</Top>
-                    <Left>0.11427in</Left>
-                    <Height>5.2597in</Height>
-                    <Width>3.54331in</Width>
+                    <Left>0.10526in</Left>
+                    <Height>5.17331in</Height>
+                    <Width>3.55233in</Width>
                     <Style>
                       <Border>
                         <Style>Solid</Style>
@@ -1337,7 +1330,6 @@
                     </Style>
                   </Textbox>
                   <Textbox Name="tb_waybill7">
-                    <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -1438,7 +1430,7 @@
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <Top>5.38794in</Top>
+                    <Top>5.31543in</Top>
                     <Left>0.24085in</Left>
                     <Height>0.13567in</Height>
                     <Width>1.16558in</Width>
@@ -1465,8 +1457,8 @@
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <Top>5.38794in</Top>
-                    <Left>2.54833in</Left>
+                    <Top>5.30155in</Top>
+                    <Left>2.54991in</Left>
                     <Height>0.13567in</Height>
                     <Width>1.16558in</Width>
                     <ZIndex>8</ZIndex>
@@ -1478,7 +1470,7 @@
                   </Textbox>
                 </ReportItems>
                 <KeepTogether>true</KeepTogether>
-                <Height>14.02997cm</Height>
+                <Height>13.84579cm</Height>
                 <Width>9.58883cm</Width>
                 <Style>
                   <Border>
@@ -1491,7 +1483,7 @@
             <KeepTogether>true</KeepTogether>
             <Top>0.02145cm</Top>
             <Left>0.02743cm</Left>
-            <Height>14.02997cm</Height>
+            <Height>13.84579cm</Height>
             <Width>9.58883cm</Width>
             <Style>
               <Border>
@@ -1507,7 +1499,7 @@
           </Border>
         </Style>
       </Body>
-      <Width>9.67777cm</Width>
+      <Width>9.66315cm</Width>
       <Page>
         <PageHeight>15cm</PageHeight>
         <PageWidth>10cm</PageWidth>
