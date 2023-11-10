@@ -46,6 +46,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         Booking_info booking_info = new Booking_info();
         Create_api order_api = new Create_api();
         db_queries queries = new db_queries();
+        FLASHModel _flashmodel = new FLASHModel();
 
         void CustomMessageBox(String message, Boolean questionType)
         {
@@ -238,7 +239,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         private async void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            
             if (receiverInformationPage.rdbJandT.IsChecked == true)
             {
                 db_queries.getCourierDetails("J&T");
@@ -301,16 +301,132 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 else
                 {
                     //receiver details
-                    FLASHModel.receiver_name = receiverInformationPage.tbFullName.Text;
-                    FLASHModel.receiver_phone = receiverInformationPage.tbPhone.Text;
-                    FLASHModel.receiver_province = receiverInformationPage.cbProvinceFlash.Text;
-                    FLASHModel.receiver_city = receiverInformationPage.cbCityFlash.Text;
-                    FLASHModel.receiver_barangay = receiverInformationPage.cbBarangayFlash.Text;
-                    FLASHModel.postal_code = receiverInformationPage.cbPostalCodeFlash.Text;
-                    FLASHModel.receiver_address = receiverInformationPage.tbAddress.Text;
+                    _flashmodel.receiver_name = receiverInformationPage.tbFullName.Text;
+                    _flashmodel.receiver_phone = receiverInformationPage.tbPhone.Text;
+                    _flashmodel.receiver_province = receiverInformationPage.cbProvinceFlash.Text;
+                    _flashmodel.receiver_city = receiverInformationPage.cbCityFlash.Text;
+                    _flashmodel.receiver_barangay = receiverInformationPage.cbBarangayFlash.Text;
+                    _flashmodel.postal_code = receiverInformationPage.cbPostalCodeFlash.Text;
+                    _flashmodel.receiver_address = receiverInformationPage.tbAddress.Text;
+                    _flashmodel.weight = receiverInformationPage.tbWeight.Text;
 
                     //parcel details
-                    
+                    _flashmodel.remarks = receiverInformationPage.tbRemarks.Text;
+                    _flashmodel.COD = receiverInformationPage.tbGoodsValue.Text;
+                    _flashmodel.item = receiverInformationPage.cbItem.Text;
+
+                    //sender details
+                    sql_control sql = new sql_control();
+                    sql.AddParam("@item", _flashmodel.item);
+                    int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item"));
+                    sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
+                    if(sql.DBDT.Rows.Count > 0)
+                    {
+                        foreach(DataRow dr in sql.DBDT.Rows)
+                        {
+                            GlobalModel.sender_name = dr[1].ToString();
+                            GlobalModel.sender_phone = dr[5].ToString();
+                            GlobalModel.sender_province = dr[2].ToString();
+                            GlobalModel.sender_city = dr[3].ToString();
+                            GlobalModel.sender_address = dr[6].ToString();
+                            GlobalModel.sender_postal = dr[7].ToString();
+                        }
+                    }
+                    switch (receiverInformationPage.cbSizeFlash.Text)
+                    {
+                        case "MINI":
+                            _flashmodel.lenght = "12";
+                            _flashmodel.width = "20";
+                            _flashmodel.height = "6";
+                            break;
+                        case "SMALL":
+                            _flashmodel.lenght = "20";
+                            _flashmodel.width = "30";
+                            _flashmodel.height = "10";
+                            break;
+                        case "+SMALL":
+                            _flashmodel.lenght = "24";
+                            _flashmodel.width = "37";
+                            _flashmodel.height = "14";
+                            break;
+                        case "MEDIUM":
+                            _flashmodel.lenght = "27";
+                            _flashmodel.width = "43";
+                            _flashmodel.height = "20";
+                            break;
+                        case "+MEDIUM":
+                            _flashmodel.lenght = "35";
+                            _flashmodel.width = "45";
+                            _flashmodel.height = "25";
+                            break;
+                        case "LARGE":
+                            _flashmodel.lenght = "40";
+                            _flashmodel.width = "50";
+                            _flashmodel.height = "30";
+                            break;
+                    }
+                    switch (receiverInformationPage.cbOrderType.Text)
+                    {
+                        case "Cash on Delivery (COD)":
+                            _flashmodel.isCOD = "1";
+                            break;
+                        case "Non-Cash on Delivery (Non-COD)":
+                            _flashmodel.isCOD = "0";
+                            break;
+                    }
+                    switch (receiverInformationPage.cbItemType.Text)
+                    {
+                        case "File":
+                            _flashmodel.article_category = "0";
+                            break;
+                        case "Dry food":
+                            _flashmodel.article_category = "1";
+                            break;
+                        case "Commodity":
+                            _flashmodel.article_category = "2";
+                            break;
+                        case "Digital products":
+                            _flashmodel.article_category = "3";
+                            break;
+                        case "Clothes":
+                            _flashmodel.article_category = "4";
+                            break;
+                        case "Books":
+                            _flashmodel.article_category = "5";
+                            break;
+                        case "Auto parts":
+                            _flashmodel.article_category = "6";
+                            break;
+                        case "Shoes and bags":
+                            _flashmodel.article_category = "7";
+                            break;
+                        case "sports equipment":
+                            _flashmodel.article_category = "8";
+                            break;
+                        case "Cosmetics":
+                            _flashmodel.article_category = "9";
+                            break;
+                        case "Household":
+                            _flashmodel.article_category = "10";
+                            break;
+                        case "Fruit":
+                            _flashmodel.article_category = "11";
+                            break;
+                        case "Others":
+                            _flashmodel.article_category = "99";
+                            break;
+                    }
+                    if (await FLASH_api.FlashCreateOrder(_flashmodel))
+                    {
+                        MessageBox.Show("Order success!");
+                        btnNext.IsEnabled = true;
+                        this.DialogResult = true;
+                        this.Close();
+                    }
+                    else
+                    {
+                        btnNext.IsEnabled = true;
+                    }
                 }
             }
         }

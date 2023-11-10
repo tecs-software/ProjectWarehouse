@@ -12,58 +12,64 @@ using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
 using System.Windows.Input;
 using System.Windows;
+using WarehouseManagement.Database;
 
 namespace WarehouseManagement.Controller
 {
     public class FLASH_api
     {
         static sql_control sql = new sql_control();
-        public static SortedDictionary<string, string> MockCreateOrderData()
+        db_queries queries = new db_queries();
+        public static SortedDictionary<string, string> MockCreateOrderData(FLASHModel flashmodel)
         {
+            decimal codAmount = decimal.Parse(flashmodel.COD) * 100;
             var rd = new Random();
             var dic = new SortedDictionary<string, string>(StringComparer.Ordinal)
             {
                 {"mchId", GlobalModel.customer_id},
-                {"nonceStr",  DateTime.Now.ToString("yyyyMMddHHmmss") + rd.Next(1,10000)},                                        //change on your demand
+                {"nonceStr",  DateTime.Now.ToString("yyyyMMddHHmmss") + rd.Next(1,10000)},//change on your demand
                 {"outTradeNo",  "TECS-" + GenerateTransactionID()},    //order id
-                {"expressCategory", FLASHModel.express_category},
+                {"expressCategory", "1"},
                 {"srcName", GlobalModel.sender_name},
                 {"srcPhone", GlobalModel.sender_phone},
                 {"srcProvinceName", GlobalModel.sender_province},
                 {"srcCityName", GlobalModel.sender_city},
                 {"srcPostalCode",GlobalModel.sender_postal},
                 {"srcDetailAddress", GlobalModel.sender_address},
-                {"dstName",FLASHModel.receiver_name},
-                {"dstPhone", FLASHModel.receiver_phone},
-                {"dstProvinceName", FLASHModel.receiver_province},
-                {"dstCityName", FLASHModel.receiver_city},
-                {"dstPostalCode", FLASHModel.postal_code},
-                {"dstDetailAddress", FLASHModel.receiver_address},
-                {"articleCategory", FLASHModel.article_category},
-                {"weight", FLASHModel.weight},
-                {"codEnabled",FLASHModel.isCOD},
-                {"codAmount",FLASHModel.COD},
-                {"remark", FLASHModel.remarks},
-                {"width",FLASHModel.width},
-                {"height",FLASHModel.height},
-                {"length",FLASHModel.lenght},
+                {"dstName", flashmodel.receiver_name},
+                {"dstPhone", flashmodel.receiver_phone},
+                {"dstProvinceName", flashmodel.receiver_province},
+                {"dstCityName", flashmodel.receiver_city},
+                {"dstPostalCode", flashmodel.postal_code},
+                {"dstDetailAddress", flashmodel.receiver_address},
+                {"articleCategory", flashmodel.article_category},
+                {"weight", flashmodel.weight},
+                {"codEnabled",flashmodel.isCOD},
+                {"codAmount",codAmount.ToString()},
+                {"remark", flashmodel.remarks},
+                {"width",flashmodel.width},
+                {"height",flashmodel.height},
+                {"length",flashmodel.lenght},
             };
             return dic;
         }
-        public static async Task FlashCreateOrder()
+        public static async Task<bool> FlashCreateOrder(FLASHModel model)
         {
-            var mockData = MockCreateOrderData();
+            var mockData = MockCreateOrderData(model);
             var url = "/open/v1/orders";
             var responseData = await RequestDataAsync<OrderResponse>(url, mockData, GlobalModel.customer_id);
             if (responseData.code == "1")
             {
-                MessageBox.Show($"Create Order successfully! The pno={responseData.data.pno}{Environment.NewLine}");
-                MessageBox.Show($"Create Order successfully! The Order ID={responseData.data.outTradeNo}{Environment.NewLine}");
+                FlashDB.ReceiverData(model);
+                FlashDB.OrderData(model, responseData.data.outTradeNo, responseData.data.pno);
+                FlashDB.UpdateStocks(model);
                 waybill.pno = responseData.data.pno;
+                return true;
             }
             else
             {
-                MessageBox.Show($"Get warehousers failed! The error message ={responseData}{Environment.NewLine}");
+                MessageBox.Show($"Order process failed! The error message ={responseData}{Environment.NewLine}");
+                return false;
             }
         }
         public static long GenerateTransactionID()
@@ -129,7 +135,7 @@ namespace WarehouseManagement.Controller
                 using (var httpClient = new HttpClient())
                 {
                     var content = new StringContent(requestContent, Encoding.UTF8, contentType);
-                    var response = await httpClient.PostAsync("https://open-api-tra.flashexpress.ph" + url, content);
+                    var response = await httpClient.PostAsync("https://open-api.flashexpress.ph" + url, content);
 
                     response.EnsureSuccessStatusCode(); // Ensure the response is successful (status code 2xx).
 

@@ -279,7 +279,7 @@ namespace WarehouseManagement.Views.Onboarding
             {
                 if (rdbFlash.IsChecked == true)
                 {
-                    queries.api_credentials(rdbFlashCustomer, "41de95733630f05b050d00c308f13d459a92d64595bac9a29d711bce191dfb2e", "", txtCustomerID);
+                    queries.api_credentials(rdbFlashCustomer, "fc8250f522c23b8d93a286519494c764a828afdd0c464797ecbb9276aa275629", "", txtCustomerID);
                     MessageBox.Show("J&T vip added");
                     txtCustomerID.Text = "";
                 }

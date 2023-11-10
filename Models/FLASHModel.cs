@@ -9,30 +9,30 @@ namespace WarehouseManagement.Models
 {
     public class FLASHModel
     {
-        [Required]
         #region receiver details
-        public static string receiver_name { get; set; } = string.Empty;
-        public static string receiver_province { get; set; } = string.Empty;
-        public static string receiver_city { get; set; } = string.Empty;
-        public static string receiver_barangay { get; set; } = string.Empty;
-        public static string receiver_address { get; set; } = string.Empty;
-        public static string postal_code { get; set; } = string.Empty;
-        public static string receiver_phone { get; set; } = string.Empty;
+        public string receiver_name { get; set; } = string.Empty;
+        public string receiver_province { get; set; } = string.Empty;
+        public string receiver_city { get; set; } = string.Empty;
+        public string receiver_barangay { get; set; } = string.Empty;
+        public string receiver_address { get; set; } = string.Empty;
+        public string postal_code { get; set; } = string.Empty;
+        public string receiver_phone { get; set; } = string.Empty;
         #endregion
 
         #region delivery data
-        public static string express_category { get; set; } = string.Empty;
-        public static string article_category { get; set; } = string.Empty;
-        public static string isCOD { get; set; } = string.Empty;
-        public static string COD { get; set; } = string.Empty;
+        public string express_category { get; set; } = string.Empty;
+        public string article_category { get; set; } = string.Empty;
+        public string isCOD { get; set; } = string.Empty;
+        public string COD { get; set; } = string.Empty;
         #endregion
 
         #region parcel data
-        public static string weight { get; set; } = string.Empty;
-        public static string height { get; set; } = string.Empty;
-        public static string lenght { get; set; } = string.Empty;
-        public static string width { get; set; } = string.Empty;
-        public static string remarks { get; set; } = string.Empty;
+        public string item { get; set; } = string.Empty;
+        public string weight { get; set; } = string.Empty;
+        public string height { get; set; } = string.Empty;
+        public string lenght { get; set; } = string.Empty;
+        public string width { get; set; } = string.Empty;
+        public string remarks { get; set; } = string.Empty;
 
         #endregion
 

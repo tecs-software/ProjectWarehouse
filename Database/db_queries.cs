@@ -210,7 +210,7 @@ namespace WarehouseManagement.Database
             string name = _receiver.FirstName + " " + _receiver.LastName;
             sql.AddParam("@name", name);
             sql.AddParam("@address", _receiver.Address);
-            sql.Query($"INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) VALUES (@name, '" + _receiver.Phone + "', @address)");
+            sql.Query($"INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) VALUES (@name, '{_receiver.Phone}', @address)");
             if (sql.HasException(true)) return;
         }
         public void Insert_Orders(string order_id, string waybill, Booking_info book_info, string status)
@@ -393,7 +393,7 @@ namespace WarehouseManagement.Database
         }
         public void update_inventory_status(Booking_info book_info)
         {
-            sql.AddParam("@item_name", book_info.item_name);
+            sql.AddParam("@item_name", book_info.item_name.Replace("'",""));
 
             //deducting the ordered quantity
             sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity - {int.Parse(book_info.quantity)} WHERE item_name = @item_name");

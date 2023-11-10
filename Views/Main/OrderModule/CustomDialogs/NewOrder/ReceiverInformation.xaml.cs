@@ -1,4 +1,5 @@
-﻿using Mono.Cecil.Cil;
+﻿using MaterialDesignThemes.Wpf;
+using Mono.Cecil.Cil;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -33,28 +34,77 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         sql_control sql = new sql_control();
         public void insert_item()
         {
-            if (CurrentUser.Instance.userID == 1)
+            if(rdbJandT.IsChecked == true)
             {
-                sql.Query($"SELECT * FROM tbl_products");
+                sql.Query($"SELECT sender_id FROM tbl_sender WHERE courier_id = 1");
                 if (sql.HasException(true)) return;
-                if (sql.DBDT.Rows.Count > 0)
+                if(sql.DBDT.Rows.Count > 0)
                 {
-                    foreach (DataRow dr in sql.DBDT.Rows)
+                    foreach(DataRow dr in sql.DBDT.Rows)
                     {
-                        cbItem.Items.Add(dr[2]);
+                        sql.Query($"SELECT * FROM tbl_products WHERE sender_id = '{dr[0].ToString()}'");
+                        if (sql.HasException(true)) return;
+                        if (sql.DBDT.Rows.Count > 0)
+                        {
+                            foreach (DataRow dr1 in sql.DBDT.Rows)
+                            {
+                                cbItem.Items.Add(dr1[2]);
+                            }
+                        }
+                        //if (CurrentUser.Instance.userID == 1)
+                        //{
+                            
+                        //}
+                        //else
+                        //{
+                        //    int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}"));
+                        //    sql.Query($"SELECT * FROM tbl_products WHERE sender_id = {sender_id}");
+                        //    if (sql.HasException(true)) return;
+                        //    if (sql.DBDT.Rows.Count > 0)
+                        //    {
+                        //        foreach (DataRow dr1 in sql.DBDT.Rows)
+                        //        {
+                        //            cbItem.Items.Add(dr1[2]);
+                        //        }
+                        //    }
+                        //}
                     }
                 }
             }
             else
             {
-                int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}"));
-                sql.Query($"SELECT * FROM tbl_products WHERE sender_id = {sender_id}");
+                sql.Query($"SELECT * FROM tbl_sender WHERE courier_id = 2");
                 if (sql.HasException(true)) return;
                 if (sql.DBDT.Rows.Count > 0)
                 {
                     foreach (DataRow dr in sql.DBDT.Rows)
                     {
-                        cbItem.Items.Add(dr[2]);
+                        sql.Query($"SELECT * FROM tbl_products WHERE sender_id = '{dr[0].ToString()}'");
+                        if (sql.HasException(true)) return;
+                        if (sql.DBDT.Rows.Count > 0)
+                        {
+                            foreach (DataRow dr1 in sql.DBDT.Rows)
+                            {
+                                cbItem.Items.Add(dr1[2]);
+                            }
+                        }
+                        //if (CurrentUser.Instance.userID == 1)
+                        //{
+
+                        //}
+                        //else
+                        //{
+                        //    int? sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_users WHERE user_id = {int.Parse(CurrentUser.Instance.userID.ToString())}"));
+                        //    sql.Query($"SELECT * FROM tbl_products WHERE sender_id = {sender_id}");
+                        //    if (sql.HasException(true)) return;
+                        //    if (sql.DBDT.Rows.Count > 0)
+                        //    {
+                        //        foreach (DataRow dr1 in sql.DBDT.Rows)
+                        //        {
+                        //            cbItem.Items.Add(dr1[2]);
+                        //        }
+                        //    }
+                        //}
                     }
                 }
             }
@@ -70,6 +120,12 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbItemType.Visibility = Visibility.Collapsed;
                 cbOrderType.Visibility = Visibility.Collapsed;
                 tbCod.Visibility = Visibility.Visible;
+                HintAssist.SetHint(tbGoodsValue, "Total goods value (PHP)");
+                tbQuantity.Visibility = Visibility.Visible;
+                tbTotal.Visibility = Visibility.Visible;
+                tbTotalHolder.Visibility = Visibility.Visible;
+                tbTotalGoods.Visibility = Visibility.Visible;
+                tbTotalGoodsHolder.Visibility = Visibility.Visible;
                 queries.province(cbProvinceJnt);
             }
             if (text == "FLASH")
@@ -80,11 +136,25 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbItemType.Visibility = Visibility.Visible;
                 cbOrderType.Visibility = Visibility.Visible;
                 tbCod.Visibility = Visibility.Collapsed;
+                HintAssist.SetHint(tbGoodsValue, "COD amount");
+                tbQuantity.Visibility = Visibility.Collapsed;
+                tbTotal.Visibility = Visibility.Collapsed;
+                tbTotalHolder.Visibility = Visibility.Collapsed;
+                tbTotalGoods.Visibility = Visibility.Collapsed;
+                tbTotalGoodsHolder.Visibility = Visibility.Collapsed;
                 queries.FlashProvince(cbProvinceFlash);
             }
         }
         void LoadTypes()
         {
+            cbSizeFlash.Items.Clear();
+            cbSizeFlash.Items.Add("MINI");
+            cbSizeFlash.Items.Add("SMALL");
+            cbSizeFlash.Items.Add("+SMALL");
+            cbSizeFlash.Items.Add("MEDIUM");
+            cbSizeFlash.Items.Add("+MEDIUM");
+            cbSizeFlash.Items.Add("LARGE");
+
             cbOrderType.Items.Clear();
             cbOrderType.Items.Add("Cash on Delivery (COD)");
             cbOrderType.Items.Add("Non-Cash on Delivery (Non-COD)");
@@ -93,7 +163,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             cbItemType.Items.Add("File");
             cbItemType.Items.Add("Dry food");
             cbItemType.Items.Add("Commodity");
-            cbItemType.Items.Add("Digital Products");
+            cbItemType.Items.Add("Digital products");
             cbItemType.Items.Add("Clothes");
             cbItemType.Items.Add("Books");
             cbItemType.Items.Add("Auto parts");
@@ -114,7 +184,6 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             cbSizeFlash.Visibility = Visibility.Collapsed;
             lblReceiverInfo.Visibility = Visibility.Visible;
             lblBookingInfo.Visibility = Visibility.Visible;
-            insert_item();
             rdbJandT.IsChecked = true;
             rdbFlash.IsChecked = false;
         }
@@ -188,16 +257,22 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         private void cbItem_DropDownClosed(object sender, EventArgs e)
         {
-            sql.AddParam("@item", cbItem.Text);
-            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = @item");
-
-            if(tbQuantity.Text != "")
+            if (rdbJandT.IsChecked == true)
             {
-                decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text)) + Converter.StringToDecimal(tbCod.Text);
-                tbTotal.Text = Converter.StringToMoney(total.ToString());
+                sql.AddParam("@item", cbItem.Text);
+                tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = @item");
+
+                if (tbQuantity.Text != "")
+                {
+                    decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text)) + Converter.StringToDecimal(tbCod.Text);
+                    tbTotal.Text = Converter.StringToMoney(total.ToString());
+                }
+            }
+            else
+            {
+                //do nothing
             }
         }
-
         private void tbQuantity_KeyUp(object sender, KeyEventArgs e)
         {
             decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text));
@@ -205,12 +280,25 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
         }
         private void rdbJandT_Checked(object sender, RoutedEventArgs e)
         {
+            cbItem.Items.Clear();
+            insert_item();
             CheckedRadio(rdbJandT.Content.ToString());
+            sql.AddParam("@item", cbItem.Text);
+            tbGoodsValue.Text = sql.ReturnResult($"SELECT nominated_price FROM tbl_products WHERE item_name = @item");
+
+            if (tbQuantity.Text != "")
+            {
+                decimal total = (Converter.StringToDecimal(tbGoodsValue.Text) * Converter.StringToDecimal(tbQuantity.Text)) + Converter.StringToDecimal(tbCod.Text);
+                tbTotal.Text = Converter.StringToMoney(total.ToString());
+            }
         }
 
         private void rdbFlash_Checked(object sender, RoutedEventArgs e)
         {
+            cbItem.Items.Clear();
+            insert_item();
             CheckedRadio(rdbFlash.Content.ToString());
+            tbGoodsValue.Text = "";
         }
 
         private void cbProvinceFlash_DropDownClosed(object sender, EventArgs e)
