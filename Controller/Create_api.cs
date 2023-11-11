@@ -321,7 +321,7 @@ namespace WarehouseManagement.Controller
                 payloadObj.receiver.city = details.receiver_city;
                 payloadObj.receiver.area = details.receiver_area;
                 payloadObj.receiver.address = details.receiver_address;
-                payloadObj.txlogisticid = "TECS-" + GenerateTransactionID();
+                payloadObj.txlogisticid = "TECS-J" + GenerateTransactionID();
 
                 //updating other fields
                 payloadObj.createordertime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -481,7 +481,7 @@ namespace WarehouseManagement.Controller
         {
             var finalString = "";
             var chars = "1234567";
-            var stringChars = new char[9];
+            var stringChars = new char[8];
             var random = new Random();
             for (int i = 0; i < stringChars.Length; i++)
             {
@@ -489,7 +489,7 @@ namespace WarehouseManagement.Controller
             }
             finalString = new String(stringChars);
 
-            sql.Query($"SELECT * FROM tbl_orders WHERE order_id = '{"TECS-" + finalString}'");
+            sql.Query($"SELECT * FROM tbl_orders WHERE order_id = '{"TECS-J" + finalString}'");
             if (sql.DBDT.Rows.Count == 0)
             {
                 return long.Parse(finalString);

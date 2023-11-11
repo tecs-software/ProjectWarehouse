@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 using WWarehouseManagement.Database;
@@ -53,6 +54,20 @@ namespace WarehouseManagement.Database
             string Status = newStock < 0 ? Util.status_out_of_stock : newStock == 0 ? Util.status_out_of_stock : newStock <= 100 ? Util.status_low_stock : Util.status_in_stock;
             sql.Query($"UPDATE tbl_products set status = '{Status}' WHERE item_name = '{model.item}'");
             if (sql.HasException(true)) return;
+        }
+        public static void UpdateCancelledOrder(string reason, string product, string id)
+        {
+            sql.Query($"UPDATE tbl_orders SET remarks = '{reason}', status = 'CANCELLED', updated_at = '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' WHERE order_id = '{id}'");
+
+            int order_qty = int.Parse(sql.ReturnResult($"SELECT quantity FROM tbl_orders WHERE order_id = '{id}'"));
+            sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity+{order_qty} WHERE item_name = '{product}'");
+
+            int stocks = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = '{product}'"));
+            string status = stocks < 0 ? Util.status_out_of_stock : (stocks == 0 ? Util.status_out_of_stock : (stocks <= 100 ? Util.status_low_stock : Util.status_in_stock));
+            sql.Query($"UPDATE tbl_products SET status = '{status}' WHERE item_name = '{product}'");
+
+            //invalidating the incentives
+            sql.Query($"UPDATE tbl_incentives SET is_valid = 0 WHERE incentive_for = '{id}'");
         }
     }
 }

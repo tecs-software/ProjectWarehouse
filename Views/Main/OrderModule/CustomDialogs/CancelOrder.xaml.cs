@@ -23,7 +23,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
     {
         string sCourier;
         string sProduct;
-        public CancelOrder(string order_id, string courier, string product)
+        string sWaybill;
+        public CancelOrder(string order_id, string courier, string product, string waybill)
         {
             InitializeComponent();
             tbOtherReason.Visibility = Visibility.Collapsed;
@@ -31,27 +32,51 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             tbOrderId.Text = order_id;
             this.sCourier = courier;
             this.sProduct = product;
+            this.sWaybill = waybill;
+
             reasons();
         }
 
         private async void btnCancelOrder_Click(object sender, RoutedEventArgs e)
         {
             Cancel_api cancel_api = new Cancel_api();
-            if(tbOtherReason.Visibility == Visibility.Visible)
+            if(sCourier == "J&T")
             {
-                
-                if (await cancel_api.api_cancel(tbOrderId.Text, tbOtherReason.Text, sCourier, sProduct))
+                if (tbOtherReason.Visibility == Visibility.Visible)
                 {
-                    this.DialogResult = true;
-                    Close();
+
+                    if (await cancel_api.api_cancel(tbOrderId.Text, tbOtherReason.Text, sCourier, sProduct))
+                    {
+                        this.DialogResult = true;
+                        Close();
+                    }
+                }
+                else
+                {
+                    if (await cancel_api.api_cancel(tbOrderId.Text, cbReason.Text, sCourier, sProduct))
+                    {
+                        this.DialogResult = true;
+                        Close();
+                    }
                 }
             }
             else
             {
-                if (await cancel_api.api_cancel(tbOrderId.Text, cbReason.Text, sCourier, sProduct))
+                if (tbOtherReason.Visibility == Visibility.Visible)
                 {
-                    this.DialogResult = true;
-                    Close();
+                    if(await FLASH_api.FlashCancelOrder(sWaybill, tbOtherReason.Text, sProduct, tbOrderId.Text))
+                    {
+                        this.DialogResult = true;
+                        Close();
+                    }
+                }
+                else
+                {
+                    if (await FLASH_api.FlashCancelOrder(sWaybill, cbReason.Text, sProduct, tbOrderId.Text))
+                    {
+                        this.DialogResult = true;
+                        Close();
+                    }
                 }
             }
 

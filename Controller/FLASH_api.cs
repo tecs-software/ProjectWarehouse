@@ -28,7 +28,7 @@ namespace WarehouseManagement.Controller
             {
                 {"mchId", GlobalModel.customer_id},
                 {"nonceStr",  DateTime.Now.ToString("yyyyMMddHHmmss") + rd.Next(1,10000)},//change on your demand
-                {"outTradeNo",  "TECS-" + GenerateTransactionID()},    //order id
+                {"outTradeNo",  "TECS-F" + GenerateTransactionID()},    //order id
                 {"expressCategory", "1"},
                 {"srcName", GlobalModel.sender_name},
                 {"srcPhone", GlobalModel.sender_phone},
@@ -53,6 +53,16 @@ namespace WarehouseManagement.Controller
             };
             return dic;
         }
+        public static SortedDictionary<string, string> MockCommonData(string dateString = "")
+        {
+            var rd = new Random();
+            var dic = new SortedDictionary<string, string>(StringComparer.Ordinal)
+            {
+                {"mchId", GlobalModel.customer_id},
+                {"nonceStr", DateTime.Now.ToString("yyyyMMddHHmmss") + rd.Next(1,10000)}, //change on your demand
+            };
+            return dic;
+        }
         public static async Task<bool> FlashCreateOrder(FLASHModel model)
         {
             var mockData = MockCreateOrderData(model);
@@ -72,11 +82,28 @@ namespace WarehouseManagement.Controller
                 return false;
             }
         }
+        public static async Task<bool> FlashCancelOrder(string pno, string reason, string product, string id)
+        {
+            var mockData = MockCommonData();
+            var url = $"/open/v1/orders/{pno}/cancel";
+            var responseData = await RequestDataAsync<OrderResponse>(url, mockData, GlobalModel.customer_id);
+            if (responseData.code == "1")
+            {
+                FlashDB.UpdateCancelledOrder(reason, product, id);
+                MessageBox.Show("Order cancelled");
+                return true;
+            }
+            else
+            {
+                MessageBox.Show($"Get warehousers failed! The error message ={responseData}{Environment.NewLine}");
+                return false;
+            }
+        }
         public static long GenerateTransactionID()
         {
             var finalString = "";
             var chars = "1234567";
-            var stringChars = new char[9];
+            var stringChars = new char[8];
             var random = new Random();
             for (int i = 0; i < stringChars.Length; i++)
             {
@@ -84,7 +111,7 @@ namespace WarehouseManagement.Controller
             }
             finalString = new String(stringChars);
 
-            sql.Query($"SELECT * FROM tbl_orders WHERE order_id = '{"TECS-" + finalString}'");
+            sql.Query($"SELECT * FROM tbl_orders WHERE order_id = '{"TECS-F" + finalString}'");
             if (sql.DBDT.Rows.Count == 0)
             {
                 return long.Parse(finalString);
@@ -140,7 +167,6 @@ namespace WarehouseManagement.Controller
                     response.EnsureSuccessStatusCode(); // Ensure the response is successful (status code 2xx).
 
                     string responseString = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show(responseString);
 
                     // Deserialize the response into FLASHApiResponse<T>.
                     var responseData = JsonConvert.DeserializeObject<FLASHApiResponse<T>>(responseString);

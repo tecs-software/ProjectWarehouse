@@ -18,7 +18,7 @@ namespace WarehouseManagement.Controller
         public async Task<bool> api_cancel(string id, string reason, string courier, string product)
         {
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/cancel";
-            string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '" + courier + "'");
+            string eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '{courier}'");
             string key = Decrypt(sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = '{courier}'"));
             string logistics_interface = @"
             {
@@ -29,8 +29,8 @@ namespace WarehouseManagement.Controller
             }";
 
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
-            payloadObj.eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '"+courier+"'");
-            payloadObj.customerid = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_name = '"+courier+"'");
+            payloadObj.eccompanyid = sql.ReturnResult($"SELECT eccompany_id FROM tbl_couriers WHERE courier_name = '{courier}'");
+            payloadObj.customerid = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_name = '{courier}'");
             payloadObj.txlogisticid = id;
             payloadObj.reason = reason;
 

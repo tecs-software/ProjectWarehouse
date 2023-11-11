@@ -121,7 +121,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbOrderType.Visibility = Visibility.Collapsed;
                 tbCod.Visibility = Visibility.Visible;
                 HintAssist.SetHint(tbGoodsValue, "Total goods value (PHP)");
-                tbQuantity.Visibility = Visibility.Visible;
+                tbQuantity.IsEnabled = true;
                 tbTotal.Visibility = Visibility.Visible;
                 tbTotalHolder.Visibility = Visibility.Visible;
                 tbTotalGoods.Visibility = Visibility.Visible;
@@ -137,7 +137,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbOrderType.Visibility = Visibility.Visible;
                 tbCod.Visibility = Visibility.Collapsed;
                 HintAssist.SetHint(tbGoodsValue, "COD amount");
-                tbQuantity.Visibility = Visibility.Collapsed;
+                tbQuantity.IsReadOnly = true;
                 tbTotal.Visibility = Visibility.Collapsed;
                 tbTotalHolder.Visibility = Visibility.Collapsed;
                 tbTotalGoods.Visibility = Visibility.Collapsed;
@@ -270,6 +270,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
             }
             else
             {
+                tbQuantity.Text = "1";
                 //do nothing
             }
         }

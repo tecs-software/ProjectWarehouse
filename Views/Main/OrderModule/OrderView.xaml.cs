@@ -240,8 +240,9 @@ namespace WarehouseManagement.Views.Main.OrderModule
                 string order_id = (dgtRespondentData.SelectedCells[0].Column.GetCellContent(id) as TextBlock).Text;
                 string courier = (dgtRespondentData.SelectedCells[1].Column.GetCellContent(id) as TextBlock).Text;
                 string product = (dgtRespondentData.SelectedCells[3].Column.GetCellContent(id) as TextBlock).Text;
+                string waybill = (dgtRespondentData.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text;
 
-                CancelOrder ca = new CancelOrder(order_id, courier, product);
+                CancelOrder ca = new CancelOrder(order_id, courier, product, waybill);
 
                 ca.Owner = Window.GetWindow(this);
 
