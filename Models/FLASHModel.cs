@@ -35,14 +35,25 @@ namespace WarehouseManagement.Models
         public string remarks { get; set; } = string.Empty;
 
         #endregion
-
-
+    }
+    public class FlashAccountDetails
+    {
+        public string AccountName { get; set; } = string.Empty;
+        public string Fullname { get; set; } = string.Empty;
+        public string Mobile { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
     }
     public class FLASHApiResponse<T>
     {
         public string code { get; set; } = string.Empty;
         public string message { get; set; } = string.Empty;
         public T data { get; set; }
+    }
+    public class AccountResponse
+    {
+        public string Subaccountid { get; set; } = string.Empty;
+        public string AccountName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
     }
     public class OrderResponse
     {

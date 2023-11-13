@@ -80,8 +80,8 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 case "Waybill Journal":
                     WaybillJournalFrame.Source = new Uri("../SystemSettingModule/WaybillJournal.xaml", UriKind.Relative);
                     break;
-                case "Bulk Order Backup":
-                    bulkOrderFrame.Source = new Uri("../SystemSettingModule/FrameBulkOrderBackup.xaml", UriKind.Relative);
+                case "Create Flash Sub-account":
+                    FlashSubaccountFrame.Source = new Uri("../SystemSettingModule/FlashSubAccount.xaml", UriKind.Relative);
                     break;
                 case "Printer Setting":
                     PrinterSettingFrame.Source = new Uri("../SystemSettingModule/FramePrinterSetting.xaml", UriKind.Relative);

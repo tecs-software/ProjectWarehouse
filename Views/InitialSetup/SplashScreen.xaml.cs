@@ -98,7 +98,7 @@ namespace WarehouseManagement.Views.InitialSetup
         {
             if (txtMessageDialog.Text.Contains("Subscription is expired. Please contact your distributor of the application."))
             {
-                if (Key.Password == "Nozarashi")
+                if (Key.Password == "3aB1F-7x9K2-LpR5q-8wC0Z".ToUpper())
                 {
                     Trial_Controller.refreshSubs();
                     new LoginWindow(GlobalModel.version).Show();

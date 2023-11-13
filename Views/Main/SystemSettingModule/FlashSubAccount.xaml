@@ -1,0 +1,147 @@
+﻿<Page x:Class="WarehouseManagement.Views.Main.SystemSettingModule.FlashSubAccount"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WarehouseManagement.Views.Main.SystemSettingModule"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="FlashSubAccount"
+      Height="auto" Width="auto">
+
+    <Border CornerRadius="10" Background="White" BorderBrush="Black" BorderThickness="0">
+        <Grid Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
+                <TextBlock Text="Flash Sub-account Creation" FontSize="16" x:Name="lbProduct" Foreground="#636363" FontWeight="Bold"/>
+            </DockPanel>
+            <TextBlock Text="Customer Details" FontSize="16" FontWeight="Light" Grid.Row="1" Grid.Column="0" Margin="10,0,0,0"/>
+            <TextBlock Text="Generated Sub-account Details" FontSize="16" FontWeight="Light" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0"/>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="2"
+                         Grid.Column="0"
+                         materialDesign:HintAssist.Hint="Account Name" 
+                         FontSize="15"
+                         Background="Transparent"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="False"
+                         x:Name="tbAccountName"
+                         VerticalAlignment="Top"
+                         Margin="10,10,10,10"
+                         Focusable="True">
+            </TextBox>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="3"
+                         Grid.Column="0"
+                         materialDesign:HintAssist.Hint="Full Name" 
+                         FontSize="15"
+                         Background="Transparent"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="False"
+                         x:Name="tbName"
+                         VerticalAlignment="Top"
+                         Margin="10,10,10,10"
+                         Focusable="True">
+            </TextBox>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="4"
+                         Grid.Column="0"
+                         materialDesign:HintAssist.Hint="Mobile #" 
+                         FontSize="15"
+                         Background="Transparent"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="False"
+                         x:Name="tbMobile"
+                         VerticalAlignment="Top"
+                         Margin="10,10,10,10"
+                         Focusable="True" PreviewTextInput="tbMobile_PreviewTextInput"
+                         >
+            </TextBox>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="5"
+                         Grid.Column="0"
+                         materialDesign:HintAssist.Hint="Email" 
+                         FontSize="15"
+                         Background="Transparent"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="False"
+                         x:Name="tbEmail"
+                         VerticalAlignment="Top"
+                         Margin="10,10,10,10"
+                         Focusable="True">
+            </TextBox>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         materialDesign:HintAssist.Hint="Sub-account ID" 
+                         FontSize="15"
+                         Background="Transparent"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="True"
+                         x:Name="tbAccountId"
+                         VerticalAlignment="Top"
+                         Margin="10,10,10,10"
+                         Focusable="True">
+            </TextBox>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="3"
+                         Grid.Column="1"
+                         materialDesign:HintAssist.Hint="Account Name" 
+                         FontSize="15"
+                         Background="Transparent"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="True"
+                         x:Name="tbRAccountName"
+                         VerticalAlignment="Top"
+                         Margin="10,10,10,10"
+                         Focusable="True">
+            </TextBox>
+            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Grid.Row="4"
+                         Grid.Column="1"
+                         materialDesign:HintAssist.Hint="Name" 
+                         FontSize="15"
+                         Background="Transparent"
+                         materialDesign:HintAssist.Foreground="Black"
+                         BorderBrush="Black"
+                         IsReadOnly="True"
+                         x:Name="tbRName"
+                         VerticalAlignment="Top"
+                         Margin="10,10,10,10"
+                         Focusable="True">
+            </TextBox>
+            <Button Grid.Column="0" Grid.Row="6" Margin="10,10,10,10"
+                    Click="Button_Click" BorderBrush="{StaticResource secondaryColor}" 
+                    Background="{StaticResource secondaryColor}" FontSize="15" 
+                    Content="Submit Details"
+                    Width="auto" 
+                    Height="45"
+                    Grid.ColumnSpan="2"
+                    />
+
+
+        </Grid>
+    </Border>
+</Page>

@@ -13,6 +13,7 @@ using WWarehouseManagement.Database;
 using System.Windows.Input;
 using System.Windows;
 using WarehouseManagement.Database;
+using System.Windows.Controls;
 
 namespace WarehouseManagement.Controller
 {
@@ -62,6 +63,39 @@ namespace WarehouseManagement.Controller
                 {"nonceStr", DateTime.Now.ToString("yyyyMMddHHmmss") + rd.Next(1,10000)}, //change on your demand
             };
             return dic;
+        }
+        public static SortedDictionary<string, string> CreateSubAccountData(FlashAccountDetails details)
+        {
+            var rd = new Random();
+            var dic = new SortedDictionary<string, string>(StringComparer.Ordinal)
+            {
+                {"mchId", GlobalModel.customer_id},
+                {"nonceStr", DateTime.Now.ToString("yyyyMMddHHmmss") + rd.Next(1,10000)}, //change on your demand
+                {"accountName",details.AccountName},
+                {"name",details.Fullname},
+                {"mobile",details.Mobile},
+                {"email",details.Email},
+                {"showAmountEnabled","1"},
+            };
+            return dic;
+        }
+        public static async Task<bool> FlashCreateSubaccount(TextBox Subaccountid, TextBox Accountname, TextBox name, FlashAccountDetails details)
+        {
+            var mockData = CreateSubAccountData(details);
+            var url = "/open/v1/new_sub_account";
+            var responseData = await RequestDataAsync<AccountResponse>(url, mockData, GlobalModel.customer_id);
+            if (responseData.code == "1")
+            {
+                Subaccountid.Text = responseData.data.Subaccountid;
+                Accountname.Text = responseData.data.AccountName;
+                name.Text = responseData.data.Name;
+                return true;
+            }
+            else
+            {
+                MessageBox.Show($"Order process failed! The error message ={responseData}{Environment.NewLine}");
+                return false;
+            }
         }
         public static async Task<bool> FlashCreateOrder(FLASHModel model)
         {
@@ -167,7 +201,7 @@ namespace WarehouseManagement.Controller
                     response.EnsureSuccessStatusCode(); // Ensure the response is successful (status code 2xx).
 
                     string responseString = await response.Content.ReadAsStringAsync();
-
+                    MessageBox.Show(responseString);
                     // Deserialize the response into FLASHApiResponse<T>.
                     var responseData = JsonConvert.DeserializeObject<FLASHApiResponse<T>>(responseString);
                     return responseData;

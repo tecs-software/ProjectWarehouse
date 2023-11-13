@@ -86,6 +86,10 @@
                                     <ComboBox Grid.Column="0" HorizontalAlignment="Right" Margin="24,8,24,0" x:Name="cmbAction" materialDesign:HintAssist.Hint="Action" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" Width="150" DropDownClosed="cmbAction_DropDownClosed"
                                                              />
+                                    <StackPanel Margin="200,6,0,0" Orientation="Horizontal">
+                                        <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked" />
+                                        <RadioButton Margin="8,0,0,0" x:Name="rdbFlash" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlash_Checked" />
+                                    </StackPanel>
                                 </Grid>
                                 <TextBox Visibility="Collapsed" HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtId" materialDesign:HintAssist.Hint="ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
@@ -93,7 +97,7 @@
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
-                                <TextBox MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Page Number (Shop Number)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                <TextBox MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Shop Contact Number" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
                                 <Grid>
@@ -170,8 +174,8 @@
                             </Grid>
                         </TabItem>
                         
-                        <TabItem x:Name="BulkOrder" Header="Bulk Order Backup" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Visible">
-                            <Frame x:Name="bulkOrderFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
+                        <TabItem x:Name="FlashSubaccount" Header="Create Flash Sub-account" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Visible">
+                            <Frame x:Name="FlashSubaccountFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
                         </TabItem>
                         <TabItem Header="Waybill Journal" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" Visibility="Visible">
                             <Frame x:Name="WaybillJournalFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="2"/>
