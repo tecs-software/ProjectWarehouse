@@ -86,9 +86,9 @@
                                     <ComboBox Grid.Column="0" HorizontalAlignment="Right" Margin="24,8,24,0" x:Name="cmbAction" materialDesign:HintAssist.Hint="Action" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" Width="150" DropDownClosed="cmbAction_DropDownClosed"
                                                              />
-                                    <StackPanel Margin="200,6,0,0" Orientation="Horizontal">
-                                        <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked" />
-                                        <RadioButton Margin="8,0,0,0" x:Name="rdbFlash" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlash_Checked" />
+                                    <StackPanel Margin="200,6,183,0" Orientation="Horizontal">
+                                        <RadioButton Margin="16,0,0,0" x:Name="rdbJandT" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandT_Checked"/>
+                                        <RadioButton Margin="8,0,0,0" x:Name="rdbFlash" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlash_Checked"/>
                                     </StackPanel>
                                 </Grid>
                                 <TextBox Visibility="Collapsed" HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtId" materialDesign:HintAssist.Hint="ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
@@ -96,11 +96,11 @@
                                                              SelectionBrush="#FF1D2118"/>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
-                                                             SelectionBrush="#FF1D2118"/>
+                                                             SelectionBrush="#FF1D2118" PreviewKeyDown="txtPagename_PreviewKeyDown" PreviewTextInput="txtPagename_PreviewTextInput"/>
                                 <TextBox MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Shop Contact Number" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
-                                <Grid>
+                                <Grid x:Name="ContainerJnT">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
@@ -116,9 +116,29 @@
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
                                                              />
                                 </Grid>
+                                <Grid x:Name="ContainerFlash" Visibility="Collapsed">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="24,8,0,0" x:Name="cmbProvinceFlash" materialDesign:HintAssist.Hint="Province" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" SelectionChanged="cmbProvinceFlash_SelectionChanged" DropDownClosed="cmbProvinceFlash_DropDownClosed"
+                                                             />
+                                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,8,8,0" x:Name="cmbCityFlash" materialDesign:HintAssist.Hint="City" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" DropDownClosed="cmbCityFlash_DropDownClosed"
+                                                             />
+                                    <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,8,8,0" x:Name="cmbBarangayFlash" materialDesign:HintAssist.Hint="Barangay" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" SelectionChanged="cmbBarangayFlash_SelectionChanged" DropDownClosed="cmbBarangayFlash_DropDownClosed" 
+                                                             />
+                                    <ComboBox Grid.Column="3" HorizontalAlignment="Stretch" Margin="0,8,24,0" x:Name="cmbPostalCodeFlash" materialDesign:HintAssist.Hint="Postal Code" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedComboBox}" VerticalAlignment="Center" 
+                                                             />
+                                </Grid>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtAddress" materialDesign:HintAssist.Hint="Complete Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
-                                                             SelectionBrush="#FF1D2118" PreviewTextInput="txtAddress_PreviewTextInput"/>
+                                                             SelectionBrush="#FF1D2118" PreviewTextInput="txtAddress_PreviewTextInput" PreviewKeyDown="txtAddress_PreviewKeyDown"/>
                                 <Button 
                                     HorizontalAlignment="Stretch"
                                     Margin="24,24,24,8"

@@ -135,10 +135,10 @@
                                 </materialDesign:Card>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,24,24,0" x:Name="txtId" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              Text="0" Visibility="Collapsed" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
-                                                             SelectionBrush="#FF1D2118"/>
+                                                             SelectionBrush="#FF1D2118" PreviewKeyDown="txtId_PreviewKeyDown"/>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtPagename" materialDesign:HintAssist.Hint="Page Name (Shop Name)" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
-                                                             SelectionBrush="#FF1D2118"/>
+                                                             SelectionBrush="#FF1D2118" PreviewKeyDown="txtPagename_PreviewKeyDown"/>
                                 <TextBox  MaxLength="11" HorizontalAlignment="Stretch" Margin="24,8,24,8" x:Name="txtPhone" materialDesign:HintAssist.Hint="Shop Contact Number" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118" PreviewTextInput="txtPhone_PreviewTextInput"/>
@@ -180,7 +180,7 @@
                                 </Grid>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtAddress" materialDesign:HintAssist.Hint="Complete Address" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
-                                                             SelectionBrush="#FF1D2118" PreviewTextInput="txtAddress_PreviewTextInput_1"/>
+                                                             SelectionBrush="#FF1D2118" PreviewTextInput="txtAddress_PreviewTextInput_1" PreviewKeyDown="txtAddress_PreviewKeyDown"/>
                                 <Button 
                                     HorizontalAlignment="Stretch"
                                     Margin="24,8,24,0"

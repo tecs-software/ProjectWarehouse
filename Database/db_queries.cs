@@ -32,15 +32,15 @@ namespace WarehouseManagement.Database
         static sql_control sql = new sql_control();
         public bool insert_sender(string id,TextBox page_name, TextBox page_number, ComboBox cb_province, ComboBox cb_city, ComboBox cb_baranggay, TextBox address, string postal, int courier)
         {
-            if(id == "0")
+            if (id == "0")
             {
                 sql.AddParam("@id", int.Parse(id));
-                sql.AddParam("@name", page_name.Text);
+                sql.AddParam("@name", page_name.Text.Replace("'", ""));
                 sql.AddParam("@phone", page_number.Text);
                 sql.AddParam("@province", cb_province.Text);
                 sql.AddParam("@city", cb_city.Text);
                 sql.AddParam("@baranggay", cb_baranggay.Text);
-                sql.AddParam("@address", address.Text);
+                sql.AddParam("@address", address.Text.Replace("'", ""));
                 sql.AddParam("@postal", postal);
                 sql.AddParam("@courier", courier);
 
@@ -50,12 +50,12 @@ namespace WarehouseManagement.Database
             else
             {
                 sql.AddParam("@id", int.Parse(id));
-                sql.AddParam("@name", page_name.Text);
+                sql.AddParam("@name", page_name.Text.Replace("'", ""));
                 sql.AddParam("@phone", page_number.Text);
                 sql.AddParam("@province", cb_province.Text);
                 sql.AddParam("@city", cb_city.Text);
                 sql.AddParam("@baranggay", cb_baranggay.Text);
-                sql.AddParam("@address", address.Text);
+                sql.AddParam("@address", address.Text.Replace("'", ""));
                 sql.AddParam("@postal", postal);
                 sql.AddParam("@courier", courier);
 
@@ -119,10 +119,10 @@ namespace WarehouseManagement.Database
         }
         public void UpdateCourier(string courierName,string customerId, string eCompanyId) =>
             sql.Query($"UPDATE tbl_couriers SET courier_name = '{courierName}', eccompany_id = '{eCompanyId}', customer_id = '{customerId}' ");
-        public void PopulateShop(ComboBox cmb)
+        public void PopulateShop(ComboBox cmb, int courier_id)
         {
             cmb.Items.Clear();
-            sql.Query("SELECT sender_name FROM tbl_sender");
+            sql.Query($"SELECT sender_name FROM tbl_sender WHERE courier_id = {courier_id}");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
@@ -136,36 +136,64 @@ namespace WarehouseManagement.Database
         public void DisplaySender(string name, SystemSettingPopup systemSetting)
         {
             sql.AddParam("@name", name);
-            string barangay = "", city = "";
-            sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = @name ");
+            string barangay = "", city = "", postal = "";
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_name = @name");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
                     systemSetting.txtId.Text = dr[0].ToString();
-                    systemSetting.txtPagename.Text = dr[2].ToString();
-                    systemSetting.txtPhone.Text = dr[7].ToString();
-                    systemSetting.txtAddress.Text = dr[8].ToString();
+                    systemSetting.txtPagename.Text = dr[1].ToString();
+                    systemSetting.txtPhone.Text = dr[5].ToString();
+                    systemSetting.txtAddress.Text = dr[6].ToString();
 
-                    systemSetting.cmbProvince.Text = dr[3].ToString();
-                    barangay = dr[5].ToString();
-                    city = dr[4].ToString();
+                    //flash address
+                    systemSetting.cmbProvinceFlash.Text = dr[2].ToString();
+                    systemSetting.cmbProvince.Text = dr[2].ToString();
+                    //systemSetting.cmbCityFlash.Text = dr[3].ToString();
+                    //systemSetting.cmbBarangayFlash.Text = dr[4].ToString();
+                    //systemSetting.cmbPostalCodeFlash.Text = dr[7].ToString();
+
+                    barangay = dr[4].ToString();
+                    city = dr[3].ToString();
+                    postal = dr[7].ToString();
                 }
                 systemSetting.cmbCity.Items.Clear();
                 systemSetting.cmbBarangay.Items.Clear();
 
-                sql.Query($"SELECT City, AreaName FROM tbl_address_delivery WHERE Province = '{systemSetting.cmbProvince.Text}' ");
+                systemSetting.cmbCityFlash.Items.Clear();
+                systemSetting.cmbBarangayFlash.Items.Clear();
+                systemSetting.cmbPostalCodeFlash.Items.Clear();
+
+                sql.AddParam("@province", systemSetting.cmbProvince.Text);
+                sql.Query($"SELECT City, AreaName FROM tbl_address_delivery WHERE Province = @province");
                 if (sql.HasException(true)) return;
-                if(sql.DBDT.Rows.Count > 0)
+                if (sql.DBDT.Rows.Count > 0)
                 {
-                    foreach(DataRow dr in sql.DBDT.Rows)
+                    foreach (DataRow dr in sql.DBDT.Rows)
                     {
                         systemSetting.cmbCity.Items.Add(dr[0].ToString());
                         systemSetting.cmbBarangay.Items.Add(dr[1].ToString());
                     }
                     systemSetting.cmbCity.Text = city;
                     systemSetting.cmbBarangay.Text = barangay;
+                }
+
+                sql.Query($"SELECT * FROM tbl_flashAddressing WHERE Province = '{systemSetting.cmbProvinceFlash.Text}'");
+                if (sql.HasException(true)) return;
+                if(sql.DBDT.Rows.Count > 0)
+                {
+                    foreach(DataRow dr in sql.DBDT.Rows)
+                    {
+                        systemSetting.cmbCityFlash.Items.Add(dr[2].ToString());
+                        systemSetting.cmbBarangayFlash.Items.Add(dr[3].ToString());
+                        systemSetting.cmbPostalCodeFlash.Items.Add(dr[4].ToString());
+                    }
+                    systemSetting.cmbCityFlash.Text = city;
+                    systemSetting.cmbBarangayFlash.Text = barangay;
+                    systemSetting.cmbPostalCodeFlash.Text = postal;
+
                 }
             }
         }

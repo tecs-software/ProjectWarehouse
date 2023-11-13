@@ -45,10 +45,11 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             InitializeComponent();
             //code for sender information
             txtId.Text = "0";
-            queries.PopulateShop(cmbAction);
+
             //code for courier information
             PopulateCourier(cmbCourier);
-
+            rdbJandT.IsChecked = true;
+            rdbFlash.IsChecked = false;
             txtMiscellaneous.Text = "0";
             txtAdSpent.Text = "0";
             txtUtilities.Text = "0";
@@ -62,6 +63,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             queries.province(cmbProvince);
+            queries.FlashProvince(cmbProvinceFlash);
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)
@@ -141,7 +143,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                         cmbCity.Text = "";
                         cmbBarangay.Text = "";
 
-                        queries.PopulateShop(cmbAction);
                         cmbAction.SelectedIndex = -1;
                     }
                     else
@@ -182,7 +183,23 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         {
 
         }
-       
+        void CheckedRadio(string text)
+        {
+            if (text == "J&T")
+            {
+                ContainerFlash.Visibility = Visibility.Collapsed;
+                ContainerJnT.Visibility = Visibility.Visible;
+                cmbProvinceFlash.Text = "";
+
+            }
+            if (text == "FLASH")
+            {
+                ContainerFlash.Visibility = Visibility.Visible;
+                ContainerJnT.Visibility = Visibility.Collapsed;
+                cmbProvince.Text = "";
+            }
+        }
+
         private void btnConfirmExpenses_Click(object sender, RoutedEventArgs e)
         {
             if (txtAdSpent.Text == "" || txtUtilities.Text == "" || txtMiscellaneous.Text == "")
@@ -239,6 +256,85 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 txtCustomerID.Text = "";
             }
 
+        }
+
+        private void rdbJandT_Checked(object sender, RoutedEventArgs e)
+        {
+            txtAddress.Clear();
+            txtPagename.Clear();
+            txtPhone.Clear();
+            cmbBarangayFlash.Text = "";
+            cmbPostalCodeFlash.Text = "";
+            CheckedRadio(rdbJandT.Content.ToString());
+            queries.PopulateShop(cmbAction, 1);
+        }
+
+        private void rdbFlash_Checked(object sender, RoutedEventArgs e)
+        {
+            txtAddress.Clear();
+            txtPagename.Clear();
+            txtPhone.Clear();
+            CheckedRadio(rdbFlash.Content.ToString());
+            queries.PopulateShop(cmbAction, 2);
+        }
+
+        private void cmbProvinceFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            cmbCityFlash.SelectedIndex = -1;
+            queries.FlashCity(cmbCityFlash, cmbProvinceFlash.Text);
+        }
+
+        private void cmbCityFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            queries.FlashBaranggay(cmbBarangayFlash, cmbCityFlash.Text);
+        }
+
+        private void cmbBarangayFlash_DropDownClosed(object sender, EventArgs e)
+        {
+            queries.FlashPostalCode(cmbPostalCodeFlash, cmbBarangayFlash.Text);
+        }
+
+        private void cmbBarangayFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbPostalCodeFlash.SelectedIndex = -1;
+        }
+
+        private void cmbProvinceFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbCityFlash.SelectedIndex = -1;
+            cmbBarangayFlash.ItemsSource = null;
+        }
+
+        private void cmbCityFlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbBarangayFlash.SelectedIndex = -1;
+        }
+
+        private void txtPagename_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.OemQuotes)
+            {
+                // Suppress the key event to prevent the character from being entered
+                e.Handled = true;
+            }
+        }
+
+        private void txtAddress_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.OemQuotes)
+            {
+                // Suppress the key event to prevent the character from being entered
+                e.Handled = true;
+            }
+        }
+
+        private void txtPagename_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Contains("'"))
+            {
+                // Suppress the event if the pasted text contains a single quote
+                e.Handled = true;
+            }
         }
     }
 }

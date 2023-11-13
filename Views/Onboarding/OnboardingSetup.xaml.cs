@@ -234,30 +234,37 @@ namespace WarehouseManagement.Views.Onboarding
 
         private void btnSaveShop_Click(object sender, RoutedEventArgs e)
         {
-            if(rdbJandT.IsChecked == true)
+            int shopChecker = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_sender WHERE sender_name = '{txtPagename.Text}'"));
+            if(shopChecker > 0)
             {
-                queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceJnt, cmbCityJnt, cmbBarangayJnt, txtAddress, "", 1);
-                MessageBox.Show("Shop Added");
-                txtPagename.Text = "";
-                txtPhone.Text = "";
-                txtAddress.Text = "";
-                cmbProvinceJnt.Text = "";
-                cmbCityJnt.Text = "";
-                cmbBarangayJnt.Text = "";
-
+                MessageBox.Show("Shop name already exists.");
             }
             else
             {
-                //FLASH
-                queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceFlash, cmbCityFlash, cmbBarangayFlash, txtAddress, cmbPostalCodeFlash.Text, 2);
-                MessageBox.Show("Shop Added");
-                txtPagename.Text = "";
-                txtPhone.Text = "";
-                txtAddress.Text = "";
-                cmbProvinceFlash.Text = "";
+                if (rdbJandT.IsChecked == true)
+                {
+                    queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceJnt, cmbCityJnt, cmbBarangayJnt, txtAddress, "", 1);
+                    MessageBox.Show("Shop Added");
+                    txtPagename.Text = "";
+                    txtPhone.Text = "";
+                    txtAddress.Text = "";
+                    cmbProvinceJnt.Text = "";
+                    cmbCityJnt.Text = "";
+                    cmbBarangayJnt.Text = "";
+
+                }
+                else
+                {
+                    //FLASH
+                    queries.insert_sender("0", txtPagename, txtPhone, cmbProvinceFlash, cmbCityFlash, cmbBarangayFlash, txtAddress, cmbPostalCodeFlash.Text, 2);
+                    MessageBox.Show("Shop Added");
+                    txtPagename.Text = "";
+                    txtPhone.Text = "";
+                    txtAddress.Text = "";
+                    cmbProvinceFlash.Text = "";
+                }
             }
         }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (Util.IsAnyTextBoxEmpty(txtCustomerID))
@@ -307,6 +314,33 @@ namespace WarehouseManagement.Views.Onboarding
             {
                 MessageBox.Show("SHOP or VIPs are detected empty. Kindly set-up your SHOP or VIP");
                 return;
+            }
+        }
+
+        private void txtId_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.OemQuotes)
+            {
+                // Suppress the key event to prevent the character from being entered
+                e.Handled = true;
+            }
+        }
+
+        private void txtPagename_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.OemQuotes)
+            {
+                // Suppress the key event to prevent the character from being entered
+                e.Handled = true;
+            }
+        }
+
+        private void txtAddress_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.OemQuotes)
+            {
+                // Suppress the key event to prevent the character from being entered
+                e.Handled = true;
             }
         }
     }
