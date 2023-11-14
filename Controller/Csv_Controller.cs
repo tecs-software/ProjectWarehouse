@@ -275,6 +275,7 @@ namespace WarehouseManagement.Controller
                 return false;
         }
         public static List<bulk_model> model { get; set; }
+        public static List<FLASHModel> Fmodels { get; set; }
         public static List<SystemSettingsModel> SystemModel { get; set; }
         public static DataTable DataTable_Creation()
         {

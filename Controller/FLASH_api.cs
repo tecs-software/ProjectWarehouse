@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows;
 using WarehouseManagement.Database;
 using System.Windows.Controls;
+using System.Data;
+using System.Diagnostics;
 
 namespace WarehouseManagement.Controller
 {
@@ -53,6 +55,123 @@ namespace WarehouseManagement.Controller
                 {"length",flashmodel.lenght},
             };
             return dic;
+        }
+        public static SortedDictionary<string, string> FlashBulkdata(FLASHModel details, ProgressBar pb_load)
+        {
+            int totalOrders = 0;
+            string txtCount;
+            sql.AddParam("item_name", details.item);
+            int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item_name"));
+            sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
+            if(sql.DBDT.Rows.Count > 0)
+            {
+                foreach(DataRow dr in sql.DBDT.Rows)
+                {
+                    GlobalModel.sender_name = dr[1].ToString();
+                    GlobalModel.sender_phone = dr[5].ToString();
+                    GlobalModel.sender_province = dr[2].ToString();
+                    GlobalModel.sender_city = dr[3].ToString();
+                    GlobalModel.sender_postal = dr[7].ToString();
+                    GlobalModel.sender_address = dr[6].ToString();
+                }
+            }
+            decimal codAmount = decimal.Parse(details.COD) * 100;
+            var rd = new Random();
+            var dic = new SortedDictionary<string, string>(StringComparer.Ordinal)
+                {
+                    {"mchId", GlobalModel.customer_id},
+                    {"nonceStr",  DateTime.Now.ToString("yyyyMMddHHmmss") + rd.Next(1,10000)},//change on your demand
+                    {"outTradeNo",  "TECS-F" + GenerateTransactionID()},    //order id
+                    {"expressCategory", "1"},
+                    {"srcName", GlobalModel.sender_name},
+                    {"srcPhone", GlobalModel.sender_phone},
+                    {"srcProvinceName", GlobalModel.sender_province},
+                    {"srcCityName", GlobalModel.sender_city},
+                    {"srcPostalCode",GlobalModel.sender_postal},
+                    {"srcDetailAddress", GlobalModel.sender_address},
+                    {"dstName", details.receiver_name},
+                    {"dstPhone", details.receiver_phone},
+                    {"dstProvinceName", details.receiver_province},
+                    {"dstCityName", details.receiver_city},
+                    {"dstPostalCode", details.postal_code},
+                    {"dstDetailAddress", details.receiver_address},
+                    {"articleCategory", ItemType(details.article_category)},
+                    {"weight", details.weight},
+                    {"codEnabled",CODenabled(details.isCOD)},
+                    {"codAmount",codAmount.ToString()},
+                    {"remark", details.remarks},
+                    {"width",details.width},
+                    {"height",details.height},
+                    {"length",details.lenght},
+                };
+            totalOrders++;
+            txtCount = totalOrders.ToString();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                pb_load.Value = totalOrders;
+            });
+            return dic;
+        }
+        public static string CODenabled(string enabled)
+        {
+            if (enabled.Contains("Yes", StringComparison.OrdinalIgnoreCase))
+                return "1";
+            else if (enabled.Contains("No", StringComparison.OrdinalIgnoreCase))
+                return "0";
+            else
+                return "Invalid Type";
+        }
+        public static string ItemType(string type)
+        {
+            if (type.Contains("File", StringComparison.OrdinalIgnoreCase))
+                return "0";
+            else if (type.Contains("Dry food", StringComparison.OrdinalIgnoreCase))
+                return "1";
+            else if (type.Contains("Commodity", StringComparison.OrdinalIgnoreCase))
+                return "2";
+            else if (type.Contains("Digital products", StringComparison.OrdinalIgnoreCase))
+                return "3";
+            else if (type.Contains("Clothes", StringComparison.OrdinalIgnoreCase))
+                return "4";
+            else if (type.Contains("Books", StringComparison.OrdinalIgnoreCase))
+                return "5";
+            else if (type.Contains("Auto parts", StringComparison.OrdinalIgnoreCase))
+                return "6";
+            else if (type.Contains("Shoes and bags", StringComparison.OrdinalIgnoreCase))
+                return "7";
+            else if (type.Contains("Sports equipment", StringComparison.OrdinalIgnoreCase))
+                return "8";
+            else if (type.Contains("Cosmetics", StringComparison.OrdinalIgnoreCase))
+                return "9";
+            else if (type.Contains("Household", StringComparison.OrdinalIgnoreCase))
+                return "10";
+            else if (type.Contains("Fruit", StringComparison.OrdinalIgnoreCase))
+                return "11";
+            else if (type.Contains("Others", StringComparison.OrdinalIgnoreCase))
+                return "99";
+            else
+                return "Invalid Type"; // or whatever default value you want to return
+        }
+ 
+        public static async Task FlashCreateBulkOrder(List<FLASHModel> modelflash, ProgressBar pb)
+        {
+            foreach(FLASHModel flashdetails in modelflash)
+            {
+                var mockData = FlashBulkdata(flashdetails, pb);
+                var url = "/open/v1/orders";
+                var responseData = await RequestDataAsync<OrderResponse>(url, mockData, GlobalModel.customer_id);
+                if (responseData.code == "1")
+                {
+                    FlashDB.BulkReceiverData(flashdetails);
+                    FlashDB.BulkOrderData(flashdetails, responseData.data.outTradeNo, responseData.data.pno);
+                    FlashDB.BulkUpdateStocks(flashdetails);
+                    waybill.pno = responseData.data.pno;
+                }
+                else
+                {
+                    MessageBox.Show($"Order process failed! The error message ={responseData}{Environment.NewLine}");
+                }
+            }
         }
         public static SortedDictionary<string, string> MockCommonData(string dateString = "")
         {
@@ -201,7 +320,7 @@ namespace WarehouseManagement.Controller
                     response.EnsureSuccessStatusCode(); // Ensure the response is successful (status code 2xx).
 
                     string responseString = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show(responseString);
+                    Debug.WriteLine("RESPONSE  " + responseString);
                     // Deserialize the response into FLASHApiResponse<T>.
                     var responseData = JsonConvert.DeserializeObject<FLASHApiResponse<T>>(responseString);
                     return responseData;

@@ -8,7 +8,7 @@
       mc:Ignorable="d"
       Background="White"
       
-      Height="800"
+      Height="500"
       Title="ReceiverInformation">
     <ScrollViewer  VerticalScrollBarVisibility="Auto">
         <Grid>

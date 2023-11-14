@@ -62,6 +62,8 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             dtSuspiciousOrders.Visibility = Visibility.Collapsed;
             Csv_Controller.dataTableBulkOrders = null;
             Csv_Controller.model = new List<bulk_model>();
+            Csv_Controller.Fmodels = new List<FLASHModel>();
+
             bulkDictionary = new Dictionary<string, bulk_model>();
         }
         Create_api bulk_api = new Create_api();
@@ -201,37 +203,66 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             }
             else
             {
-                Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTablebulkOrder;
-                //Push to Create_API
-                foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                if(rdbJandT.IsChecked == true)
                 {
-                    bulk_model model = new bulk_model()
+                    Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTablebulkOrder;
+                    //Push to Create_API
+                    foreach (DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
                     {
-                        //receiver payload
-                        receiver_name = dr[3].ToString(),
-                        receiver_address = dr[5].ToString(),
-                        receiver_phone = dr[4].ToString(),
-                        receiver_province = dr[6].ToString(),
-                        receiver_city = dr[7].ToString(),
-                        receiver_area = dr[8].ToString(),
+                        bulk_model model = new bulk_model()
+                        {
+                            //receiver payload
+                            receiver_name = dr[3].ToString(),
+                            receiver_address = dr[5].ToString(),
+                            receiver_phone = dr[4].ToString(),
+                            receiver_province = dr[6].ToString(),
+                            receiver_city = dr[7].ToString(),
+                            receiver_area = dr[8].ToString(),
 
-                        //other fields
-                        remarks = dr[2].ToString(),
-                        product_name = dr[0].ToString(),
-                        total = decimal.Parse(dr[13].ToString()),
-                        quantity = int.Parse(dr[1].ToString()),
+                            //other fields
+                            remarks = dr[2].ToString(),
+                            product_name = dr[0].ToString(),
+                            total = decimal.Parse(dr[13].ToString()),
+                            quantity = int.Parse(dr[1].ToString()),
 
-                        //etc
-                        cod = decimal.Parse(dr[14].ToString()),
-                        parcel_value = decimal.Parse(dr[13].ToString()),
-                        parcel_name = dr[10].ToString(),
-                        total_parcel = int.Parse(dr[12].ToString()),
-                        weight = decimal.Parse(dr[11].ToString())
+                            //etc
+                            cod = decimal.Parse(dr[14].ToString()),
+                            parcel_value = decimal.Parse(dr[13].ToString()),
+                            parcel_name = dr[10].ToString(),
+                            total_parcel = int.Parse(dr[12].ToString()),
+                            weight = decimal.Parse(dr[11].ToString())
 
-                    };
-                    Csv_Controller.model.Add(model);
+                        };
+                        Csv_Controller.model.Add(model);
+                    }
                 }
-
+                else
+                {
+                    Csv_Controller.dataTableBulkOrders = Csv_Controller.dataTablebulkOrder;
+                    foreach(DataRow dr in Csv_Controller.dataTableBulkOrders.Rows)
+                    {
+                        FLASHModel flashmodel = new FLASHModel()
+                        {
+                            item = dr[0].ToString(),
+                            remarks = dr[1].ToString(),
+                            receiver_name = dr[2].ToString(),
+                            receiver_phone = dr[3].ToString(),
+                            receiver_province = dr[4].ToString(),
+                            receiver_city = dr[5].ToString(),
+                            receiver_barangay = dr[6].ToString(),
+                            postal_code = dr[7].ToString(),
+                            receiver_address = dr[8].ToString(),
+                            article_category = dr[9].ToString(),
+                            isCOD = dr[10].ToString(),
+                            COD = dr[11].ToString(),
+                            weight = dr[12].ToString(),
+                            height = dr[13].ToString(),
+                            lenght = dr[14].ToString(),
+                            width = dr[15].ToString()
+                        };
+                        Csv_Controller.Fmodels.Add(flashmodel);
+                    }
+                }
                 btnConfirm.IsEnabled = false;
                 pushOrders = new BackgroundWorker();
                 pushOrders.WorkerReportsProgress = true;
@@ -242,9 +273,25 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 pushOrders.RunWorkerAsync();
             }
         }
-        private void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
+        private async void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
         {
-            bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false, pbBulkOrder);
+            sql_control sql = new sql_control();
+            //if(rdbJandT.IsChecked == true)
+            //{
+            //    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 1");
+            //    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 1");
+
+            //    bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false, pbBulkOrder);
+            //}
+            //else
+            //{
+            //    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 1");
+            //    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 1");
+            //    await FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels);
+            //}
+            GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 2");
+            GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 2");
+            await FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels, pbBulkOrder);
         }
         private void WorkerPushCompleted_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -594,6 +641,16 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 image.Save(stream, ImageFormat.Png); // You can change the format as needed (e.g., ImageFormat.Jpeg)
                 return stream.ToArray();
             }
+        }
+
+        private void rdbJandT_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rdbFlash_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

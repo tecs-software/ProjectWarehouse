@@ -237,7 +237,7 @@ namespace WarehouseManagement.Controller
             }
         }
         //api bulk orders
-        public async void create_bulk_api(List<bulk_model> model, Button btn, bool granted, ProgressBar pb_load)
+        public async void create_bulk_api(List<bulk_model> model, Button btn, bool granted,ProgressBar pb_load)
         {
             string txtCount;
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
