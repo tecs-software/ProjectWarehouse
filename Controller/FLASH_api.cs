@@ -56,10 +56,8 @@ namespace WarehouseManagement.Controller
             };
             return dic;
         }
-        public static SortedDictionary<string, string> FlashBulkdata(FLASHModel details, ProgressBar pb_load)
+        public static SortedDictionary<string, string> FlashBulkdata(FLASHModel details, ProgressBar pb_load, int totalOrders, int currentOrder)
         {
-            int totalOrders = 0;
-            string txtCount;
             sql.AddParam("item_name", details.item);
             int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item_name"));
             sql.Query($"SELECT * FROM tbl_sender WHERE sender_id = {sender_id}");
@@ -104,11 +102,12 @@ namespace WarehouseManagement.Controller
                     {"height",details.height},
                     {"length",details.lenght},
                 };
-            totalOrders++;
-            txtCount = totalOrders.ToString();
+            currentOrder++;
+
+            // Update progress bar for the current order
             Application.Current.Dispatcher.Invoke(() =>
             {
-                pb_load.Value = totalOrders;
+                pb_load.Value = currentOrder;
             });
             return dic;
         }
@@ -155,9 +154,11 @@ namespace WarehouseManagement.Controller
  
         public static async Task FlashCreateBulkOrder(List<FLASHModel> modelflash, ProgressBar pb)
         {
-            foreach(FLASHModel flashdetails in modelflash)
+            int totalOrders = modelflash.Count;
+            int currentOrder = 0;
+            foreach (FLASHModel flashdetails in modelflash)
             {
-                var mockData = FlashBulkdata(flashdetails, pb);
+                var mockData = FlashBulkdata(flashdetails, pb, totalOrders, currentOrder);
                 var url = "/open/v1/orders";
                 var responseData = await RequestDataAsync<OrderResponse>(url, mockData, GlobalModel.customer_id);
                 if (responseData.code == "1")
@@ -171,6 +172,7 @@ namespace WarehouseManagement.Controller
                 {
                     MessageBox.Show($"Order process failed! The error message ={responseData}{Environment.NewLine}");
                 }
+                currentOrder++;
             }
         }
         public static SortedDictionary<string, string> MockCommonData(string dateString = "")

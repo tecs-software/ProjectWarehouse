@@ -52,7 +52,7 @@
                             TextBlock.TextAlignment="Left"
                             SelectionMode="Single"
                             x:Name="tblWaybilldata"
-                            ColumnHeaderStyle="{StaticResource HeaderStyle}" SelectionChanged="tblWaybilldata_SelectionChanged">
+                            ColumnHeaderStyle="{StaticResource HeaderStyle}" SelectionChanged="tblWaybilldata_SelectionChanged" Loaded="tblWaybilldata_Loaded">
                 </DataGrid>
 
             </Grid>

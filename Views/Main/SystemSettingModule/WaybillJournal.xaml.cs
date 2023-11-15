@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,13 +31,14 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
-            ReportViewer1.LocalReport.EnableExternalImages = true;
-            ReportViewer1.RefreshReport();
+            
         }
 
         private void Print_Click(object sender, RoutedEventArgs e)
         {
+            ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
+            ReportViewer1.LocalReport.EnableExternalImages = true;
+            ReportViewer1.RefreshReport();
             printwaybill();
         }
         private byte[] ImageToByteArray(Bitmap image)
@@ -48,6 +51,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         }
         private async void displayWaybillData()
         {
+            await Task.Delay(200);
             await WaybillController.DisplayDataOnWaybillJournal(tblWaybilldata);
         }
         private void printwaybill()
@@ -192,6 +196,18 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                     // Access the ID and set it to the TextBox
                     waybill = selectedRow["Waybill"].ToString();
                     btnPrint.Content = "Print-" + waybill;
+
+                    // Assuming "SelectRow" is the checkbox column name
+                    string checkboxColumnName = "SelectRow";
+                    DataGridColumn checkboxColumn = tblWaybilldata.Columns.FirstOrDefault(col => col.Header.ToString() == checkboxColumnName);
+
+                    if (checkboxColumn != null && checkboxColumn is DataGridCheckBoxColumn)
+                    {
+                        // Update the checkbox state based on the selected row
+                        bool currentSelectRowState = (bool)selectedRow.Row[checkboxColumnName];
+                        selectedRow.Row[checkboxColumnName] = !currentSelectRowState;
+                    }
+                    tblWaybilldata.Dispatcher.Invoke(() => { }, System.Windows.Threading.DispatcherPriority.Render);
                 }
             }
             else
@@ -204,6 +220,11 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
         {
             WaybillController.searchWaybill(txtSearch, tblWaybilldata);
+        }
+
+        private void tblWaybilldata_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

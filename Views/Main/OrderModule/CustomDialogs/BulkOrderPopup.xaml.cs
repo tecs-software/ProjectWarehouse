@@ -63,7 +63,7 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             Csv_Controller.dataTableBulkOrders = null;
             Csv_Controller.model = new List<bulk_model>();
             Csv_Controller.Fmodels = new List<FLASHModel>();
-
+            rdbJandT.IsChecked = true;
             bulkDictionary = new Dictionary<string, bulk_model>();
         }
         Create_api bulk_api = new Create_api();
@@ -273,31 +273,42 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 pushOrders.RunWorkerAsync();
             }
         }
-        private async void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
+        private void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
         {
             sql_control sql = new sql_control();
-            //if(rdbJandT.IsChecked == true)
-            //{
-            //    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 1");
-            //    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 1");
 
-            //    bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false, pbBulkOrder);
-            //}
-            //else
-            //{
-            //    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 1");
-            //    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 1");
-            //    await FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels);
-            //}
-            GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 2");
-            GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 2");
-            await FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels, pbBulkOrder);
+            Application.Current.Dispatcher.Invoke( async() =>
+            {
+                if (rdbJandT.IsChecked == true)
+                {
+                    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 1");
+                    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 1");
+                    bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false, pbBulkOrder);
+                }
+                else
+                {
+                    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 2");
+                    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 2");
+                    await FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels, pbBulkOrder);
+                }
+            });
         }
         private void WorkerPushCompleted_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            btnConfirm.IsEnabled = true;
-            MessageBox.Show("Orders has been created.", "Success");
-            bulk_inserts.show_temp_table(dtBulkOrders, dtSuspiciousOrders, btnConfirm, btnReConfirm);
+            try
+            {
+                if (pbBulkOrder.Value == pbBulkOrder.Maximum)
+                {
+                    btnConfirm.IsEnabled = true;
+                    MessageBox.Show("Orders have been created.", "Success");
+                    bulk_inserts.show_temp_table(dtBulkOrders, dtSuspiciousOrders, btnConfirm, btnReConfirm);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or display the exception
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error");
+            }
         }
         private void btnNo_Click(object sender, RoutedEventArgs e)
         {

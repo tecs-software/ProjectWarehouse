@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using WWarehouseManagement.Database;
+using System.Windows.Data;
 
 namespace WarehouseManagement.Controller
 {
@@ -128,11 +129,40 @@ namespace WarehouseManagement.Controller
             await Task.Run(() =>
             {
                 sql.Query($"SELECT * FROM tbl_waybill ORDER BY ID DESC");
-                if(sql.DBDT.Rows.Count > 0)
-                {
-                    Application.Current.Dispatcher.Invoke(() => dg.ItemsSource = sql.DBDT.DefaultView);
-                }
 
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        // Clear existing columns
+                        dg.Columns.Clear();
+
+                        // Add checkbox column
+                        DataGridTemplateColumn checkBoxColumn = new DataGridTemplateColumn
+                        {
+                            Header = "Select"
+                        };
+
+                        FrameworkElementFactory checkBoxFactory = new FrameworkElementFactory(typeof(CheckBox));
+                        checkBoxFactory.SetBinding(CheckBox.IsCheckedProperty, new Binding("YourBooleanProperty"));
+
+                        DataTemplate checkBoxDataTemplate = new DataTemplate();
+                        checkBoxDataTemplate.VisualTree = checkBoxFactory;
+
+                        checkBoxColumn.CellTemplate = checkBoxDataTemplate;
+
+                        checkBoxColumn.Width = new DataGridLength(70, DataGridLengthUnitType.Pixel);
+                        dg.Columns.Add(checkBoxColumn);
+
+                        // Set the ItemsSource
+                        dg.ItemsSource = sql.DBDT.DefaultView;
+                        if (dg.Columns.Count > 1)
+                        {
+                            dg.Columns[1].Visibility = Visibility.Collapsed;
+                        }
+                        return;
+                    });
+                }
             });
         }
         public static void searchWaybill(TextBox tb, DataGrid dg)
