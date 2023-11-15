@@ -51,7 +51,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         }
         private async void displayWaybillData()
         {
-            await Task.Delay(200);
             await WaybillController.DisplayDataOnWaybillJournal(tblWaybilldata);
         }
         private void printwaybill()
