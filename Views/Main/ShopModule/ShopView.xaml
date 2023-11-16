@@ -22,7 +22,7 @@
 
             <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="20,15,0,15" Orientation="Horizontal">
 
-                <Border CornerRadius="20" Background="{StaticResource searchBarColor1}"  Width="400" Margin="0,0,10,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Border CornerRadius="20" Visibility="Collapsed" Background="{StaticResource searchBarColor1}"  Width="400" Margin="0,0,10,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="40" Width="20" Margin="15,4,0,0" Foreground="Gray"/>
                         <TextBox 
@@ -43,25 +43,25 @@
                     </StackPanel>
                 </Border>
 
-                <Border Height="40" Width="150" Background="#4E575C"  CornerRadius="5">
+                <Border Visibility="Collapsed" Height="40" Width="150" Background="#4E575C"  CornerRadius="5">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
                         <Label Content="Start Date" Foreground="#BCBCBC"  FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <Border Height="40" Width="150" Background="#4E575C" Margin="10,0,20,0" CornerRadius="5">
+                <Border Visibility="Collapsed" Height="40" Width="150" Background="#4E575C" Margin="10,0,20,0" CornerRadius="5">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <materialDesign:PackIcon Kind="CalendarMonth" Foreground="#BCBCBC" Height="20" Width="20" VerticalAlignment="Center"/>
                         <Label Content="End Date" Foreground="#BCBCBC"  FontSize="15" Margin="0,0,0,3" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <Button Style="{StaticResource MaterialDesignIconButton}" Height="25" Width="25" Background="#618EE7" BorderBrush="#618EE7">
+                <Button Style="{StaticResource MaterialDesignIconButton}" Height="25" Width="25" Background="#618EE7" BorderBrush="#618EE7" Visibility="Collapsed">
                     <materialDesign:PackIcon Kind="Close" Height="15" Width="15"  Foreground="White"/>
                 </Button>
 
-                <Label Content="Clear Date" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#BCBCBC"/>
+                <Label Visibility="Collapsed" Content="Clear Date" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#BCBCBC"/>
 
             </StackPanel>
 

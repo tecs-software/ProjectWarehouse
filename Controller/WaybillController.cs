@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using WWarehouseManagement.Database;
 using System.Windows.Data;
+using System.ComponentModel;
 
 namespace WarehouseManagement.Controller
 {
@@ -134,33 +135,21 @@ namespace WarehouseManagement.Controller
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        // Clear existing columns
-                        dg.Columns.Clear();
-
-                        // Add checkbox column
-                        DataGridTemplateColumn checkBoxColumn = new DataGridTemplateColumn
+                        List<waybillData> waybill = new List<waybillData>();
+                        foreach (DataRow dr in sql.DBDT.Rows)
                         {
-                            Header = "Select"
-                        };
+                            waybillData details = new waybillData
+                            {
+                                Order_id = dr[1].ToString(),
+                                Waybill = dr[2].ToString(),
+                                Receiver = dr[5].ToString(),
+                                Date = dr[0].ToString(),
+                                Remarks = dr[16].ToString()
 
-                        FrameworkElementFactory checkBoxFactory = new FrameworkElementFactory(typeof(CheckBox));
-                        checkBoxFactory.SetBinding(CheckBox.IsCheckedProperty, new Binding("YourBooleanProperty"));
-
-                        DataTemplate checkBoxDataTemplate = new DataTemplate();
-                        checkBoxDataTemplate.VisualTree = checkBoxFactory;
-
-                        checkBoxColumn.CellTemplate = checkBoxDataTemplate;
-
-                        checkBoxColumn.Width = new DataGridLength(70, DataGridLengthUnitType.Pixel);
-                        dg.Columns.Add(checkBoxColumn);
-
-                        // Set the ItemsSource
-                        dg.ItemsSource = sql.DBDT.DefaultView;
-                        if (dg.Columns.Count > 1)
-                        {
-                            dg.Columns[1].Visibility = Visibility.Collapsed;
+                            };
+                            waybill.Add(details);
                         }
-                        return;
+                        dg.ItemsSource = waybill;
                     });
                 }
             });
@@ -174,4 +163,34 @@ namespace WarehouseManagement.Controller
             }
         }
     }
+    public class waybillData : INotifyPropertyChanged
+    {
+        private bool _isChecked = false;
+
+        public bool IsChecked
+        {
+            get { return _isChecked; }
+            set
+            {
+                if (_isChecked != value)
+                {
+                    _isChecked = value;
+                    OnPropertyChanged(nameof(IsChecked));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string Order_id { get; set; } = string.Empty;
+        public string Waybill { get; set; } = string.Empty;
+        public string Receiver { get; set; } = string.Empty;
+        public string Date { get; set; } = string.Empty;
+        public string Remarks { get; set; } = string.Empty;
+    }
+
 }

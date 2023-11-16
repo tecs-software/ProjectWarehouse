@@ -1,5 +1,6 @@
 ﻿using Microsoft.Reporting.WinForms;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -39,7 +40,10 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
             ReportViewer1.LocalReport.EnableExternalImages = true;
             ReportViewer1.RefreshReport();
-            printwaybill();
+            foreach (var waybills in waybillList)
+            {
+                printwaybill(waybills);
+            }
         }
         private byte[] ImageToByteArray(Bitmap image)
         {
@@ -53,7 +57,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         {
             await WaybillController.DisplayDataOnWaybillJournal(tblWaybilldata);
         }
-        private void printwaybill()
+        private void printwaybill(string Waybill)
         {
             sql_control sql = new sql_control();
             BarcodeWriter<Bitmap> horizontalWriter = new BarcodeWriter<Bitmap>
@@ -90,7 +94,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                     Height = 300, // Adjust the height as needed
                 }
             };
-            sql.Query($"SELECT TOP 1 * FROM tbl_waybill WHERE Waybill = '{waybill}'");
+            sql.Query($"SELECT TOP 1 * FROM tbl_waybill WHERE Waybill = '{Waybill}'");
             if (sql.HasException(true)) return;
             if (sql.DBDT.Rows.Count > 0)
             {
@@ -183,37 +187,13 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 }
             }
         }
-        private string waybill { get; set; }
         private void tblWaybilldata_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tblWaybilldata.SelectedItem != null)
-            {
-                // Assuming your ID column is named "ID" in your DataTable
-                DataRowView selectedRow = tblWaybilldata.SelectedItem as DataRowView;
-                if (selectedRow != null)
-                {
-                    // Access the ID and set it to the TextBox
-                    waybill = selectedRow["Waybill"].ToString();
-                    btnPrint.Content = "Print-" + waybill;
-
-                    // Assuming "SelectRow" is the checkbox column name
-                    string checkboxColumnName = "SelectRow";
-                    DataGridColumn checkboxColumn = tblWaybilldata.Columns.FirstOrDefault(col => col.Header.ToString() == checkboxColumnName);
-
-                    if (checkboxColumn != null && checkboxColumn is DataGridCheckBoxColumn)
-                    {
-                        // Update the checkbox state based on the selected row
-                        bool currentSelectRowState = (bool)selectedRow.Row[checkboxColumnName];
-                        selectedRow.Row[checkboxColumnName] = !currentSelectRowState;
-                    }
-                    tblWaybilldata.Dispatcher.Invoke(() => { }, System.Windows.Threading.DispatcherPriority.Render);
-                }
-            }
-            else
-            {
-                // No item is selected, clear the TextBox
-                txtSearch.Clear();
-            }
+            
+        }
+        private void CheckBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
         }
 
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
@@ -224,6 +204,28 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         private void tblWaybilldata_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void cbName_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private List<string> waybillList = new List<string>();
+        private void cbName_Click(object sender, RoutedEventArgs e)
+        {
+            var cb = sender as CheckBox;
+            var selectedOrder = tblWaybilldata.SelectedItems[0] as WarehouseManagement.Controller.waybillData;
+            object id = tblWaybilldata.SelectedItem;
+            string? orderId = selectedOrder.Order_id;
+            if (cb.IsChecked == true)
+            {
+                waybillList.Add((tblWaybilldata.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text);
+               
+            }
+            else
+            {
+                waybillList.Remove((tblWaybilldata.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text);
+            }
         }
     }
 }

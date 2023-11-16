@@ -36,7 +36,7 @@
                           Margin="8,8,8,0"
                             DockPanel.Dock="Top"
                             CanUserAddRows="False"
-                            AutoGenerateColumns="True"
+                            AutoGenerateColumns="False"
                             HeadersVisibility="Column"
                             GridLinesVisibility="All"
                            
@@ -53,6 +53,41 @@
                             SelectionMode="Single"
                             x:Name="tblWaybilldata"
                             ColumnHeaderStyle="{StaticResource HeaderStyle}" SelectionChanged="tblWaybilldata_SelectionChanged" Loaded="tblWaybilldata_Loaded">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Select" Width="70">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Margin="8,0,0,0" x:Name="cbName" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontSize="15" Click="cbName_Click" Loaded="cbName_Loaded" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn     Header="Order ID"
+                                                Binding="{Binding Order_id }"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="*"/>
+                        <DataGridTextColumn     Header="Waybill"
+                                                Binding="{Binding Waybill}"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="*"/>
+                        <DataGridTextColumn     Header="Receiver"
+                                                Binding="{Binding Receiver}"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="*"/>
+                        <DataGridTextColumn     Header="Date"
+                                                Binding="{Binding Date}"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="*"/>
+                        <DataGridTextColumn     Header="Remarks"
+                                                Binding="{Binding Remarks}"
+                                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                Width="*"/>
+                    </DataGrid.Columns>
                 </DataGrid>
 
             </Grid>

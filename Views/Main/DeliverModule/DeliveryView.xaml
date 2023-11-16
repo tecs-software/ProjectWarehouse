@@ -31,12 +31,12 @@
 
             <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="auto" Margin="20,15,0,15" Width="auto">
 
-                <Border CornerRadius="5" Background="{StaticResource searchBarColor1}"  Width="400" Height="51" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal">
+                <Border Visibility="Collapsed" CornerRadius="5" Background="{StaticResource searchBarColor1}"  Width="400" Height="51" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                         <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Height="40" Width="20" Margin="15,4,0,0" Foreground="Gray"/>
                         <TextBox 
                                 FontWeight="Light" 
-                                FontSize="17" 
+                                FontSize="17"
                                 Width="350"
                                 Foreground="White"
                                 BorderBrush="Transparent"
@@ -48,7 +48,7 @@
                                 VerticalAlignment="Center"
                                 Height="35"
                                 x:Name="tbSearchProduct"
-
+                                Visibility="Collapsed"
                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" TextChanged="tbSearchProduct_TextChanged"/>
                     </StackPanel>
                 </Border>
