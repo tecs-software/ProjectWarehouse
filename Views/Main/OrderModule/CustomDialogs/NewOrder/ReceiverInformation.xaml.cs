@@ -121,11 +121,12 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbOrderType.Visibility = Visibility.Collapsed;
                 tbCod.Visibility = Visibility.Visible;
                 HintAssist.SetHint(tbGoodsValue, "Total goods value (PHP)");
-                tbQuantity.IsEnabled = true;
                 tbTotal.Visibility = Visibility.Visible;
                 tbTotalHolder.Visibility = Visibility.Visible;
                 tbTotalGoods.Visibility = Visibility.Visible;
                 tbTotalGoodsHolder.Visibility = Visibility.Visible;
+                tbQuantity.Visibility = Visibility.Visible;
+                tbQuantity.Clear();
                 queries.province(cbProvinceJnt);
             }
             if (text == "FLASH")
@@ -137,11 +138,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs.NewOrder
                 cbOrderType.Visibility = Visibility.Visible;
                 tbCod.Visibility = Visibility.Collapsed;
                 HintAssist.SetHint(tbGoodsValue, "COD amount");
-                tbQuantity.IsReadOnly = true;
                 tbTotal.Visibility = Visibility.Collapsed;
                 tbTotalHolder.Visibility = Visibility.Collapsed;
                 tbTotalGoods.Visibility = Visibility.Collapsed;
                 tbTotalGoodsHolder.Visibility = Visibility.Collapsed;
+                tbQuantity.Visibility = Visibility.Collapsed;
                 queries.FlashProvince(cbProvinceFlash);
             }
         }

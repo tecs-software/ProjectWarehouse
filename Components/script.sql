@@ -51,9 +51,19 @@ BEGIN
 		Price DECIMAL(18,2),
 		[Weight] DECIMAL(18,2),
 		Remarks NVARCHAR(Max),
+		[Date] Date,
     )
 END
 GO
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_waybill')
+BEGIN
+    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.tbl_waybill') AND name = 'Date')
+    BEGIN
+        -- Alter column 'receiver_address' to VARCHAR(255)
+        ALTER TABLE dbo.tbl_waybill
+        ADD [Date] Date NULL
+    END
+END
 -- Create tbl_users table if not exists
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'tbl_expenses')
 BEGIN

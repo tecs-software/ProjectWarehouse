@@ -50,7 +50,7 @@
                     <Label Content="6,787,400.00" Foreground="#333433" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" x:Name="lbl_total_expenses"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+70%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="3" Content="+70%" Visibility="Collapsed" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -76,7 +76,7 @@
                     <Label Content="3,243,800.00" Foreground="#333433" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" x:Name="lbl_Miscellaneous"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+20%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="3" Visibility="Collapsed" Content="+20%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -102,7 +102,7 @@
                     <Label Content="1,384,750.00" Foreground="#333433" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" x:Name="lbl_AdSpent"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+60%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="3" Content="+60%" Visibility="Collapsed" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>
@@ -128,7 +128,7 @@
                     <Label Content="753,900.00" Foreground="#333433" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" x:Name="lbl_Utilities"/>
                 </StackPanel>
 
-                <Label Grid.Row="3" Content="+10%" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                <Label Grid.Row="3" Content="+10%" Visibility="Collapsed" Foreground="{StaticResource secondaryColor}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 
             </Grid>
         </Border>

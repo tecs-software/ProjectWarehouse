@@ -131,23 +131,47 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                 }
                 else
                 {
-                    if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress, "", 1))
+                    if(rdbJandT.IsChecked == true)
                     {
-                        MessageBox.Show("Shop/Page Save");
-                        txtAddress.Clear();
-                        txtPagename.Clear();
-                        txtId.Text = "0";
-                        btnSubmit_sender.Content = "ADD";
-                        txtPhone.Clear();
-                        cmbProvince.Text = "";
-                        cmbCity.Text = "";
-                        cmbBarangay.Text = "";
+                        if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvince, cmbCity, cmbBarangay, txtAddress, "", 1))
+                        {
+                            MessageBox.Show("Shop/Page Save");
+                            txtAddress.Clear();
+                            txtPagename.Clear();
+                            txtId.Text = "0";
+                            btnSubmit_sender.Content = "ADD";
+                            txtPhone.Clear();
+                            cmbProvince.Text = "";
+                            cmbCity.Text = "";
+                            cmbBarangay.Text = "";
 
-                        cmbAction.SelectedIndex = -1;
+                            cmbAction.SelectedIndex = -1;
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                     else
                     {
-                        return;
+                        if (queries.insert_sender(txtId.Text, txtPagename, txtPhone, cmbProvinceFlash, cmbCityFlash, cmbBarangay, txtAddress, cmbPostalCodeFlash.Text, 2))
+                        {
+                            MessageBox.Show("Shop/Page Save");
+                            txtAddress.Clear();
+                            txtPagename.Clear();
+                            txtId.Text = "0";
+                            btnSubmit_sender.Content = "ADD";
+                            txtPhone.Clear();
+                            cmbProvince.Text = "";
+                            cmbCity.Text = "";
+                            cmbBarangay.Text = "";
+
+                            cmbAction.SelectedIndex = -1;
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                 }
             }

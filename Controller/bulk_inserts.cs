@@ -28,7 +28,7 @@ namespace WarehouseManagement.Controller
         }
         public static void bulk_orders(bulk_model model, string waybill, string order_id) 
         {
-            sql.AddParam("@item_name", model.product_name.Replace("'", ""));
+            sql.AddParam("@item_name", model.product_name);
             int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item_name"));
 
             sql.AddParam("@address", model.receiver_address.Replace("'", ""));
@@ -41,20 +41,20 @@ namespace WarehouseManagement.Controller
         
         public static void bulk_incentives(bulk_model model, string order_id)
         {
-            sql.AddParam("@item", model.product_name.Replace("'", ""));
+            sql.AddParam("@item", model.product_name);
             sql.Query($"EXEC SPadd_incentives {CurrentUser.Instance.userID}, '{order_id}', {model.quantity}," +
             $"{1}, @item");
             if (sql.HasException(true)) return;
         }
         public static void bulk_update_quantity(bulk_model model)
         {
-            sql.AddParam("@item",model.product_name.Replace("'", ""));
+            sql.AddParam("@item",model.product_name);
             sql.Query($"EXEC SPupdate_stocks {model.quantity}, @item");
             if (sql.HasException(true)) return;
         }
         public static void bulk_update_stocks(bulk_model model)
         {
-            sql.AddParam("@item", model.product_name.Replace("'", ""));
+            sql.AddParam("@item", model.product_name);
             int newStock = int.Parse(sql.ReturnResult($"SELECT unit_quantity FROM tbl_products WHERE item_name = @item"));
             string Status = newStock < 0 ? Util.status_out_of_stock : newStock == 0 ? Util.status_out_of_stock : newStock <= 100 ? Util.status_low_stock : Util.status_in_stock;
             sql.AddParam("@product", model.product_name);

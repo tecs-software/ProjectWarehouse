@@ -27,7 +27,7 @@ namespace WarehouseManagement.Controller
         {
             await Task.Run(() =>
             {
-                DateTime dateTime = DateTime.Now.AddDays(1).Date;
+                DateTime dateTime = DateTime.Now;
                 sql.AddParam("@date", dateTime);
                 sql.Query($"EXEC SpExpenses_GetDataFilterByDate @date, {days}");
                 if (sql.HasException(true)) return;
@@ -51,7 +51,7 @@ namespace WarehouseManagement.Controller
         {
             await Task.Run(() =>
             {
-                DateTime dateTime = DateTime.Now.AddDays(1).Date;
+                DateTime dateTime = DateTime.Now;
                 sql.AddParam("@date", dateTime);
                 sql.Query($"EXEC SpExpenses_GetDataFilterByDate @date, {days}");
                 if (sql.HasException(true)) return;

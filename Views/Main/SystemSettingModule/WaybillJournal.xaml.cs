@@ -28,6 +28,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         {
             InitializeComponent();
             displayWaybillData();
+            setDate();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -226,6 +227,16 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             {
                 waybillList.Remove((tblWaybilldata.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text);
             }
+        }
+        private void setDate()
+        {
+            DatePicker.DisplayDateStart = new DateTime(2023, 6, 1);
+            DatePicker.DisplayDateEnd = DateTime.Now;
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            WaybillController.SelectWaybillByDate(DatePicker, tblWaybilldata);
         }
     }
 }

@@ -42,12 +42,12 @@ namespace WarehouseManagement.Controller
 
 
             sql.AddParam("@sender_name", sender_name);
-            sql.AddParam("@sender_add", sender_add);
-            sql.AddParam("@remarks",remarks);
-            sql.AddParam("@rAddress", receiverAddress);
+            sql.AddParam("@sender_add", sender_add.Replace("'", ""));
+            sql.AddParam("@remarks",remarks.Replace("'", ""));
+            sql.AddParam("@rAddress", receiverAddress.Replace("'",""));
             await Task.Run(() => sql.Query($"INSERT INTO tbl_waybill (Order_ID, Waybill, Sorting_Code, Sorting_No, ReceiverName,ReceiverProvince, ReceiverCity, ReceiverBarangay,ReceiverAddress,SenderName,SenderAddress,COD, Goods, Price, Weight, Remarks) " +
                 $"VALUES ('{Order_id}', '{Waybill}', '{SortingCode}', '{SortingNo}', '{receiverName}', '{receiverProvince}', '{receiverCity}', '{receiverBarangay}', @rAddress,  " +
-                $" @sender_name, @sender_add, {cod}, '{goods}', {price},{weight}, @remarks) "));
+                $" @sender_name, @sender_add, {cod}, '{goods}', {price},{weight}, @remarks, '{DateTime.Now}') "));
             if (sql.HasException(true)) return;
         }
         public static async Task LoadDevice(ComboBox cmbJnt, ComboBox cmbFlash)
@@ -143,7 +143,7 @@ namespace WarehouseManagement.Controller
                                 Order_id = dr[1].ToString(),
                                 Waybill = dr[2].ToString(),
                                 Receiver = dr[5].ToString(),
-                                Date = dr[0].ToString(),
+                                Date = dr[17].ToString(),
                                 Remarks = dr[16].ToString()
 
                             };
@@ -152,6 +152,10 @@ namespace WarehouseManagement.Controller
                         dg.ItemsSource = waybill;
                     });
                 }
+                else
+                {
+                    dg.ItemsSource = null;
+                }
             });
         }
         public static void searchWaybill(TextBox tb, DataGrid dg)
@@ -159,33 +163,77 @@ namespace WarehouseManagement.Controller
             sql.Query($"SELECT * FROM tbl_waybill WHERE Waybill LIKE '%{tb.Text}%'");
             if (sql.DBDT.Rows.Count > 0)
             {
-                Application.Current.Dispatcher.Invoke(() => dg.ItemsSource = sql.DBDT.DefaultView);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    List<waybillData> waybill = new List<waybillData>();
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        waybillData details = new waybillData
+                        {
+                            Order_id = dr[1].ToString(),
+                            Waybill = dr[2].ToString(),
+                            Receiver = dr[5].ToString(),
+                            Date = dr[17].ToString(),
+                            Remarks = dr[16].ToString()
+
+                        };
+                        waybill.Add(details);
+                    }
+                    dg.ItemsSource = waybill;
+                });
+            }
+            else
+            {
+                dg.ItemsSource = null;
+            }
+        }
+        public static void SelectWaybillByDate(DatePicker date, DataGrid dg)
+        {
+            DateTime selectedDate = date.SelectedDate ?? DateTime.Now; // Use DateTime.Now if SelectedDate is null
+            DateTime newDate = selectedDate.AddDays(1);
+            string formattedDate = newDate.ToString("yyyy-MM-dd");
+            try
+            {
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+
+                sql.Query($"SELECT * FROM tbl_waybill WHERE Date BETWEEN @startDate AND @endDate");
+                if(sql.DBDT.Rows.Count > 0)
+                {
+                    MessageBox.Show("Test");
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        List<waybillData> waybill = new List<waybillData>();
+                        foreach (DataRow dr in sql.DBDT.Rows)
+                        {
+                            waybillData details = new waybillData
+                            {
+                                
+                                Order_id = dr[1].ToString(),
+                                Waybill = dr[2].ToString(),
+                                Receiver = dr[5].ToString(),
+                                Date = dr[17].ToString(),
+                                Remarks = dr[16].ToString()
+
+                            };
+                            waybill.Add(details);
+                        }
+                        dg.ItemsSource = waybill;
+                    });
+                }
+                else
+                {
+                    dg.ItemsSource = null;
+                }
+            }
+            catch
+            {
+
             }
         }
     }
-    public class waybillData : INotifyPropertyChanged
+    public class waybillData
     {
-        private bool _isChecked = false;
-
-        public bool IsChecked
-        {
-            get { return _isChecked; }
-            set
-            {
-                if (_isChecked != value)
-                {
-                    _isChecked = value;
-                    OnPropertyChanged(nameof(IsChecked));
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public string Order_id { get; set; } = string.Empty;
         public string Waybill { get; set; } = string.Empty;
         public string Receiver { get; set; } = string.Empty;
