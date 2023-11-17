@@ -42,12 +42,18 @@ namespace WarehouseManagement.Views.Main.DashboardModule
             VaPage = new VAPage();
             cbSales.SelectedIndex = 0;
             btn_D1.Focus();
+            setDate();
 
             if (CurrentUser.Instance.RoleName != "admin")
             {
                 PageContent.Content = VaPage;
                 cmbContainer.Visibility = Visibility.Hidden;
             }
+        }
+        private void setDate()
+        {
+            DatePicker.DisplayDateStart = new DateTime(2023, 6, 1);
+            DatePicker.DisplayDateEnd = DateTime.Now;
         }
 
         private void cbSales_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -106,6 +112,20 @@ namespace WarehouseManagement.Views.Main.DashboardModule
         {
             await ExpensesController.showExpensesData(expensesReportPage.lbl_total_expenses, expensesReportPage.lbl_AdSpent, expensesReportPage.lbl_Utilities, expensesReportPage.lbl_Miscellaneous, days);
             ExpensesController.showExpensesGraphs(days, expensesReportPage.expensesChart);
+        }
+
+        private void DatePicker_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            if (cbSales.SelectedIndex == 0)
+            {
+                queries.LoadDashboardByDate(summaryPage.lbl_total_order, summaryPage.lbl_gross, summaryPage.lbl_products_sold, summaryPage.lbl_Net_profit, summaryPage.salesChart, DatePicker);
+                queries.LoadExpenseSummaryByDate(summaryPage.lbl_expenses, DatePicker);
+            }
+            else
+            {
+                queries.LoadExpenseDashBoardByDate(expensesReportPage.lbl_total_expenses, expensesReportPage.lbl_AdSpent, expensesReportPage.lbl_Utilities, expensesReportPage.lbl_Miscellaneous, expensesReportPage.expensesChart, DatePicker);
+            }
+            
         }
     }
 }

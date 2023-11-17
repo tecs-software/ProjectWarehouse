@@ -84,29 +84,28 @@ namespace WarehouseManagement.Controller
         public static void showExpensesGraphs(int days, CartesianChart chart)
         {
             ChartValues<ObservableValue> expensesData = new ChartValues<ObservableValue>();
-            List<DateTime> dateList = new List<DateTime>();
+            List<string> dateList = new List<string>();
 
 
             DateTime from = DateTime.Now.AddDays(-days).Date;
             DateTime to = DateTime.Now.AddDays(1).Date;
             sql.AddParam("@from", from);
             sql.AddParam("@to", to);
-            sql.Query($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) AS total_expenses, CAST(Date AS DATE) AS date FROM tbl_expenses WHERE Date BETWEEN @from AND @to GROUP BY CAST(Date AS DATE)");
+            sql.Query($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) AS total_expenses, Date FROM tbl_expenses WHERE Date BETWEEN @from AND @to GROUP BY Date");
             if (sql.HasException(true)) return;
             if(sql.DBDT.Rows.Count > 0)
             {
                 foreach(DataRow dr in sql.DBDT.Rows)
                 {
                     expensesData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
-                    dateList.Add(DateTime.Parse(dr[1].ToString()));
+                    dateList.Add(DateTime.Parse(dr[1].ToString()).ToString());
                 }
-                List<string> dateLabels = dateList.Select(date => date.ToString("MM/dd/yy h:mm:ss tt")).ToList();
 
                 chart.AxisX.Clear();
                 chart.AxisX.Add(new Axis
                 {
                     Title = "Date",
-                    Labels = dateLabels
+                    Labels = dateList
                 });
 
                 chart.Series.Clear();

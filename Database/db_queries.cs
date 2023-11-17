@@ -236,8 +236,8 @@ namespace WarehouseManagement.Database
         public void insert_receiver(Receiver _receiver)
         {
             string name = _receiver.FirstName + " " + _receiver.LastName;
-            sql.AddParam("@name", name);
-            sql.AddParam("@address", _receiver.Address);
+            sql.AddParam("@name", name.Replace("'",""));
+            sql.AddParam("@address", _receiver.Address.Replace("'",""));
             sql.Query($"INSERT INTO tbl_receiver (receiver_name, receiver_phone, receiver_address) VALUES (@name, '{_receiver.Phone}', @address)");
             if (sql.HasException(true)) return;
         }
@@ -265,7 +265,7 @@ namespace WarehouseManagement.Database
 
             decimal total = book_info.cod;
 
-            sql.AddParam("@remarks", book_info.remarks);
+            sql.AddParam("@remarks", book_info.remarks.Replace("'",""));
 
             //dito papalitan couriers
             sql.Query($"INSERT INTO tbl_orders (order_id, waybill_number, user_id, sender_id, receiver_id, product_id, quantity, total, remarks, status, created_at, updated_at, courier) VALUES " +
@@ -421,7 +421,7 @@ namespace WarehouseManagement.Database
         }
         public void update_inventory_status(Booking_info book_info)
         {
-            sql.AddParam("@item_name", book_info.item_name.Replace("'",""));
+            sql.AddParam("@item_name", book_info.item_name);
 
             //deducting the ordered quantity
             sql.Query($"UPDATE tbl_products SET unit_quantity = unit_quantity - {int.Parse(book_info.quantity)} WHERE item_name = @item_name");
@@ -553,8 +553,218 @@ namespace WarehouseManagement.Database
             }
             else
             {
+                
                 chart.Series.Clear();
                 chart.AxisX.Clear();
+            }
+        }
+        public void LoadExpenseDashBoardByDate(Label total_expenses, Label adspent, Label utilities, Label misc, CartesianChart chart, DatePicker date)
+        {
+            DateTime selectedDate = date.SelectedDate ?? DateTime.Now;
+            DateTime newDate = selectedDate.AddDays(1);
+            string formattedDate = newDate.ToString("yyyy-MM-dd");
+
+            try
+            {
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+
+                sql.Query($"SELECT SUM(tbl_expenses.AdSpent +tbl_expenses.Utilities + tbl_expenses.Miscellaneous) as 'Total Expenses'," +
+                    $"  SUM(tbl_expenses.AdSpent) as 'Total AdSpent'," +
+                    $"  SUM(tbl_expenses.Utilities) as 'Total Utility'," +
+                    $"  SUM(tbl_expenses.Miscellaneous) as 'Total Misc'" +
+                    $"  FROM tbl_expenses WHERE Date BETWEEN @startDate AND @endDate");
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        total_expenses.Dispatcher.Invoke(() =>
+                        {
+                            if (dr[0].ToString() == "" || dr[0].ToString() == null)
+                            {
+                                adspent.Content = "0";
+                                utilities.Content = "0";
+                                misc.Content = "0";
+                                total_expenses.Content = "0";
+                            }
+                            else
+                            {
+                                adspent.Content = dr[1].ToString();
+                                utilities.Content = dr[2].ToString();
+                                misc.Content = dr[3].ToString();
+                                total_expenses.Content = dr[0].ToString();
+                            }
+                        });
+                    }
+                }
+
+                //expenses graph
+                ChartValues<ObservableValue> expensesData = new ChartValues<ObservableValue>();
+                List<string> dateList = new List<string>();
+
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+                sql.Query($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) AS total_expenses, Date FROM tbl_expenses WHERE Date BETWEEN @startDate AND @endDate GROUP BY Date");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        expensesData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
+                        dateList.Add(DateTime.Parse(dr[1].ToString()).ToString("MM-dd-yy hh:mm:s"));
+                    }
+
+                    chart.AxisX.Clear();
+                    chart.AxisX.Add(new Axis
+                    {
+                        Title = "Date",
+                        Labels = dateList
+                    });
+
+                    chart.Series.Clear();
+                    chart.Series.Add(new LineSeries
+                    {
+                        Title = "Total Expenses",
+                        Values = expensesData,
+                    });
+                }
+                else
+                {
+                    chart.Series.Clear();
+                    chart.AxisX.Clear();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        public void LoadExpenseSummaryByDate(Label total_expenses, DatePicker date)
+        {
+            DateTime selectedDate = date.SelectedDate ?? DateTime.Now;
+            DateTime newDate = selectedDate.AddDays(1);
+            string formattedDate = newDate.ToString("yyyy-MM-dd");
+
+            try
+            {
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+
+                sql.Query($"SELECT SUM(tbl_expenses.AdSpent + tbl_expenses.Utilities + tbl_expenses.Miscellaneous) FROM tbl_expenses WHERE Date BETWEEN @startDate AND @endDate");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        total_expenses.Dispatcher.Invoke(() =>
+                        {
+                            if (dr[0].ToString() == "" || dr[0].ToString() == null)
+                                total_expenses.Content = "0";
+                            else
+                                total_expenses.Content = dr[0].ToString();
+                        });
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        public void LoadDashboardByDate(Label lbl_total_orders, Label lbl_gross, Label lbl_products_sold, Label net_profit, CartesianChart chart, DatePicker date)
+        {
+            DateTime selectedDate = date.SelectedDate ?? DateTime.Now; // Use DateTime.Now if SelectedDate is null
+            DateTime newDate = selectedDate.AddDays(1);
+            string formattedDate = newDate.ToString("yyyy-MM-dd");
+
+            try
+            {
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+                //total orders
+                sql.Query($"SELECT COUNT(*) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN @startDate AND @endDate");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        lbl_total_orders.Content = dr[0].ToString();
+                    }
+                }
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+                //gross sales
+                sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN @startDate AND @endDate");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        lbl_gross.Content = dr[0].ToString();
+                    }
+                }
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+                //net sales
+                sql.Query($"SELECT COALESCE(SUM(total),0) FROM tbl_orders WHERE status != 'CANCELLED' AND created_at BETWEEN @startDate AND @endDate");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        lbl_products_sold.Content = dr[0].ToString();
+                    }
+                }
+                //net profit
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+                decimal total_sales = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(total), 0) FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN @startDate AND @endDate"));
+
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+                decimal total_expenses = decimal.Parse(sql.ReturnResult($"SELECT COALESCE(SUM(AdSpent + Utilities + Miscellaneous), 0) FROM tbl_expenses WHERE Date BETWEEN @startDate AND @endDate"));
+
+                net_profit.Content = total_sales - total_expenses;
+
+                //sale graph
+                ChartValues<ObservableValue> revenueData = new ChartValues<ObservableValue>();
+                List<string> dateList = new List<string>();
+
+                sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
+                sql.AddParam("@endDate", formattedDate);
+                sql.Query($"SELECT COALESCE(SUM(total),0), updated_at FROM tbl_orders WHERE status = 'DELIVERED' AND updated_at BETWEEN @startDate AND @endDate GROUP BY updated_at");
+                if (sql.HasException(true)) return;
+                if (sql.DBDT.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in sql.DBDT.Rows)
+                    {
+                        revenueData.Add(new ObservableValue(double.Parse(dr[0].ToString())));
+                        dateList.Add(DateTime.Parse(dr[1].ToString()).ToString("MM-dd-yy hh:mm:s"));
+                    }
+
+                    chart.AxisX.Clear();
+                    chart.AxisX.Add(new Axis
+                    {
+                        Title = "Date",
+                        Labels = dateList
+                    });
+
+                    chart.Series.Clear();
+                    chart.Series.Add(new LineSeries
+                    {
+                        Title = "Total Revenue",
+                        Values = revenueData,
+                    });
+                }
+                else
+                {
+                    chart.Series.Clear();
+                    chart.AxisX.Clear();
+                }
+            }
+            catch
+            {
+
             }
         }
         public string Encrypt(string input)
