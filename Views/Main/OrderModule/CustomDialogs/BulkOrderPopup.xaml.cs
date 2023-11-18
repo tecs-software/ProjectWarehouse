@@ -273,11 +273,11 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 pushOrders.RunWorkerAsync();
             }
         }
-        private void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
+        private async void WorkerPushOrders_DoWork(object sender, DoWorkEventArgs e)
         {
             sql_control sql = new sql_control();
 
-            Application.Current.Dispatcher.Invoke( async() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 if (rdbJandT.IsChecked == true)
                 {
@@ -289,25 +289,32 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
                 {
                     GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 2");
                     GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 2");
-                    await FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels, pbBulkOrder);
+                    FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels, pbBulkOrder);
                 }
             });
         }
-        private void WorkerPushCompleted_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private async void WorkerPushCompleted_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            try
+            await Task.Delay(3000);
+            int delayMilliseconds = 1000;
+            int maximumAttempts = 100; // Adjust this based on your requirements
+            int attempts = 0;
+
+            while (pbBulkOrder.Value < pbBulkOrder.Maximum && attempts < maximumAttempts)
             {
-                if (pbBulkOrder.Value == pbBulkOrder.Maximum)
+                await Task.Delay(delayMilliseconds);
+                attempts++;
+            }
+
+            // Now execute your block of code once the progress bar reaches its maximum
+            if (pbBulkOrder.Value >= pbBulkOrder.Maximum)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     btnConfirm.IsEnabled = true;
                     MessageBox.Show("Orders have been created.", "Success");
                     bulk_inserts.show_temp_table(dtBulkOrders, dtSuspiciousOrders, btnConfirm, btnReConfirm);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log or display the exception
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error");
+                });
             }
         }
         private void btnNo_Click(object sender, RoutedEventArgs e)

@@ -56,7 +56,7 @@ namespace WarehouseManagement.Controller
             };
             return dic;
         }
-        public static SortedDictionary<string, string> FlashBulkdata(FLASHModel details, ProgressBar pb_load, int totalOrders, int currentOrder)
+        public static SortedDictionary<string, string> FlashBulkdata(FLASHModel details, ProgressBar pb_load, int currentOrder)
         {
             sql.AddParam("item_name", details.item);
             int sender_id = int.Parse(sql.ReturnResult($"SELECT sender_id FROM tbl_products WHERE item_name = @item_name"));
@@ -154,11 +154,10 @@ namespace WarehouseManagement.Controller
  
         public static async Task FlashCreateBulkOrder(List<FLASHModel> modelflash, ProgressBar pb)
         {
-            int totalOrders = modelflash.Count;
             int currentOrder = 0;
             foreach (FLASHModel flashdetails in modelflash)
             {
-                var mockData = FlashBulkdata(flashdetails, pb, totalOrders, currentOrder);
+                var mockData = FlashBulkdata(flashdetails, pb, currentOrder);
                 var url = "/open/v1/orders";
                 var responseData = await RequestDataAsync<OrderResponse>(url, mockData, GlobalModel.customer_id);
                 if (responseData.code == "1")
@@ -170,7 +169,7 @@ namespace WarehouseManagement.Controller
                 }
                 else
                 {
-                    MessageBox.Show($"Order process failed! The error message ={responseData}{Environment.NewLine}");
+                    MessageBox.Show($"Order process failed! The error message ={responseData.data}{Environment.NewLine}");
                 }
                 currentOrder++;
             }

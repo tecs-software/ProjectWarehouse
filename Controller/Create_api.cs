@@ -147,7 +147,7 @@ namespace WarehouseManagement.Controller
                     requestData.Add("logistics_interface", updatedPayload);
                     requestData.Add("data_digest", encodedDataDigest);
                     requestData.Add("msg_type", msg_type);
-                    requestData.Add("eccompanyid", GlobalModel.eccompany_id);
+                    requestData.Add("eccompanyid", "THIRDYNAL");
 
                     // Send the POST request
                     byte[] responseBytes = await client.UploadValuesTaskAsync(url, requestData);
@@ -237,9 +237,9 @@ namespace WarehouseManagement.Controller
             }
         }
         //api bulk orders
-        public async void create_bulk_api(List<bulk_model> model, Button btn, bool granted,ProgressBar pb_load)
+        public async Task create_bulk_api(List<bulk_model> model, Button btn, bool granted,ProgressBar pb_load)
         {
-            string txtCount;
+            int totalorders = 0;
             string url = "https://jtapi.jtexpress.ph/jts-phl-order-api/api/order/create";
             string key = Decrypt(GlobalModel.key);
             string logistics_interface = @"
@@ -288,10 +288,8 @@ namespace WarehouseManagement.Controller
             dynamic payloadObj = Newtonsoft.Json.JsonConvert.DeserializeObject(logistics_interface);
 
             //for VIP code
-            payloadObj.eccompanyid = "THIRDYNAL";
             payloadObj.customerid = GlobalModel.customer_id;
 
-            int totalOrders = 0;
             foreach (bulk_model details in model)
             {
                 sql.AddParam("product_name", details.product_name);
@@ -357,7 +355,7 @@ namespace WarehouseManagement.Controller
                         requestData.Add("logistics_interface", updatedPayload);
                         requestData.Add("data_digest", encodedDataDigest);
                         requestData.Add("msg_type", "ORDERCREATE");
-                        requestData.Add("eccompanyid", GlobalModel.eccompany_id);
+                        requestData.Add("eccompanyid", "THIRDYNAL");
 
                         // Send the POST request
                         byte[] responseBytes = client.UploadValues(url, requestData);
@@ -380,7 +378,7 @@ namespace WarehouseManagement.Controller
                         string logisticProviderIdString = logisticProviderId.ToString();
                         string successString = success.ToString();
                         string reasonString = reason.ToString();
-                        string sortingNostring = sortingNo.ToString();
+                        string? sortingNostring = sortingNo.ToString();
 
                         //if there is no error
                         if (successString == "true")
@@ -469,12 +467,13 @@ namespace WarehouseManagement.Controller
                     MessageBox.Show(errorMessage);
                     BulkOrderPopup.NoError = false;
                 }
-                totalOrders++;
-                txtCount = totalOrders.ToString();
+                totalorders++;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    pb_load.Value = totalOrders;
+                    
+                    pb_load.Value = totalorders;
                 });
+                await Task.Delay(100);
             }
         }
         public long GenerateTransactionID()

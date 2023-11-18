@@ -45,9 +45,9 @@ namespace WarehouseManagement.Controller
             sql.AddParam("@sender_add", sender_add.Replace("'", ""));
             sql.AddParam("@remarks",remarks.Replace("'", ""));
             sql.AddParam("@rAddress", receiverAddress.Replace("'",""));
-            await Task.Run(() => sql.Query($"INSERT INTO tbl_waybill (Order_ID, Waybill, Sorting_Code, Sorting_No, ReceiverName,ReceiverProvince, ReceiverCity, ReceiverBarangay,ReceiverAddress,SenderName,SenderAddress,COD, Goods, Price, Weight, Remarks) " +
+            await Task.Run(() => sql.Query($"INSERT INTO tbl_waybill (Order_ID, Waybill, Sorting_Code, Sorting_No, ReceiverName,ReceiverProvince, ReceiverCity, ReceiverBarangay,ReceiverAddress,SenderName,SenderAddress,COD, Goods, Price, Weight, Remarks, Date) " +
                 $"VALUES ('{Order_id}', '{Waybill}', '{SortingCode}', '{SortingNo}', '{receiverName}', '{receiverProvince}', '{receiverCity}', '{receiverBarangay}', @rAddress,  " +
-                $" @sender_name, @sender_add, {cod}, '{goods}', {price},{weight}, @remarks, '{DateTime.Now}') "));
+                $" @sender_name, @sender_add, {cod}, '{goods}', {price},{weight}, @remarks, '{DateTime.Now.ToString("MM-dd-yyyy hh:mm:s")}') "));
             if (sql.HasException(true)) return;
         }
         public static async Task LoadDevice(ComboBox cmbJnt, ComboBox cmbFlash)
@@ -197,10 +197,9 @@ namespace WarehouseManagement.Controller
                 sql.AddParam("@startDate", DateTime.Parse(date.SelectedDate.ToString()).ToString("yyyy-MM-dd"));
                 sql.AddParam("@endDate", formattedDate);
 
-                sql.Query($"SELECT * FROM tbl_waybill WHERE Date BETWEEN @startDate AND @endDate");
+                sql.Query($"SELECT * FROM tbl_waybill WHERE Date = @startDate");
                 if(sql.DBDT.Rows.Count > 0)
                 {
-                    MessageBox.Show("Test");
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         List<waybillData> waybill = new List<waybillData>();
@@ -212,7 +211,7 @@ namespace WarehouseManagement.Controller
                                 Order_id = dr[1].ToString(),
                                 Waybill = dr[2].ToString(),
                                 Receiver = dr[5].ToString(),
-                                Date = dr[17].ToString(),
+                                Date = DateTime.Parse(dr[17].ToString()).ToString("MMMM dd, yyyy"),
                                 Remarks = dr[16].ToString()
 
                             };
