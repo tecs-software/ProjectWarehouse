@@ -17,6 +17,7 @@ using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
+using WWarehouseManagement.Database;
 using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace WarehouseManagement.Views.Main.InventoryModule
@@ -25,7 +26,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule
 
     public partial class InventoryTable : UserControl
     {
-
+        static sql_control sql = new sql_control();
         public InventoryTable()
         {
             InitializeComponent();
@@ -175,6 +176,20 @@ namespace WarehouseManagement.Views.Main.InventoryModule
                         
                     }
                 }
+            }
+        }
+        public void FilterByBarcode(string keywords)
+        {
+            sql.Query($"SELECT product_id, item_name, nominated_price, unit_quantity, status, reorder_point, timestamp FROM tbl_products " +
+                $"WHERE barcode LIKE '%{keywords}%' OR item_name LIKE '%{keywords}%'");
+            if (sql.HasException(true)) return;
+            if (sql.DBDT.Rows.Count > 0)
+            {
+                tblProducts.ItemsSource = sql.DBDT.DefaultView;
+            }
+            else
+            {
+                tblProducts.ItemsSource = null;
             }
         }
     }

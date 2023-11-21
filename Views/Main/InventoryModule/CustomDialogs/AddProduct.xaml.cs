@@ -18,6 +18,9 @@ using System.Windows.Markup;
 using IronBarCode;
 using System.Windows.Interop;
 using System.Diagnostics;
+using ZXing.QrCode;
+using ZXing.Windows.Compatibility;
+using System.Drawing.Imaging;
 
 namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
 {
@@ -43,7 +46,6 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
             this.product = product;
             SetValues();
         }
-
         private async void SetValues()
         {
             if (product == null)
@@ -78,6 +80,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                     tbBarcode.Text = row["barcode"].ToString();
                     tbUnitQuantity.Text = row["unit_quantity"].ToString();
                     tbNominatedPrice.Text = Converter.StringToMoney(row["nominated_price"].ToString()).ToString();
+                    GenerateBarcode(row["barcode"].ToString());
                 }
 
                 tbEmployeeCommission.Text = await db.GetValue("tbl_selling_expenses", "employee_commission", "product_id", product.ProductId);
@@ -177,52 +180,48 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
                 MessageBox.Show(isUpdate ? "Error updating product" : "Error inserting product");
             }
         }
-        private async Task GenerateBarcode(string barcode_serial, string image_name)
+        private void GenerateBarcode(string code)
         {
-            //For generating barcode
-            if (!string.IsNullOrEmpty(tbBarcode.Text) || tbBarcode.Text != "N/A")
+            try
             {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                if(code == "N/A")
                 {
-                    try
+                    pbBarcode.Source = null;
+                }
+                else
+                {
+                    BarcodeWriter<Bitmap> horizontalWriter = new BarcodeWriter<Bitmap>
                     {
-                        string exeFolderPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
-                        string folderName = "barcodes";
-                        string folderPath = Path.Combine(exeFolderPath, folderName);
-
-                        // Check if the folder exists
-                        if (!Directory.Exists(folderPath))
+                        Format = BarcodeFormat.CODE_128,
+                        Renderer = new BitmapRenderer(),
+                        Options = new QrCodeEncodingOptions
                         {
-                            // Create the folder
-                            Directory.CreateDirectory(folderPath);
+                            PureBarcode = false, // Set this to true to generate a barcode without text
+                            Width = 185, // Adjust the width as needed
+                            Height = 70, // Adjust the height as needed
                         }
-
-                        GeneratedBarcode barcode = BarcodeWriter.CreateBarcode(barcode_serial, BarcodeWriterEncoding.Code128);
-
-                        System.Drawing.Bitmap barcodeBitmap = barcode.ToBitmap();
-
-                        string imageName = image_name; // Assuming image_name is the TextBox containing the desired image name
-
-                        string filePath = Path.Combine(folderPath, $"{imageName}.png");
-
-                        // Save the barcode image to the specified file path
-                        barcodeBitmap.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
-
-                        // Convert the bitmap to a WPF image source
-                        BitmapSource barcodeSource = Imaging.CreateBitmapSourceFromHBitmap(
-                            barcodeBitmap.GetHbitmap(),
-                            IntPtr.Zero,
-                            Int32Rect.Empty,
-                            BitmapSizeOptions.FromEmptyOptions());
-
-                        // Set the image source for the Image control
-                        pbBarcode.Source = barcodeSource;
+                    };
+                    var horizontalBitmap = horizontalWriter.Write(code);
+                    BitmapImage bitmapImage = new BitmapImage();
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        horizontalBitmap.Save(memoryStream, ImageFormat.Png);
+                        memoryStream.Position = 0;
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
                     }
-                    catch { }
-                });
+
+                    // Set the BitmapImage as the Source of the Image control
+                    pbBarcode.Source = bitmapImage;
+                }
+            }
+            catch
+            {
+
             }
         }
-
         private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Util.IsAnyTextBoxEmpty(tbItemName, tbAcquisitionCost, tbUnitQuantity))
@@ -288,6 +287,7 @@ namespace WarehouseManagement.Views.Main.InventoryModule.CustomDialogs
         }
         private void tbBarcode_KeyUp(object sender, KeyEventArgs e)
         {
+            GenerateBarcode(tbBarcode.Text);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

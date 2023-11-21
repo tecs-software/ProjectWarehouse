@@ -93,7 +93,9 @@
                      materialDesign:HintAssist.Foreground="Black"
                      BorderBrush="Black"
                      Margin="10,0,10,0"
-                     x:Name="tbBarcode" KeyUp="tbBarcode_KeyUp"/>
+                     x:Name="tbBarcode" 
+                     KeyUp="tbBarcode_KeyUp"
+                     MaxLength="10"/>
 
             <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                      Grid.Row="1"

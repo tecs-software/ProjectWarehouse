@@ -168,7 +168,7 @@ namespace WarehouseManagement.Views.InitialSetup
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                //MessageBox.Show(ex.ToString());
             }
         }
 

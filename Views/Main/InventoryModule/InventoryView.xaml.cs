@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Database;
 using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
+using WWarehouseManagement.Database;
 using MenuItem = WarehouseManagement.Models.MenuItem;
 
 namespace WarehouseManagement.Views.Main.InventoryModule
@@ -48,7 +49,8 @@ namespace WarehouseManagement.Views.Main.InventoryModule
 
         private void tbSearchProduct_TextChanged(object sender, TextChangedEventArgs e)
         {
-            tableFilter(status);
+            //tableFilter(status);
+            inventoryTable.FilterByBarcode(tbSearchProduct.Text);
         }
 
         private void Dialog_TableFilterRequested(object sender, string status)
