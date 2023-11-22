@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WarehouseManagement.Properties;
 
 namespace WarehouseManagement.Database
 {
@@ -26,9 +27,9 @@ namespace WarehouseManagement.Database
                 {
                     this.connectionString = connectionString;
                 }
-                else if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
+                else if (!string.IsNullOrEmpty(Settings.Default.ConnectionString))
                 {
-                    this.connectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+                    this.connectionString = Settings.Default.ConnectionString;
                 }
             }
             catch(Exception e)

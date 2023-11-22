@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WarehouseManagement.Database;
+using WarehouseManagement.Properties;
 
 namespace WWarehouseManagement.Database
 {
@@ -29,9 +30,9 @@ namespace WWarehouseManagement.Database
 
         public sql_control()
         {
-            if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
+            if (!string.IsNullOrEmpty(Settings.Default.ConnectionString))
             {
-                constring = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+                constring = Settings.Default.ConnectionString;
                 DBCon = new SqlConnection(constring);
                 DBCmd = new SqlCommand(constring);
             }

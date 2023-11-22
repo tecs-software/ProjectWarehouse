@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WarehouseManagement.Database;
+using WarehouseManagement.Properties;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Views.Login;
 using WWarehouseManagement.Database;
@@ -34,7 +35,7 @@ namespace WarehouseManagement.Views.InitialSetup
         {
             InitializeComponent();
             ReCenter();
-            if (ConfigurationManager.ConnectionStrings["MyConnectionString"] != null)
+            if (!string.IsNullOrEmpty(Settings.Default.ConnectionString))
             {
                 new SplashScreen().Show();
                 this.Close();
@@ -143,7 +144,7 @@ namespace WarehouseManagement.Views.InitialSetup
                             if (Util.AddFirewallRule())
                             {
                                 connection += ";Initial Catalog=db_warehouse_management";
-                                await SaveConnection(connection);
+                                SaveConnection(connection);
                                 await dbInitializer.InsertSQLAuthentication("db_warehouse_management", connection);
                                 new SplashScreen().Show();
                                 this.Close();
@@ -157,7 +158,7 @@ namespace WarehouseManagement.Views.InitialSetup
                     }
                     else
                     {
-                        await SaveConnection(connection);
+                        SaveConnection(connection);
                         new SplashScreen().Show();
                         this.Close();
                     }
@@ -172,13 +173,10 @@ namespace WarehouseManagement.Views.InitialSetup
             }
         }
 
-        private async Task SaveConnection(string connectionString)
+        private void SaveConnection(string connectionString)
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            ConnectionStringSettings connectionStringSettings = new ConnectionStringSettings("MyConnectionString", connectionString, "System.Data.SqlClient");
-            config.ConnectionStrings.ConnectionStrings.Add(connectionStringSettings);
-            await Task.Run(() => config.Save(ConfigurationSaveMode.Modified));
-            ConfigurationManager.RefreshSection("connectionStrings");
+            Properties.Settings.Default.ConnectionString = connectionString;
+            Properties.Settings.Default.Save();
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e)
