@@ -24,6 +24,7 @@ using WarehouseManagement.Views.Main.InventoryModule.CustomDialogs;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs;
 using WarehouseManagement.Views.Main.OrderModule.CustomDialogs.LocalOrder;
 using WarehouseManagement.Views.Main.InventoryModule;
+using MaterialDesignThemes.Wpf;
 
 namespace WarehouseManagement.Views.Main.OrderModule
 {
@@ -64,6 +65,7 @@ namespace WarehouseManagement.Views.Main.OrderModule
             showOrderMenu();
             SetColumnWidth();
             refreshTable();
+            rbtn_show_all.IsChecked = true;
         }
         private async void refreshTable()
         {
@@ -293,15 +295,16 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
-            {
-                show_DT.search_orders_data(tbSearch, rbtn_waybill, rbtn_customer, dgtRespondentData);
-            }
+            //if(e.Key == Key.Enter)
+            //{
+            //    show_DT.search_orders_data(tbSearch, rbtn_waybill, rbtn_customer, dgtRespondentData);
+            //}
         }
 
         private async void rbtn_show_all_Checked(object sender, RoutedEventArgs e)
         {
-            tbSearch.Text = "";
+            HintAssist.SetHint(tbSearch, "Search for Waybills or Receiver");
+            tbSearch.IsReadOnly = true;
             refreshTable();
         }
 
@@ -319,7 +322,24 @@ namespace WarehouseManagement.Views.Main.OrderModule
 
         private void tbSearch_KeyUp(object sender, KeyEventArgs e)
         {
+            
+        }
+
+        private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
             show_DT.search_orders_data(tbSearch, rbtn_waybill, rbtn_customer, dgtRespondentData);
+        }
+
+        private void rbtn_waybill_Checked(object sender, RoutedEventArgs e)
+        {
+            HintAssist.SetHint(tbSearch, "Search Waybill");
+            tbSearch.IsReadOnly = false;
+        }
+
+        private void rbtn_customer_Checked(object sender, RoutedEventArgs e)
+        {
+            HintAssist.SetHint(tbSearch, "Search Receiver");
+            tbSearch.IsReadOnly = false;
         }
         //public async void refreshTable()
         //{

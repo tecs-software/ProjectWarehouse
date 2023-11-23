@@ -36,10 +36,10 @@
                                  x:Name="tbSearch"
                                  CaretBrush="White"
                                  materialDesign:HintAssist.IsFloating="False"
-                                 materialDesign:HintAssist.Hint="Search for orders"
+                                 materialDesign:HintAssist.Hint="Search for Waybills or Receiver"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" KeyDown="tbSearch_KeyDown" KeyUp="tbSearch_KeyUp"/>
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" KeyDown="tbSearch_KeyDown" KeyUp="tbSearch_KeyUp" TextChanged="tbSearch_TextChanged"/>
 
                     </StackPanel>
                 </Border>
@@ -56,7 +56,7 @@
                     </RadioButton>
                     <RadioButton Content="WAYBILL" Margin="0,5,20,0" FontSize="10" x:Name="rbtn_waybill"
                  Foreground="White"
-                 Style="{DynamicResource MaterialDesignOptionRadioButton}">
+                 Style="{DynamicResource MaterialDesignOptionRadioButton}" Checked="rbtn_waybill_Checked">
                         <RadioButton.LayoutTransform>
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                             <!-- Adjust the scale values as needed -->
@@ -65,7 +65,7 @@
 
                     <RadioButton Content="CUSTOMER" Margin="0,5,20,0" FontSize="10" x:Name="rbtn_customer"
                  Foreground="White"
-                 Style="{DynamicResource MaterialDesignOptionRadioButton}">
+                 Style="{DynamicResource MaterialDesignOptionRadioButton}" Checked="rbtn_customer_Checked">
                         <RadioButton.LayoutTransform>
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                             <!-- Adjust the scale values as needed -->

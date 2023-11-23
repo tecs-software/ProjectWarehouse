@@ -166,7 +166,7 @@ namespace WarehouseManagement.Controller
             {
                 if (rbtn_waybill.IsChecked == true)
                 {
-                    sql.Query($"SELECT * FROM tbl_orders WHERE waybill_number = '{tb_search_bar.Text}' ORDER BY created_at DESC");
+                    sql.Query($"SELECT * FROM tbl_orders WHERE waybill_number LIKE '%{tb_search_bar.Text}%' ORDER BY created_at DESC");
                     if (sql.HasException(true)) return;
                     if (sql.DBDT.Rows.Count > 0)
                     {
@@ -250,7 +250,7 @@ namespace WarehouseManagement.Controller
             {
                 if (rbtn_waybill.IsChecked == true)
                 {
-                    sql.Query($"SELECT * FROM tbl_orders WHERE waybill_number = '{tb_search_bar.Text}' AND user_id = {int.Parse(CurrentUser.Instance.userID.ToString())} ORDER BY created_at DESC");
+                    sql.Query($"SELECT * FROM tbl_orders WHERE waybill_number LIKE '%{tb_search_bar.Text}%' AND user_id = {int.Parse(CurrentUser.Instance.userID.ToString())} ORDER BY created_at DESC");
                     if (sql.HasException(true)) return;
                     if (sql.DBDT.Rows.Count > 0)
                     {
