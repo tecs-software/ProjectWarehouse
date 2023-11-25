@@ -45,7 +45,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             InitializeComponent();
             //code for sender information
             txtId.Text = "0";
-
             //code for courier information
             PopulateCourier(cmbCourier);
             rdbJandT.IsChecked = true;
@@ -75,7 +74,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
             switch (tabItem)
             {
-               
                 case "Import Address":
                     importAddressFrame.Source = new Uri("../SystemSettingModule/FrameImportAddress.xaml", UriKind.Relative);
                     break;
@@ -92,7 +90,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
                     return;
             }
         }
-
         private void cmbCity_DropDownClosed(object sender, EventArgs e)
         {
             cmbBarangay.SelectedIndex = -1;

@@ -169,7 +169,8 @@ namespace WarehouseManagement.Controller
                 }
                 else
                 {
-                    MessageBox.Show($"Order process failed! The error message ={responseData.data}{Environment.NewLine}");
+
+                    MessageBox.Show($"Order process failed! The error message = {responseData.message}{Environment.NewLine}");
                 }
                 currentOrder++;
             }
@@ -321,6 +322,8 @@ namespace WarehouseManagement.Controller
                     response.EnsureSuccessStatusCode(); // Ensure the response is successful (status code 2xx).
 
                     string responseString = await response.Content.ReadAsStringAsync();
+
+                    Clipboard.SetText(responseString);
                     Debug.WriteLine("RESPONSE  " + responseString);
                     // Deserialize the response into FLASHApiResponse<T>.
                     var responseData = JsonConvert.DeserializeObject<FLASHApiResponse<T>>(responseString);

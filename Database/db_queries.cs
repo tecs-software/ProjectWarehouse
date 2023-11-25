@@ -95,12 +95,10 @@ namespace WarehouseManagement.Database
             int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers"));
             if (count >= 2)
             {
-                MessageBox.Show("true daw");
                 return true;
             }
             else
             {
-                MessageBox.Show("false daw");
                 return false;
             }
         }

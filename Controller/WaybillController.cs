@@ -233,6 +233,7 @@ namespace WarehouseManagement.Controller
     }
     public class waybillData
     {
+        public bool isSelected { get; set; }
         public string Order_id { get; set; } = string.Empty;
         public string Waybill { get; set; } = string.Empty;
         public string Receiver { get; set; } = string.Empty;

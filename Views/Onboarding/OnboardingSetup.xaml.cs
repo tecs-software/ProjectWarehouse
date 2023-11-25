@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -287,14 +288,14 @@ namespace WarehouseManagement.Views.Onboarding
                 if (rdbFlash.IsChecked == true)
                 {
                     queries.api_credentials(rdbFlashCustomer, "fc8250f522c23b8d93a286519494c764a828afdd0c464797ecbb9276aa275629", "", txtCustomerID);
-                    MessageBox.Show("J&T vip added");
+                    MessageBox.Show("FLASH vip added"); 
                     txtCustomerID.Text = "";
                 }
                 else
                 {
                     //J&T
                     queries.api_credentials(rdbJandT, "03bf07bf1b172b13efb6259f44190ff3", "THIRDYNAL", txtCustomerID);
-                    MessageBox.Show("FLASH vip added");
+                    MessageBox.Show("J&T vip added");
                     txtCustomerID.Text = "";
                 }
             }

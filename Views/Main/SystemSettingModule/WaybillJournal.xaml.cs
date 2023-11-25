@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WarehouseManagement.Controller;
 using WWarehouseManagement.Database;
 using ZXing;
@@ -38,12 +39,17 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private void Print_Click(object sender, RoutedEventArgs e)
         {
-            ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
-            ReportViewer1.LocalReport.EnableExternalImages = true;
-            ReportViewer1.RefreshReport();
-            foreach (var waybills in waybillList)
+            //ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
+            //ReportViewer1.LocalReport.EnableExternalImages = true;
+            //ReportViewer1.RefreshReport();
+            //foreach (var waybills in waybillList)
+            //{
+            //    printwaybill(waybills);
+            //}
+
+            foreach (string waybills in waybillList)
             {
-                printwaybill(waybills);
+                MessageBox.Show(waybills);
             }
         }
         private byte[] ImageToByteArray(Bitmap image)
@@ -211,7 +217,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         {
 
         }
-        private List<string> waybillList = new List<string>();
+        public List<string> waybillList = new List<string>();
         private void cbName_Click(object sender, RoutedEventArgs e)
         {
             var cb = sender as CheckBox;
@@ -221,7 +227,6 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             if (cb.IsChecked == true)
             {
                 waybillList.Add((tblWaybilldata.SelectedCells[2].Column.GetCellContent(id) as TextBlock).Text);
-               
             }
             else
             {
@@ -237,6 +242,35 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             WaybillController.SelectWaybillByDate(DatePicker, tblWaybilldata);
+        }
+
+        private void tblWaybilldata_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            if (e.Row.Item is waybillData item)
+            {
+                CheckBox checkBox = FindVisualChild<CheckBox>(e.Row);
+                if (checkBox != null)
+                {
+                    checkBox.IsChecked = item.isSelected;
+                }
+            }
+        }
+        private childItem FindVisualChild<childItem>(DependencyObject obj)
+        where childItem : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is childItem)
+                    return (childItem)child;
+                else
+                {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null)
+                        return childOfChild;
+                }
+            }
+            return null;
         }
     }
 }
