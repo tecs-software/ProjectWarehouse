@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
+using WarehouseManagement.Models;
 using WarehouseManagement.Views.Main;
 using WWarehouseManagement.Database;
 using static WarehouseManagement.Models.Address;
@@ -51,7 +52,28 @@ namespace WarehouseManagement.Views.Onboarding
                 cmbProvinceJnt.Text = "";
             }
         }
+        private void radioCustomer(string text)
+        {
+            if (text == "J&T")
+            {
+                txtCustomerID.Visibility = Visibility.Visible;
 
+                tbAccountName.Visibility = Visibility.Collapsed;
+                tbName.Visibility = Visibility.Collapsed;
+                tbMobile.Visibility = Visibility.Collapsed;
+                tbEmail.Visibility = Visibility.Collapsed;
+
+            }
+            if (text == "FLASH")
+            {
+                txtCustomerID.Visibility = Visibility.Collapsed;
+
+                tbAccountName.Visibility = Visibility.Visible;
+                tbName.Visibility = Visibility.Visible;
+                tbMobile.Visibility = Visibility.Visible;
+                tbEmail.Visibility = Visibility.Visible;
+            }
+        }
         public OnboardingSetup()
         {
             InitializeComponent();
@@ -159,7 +181,7 @@ namespace WarehouseManagement.Views.Onboarding
         #endregion
         private void WorkerImportRegion_DoWork(object sender, DoWorkEventArgs e)
         {
-            Csv_Controller.ImportAddress(lblImportedProducts, pbBarProduct);
+            //Csv_Controller.ImportAddress(lblImportedProducts, pbBarProduct);
         }
         private void WorkerImportRegion_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -226,11 +248,13 @@ namespace WarehouseManagement.Views.Onboarding
         private void rdbJandT_Checked(object sender, RoutedEventArgs e)
         {
             CheckedRadio(rdbJandT.Content.ToString());
+            HintAssist.SetHint(txtCustomerID, "J&T VIP CODE");
         }
 
         private void rdbFlash_Checked(object sender, RoutedEventArgs e)
         {
             CheckedRadio(rdbFlash.Content.ToString());
+            HintAssist.SetHint(txtCustomerID, "FLASH KA CODE");
         }
 
         private void btnSaveShop_Click(object sender, RoutedEventArgs e)
@@ -266,7 +290,7 @@ namespace WarehouseManagement.Views.Onboarding
                 }
             }
         }
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (Util.IsAnyTextBoxEmpty(txtCustomerID))
             {
@@ -285,21 +309,35 @@ namespace WarehouseManagement.Views.Onboarding
             }
             else
             {
-                if (rdbFlash.IsChecked == true)
+                if (rdbFlashCustomer.IsChecked == true)
                 {
-                    queries.api_credentials(rdbFlashCustomer, "fc8250f522c23b8d93a286519494c764a828afdd0c464797ecbb9276aa275629", "", txtCustomerID);
-                    MessageBox.Show("FLASH vip added"); 
-                    txtCustomerID.Text = "";
+                    //queries.api_credentials(rdbFlashCustomer, "fc8250f522c23b8d93a286519494c764a828afdd0c464797ecbb9276aa275629", "", txtCustomerID);
+                    //MessageBox.Show("FLASH vip added"); 
+                    FlashAccountDetails details = new FlashAccountDetails()
+                    {
+                        AccountName = tbAccountName.Text,
+                        Fullname = tbAccountName.Text,
+                        Mobile = tbMobile.Text,
+                        Email = tbEmail.Text
+                    };
+
+                    GlobalModel.customer_id = "BA0074";
+                    GlobalModel.key = "PwxNQHBeBUdLQhdbXAxzAUBqDkdKc1tSS01JQApYWH8EQWtXFBQhClMRTUZAXlZZLgYbO1ZHRXMPAkBORUJbVg==";
+                    await FLASH_api.FlashCreateSubaccount(details, rdbFlashCustomer.Content.ToString());
+
+                    tbAccountName.Clear();
+                    tbMobile.Clear();
+                    tbEmail.Clear();
+                    tbName.Clear();
                 }
                 else
                 {
                     //J&T
-                    queries.api_credentials(rdbJandT, "03bf07bf1b172b13efb6259f44190ff3", "THIRDYNAL", txtCustomerID);
+                    queries.api_credentials(rdbJandTCustomer.Content.ToString(), "03bf07bf1b172b13efb6259f44190ff3", "THIRDYNAL", txtCustomerID.Text);
                     MessageBox.Show("J&T vip added");
                     txtCustomerID.Text = "";
                 }
             }
-            this.Close();
         }
 
         private void btnComplete_Click(object sender, RoutedEventArgs e)
@@ -343,6 +381,22 @@ namespace WarehouseManagement.Views.Onboarding
                 // Suppress the key event to prevent the character from being entered
                 e.Handled = true;
             }
+        }
+
+        private void rdbJandTCustomer_Checked(object sender, RoutedEventArgs e)
+        {
+            radioCustomer(rdbJandTCustomer.Content.ToString());
+        }
+
+        private void rdbFlashCustomer_Checked(object sender, RoutedEventArgs e)
+        {
+            txtCustomerID.Text = "1";
+            radioCustomer(rdbFlashCustomer.Content.ToString());
+        }
+
+        private void tbMobile_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputValidation.Integer(sender, e);
         }
     }
 }

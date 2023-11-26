@@ -11,12 +11,12 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="System Setting" Height="600" Width="1000">
+        Title="System Setting" Height="608" Width="1000">
 
     <Border CornerRadius="10"
         Background="White"
         BorderBrush="Black"
-        BorderThickness="1">
+        BorderThickness="1" Margin="0,0,0,4">
 
         <Grid Height="Auto" Margin="20,20,20,77">
 
@@ -90,20 +90,20 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="VIP Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter">
-                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,40,0,0">
+                            <StackPanel VerticalAlignment="Top" Height="500">
                                 <TextBlock HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="VIP Information" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Bold" Margin="24,0,0,0"/>
-                                <TextBlock FontStyle="Italic" HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Note: (These information will be your connection to couriers.)" TextWrapping="Wrap" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Regular" Margin="24,24,0,0"/>
+                                <TextBlock FontStyle="Italic" HorizontalAlignment="Left" Foreground="#636363" FontSize="15" Text="Note: (These information will be your connection to couriers.)" TextWrapping="Wrap" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" FontWeight="Regular" Margin="24,10,0,0"/>
 
                                 <materialDesign:Card Grid.Row="1" Grid.Column="0" materialDesign:ShadowAssist.ShadowDepth="Depth2" Height="50" materialDesign:ShadowAssist.ShadowEdges="All"
-                                    Margin="24,24,24,0">
+                                    Margin="24,0,24,0">
                                     <StackPanel Margin="5" Orientation="Horizontal">
-                                        <RadioButton Margin="16,0,0,0" x:Name="rdbJandTCustomer" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" />
-                                        <RadioButton Margin="8,0,0,0" x:Name="rdbFlashCustomer" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}"/>
+                                        <RadioButton Margin="16,0,0,0" x:Name="rdbJandTCustomer" Content="J&amp;T" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbJandTCustomer_Checked" />
+                                        <RadioButton Margin="8,0,0,0" x:Name="rdbFlashCustomer" Content="FLASH" Style="{StaticResource MaterialDesignDarkRadioButton}" Checked="rdbFlashCustomer_Checked"/>
                                     </StackPanel>
                                 </materialDesign:Card>
 
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtCustomerID" materialDesign:HintAssist.Hint="Customer ID/ VIP CODE" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
-                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
+                                                             FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center" Visibility="Collapsed"
                                                              SelectionBrush="#FF1D2118"/>
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtEccompanyId" materialDesign:HintAssist.Hint="EcCompany ID" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center" Visibility="Collapsed"
@@ -111,9 +111,71 @@
                                 <TextBox HorizontalAlignment="Stretch" Margin="24,8,24,0" x:Name="txtKey" Visibility="Collapsed" materialDesign:HintAssist.Hint="Private Key" FontFamily="/DJ_Corp;component/Fonts/static/#Inter" 
                                                              FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" VerticalAlignment="Center"
                                                              SelectionBrush="#FF1D2118"/>
+                                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Grid.Row="2"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Account Name" 
+                                         FontSize="15"
+                                         Background="Transparent"
+                                         materialDesign:HintAssist.Foreground="Black"
+                                         BorderBrush="Black"
+                                         IsReadOnly="False"
+                                         x:Name="tbAccountName"
+                                         VerticalAlignment="Top"
+                                         Margin="24,10,24,0"
+                                         Focusable="True"
+                                         Visibility="Collapsed">
+                                </TextBox>
+                                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Grid.Row="3"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Full Name" 
+                                         FontSize="15"
+                                         Background="Transparent"
+                                         materialDesign:HintAssist.Foreground="Black"
+                                         BorderBrush="Black"
+                                         IsReadOnly="False"
+                                         x:Name="tbName"
+                                         VerticalAlignment="Top"
+                                         Margin="24,10,24,0"
+                                         Focusable="True"
+                                         Visibility="Collapsed">
+                                </TextBox>
+                                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Grid.Row="4"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Mobile #" 
+                                         FontSize="15"
+                                         Background="Transparent"
+                                         materialDesign:HintAssist.Foreground="Black"
+                                         BorderBrush="Black"
+                                         IsReadOnly="False"
+                                         x:Name="tbMobile"
+                                         VerticalAlignment="Top"
+                                         Margin="24,10,24,0"
+                                         Focusable="True" 
+                                         PreviewTextInput="tbMobile_PreviewTextInput"
+                                         Visibility="Collapsed"
+                                         MaxLength="11">
+                                </TextBox>
+                                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Grid.Row="5"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Email" 
+                                         FontSize="15"
+                                         Background="Transparent"
+                                         materialDesign:HintAssist.Foreground="Black"
+                                         BorderBrush="Black"
+                                         IsReadOnly="False"
+                                         x:Name="tbEmail"
+                                         VerticalAlignment="Top"
+                                         Margin="24,10,24,0"
+                                         Focusable="True"
+                                         Visibility="Collapsed">
+                                </TextBox>
                                 <Button 
                                     HorizontalAlignment="Stretch"
-                                    Margin="24,24,24,0"
+                                    Margin="24,10,24,0"
                                     VerticalAlignment="Center" 
                                     x:Name="btnSave" 
                                     Content="Create VIP" 
@@ -203,7 +265,7 @@
                                     IsDefault="True" 
                                     FontSize="15"
                                     Background="{StaticResource secondaryColor}" BorderBrush="Transparent" 
-                                    Height="40" Click="btnComplete_Click" Margin="166,468,166,-58" Grid.Row="1"/>
+                                    Height="40" Click="btnComplete_Click" Margin="166,465,166,-55" Grid.Row="1"/>
         </Grid>
     </Border>
 </Window>

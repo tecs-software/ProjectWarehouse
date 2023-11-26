@@ -169,8 +169,69 @@ namespace WarehouseManagement.Controller
                 }
                 else
                 {
-
-                    MessageBox.Show($"Order process failed! The error message = {responseData.message}{Environment.NewLine}");
+                    switch (responseData.code)
+                    {
+                        case "0":
+                            MessageBox.Show($"Internal Server Error: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1000":
+                            MessageBox.Show($"Failed to submit: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1001":
+                            MessageBox.Show($"Customer not found: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1002":
+                            MessageBox.Show($"Invalid signature: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1003":
+                            MessageBox.Show($"Order is exists: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1004":
+                            MessageBox.Show($"Sender address does not match: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1005":
+                            MessageBox.Show($"Destination address does not match: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1006":
+                            MessageBox.Show($"Order not found: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1007":
+                            MessageBox.Show($"Warehouse not found: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1008":
+                            MessageBox.Show($"COD Service is not registered: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1009":
+                            MessageBox.Show($"COD amount cannot be a negative value: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1010":
+                            MessageBox.Show($"Incomplete schedule of pickup is exists, no schedule of pickup is required: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1011":
+                            MessageBox.Show($"This courier notification can't be cancelled: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1015":
+                            MessageBox.Show($"Parcel is picked up, not allowed to cancel: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1018":
+                            MessageBox.Show($"Either sender's address and warehouse no should be sent: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1019":
+                            MessageBox.Show($"Pno and mchId not match: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1020":
+                            MessageBox.Show($"InsureDeclareValue cannot be a negative value: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1021":
+                            MessageBox.Show($"Postal Code should be a 5-digit number: {responseData.message}{Environment.NewLine}");
+                            break;
+                        case "1022":
+                            MessageBox.Show($"Sender's address is not in service range yet: {responseData.message}{Environment.NewLine}");
+                            break;
+                        default:
+                            MessageBox.Show($"Unexpected code ({responseData.code}): {responseData.message}{Environment.NewLine}");
+                            break;
+                    }
                 }
                 currentOrder++;
             }
@@ -200,21 +261,84 @@ namespace WarehouseManagement.Controller
             };
             return dic;
         }
-        public static async Task<bool> FlashCreateSubaccount(TextBox Subaccountid, TextBox Accountname, TextBox name, FlashAccountDetails details)
+        public static async Task<bool> FlashCreateSubaccount(FlashAccountDetails details, string rdb)
         {
+            db_queries queries = new db_queries();
+
             var mockData = CreateSubAccountData(details);
             var url = "/open/v1/new_sub_account";
             var responseData = await RequestDataAsync<AccountResponse>(url, mockData, GlobalModel.customer_id);
             if (responseData.code == "1")
             {
-                Subaccountid.Text = responseData.data.Subaccountid;
-                Accountname.Text = responseData.data.AccountName;
-                name.Text = responseData.data.Name;
+                queries.api_credentials(rdb, "fc8250f522c23b8d93a286519494c764a828afdd0c464797ecbb9276aa275629", "", responseData.data.Subaccountid);
+                MessageBox.Show("Flash VIP added.");
                 return true;
             }
             else
             {
-                MessageBox.Show($"Order process failed! The error message ={responseData}{Environment.NewLine}");
+                switch (responseData.code)
+                {
+                    case "0":
+                        MessageBox.Show($"Internal Server Error: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1000":
+                        MessageBox.Show($"Failed to submit: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1001":
+                        MessageBox.Show($"Customer not found: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1002":
+                        MessageBox.Show($"Invalid signature: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1003":
+                        MessageBox.Show($"Order is exists: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1004":
+                        MessageBox.Show($"Sender address does not match: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1005":
+                        MessageBox.Show($"Destination address does not match: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1006":
+                        MessageBox.Show($"Order not found: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1007":
+                        MessageBox.Show($"Warehouse not found: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1008":
+                        MessageBox.Show($"COD Service is not registered: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1009":
+                        MessageBox.Show($"COD amount cannot be a negative value: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1010":
+                        MessageBox.Show($"Incomplete schedule of pickup is exists, no schedule of pickup is required: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1011":
+                        MessageBox.Show($"This courier notification can't be cancelled: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1015":
+                        MessageBox.Show($"Parcel is picked up, not allowed to cancel: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1018":
+                        MessageBox.Show($"Either sender's address and warehouse no should be sent: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1019":
+                        MessageBox.Show($"Pno and mchId not match: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1020":
+                        MessageBox.Show($"InsureDeclareValue cannot be a negative value: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1021":
+                        MessageBox.Show($"Postal Code should be a 5-digit number: {responseData.message}{Environment.NewLine}");
+                        break;
+                    case "1022":
+                        MessageBox.Show($"Sender's address is not in service range yet: {responseData.message}{Environment.NewLine}");
+                        break;
+                    default:
+                        MessageBox.Show($"Unexpected code ({responseData.code}): {responseData.message}{Environment.NewLine}");
+                        break;
+                }
                 return false;
             }
         }
@@ -333,12 +457,14 @@ namespace WarehouseManagement.Controller
             catch (HttpRequestException ex)
             {
                 // Handle specific exception for HTTP request errors.
-                throw new Exception("HTTP request error: " + ex.Message, ex);
+                string errorMessage = "HTTP request error: " + ex.Message;
+                return new FLASHApiResponse<T> { code = "1000", message = "API request Problem. Try again later." };
             }
             catch (JsonException ex)
             {
                 // Handle JSON deserialization exceptions.
-                throw new Exception("JSON deserialization error: " + ex.Message, ex);
+                string errorMessage = "JSON deserialization error: " + ex.Message;
+                return new FLASHApiResponse<T> { code = "1000", message = "Kindly put proper details."};
             }
             catch (Exception ex)
             {

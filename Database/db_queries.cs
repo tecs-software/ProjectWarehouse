@@ -92,14 +92,27 @@ namespace WarehouseManagement.Database
         }
         public bool VIPLimit()
         {
+            int jcount = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers WHERE courier_name = 'J&T'"));
+            int fcount = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers WHERE courier_name = 'FLASH'"));
             int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers"));
-            if (count >= 2)
+            if(count <= 2)
             {
-                return true;
+                if (jcount > 0)
+                {
+                    return true;
+                }
+                else if (fcount > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
-                return false;
+                return true;
             }
         }
         public static bool checkExistingShop(string name)
@@ -225,10 +238,10 @@ namespace WarehouseManagement.Database
                 }
             }
         }
-        public void api_credentials(RadioButton courier, string api_key, string ec, TextBox customer_id)
+        public void api_credentials(string courier, string api_key, string ec, string customer_id)
         {
             sql.Query($"INSERT INTO tbl_couriers (courier_name, api_key, eccompany_id, customer_id) " +
-                $"VALUES ('{courier.Content}','{Encrypt(api_key)}' ,'{ec}', '{customer_id.Text}')");
+                $"VALUES ('{courier}','{Encrypt(api_key)}' ,'{ec}', '{customer_id}')");
             if (sql.HasException(true)) return;
         }
         public void insert_receiver(Receiver _receiver)

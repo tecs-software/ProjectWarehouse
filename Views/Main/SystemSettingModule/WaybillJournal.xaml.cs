@@ -39,18 +39,18 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private void Print_Click(object sender, RoutedEventArgs e)
         {
-            //ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
-            //ReportViewer1.LocalReport.EnableExternalImages = true;
-            //ReportViewer1.RefreshReport();
-            //foreach (var waybills in waybillList)
-            //{
-            //    printwaybill(waybills);
-            //}
-
-            foreach (string waybills in waybillList)
+            ReportViewer1.LocalReport.ReportEmbeddedResource = "WarehouseManagement.Waybill.WaybillTemplate.rdlc";
+            ReportViewer1.LocalReport.EnableExternalImages = true;
+            ReportViewer1.RefreshReport();
+            foreach (var waybills in waybillList)
             {
-                MessageBox.Show(waybills);
+                printwaybill(waybills);
             }
+
+            //foreach (string waybills in waybillList)
+            //{
+            //    MessageBox.Show(waybills);
+            //}
         }
         private byte[] ImageToByteArray(Bitmap image)
         {

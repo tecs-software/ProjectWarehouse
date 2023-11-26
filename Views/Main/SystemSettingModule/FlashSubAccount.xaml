@@ -10,33 +10,35 @@
       Title="FlashSubAccount"
       Height="auto" Width="auto">
 
-    <Border CornerRadius="10" Background="White" BorderBrush="Black" BorderThickness="0">
-        <Grid Margin="15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+    <StackPanel x:Name="Flash">
+        <Border CornerRadius="10" Background="White" BorderBrush="Black" BorderThickness="0">
+            <Grid Margin="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
 
-            </Grid.RowDefinitions>
+                </Grid.RowDefinitions>
 
-            <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
-                <TextBlock Text="Flash Sub-account Creation" FontSize="16" x:Name="lbProduct" Foreground="#636363" FontWeight="Bold"/>
-            </DockPanel>
-            <TextBlock Text="Customer Details" FontSize="16" FontWeight="Light" Grid.Row="1" Grid.Column="0" Margin="10,0,0,0"/>
-            <TextBlock Text="Generated Sub-account Details" FontSize="16" FontWeight="Light" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0"/>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                <DockPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" VerticalAlignment="Center" Margin="10,5,5,20">
+                    <TextBlock Text="Flash Sub-account Creation" FontSize="16" x:Name="lbProduct" Foreground="#636363" FontWeight="Bold"/>
+                </DockPanel>
+                <TextBlock Text="Customer Details" FontSize="16" FontWeight="Light" Grid.Row="1" Grid.Column="0" Margin="10,0,0,0"/>
+                <TextBlock Text="Generated Sub-account Details" FontSize="16" FontWeight="Light" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" Visibility="Collapsed"/>
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Grid.Row="2"
                          Grid.Column="0"
-                         materialDesign:HintAssist.Hint="Account Name" 
+                         Grid.ColumnSpan="2"
+                         materialDesign:HintAssist.Hint="*Account Name" 
                          FontSize="15"
                          Background="Transparent"
                          materialDesign:HintAssist.Foreground="Black"
@@ -46,11 +48,12 @@
                          VerticalAlignment="Top"
                          Margin="10,10,10,10"
                          Focusable="True">
-            </TextBox>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                </TextBox>
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Grid.Row="3"
                          Grid.Column="0"
-                         materialDesign:HintAssist.Hint="Full Name" 
+                         Grid.ColumnSpan="2"
+                         materialDesign:HintAssist.Hint="*Full Name" 
                          FontSize="15"
                          Background="Transparent"
                          materialDesign:HintAssist.Foreground="Black"
@@ -60,11 +63,12 @@
                          VerticalAlignment="Top"
                          Margin="10,10,10,10"
                          Focusable="True">
-            </TextBox>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                </TextBox>
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Grid.Row="4"
                          Grid.Column="0"
-                         materialDesign:HintAssist.Hint="Mobile #" 
+                         Grid.ColumnSpan="2"
+                         materialDesign:HintAssist.Hint="*Mobile #" 
                          FontSize="15"
                          Background="Transparent"
                          materialDesign:HintAssist.Foreground="Black"
@@ -74,12 +78,13 @@
                          VerticalAlignment="Top"
                          Margin="10,10,10,10"
                          Focusable="True" PreviewTextInput="tbMobile_PreviewTextInput"
-                         >
-            </TextBox>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         MaxLength="11">
+                </TextBox>
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Grid.Row="5"
                          Grid.Column="0"
-                         materialDesign:HintAssist.Hint="Email" 
+                         Grid.ColumnSpan="2"
+                         materialDesign:HintAssist.Hint="*Email" 
                          FontSize="15"
                          Background="Transparent"
                          materialDesign:HintAssist.Foreground="Black"
@@ -89,8 +94,8 @@
                          VerticalAlignment="Top"
                          Margin="10,10,10,10"
                          Focusable="True">
-            </TextBox>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                </TextBox>
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Grid.Row="2"
                          Grid.Column="1"
                          materialDesign:HintAssist.Hint="Sub-account ID" 
@@ -102,9 +107,10 @@
                          x:Name="tbAccountId"
                          VerticalAlignment="Top"
                          Margin="10,10,10,10"
-                         Focusable="True">
-            </TextBox>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Focusable="True"
+                         Visibility="Collapsed">
+                </TextBox>
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Grid.Row="3"
                          Grid.Column="1"
                          materialDesign:HintAssist.Hint="Account Name" 
@@ -116,9 +122,10 @@
                          x:Name="tbRAccountName"
                          VerticalAlignment="Top"
                          Margin="10,10,10,10"
-                         Focusable="True">
-            </TextBox>
-            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Focusable="True"
+                         Visibility="Collapsed">
+                </TextBox>
+                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Grid.Row="4"
                          Grid.Column="1"
                          materialDesign:HintAssist.Hint="Name" 
@@ -130,9 +137,10 @@
                          x:Name="tbRName"
                          VerticalAlignment="Top"
                          Margin="10,10,10,10"
-                         Focusable="True">
-            </TextBox>
-            <Button Grid.Column="0" Grid.Row="6" Margin="10,10,10,10"
+                         Focusable="True"
+                         Visibility="Collapsed">
+                </TextBox>
+                <Button Grid.Column="0" Grid.Row="6" Margin="10,10,10,10"
                     Click="Button_Click" BorderBrush="{StaticResource secondaryColor}" 
                     Background="{StaticResource secondaryColor}" FontSize="15" 
                     Content="Submit Details"
@@ -142,6 +150,7 @@
                     />
 
 
-        </Grid>
-    </Border>
+            </Grid>
+        </Border>
+    </StackPanel>
 </Page>

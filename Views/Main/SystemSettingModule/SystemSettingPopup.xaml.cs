@@ -15,6 +15,7 @@ using WarehouseManagement.Controller;
 using WarehouseManagement.Database;
 using WarehouseManagement.Helpers;
 using WarehouseManagement.Models;
+using WWarehouseManagement.Database;
 
 namespace WarehouseManagement.Views.Main.SystemSettingModule
 {
@@ -47,6 +48,7 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
             txtId.Text = "0";
             //code for courier information
             PopulateCourier(cmbCourier);
+            FlashChecker();
             rdbJandT.IsChecked = true;
             rdbFlash.IsChecked = false;
             txtMiscellaneous.Text = "0";
@@ -58,7 +60,20 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
         {
             Close();
         }
-
+        private void FlashChecker()
+        {
+            sql_control sql = new sql_control();
+            int count = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers WHERE courier_name = 'FLASH'"));
+            if(count > 0)
+            {
+                FlashSubaccount.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                FlashSubaccount.Visibility = Visibility.Visible;
+            }
+            
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             queries.province(cmbProvince);

@@ -281,14 +281,14 @@ namespace WarehouseManagement.Views.Main.OrderModule.CustomDialogs
             {
                 if (rdbJandT.IsChecked == true)
                 {
-                    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 1");
-                    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 1");
+                    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_name = 'J&T'");
+                    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = 'J&T'");
                     bulk_api.create_bulk_api(Csv_Controller.model, btnConfirm, false, pbBulkOrder);
                 }
                 else
                 {
-                    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_id = 2");
-                    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_id = 2");
+                    GlobalModel.customer_id = sql.ReturnResult($"SELECT customer_id FROM tbl_couriers WHERE courier_name = 'FLASH'");
+                    GlobalModel.key = sql.ReturnResult($"SELECT api_key FROM tbl_couriers WHERE courier_name = 'FLASH'");
                     FLASH_api.FlashCreateBulkOrder(Csv_Controller.Fmodels, pbBulkOrder);
                 }
             });

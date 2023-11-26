@@ -38,17 +38,38 @@ namespace WarehouseManagement.Views.Main.SystemSettingModule
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            FlashAccountDetails details = new FlashAccountDetails()
-            {
-                AccountName = tbAccountName.Text,
-                Fullname = tbAccountName.Text,
-                Mobile = tbMobile.Text,
-                Email = tbEmail.Text
-            };
+            int FlashCounter = int.Parse(sql.ReturnResult($"SELECT COUNT(*) FROM tbl_couriers WHERE courier_name = 'FLASH'"));
 
-            GlobalModel.customer_id = "BA0074";
-            GlobalModel.key = "PwxNQHBeBUdLQhdbXAxzAUBqDkdKc1tSS01JQApYWH8EQWtXFBQhClMRTUZAXlZZLgYbO1ZHRXMPAkBORUJbVg==";
-            await FLASH_api.FlashCreateSubaccount(tbAccountId, tbRAccountName, tbRName, details);
+            if(Util.IsAnyTextBoxEmpty(tbAccountName, tbName, tbMobile, tbEmail))
+            {
+                MessageBox.Show("Complete the details to proceed.");
+            }
+            else
+            {
+                if (FlashCounter > 0)
+                {
+                    MessageBox.Show("Creation Denied! There's already existing FLASH account.");
+                }
+                else
+                {
+                    FlashAccountDetails details = new FlashAccountDetails()
+                    {
+                        AccountName = tbAccountName.Text,
+                        Fullname = tbName.Text,
+                        Mobile = tbMobile.Text,
+                        Email = tbEmail.Text
+                    };
+
+                    GlobalModel.customer_id = "BA0074";
+                    GlobalModel.key = "PwxNQHBeBUdLQhdbXAxzAUBqDkdKc1tSS01JQApYWH8EQWtXFBQhClMRTUZAXlZZLgYbO1ZHRXMPAkBORUJbVg==";
+                    await FLASH_api.FlashCreateSubaccount(details, "FLASH");
+
+                    tbAccountName.Clear();
+                    tbMobile.Clear();
+                    tbEmail.Clear();
+                    tbName.Clear();
+                }
+            }
         }
         private bool HasSymbols(string text)
         {
